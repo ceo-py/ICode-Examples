@@ -1,4 +1,5 @@
 import {Octokit} from "@octokit/core";
+import {formatTitle} from "./utils/formatTitle.jsx";
 
 
 const octokit = new Octokit({
@@ -7,15 +8,19 @@ const octokit = new Octokit({
 
 
 
-export async function gitGetApi(search) {
+export async function gitGetApi({language, module, topic}) {
     const getAPICall = async (URL) => {
         return await octokit.request(`GET ${URL}`)
     }
-    const repos = await getAPICall("/repos/ceo-py/softuni/contents/Python%20Basics/Conditional%20Statements%20-%20Exercise?ref=main")
+    const result = []
+    const languageModul = !topic.includes('More') ? `${language} ${module}`: 'PB - More Exercises'
+    const url = `${import.meta.env.VITE_REACT_PY_URL}${encodeURIComponent(languageModul)}/${encodeURIComponent(topic)}`
+    const repos = await getAPICall(url)
     for (const x of repos.data) {
         const output = await getAPICall(x.url)
-        if (!output.data.name.includes(search.trim())) continue
-        return {content: atob(output.data.content),
-                name: output.data.name}
+        result.push({content: atob(output.data.content),
+                name: formatTitle(output.data.name)})
     }
+    console.log(result)
+    return result
 }
