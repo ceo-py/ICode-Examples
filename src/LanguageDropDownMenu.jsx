@@ -18,7 +18,7 @@ export function LanguageDropDownMenu({
                     <option value="">Select a language</option>
                     {Object.keys(languageOptions).map((key) => (
                         <option key={key} value={key}>
-                            {languageOptions[key].name}
+                            {languageOptions[key].name.language}
                         </option>
                     ))}
                 </select>
@@ -38,7 +38,7 @@ export function LanguageDropDownMenu({
                 <select id="thirdDropdown" onChange={handleTopicChange} value={selectedTopic}
                         disabled={!selectedModuleData}>
                     <option value="">Select a topic</option>
-                    {selectedModuleData && selectedModuleData.map((topic) => (
+                    {selectedModuleData && Object.keys(selectedModuleData).map((topic) => (
                         <option key={topic} value={topic}>
                             {topic}
                         </option>

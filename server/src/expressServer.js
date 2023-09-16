@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
@@ -7,6 +8,7 @@ const pathToEnvFile = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: pathToEnvFile });
 
 const app = express();
+app.use(cors());
 const port = process.env.VITE_REACT_DB_PORT;
 const uri = `mongodb+srv://${process.env.VITE_REACT_DB_USER_NAME}:${process.env.VITE_REACT_DB_PASSWORD}@cluster0.1sxtc.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -58,6 +60,10 @@ async function searchForContest(collectionName, contest) {
     return await searchInDB(collectionName, contest, 'task url')
 }
 
+function generateUnicodePath (query) {
+    return query.split('/').map(x => encodeURIComponent(x)).join('/')
+}
+
 app.get('/api/search', async (req, res) => {
     const { language, task } = req.query;
     await output(language, task, res, searchInCollection)
@@ -65,7 +71,8 @@ app.get('/api/search', async (req, res) => {
 
 app.get('/api/contests', async (req, res) => {
     const { language, contest } = req.query;
-    await output(language, contest, res, searchForContest)
+    // console.log(encodeURIComponent(contest))
+    await output(language, generateUnicodePath(contest), res, searchForContest)
 });
 
 app.listen(port, () => {
