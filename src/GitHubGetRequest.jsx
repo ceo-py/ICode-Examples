@@ -44,7 +44,7 @@ export async function gitHubApiCall(url) {
         console.log(`Initial URL - ${url}`)
         const genUrl = convertUrl(url, branch)
 
-        const generatedUrl = `/repos/ceo-py1/${repo}/contents/${genUrl}`
+        const generatedUrl = `/repos/ceo-py/${repo}/contents/${genUrl}`
 
         console.log(`Generated URL - ${generatedUrl}`)
         const tasks = await getAPICall(generatedUrl)
