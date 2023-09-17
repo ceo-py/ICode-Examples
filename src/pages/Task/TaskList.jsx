@@ -1,21 +1,20 @@
-import {gitHubApiCall} from "./GitHubGetRequest.jsx";
+import {Link} from "react-router-dom";
+
 
 // eslint-disable-next-line react/prop-types
-export function SolutionsCode({output}) {
+export function TaskList({output, setSelectedUrl}) {
+
     if (!output) return
 
-    async function handleNameClick(url) {
-        await gitHubApiCall(url)
-    }
 
     return (
         <div>
             {output.map((x) => (
                 <div key={x.id}>
-                    <h2>
-                        <a href="#" onClick={() => handleNameClick(x.url)}>
+                    <h2 >
+                        <Link to={`/details`} onClick={() => setSelectedUrl(x.url)}>
                             {x.name}
-                        </a>
+                        </Link>
                     </h2>
                     {/*<pre>{x.content}</pre>*/}
                 </div>

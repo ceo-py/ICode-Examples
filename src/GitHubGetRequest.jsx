@@ -8,7 +8,7 @@ const octokit = new Octokit({
 
 
 async function db(language, topic) {
-    const url = `http://127.0.0.1:3000/api/contests?language=${language}&contest=${topic}`
+    const url = `${import.meta.env.VITE_REACT_API_URL}language=${language}&contest=${topic}`
     const options = {
         method: 'GET'
     }
@@ -51,8 +51,10 @@ export async function gitHubApiCall(url) {
 
         if (!tasks || tasks.status !== 200) return
 
-        console.log(tasks)
-        console.log(`Full content\n${atob(tasks.data.content)}`)
+        console.log(tasks);
+        console.log(`Full content\n${atob(tasks.data.content)}`);
+        return {content: atob(tasks.data.content),
+                name: formatTitle(tasks.data.name)};
 
     } catch (e) {
         console.error(`Error: `, e.message);
