@@ -7,17 +7,6 @@ const octokit = new Octokit({
 });
 
 
-function repoIdentifier(language) {
-
-    const repo = {
-        python: '/main/',
-        js: '/master/',
-        'html_css': '/main/',
-        mssql: '/main/'
-    }
-    return repo[language]
-}
-
 async function db(language, topic) {
     const url = `http://127.0.0.1:3000/api/contests?language=${language}&contest=${topic}`
     const options = {
@@ -28,37 +17,45 @@ async function db(language, topic) {
     return await output.json()
 }
 
-function convertUrl(url, language) {
-    return url.split(repoIdentifier(language))[1].split('/').slice(0, -1).join('/');
+function convertUrl(url, branch) {
+    return url.split(`/${branch}/`)[1].split('/').join('/');
 
+}
+
+function generateRepoAndBranch(url) {
+    const output = url.split('/')
+    const [repo, branch] = [output[4], output[6]]
+    return [repo, branch]
 }
 
 async function getAPICall(URL) {
-    return await octokit.request(`GET ${URL}`)
+    try {
+        return await octokit.request(`GET ${URL}`);
+    } catch (error) {
+        console.error('Error: ', error.message);
+    }
 }
 
-async function gitHubApiCall() {
+export async function gitHubApiCall(url) {
     try {
-        const url = convertUrl(data[0]['task url'])
-        const generatedUrl = `${import.meta.env.VITE_REACT_PY_URL}${url}?ref=main`
+        const [repo, branch] = generateRepoAndBranch(url)
+        console.log(repo)
+        console.log(branch)
+        console.log(`Initial URL - ${url}`)
+        const genUrl = convertUrl(url, branch)
+
+        const generatedUrl = `/repos/ceo-py1/${repo}/contents/${genUrl}`
+
+        console.log(`Generated URL - ${generatedUrl}`)
         const tasks = await getAPICall(generatedUrl)
 
-        for (const x of tasks.data) {
-            const output = await getAPICall(x.url)
+        if (!tasks || tasks.status !== 200) return
 
-            // if (output.data.name.includes('.zip')) continue
-            // if (output.data.name.includes('__')) continue
-
-            console.log(output)
-            result.push({
-                content: atob(output.data.content),
-                name: formatTitle(output.data.name),
-            })
-        }
-        return result
+        console.log(tasks)
+        console.log(`Full content\n${atob(tasks.data.content)}`)
 
     } catch (e) {
-        console.error(`Error getting property`, e);
+        console.error(`Error: `, e.message);
         throw e;
     }
 }
@@ -75,8 +72,9 @@ export async function gitGetApi({language, module, topic}) {
 
     data.forEach(x => {
         result.push({
-            content: x['task url'],
+            url: x['task url'],
             name: formatTitle(x['task name']),
+            id: crypto.randomUUID()
         })
     })
     return result

@@ -1,66 +1,9 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {gitGetApi} from "./GitHubGetRequest.jsx";
 import {SolutionsCode} from "./SolutionsCode.jsx";
 import {LanguageDropDownMenu} from "./LanguageDropDownMenu.jsx";
 
 
-// const languageOptions = {
-//     python: {
-//         name: {
-//             language: 'Python',
-//             db: 'python'
-//         },
-//         modules: {
-//             Basics: ['First Steps in Coding - Lab',
-//                 'First Steps in Coding - Exercise',
-//                 'First Steps in Coding - More Exercises',
-//                 'Conditional Statements - Lab',
-//                 'Conditional Statements - Exercise',
-//                 'Conditional Statements - More Exercises',
-//                 'Conditional Statements Advanced - Lab',
-//                 'Conditional Statements Advanced - Exercise',
-//                 'Conditional Statements Advanced - More Exercises',
-//                 'For Loop - Lab',
-//                 'For Loop - Exercise',
-//                 'For-Loop - More Exercises',
-//                 'While Loop - Lab',
-//                 'While Loop - Exercise',
-//                 'While-Loop - More Exercises',
-//                 'Nested Loops - Lab',
-//                 'Nested Loops - Exercise',
-//                 'Nested Loops - More Exercises',
-//                 'Drawing Figures with Loops - More Exercises'],
-//             Fundamentals: ['Test1', 'Test2']
-//         },
-//     },
-//     JavaScript: {
-//         name: {
-//             language: 'JavaScript',
-//             db: 'python',
-//         },
-//         modules: {
-//             Basics: ['First Steps in Coding - Lab',
-//                 'First Steps in Coding - Exercise',
-//                 'First Steps in Coding - More Exercises',
-//                 'Conditional Statements - Lab',
-//                 'Conditional Statements - Exercise',
-//                 'Conditional Statements - More Exercises',
-//                 'Conditional Statements Advanced - Lab',
-//                 'Conditional Statements Advanced - Exercise',
-//                 'Conditional Statements Advanced - More Exercises',
-//                 'For Loop - Lab',
-//                 'For Loop - Exercise',
-//                 'For-Loop - More Exercises',
-//                 'While Loop - Lab',
-//                 'While Loop - Exercise',
-//                 'While-Loop - More Exercises',
-//                 'Nested Loops - Lab',
-//                 'Nested Loops - Exercise',
-//                 'Nested Loops - More Exercises',
-//                 'Drawing Figures with Loops - More Exercises']
-//         },
-//     },
-// }
 const languageOptions = {
     python: {
         name: {
@@ -430,6 +373,7 @@ const languageOptions = {
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [output, setOutput] = useState([]);
+    const [result, setResult] = useState([]);
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const [selectedModule, setSelectedModule] = useState('');
     const [selectedTopic, setSelectedTopic] = useState('');
@@ -437,21 +381,29 @@ function App() {
     const selectedModuleData = selectedLanguageData?.modules[selectedModule];
 
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
+    useEffect(() => {
+        setResult(output)
+    }, [output]);
+
+    useEffect(() => {
+        setSearchTerm('')
+        setOutput([])
+    }, [selectedTopic, selectedModule, selectedLanguage]);
+
+
+    const handleSearchChange = (event) => {
+        const context = event.target.value;
+
+        setSearchTerm(context);
+
+        if (!context.trim()) return setResult(output);
+
+        setResult(output.filter(x => x.name.toLowerCase().includes(context.toLowerCase())));
     };
 
-    const handleSearchSubmit = async () => {
-        // setOutput(await gitGetApi(url))
-    };
-
-    const handleLanguageChange = (event) => {
-        setSelectedLanguage(event.target.value);
-    };
-
-    const handleModelChange = (event) => {
-        setSelectedModule(event.target.value);
-    };
+    // const handleSearchSubmit = async () => {
+    //     // setOutput(await gitGetApi(url))
+    // };
 
     const handleTopicChange = async (event) => {
         const currentSelection = event.target.value
@@ -464,16 +416,14 @@ function App() {
             language: selectedLanguageData.name.db,
             module: selectedModule,
             topic: selectedModuleData[currentSelection]
-        }
+        };
 
-        setOutput(await gitGetApi(queryOptions))
+        setOutput(await gitGetApi(queryOptions));
     };
 
     return (
         <>
             <LanguageDropDownMenu
-                handleLanguageChange={handleLanguageChange}
-                handleModelChange={handleModelChange}
                 handleTopicChange={handleTopicChange}
                 selectedLanguage={selectedLanguage}
                 selectedModule={selectedModule}
@@ -481,6 +431,8 @@ function App() {
                 selectedLanguageData={selectedLanguageData}
                 selectedModuleData={selectedModuleData}
                 languageOptions={languageOptions}
+                setSelectedLanguage={setSelectedLanguage}
+                setSelectedModule={setSelectedModule}
             />
             <div className="App">
                 <h1>Search App</h1>
@@ -490,12 +442,10 @@ function App() {
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
-                <button onClick={handleSearchSubmit}>Search</button>
+                {/*<button onClick={handleSearchSubmit}>Search</button>*/}
             </div>
-            <SolutionsCode output={output}/>
-            <div>{selectedLanguage} {selectedModule} {selectedTopic}</div>
-
-
+            <h3>{selectedLanguage} {selectedModule} {selectedTopic}</h3>
+            <SolutionsCode output={result}/>
         </>
     )
 }

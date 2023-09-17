@@ -71,7 +71,6 @@ app.get('/api/search', async (req, res) => {
 
 app.get('/api/contests', async (req, res) => {
     const { language, contest } = req.query;
-    // console.log(encodeURIComponent(contest))
     await output(language, generateUnicodePath(contest), res, searchForContest)
 });
 
