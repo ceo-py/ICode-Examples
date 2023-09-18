@@ -19,7 +19,6 @@ async function db(language, topic) {
 
 function convertUrl(url, branch) {
     return url.split(`/${branch}/`)[1].split('/').join('/');
-
 }
 
 function generateRepoAndBranch(url) {
