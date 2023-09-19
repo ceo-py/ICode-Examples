@@ -61,7 +61,6 @@ export async function gitHubApiCall(url) {
     }
 }
 
-
 export async function gitGetApi({language, module, topic}) {
 
     const result = []

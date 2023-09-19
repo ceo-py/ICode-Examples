@@ -80,7 +80,7 @@ export function TaskSearch({setSelectedUrl}) {
                 )}
 
             </div>
-            {location.pathname !== '/details' && (
+            {location.pathname === '/' && (
                 <>
                     <input
                         type="text"

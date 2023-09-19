@@ -1,4 +1,4 @@
-const {MongoClient, MongoServerError} = require('mongodb');
+const {MongoClient} = require("mongodb");
 const dotenv = require('dotenv');
 const path = require('path');
 
@@ -49,47 +49,43 @@ async function searchInDB(collectionName, query, searchByField) {
 
 }
 
-async function addUserToDD(collectionName, {username, password}) {
+async function addUserToDD(collectionName, input) {
     const collection = await connectToCollection(collectionName);
 
     try {
         await collection.insertOne(
-            {
-                'username': username.toLowerCase(),
-                password
-            }
+            input
         )
     } catch (e) {
         if (e.code === 11000) {
-            console.log(`Duplicate Username ${username}`);
-            return
+            const output = `Duplicate Username ${input.username}`
+            console.log(output);
+            return output
         } else {
             throw new Error(e);
         }
     }
-    console.log(`Added Username to DB : ${username}`)
+    const output = `Added Username to DB : ${input.username}`
+    console.log(output)
+    return output
 
 
 }
 
-async function queryDbEuCollection(collectionName, query, searchByField) {
-    // const collection = await connectToCollection(collectionName);
-    // collection.createIndex({ username: 1 }, { unique: true });
-
-
+export async function queryDbEuCollection(collectionName, query, searchByField) {
     const results = await searchInDB(collectionName, query, searchByField);
     console.log(results)
-
+    return results
 }
 
 
-addUserToDD('Users', {
-    username: 'Test3',
-    password: 'test2'
-})
+// addUserToDD('Users', {
+//     username: 'Test3',
+//     password: 'test2'
+// })
 // addUserToDD('Users', {
 //     username: 'Test2',
 //     password: 'test2'
 // })
 
-// queryDbEuCollection('Users', 'Test', 'username')
+// queryDbEuCollection('Users', '', 'username')
