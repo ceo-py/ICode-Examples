@@ -1,5 +1,5 @@
 const express = require('express');
-const {MongoClient} = require('mongodb');
+const {MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -121,12 +121,13 @@ async function addUserToDB(collectionName, {username, password}) {
     const collection = await connectToCollection(collectionName);
     const hashedPassword = await bcrypt.hash(password, 10);
     try {
-        await collection.insertOne(
+        const result = await collection.insertOne(
             {
                 username,
                 password: hashedPassword
             }
         )
+        await addUserProfile(result.insertedId, username)
     } catch (e) {
         if (e.code === 11000) {
             const output = `Duplicate Username ${username}`
@@ -139,19 +140,45 @@ async function addUserToDB(collectionName, {username, password}) {
     const output = `Added Username to DB : ${username}`
     console.log(output)
     return output
+}
 
+async function addUserProfile(userId, displayName) {
+  const collection = await connectToCollection(process.env.VITE_REACT_DB_USERPROFILE);
+
+  try {
+    await collection.insertOne({
+        userId: new ObjectId(userId),
+        displayName,
+        email: '',
+        avatarUrl: '',
+        youtubeLink: '',
+        githubLink: '',
+        about: '',
+    });
+
+    console.log(`Added user profile for user with ID ${userId}`);
+  } catch (e) {
+    if (e.code === 11000) {
+      console.error(`User profile already exists for user with ID ${userId}`);
+    } else {
+      console.error(`Error adding user profile: ${e.message}`);
+    }
+  }
 }
 
 async function deleteUserFromDB(collectionName, username) {
     const collection = await connectToCollection(collectionName);
     try {
-        const result = await collection.deleteOne({username: username});
-        if (result.deletedCount === 0) {
+        const result = await collection.findOne({username});
+        if (!result) {
             const output = `User not found : ${username}`;
             console.log(output);
             return output;
         } else {
             const output = `Deleted User : ${username}`;
+            await collection.deleteOne({username: username});
+            const collectionProfie = await connectToCollection(process.env.VITE_REACT_DB_USERPROFILE);
+            collectionProfie.deleteOne({userId: result._id});
             console.log(output);
             return output;
         }
