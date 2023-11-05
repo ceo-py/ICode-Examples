@@ -1,6 +1,4 @@
-# Project Title
-
-ICode Example (Working Stage)
+# ICode Example
 
 ## Overview
 
