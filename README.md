@@ -1,17 +1,17 @@
 # Project Title
 
-Project Name (Working Stage)
+ICode Example (Working Stage)
 
 ## Overview
 
-This project is currently in the development phase and aims to deliver a comprehensive web application using React with Vite for the frontend and Node.js with Express for the backend. The project will involve the integration of multiple data storage solutions, including Redis and MongoDB, to support various features and functionalities.
+This project is currently in the development phase and aims to deliver a comprehensive web application using React with Vite for the frontend and Node.js with Express for the backend. The project will involve the integration of multiple data storage solutions, including Redis and MongoDB, to support various features and functionalities. Additionally, we are using Tailwind CSS for styling and NextUI for enhanced React applications.
 
 ## Project Details
 
 ### Frontend
 
-- **Technology Stack**: React with Vite
-- **Description**: The frontend of this project is built using React, leveraging Vite for a fast development environment. It will provide an engaging and user-friendly interface, ensuring a seamless experience for end-users.
+- **Technology Stack**: React with Vite, Tailwind CSS, and NextUI.
+- **Description**: The frontend of this project is built using React, leveraging Vite for a fast development environment. Tailwind CSS is used for efficient styling, and NextUI is employed for creating powerful, production-ready React applications.
 
 ### Backend
 
@@ -34,5 +34,3 @@ The project is currently in the working stage, with ongoing development and impl
 - Implement database integration with Redis and MongoDB.
 - Refine and optimize the application's performance.
 - Conduct testing, debugging, and quality assurance.
-
-
