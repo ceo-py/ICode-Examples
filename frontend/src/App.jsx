@@ -1,11 +1,16 @@
-import { useState } from 'react'
-import { SelectLanguage } from './components/ui/SelectLanguage/SelectLanguage'
+import { SelectLanguage } from './components/ui/SelectLanguage/SelectLanguage';
+import { selectedCourseSignal } from './components/ui/SelectLanguage/selectMenuSignal';
+import { SelectCourse } from "./components/ui/SelectCourse/SelectCourse";
+import { SelectModule } from "./components/ui/SelectModule/SelectModule";
+
 
 function App() {
 
   return (
     <>
-    <SelectLanguage />
+    <SelectLanguage menu={selectedCourseSignal} />
+    <SelectCourse menu={selectedCourseSignal} /> 
+    <SelectModule menu={selectedCourseSignal}/> 
     </>
   )
 }
