@@ -241,8 +241,7 @@ export const languages = {
                 'Iterators and Comparators - Exercises': 'Iterators%20and%20Comparators%20-%20Exercises',
                 'Basic Algorithms - Lab': 'Basic%20Algorithms%20-%20Lab',
             },
-        },
-        module: {}
+        }
     },
     javascript: {
         name: {
