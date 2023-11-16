@@ -8,11 +8,10 @@ export function SelectLanguage({ menu }) {
       <Autocomplete
         className="max-w-xs"
         label="Select Language"
-        selectedKeys='test'
         onSelectionChange={(x) => {
-          menu.value = Object.values(languages).filter(
+          menu.value = Object.values(languages).find(
             (y) => y?.name?.language === x
-          )[0];
+          );
         }}
         defaultSelectedKey={menu?.value?.name ? menu.value.name.language: ''}
         startContent={
