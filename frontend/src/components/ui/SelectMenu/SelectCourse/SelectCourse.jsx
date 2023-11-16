@@ -9,7 +9,7 @@ export function SelectCourse({ menu }) {
         onSelectionChange={(x) => {
           menu.value = { ...menu?.value, ...{module: menu?.value?.modules[x]}, ...{selectedCourse: x} };
         }}
-        inputValue = {menu?.value?.selectedCourse? menu.value.selectedCourse: ''}
+        defaultSelectedKey = {menu?.value?.selectedCourse? menu.value.selectedCourse: ''}
         startContent={
           <Avatar
             alt=""
