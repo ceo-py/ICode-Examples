@@ -4,7 +4,6 @@ import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 export function SelectModule({menu}) {
   return (
     <>
-    {console.log('render module')}
     <Autocomplete
       className="max-w-xs"
       label="Select Module"

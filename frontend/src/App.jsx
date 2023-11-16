@@ -1,17 +1,13 @@
-import { SelectLanguage } from './components/ui/SelectLanguage/SelectLanguage';
-import { selectedCourseSignal } from './components/ui/SelectLanguage/selectMenuSignal';
-import { SelectCourse } from "./components/ui/SelectCourse/SelectCourse";
-import { SelectModule } from "./components/ui/SelectModule/SelectModule";
+import { selectedCourseSignal } from './components/ui/SelectMenu/SelectLanguage/selectMenuSignal';
 import { CodeSnippet } from './components/ui/CodeSnippet/CodeSnippet';
+import { SelectMenu } from './components/ui/SelectMenu/SelectMenu';
 
 
 function App() {
 
   return (
     <>
-    <SelectLanguage menu={selectedCourseSignal}/>
-    <SelectCourse menu={selectedCourseSignal}/> 
-    <SelectModule menu={selectedCourseSignal}/>
+    <SelectMenu menu={selectedCourseSignal}/>
     <br/>
     <CodeSnippet/>
     </>
