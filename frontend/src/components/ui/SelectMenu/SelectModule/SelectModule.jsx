@@ -15,7 +15,7 @@ export function SelectModule({menu}) {
         <Avatar
           alt=""
           className="w-8 h-6"
-          src="https://www.svgrepo.com/show/418014/programming.svg"
+          src="https://www.svgrepo.com/show/418011/marking.svg"
         />
       }
     >
