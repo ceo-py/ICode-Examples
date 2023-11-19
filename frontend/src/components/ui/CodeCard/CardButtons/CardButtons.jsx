@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
 
 const buttons = [
@@ -7,60 +7,63 @@ const buttons = [
     btnText: "Follow",
     variant: { true: "bordered", false: "solid" },
     onPress: "isFollowed",
+    hoverDesc: "I Follow",
   },
   {
     btnText: "Like",
+    hoverDesc: "I like this",
   },
   {
     btnText: "Share",
     onPress: () => navigator.clipboard.writeText(window.location.href),
     onClickMsg: "Url",
+    hoverDesc: "I share this",
   },
   {
     btnText: "Report",
+    hoverDesc: "I report a problem",
   },
 ];
 
 function CardButtons() {
   const [buttonData, setButtonData] = useState({
-    isFollowed: true,
+    Follow: true,
+    Like: true,
   });
-
   return (
     <>
       <div className={"sm:hidden"}>
         <CardButtonsDropDownMenu />
       </div>
       <div className="hidden sm:block">
-        {buttons.map((x) => (
-          <Button
+        {buttons.map((x, i) => (
+          <Tooltip
+            showArrow={true}
+            placement="bottom"
             key={x.btnText}
-            className={
-              buttonData[x?.onPress]
-                ? "bg-transparent text-foreground border-default-200"
-                : ""
-            }
+            content={x.hoverDesc}
             color="primary"
-            radius="full"
-            size="sm"
-            variant={buttonData[x?.onPress] ? "bordered" : "solid"}
-            onPress={x.onPress}
-            //   onPress={() => x?.onPress?
-            //     setButtonData({
-            //       ...buttonData,
-            //       [x.onPress]: !buttonData[x.onPress],
-            //     }): ''
-            //   }
           >
-            {x.btnText}
-          </Button>
+            <Button
+              key={x.btnText}
+              className={`${
+                buttonData[x.btnText]
+                  ? "text-foreground"
+                  : "bg-transparent text-foreground border-default-200"
+              } `}
+              color="success"
+              radius="full"
+              size="sm"
+              variant="bordered"
+              onPress={[0, 1].includes(i)? () => setButtonData({...buttonData, [x.btnText]: !buttonData[x.btnText]}): x.onPress}
+            >
+              {x.btnText}
+            </Button>
+          </Tooltip>
         ))}
       </div>
     </>
   );
 }
 
-export {
-    CardButtons,
-    buttons
-}
+export { CardButtons, buttons };
