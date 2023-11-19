@@ -23,7 +23,13 @@ export function CodeVideoButtons() {
   return (
     <>
       {buttons.map((o) => (
-        <Tooltip placement="bottom" key={o.src}>
+        <Tooltip
+          showArrow={true}
+          placement="bottom"
+          key={o.src}
+          content={o.hoverContent}
+          color="primary"
+        >
           <Avatar
             isBordered={btnIsOn[o.btnType]}
             color="success"

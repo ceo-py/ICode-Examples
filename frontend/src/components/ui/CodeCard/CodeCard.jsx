@@ -21,7 +21,7 @@ export function CodeCard() {
               isBordered
               radius="full"
               size="md"
-              src="/avatars/avatar-1.png"
+              src="	https://www.svgrepo.com/show/418032/user.svg"
             />
             <div className="flex flex-col gap-1 items-start justify-center">
               <h4 className="text-small font-semibold leading-none text-default-600">

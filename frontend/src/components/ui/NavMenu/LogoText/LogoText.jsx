@@ -1,9 +1,9 @@
-import { Avatar} from "@nextui-org/react";
+import { Avatar, Link } from "@nextui-org/react";
 import Icon from "../../../../assets/Icon.svg";
 
 export function LogoText() {
   return (
-    <>
+    <Link href="/">
       <Avatar
         alt="search icon"
         src={Icon}
@@ -15,6 +15,6 @@ export function LogoText() {
       <p className="flex hidden sm:block font-bold text-inherit">
         ICode Example
       </p>
-    </>
+    </Link>
   );
 }
