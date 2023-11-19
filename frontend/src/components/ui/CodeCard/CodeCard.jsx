@@ -7,7 +7,9 @@ import {
   Avatar,
   Button,
 } from "@nextui-org/react";
-import { CodeSnippet } from "../CodeSnippet/COdeSnippet";
+import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
+import { CardButtons } from "./CardButtons/CardButtons";
+
 
 export function CodeCard() {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -32,7 +34,8 @@ export function CodeCard() {
               </h5>
             </div>
           </div>
-          <Button
+          <CardButtons/>
+          {/* <Button
             className={
               isFollowed
                 ? "bg-transparent text-foreground border-default-200"
@@ -59,7 +62,7 @@ export function CodeCard() {
             onPress={() => setIsFollowed(!isFollowed)}
           >
             {isFollowed ? "Unfollow" : "Follow"}
-          </Button>
+          </Button> */}
         </CardHeader>
       <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40 overflow-x-auto">
         <CodeSnippet />

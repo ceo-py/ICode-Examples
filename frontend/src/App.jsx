@@ -1,8 +1,8 @@
 import { selectedCourseSignal } from "./components/ui/SelectMenu/SelectLanguage/selectMenuSignal";
 import { SelectMenu } from "./components/ui/SelectMenu/SelectMenu";
 import { NavMenu } from "./components/ui/NavMenu/NavMenu";
-import { CodeSnippet } from "./components/ui/CodeSnippet/COdeSnippet";
 import { CodeCard } from "./components/ui/CodeCard/CodeCard";
+import { CodeSnippet } from "./components/ui/CodeCard/CodeSnippet/CodeSnippet";
 
 function App() {
   return (
