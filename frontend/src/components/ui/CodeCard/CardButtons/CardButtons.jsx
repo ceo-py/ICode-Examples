@@ -7,21 +7,21 @@ const buttons = [
     btnText: "Follow",
     variant: { true: "bordered", false: "solid" },
     onPress: "isFollowed",
-    hoverDesc: "I Follow",
+    hoverDesc: "Click to follow",
   },
   {
     btnText: "Like",
-    hoverDesc: "I like this",
+    hoverDesc: "Click to like",
   },
   {
     btnText: "Share",
     onPress: () => navigator.clipboard.writeText(window.location.href),
     onClickMsg: "Url",
-    hoverDesc: "I share this",
+    hoverDesc: "Copy link",
   },
   {
     btnText: "Report",
-    hoverDesc: "I report a problem",
+    hoverDesc: "Click to report a problem",
   },
 ];
 
@@ -43,6 +43,7 @@ function CardButtons() {
             key={x.btnText}
             content={x.hoverDesc}
             color="primary"
+            isDisabled={buttonData[x.btnText]}
           >
             <Button
               key={x.btnText}
