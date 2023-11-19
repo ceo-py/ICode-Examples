@@ -10,14 +10,14 @@ import {
 import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
 import { CardButtons } from "./CardButtons/CardButtons";
 
-
 export function CodeCard() {
   const [isFollowed, setIsFollowed] = React.useState(false);
 
   return (
-    <Card className="w-[1534px]">
+    <div className="flex flex-wrap items-center justify-center w-full">
+      <Card>
         {/* <CardHeader className="justify-between sticky top-[4rem] bg-white z-40"> */}
-        <CardHeader className="justify-between relative">
+        <CardHeader className="justify-between">
           <div className="flex gap-5">
             <Avatar
               isBordered
@@ -34,47 +34,20 @@ export function CodeCard() {
               </h5>
             </div>
           </div>
-          <CardButtons/>
-          {/* <Button
-            className={
-              isFollowed
-                ? "bg-transparent text-foreground border-default-200"
-                : ""
-            }
-            color="primary"
-            radius="full"
-            size="sm"
-            variant={isFollowed ? "bordered" : "solid"}
-            onPress={() => setIsFollowed(!isFollowed)}
-          >
-            {isFollowed ? "Share" : "Share"}
-          </Button>
-          <Button
-            className={
-              isFollowed
-                ? "bg-transparent text-foreground border-default-200"
-                : ""
-            }
-            color="primary"
-            radius="full"
-            size="sm"
-            variant={isFollowed ? "bordered" : "solid"}
-            onPress={() => setIsFollowed(!isFollowed)}
-          >
-            {isFollowed ? "Unfollow" : "Follow"}
-          </Button> */}
+          <CardButtons />
         </CardHeader>
-      <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40 overflow-x-auto">
-        <CodeSnippet />
-      </CardBody>
-      {/* <div className="w-full pointer-events-auto overflow-x-scroll sticky bottom-0 h-17"></div> */}
-      {/* <div className="overflow-x-scroll"></div> */}
-      <CardFooter className="gap-3">
-        <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">4</p>
-          <p className=" text-default-400 text-small">Comments</p>
-        </div>
-      </CardFooter>
-    </Card>
+        <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40 overflow-x-auto">
+          <CodeSnippet />
+        </CardBody>
+        {/* <div className="w-full pointer-events-auto overflow-x-scroll sticky bottom-0 h-17"></div> */}
+        {/* <div className="overflow-x-scroll"></div> */}
+        <CardFooter className="gap-3">
+          <div className="flex gap-1">
+            <p className="font-semibold text-default-400 text-small">4</p>
+            <p className=" text-default-400 text-small">Comments</p>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }

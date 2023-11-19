@@ -6,7 +6,7 @@ export function SelectLanguage({ menu }) {
   return (
     <>
       <Autocomplete
-        className="max-w-xs"
+        className="max-w-[290px]"
         label="Select Language"
         onSelectionChange={(x) => {
           menu.value = Object.values(languages).find(

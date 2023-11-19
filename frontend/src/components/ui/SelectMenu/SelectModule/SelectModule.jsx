@@ -5,7 +5,7 @@ export function SelectModule({menu}) {
   return (
     <>
     <Autocomplete
-      className="max-w-xs"
+      className="max-w-md"
       label="Select Module"
       onSelectionChange={(x) => {
         menu.value = {...menu?.value, ...{selectedModule: x}}
