@@ -9,7 +9,7 @@ export function CodeSnippet() {
         size="lg"
         hideSymbol="true"
         classNames={{
-          base: "items-start max-w-full overflow-x: auto bg-default/",
+          base: "items-start bg-default/",
           pre: "",
         }}
         tooltipProps={{
@@ -218,7 +218,7 @@ export function CodeSnippet() {
         <span>
           Why don't seagulls fly over the bay? Because then they'd be bagels.
         </span>
-        69. <span>What do</span>
+        <span>What do</span>
       </Snippet>
     </>
   );
