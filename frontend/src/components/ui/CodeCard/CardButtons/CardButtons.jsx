@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button, Tooltip,  } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
+import { useDisclosure } from "@nextui-org/react";
 import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
 
 const buttons = [
@@ -22,7 +23,6 @@ const buttons = [
   {
     btnText: "Report",
     hoverDesc: "Click to report a problem",
-    modalComponent: CardReportBtnModal,
   },
 ];
 
@@ -31,11 +31,12 @@ function CardButtons() {
     Follow: true,
     Like: true,
   });
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>
       <div className="sm:hidden">
-        <CardButtonsDropDownMenu />
+        <CardButtonsDropDownMenu onOpen={onOpen}/>
       </div>
       <div className="hidden sm:block">
         {buttons.map((x, i) => (
@@ -47,30 +48,31 @@ function CardButtons() {
             color="primary"
             isDisabled={buttonData[x.btnText]}
           >
-            {i !== 3 ? (
-              <Button
-                className={`${
-                  buttonData[x.btnText]
-                    ? "text-foreground"
-                    : "bg-transparent text-foreground border-default-200"
-                } `}
-                color="success"
-                radius="full"
-                size="sm"
-                variant="bordered"
-                onPress={
-                  [0, 1].includes(i)
-                    ? () =>
-                        setButtonData({
-                          ...buttonData,
-                          [x.btnText]: !buttonData[x.btnText],
-                        })
-                    : x.onPress
-                }
-              >
-                {x.btnText}
-              </Button>
-            ) : < x.modalComponent/>}
+            <Button
+              className={`${
+                buttonData[x.btnText]
+                  ? "text-foreground"
+                  : "bg-transparent text-foreground border-default-200"
+              } `}
+              color="success"
+              radius="full"
+              size="sm"
+              variant="bordered"
+              onPress={
+                [0, 1].includes(i)
+                ? () =>
+                    setButtonData({
+                      ...buttonData,
+                      [x.btnText]: !buttonData[x.btnText],
+                    })
+                : i === 3
+                ? onOpen
+                : x.onPress
+              }
+            >
+              {x.btnText}
+              <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange}/>
+            </Button>
           </Tooltip>
         ))}
       </div>

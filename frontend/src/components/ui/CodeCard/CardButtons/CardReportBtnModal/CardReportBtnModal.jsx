@@ -1,4 +1,3 @@
-import React, { forwardRef } from "react";
 import {
   Modal,
   ModalContent,
@@ -6,27 +5,12 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
+  Textarea,
 } from "@nextui-org/react";
 
-const CardReportBtnModal = forwardRef(({ onClick, ...props }, ref) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+export function CardReportBtnModal({ isOpen, onOpenChange }) {
   return (
     <>
-      <Button
-        key="Report"
-        className="bg-transparent text-foreground border-default-200"
-        color="success"
-        radius="full"
-        size="sm"
-        variant="bordered"
-        onPress={onOpen}
-        ref={ref}
-        {...props}
-      >
-        Report
-      </Button>
       <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -35,22 +19,16 @@ const CardReportBtnModal = forwardRef(({ onClick, ...props }, ref) => {
                 Report Problem
               </ModalHeader>
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
+                <Textarea
+                  variant="underlined"
+                  className="col-span-12 md:col-span-6 mb-6 md:mb-0"
+                />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={() => { onClose(); onClick(); }}>
+                <Button color="primary" onPress={onClose}>
                   Report
                 </Button>
               </ModalFooter>
@@ -60,6 +38,4 @@ const CardReportBtnModal = forwardRef(({ onClick, ...props }, ref) => {
       </Modal>
     </>
   );
-});
-
-export { CardReportBtnModal };
+}
