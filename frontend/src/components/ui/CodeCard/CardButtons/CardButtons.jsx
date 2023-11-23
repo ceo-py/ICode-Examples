@@ -32,7 +32,7 @@ function CardButtons() {
   });
   return (
     <>
-      <div className={"sm:hidden"}>
+      <div className="sm:hidden">
         <CardButtonsDropDownMenu />
       </div>
       <div className="hidden sm:block">

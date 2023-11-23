@@ -9,7 +9,7 @@ export function CodeSnippet() {
         size="lg"
         hideSymbol="true"
         classNames={{
-          base: "items-start bg-default/",
+          base: "items-start bg-default/ sticky",
           pre: "",
         }}
         tooltipProps={{

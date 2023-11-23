@@ -44,7 +44,7 @@ export function CodeCard() {
         <CardFooter className="gap-3">
           <div className="flex gap-1">
             <p className="font-semibold text-default-400 text-small">4</p>
-            <p className=" text-default-400 text-small">Comments</p>
+            <p className="text-default-400 text-small">Comments</p>
           </div>
         </CardFooter>
       </Card>
