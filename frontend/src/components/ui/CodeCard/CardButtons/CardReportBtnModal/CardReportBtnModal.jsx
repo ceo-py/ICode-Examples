@@ -26,7 +26,7 @@ export function CardReportBtnModal({ isOpen, onOpenChange }) {
                   variant="underlined"
                   className="col-span-12 md:col-span-6 mb-6 md:mb-0"
                   value={textSize.value}
-                  onValueChange={(v) => v.length <= 300 || v.length < text.length? textSize.value = v: ''}
+                  onValueChange={(v) => v.length <= 300 ? textSize.value = v: textSize.value}
                   description={`${300 - textSize.value.length} characters remaining`}
                 />
               </ModalBody>
