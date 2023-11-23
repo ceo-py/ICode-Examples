@@ -13,8 +13,9 @@ export function CardButtonsDropDownMenu({onOpen}) {
     <Dropdown backdrop="blur">
       <DropdownTrigger>
         <Button
-          className="min-w-unit-16 h-unit-8 border-default-200"
+          className="min-w-unit-10 h-unit-10 border-default-200 items-center"
           variant="bordered"
+          radius="full"
         >
           ...
         </Button>

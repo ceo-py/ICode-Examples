@@ -13,7 +13,6 @@ export function CardReportBtnModal({ isOpen, onOpenChange }) {
   const textSize = signal('');
 
   return (
-    <>
       <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -42,7 +41,6 @@ export function CardReportBtnModal({ isOpen, onOpenChange }) {
           )}
         </ModalContent>
       </Modal>
-    </>
   );
 }
 
