@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button, Tooltip } from "@nextui-org/react";
+import { Button, Tooltip,  } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
+import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
 
 const buttons = [
   {
@@ -16,12 +17,12 @@ const buttons = [
   {
     btnText: "Share",
     onPress: () => navigator.clipboard.writeText(window.location.href),
-    onClickMsg: "Url",
     hoverDesc: "Copy link",
   },
   {
     btnText: "Report",
     hoverDesc: "Click to report a problem",
+    modalComponent: CardReportBtnModal,
   },
 ];
 
@@ -30,6 +31,7 @@ function CardButtons() {
     Follow: true,
     Like: true,
   });
+
   return (
     <>
       <div className="sm:hidden">
@@ -45,21 +47,30 @@ function CardButtons() {
             color="primary"
             isDisabled={buttonData[x.btnText]}
           >
-            <Button
-              key={x.btnText}
-              className={`${
-                buttonData[x.btnText]
-                  ? "text-foreground"
-                  : "bg-transparent text-foreground border-default-200"
-              } `}
-              color="success"
-              radius="full"
-              size="sm"
-              variant="bordered"
-              onPress={[0, 1].includes(i)? () => setButtonData({...buttonData, [x.btnText]: !buttonData[x.btnText]}): x.onPress}
-            >
-              {x.btnText}
-            </Button>
+            {i !== 3 ? (
+              <Button
+                className={`${
+                  buttonData[x.btnText]
+                    ? "text-foreground"
+                    : "bg-transparent text-foreground border-default-200"
+                } `}
+                color="success"
+                radius="full"
+                size="sm"
+                variant="bordered"
+                onPress={
+                  [0, 1].includes(i)
+                    ? () =>
+                        setButtonData({
+                          ...buttonData,
+                          [x.btnText]: !buttonData[x.btnText],
+                        })
+                    : x.onPress
+                }
+              >
+                {x.btnText}
+              </Button>
+            ) : < x.modalComponent/>}
           </Tooltip>
         ))}
       </div>
