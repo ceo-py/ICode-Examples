@@ -38,15 +38,14 @@ export function CodeCard() {
         <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40 overflow-x-auto">
           <CodeSnippet />
         </CardBody>
-        {/* <div className="w-full pointer-events-auto overflow-x-scroll sticky bottom-0 h-17"></div> */}
-        {/* <div className="overflow-x-scroll"></div> */}
         <CardFooter className="gap-3">
           <div className="flex gap-1">
             <p className="font-semibold text-default-400 text-small">4</p>
             <p className="text-default-400 text-small">Comments</p>
           </div>
         </CardFooter>
-        <CodeComments />
+        <CodeComments actionName={"Comment"} display={true}/>
+        <CodeComments actionName={"Comment"} display={false}/>
       </Card>
     </div>
   );

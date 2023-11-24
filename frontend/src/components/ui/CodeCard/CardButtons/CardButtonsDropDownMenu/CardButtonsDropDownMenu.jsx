@@ -1,3 +1,4 @@
+import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 import { buttons } from "../CardButtons";
 import {
   Dropdown,
@@ -25,6 +26,7 @@ export function CardButtonsDropDownMenu({onOpen}) {
           <DropdownItem
             textValue="choice"
             key={x.btnText}
+            startContent={<DropDownMenuIcon alt={x.btnText} src={x.src}/>}
             onClick={
               x.btnText !== "Report" ? x.onPress : onOpen
             }
