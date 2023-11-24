@@ -5,10 +5,10 @@ import {
   CardBody,
   CardFooter,
   Avatar,
-  Button,
 } from "@nextui-org/react";
 import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
 import { CardButtons } from "./CardButtons/CardButtons";
+import { CodeComments } from "./CodeComment/CodeComments";
 
 export function CodeCard() {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -16,14 +16,13 @@ export function CodeCard() {
   return (
     <div className="flex flex-wrap items-center justify-center w-full">
       <Card>
-        {/* <CardHeader className="justify-between sticky top-[4rem] bg-white z-40"> */}
         <CardHeader className="justify-between">
           <div className="flex gap-5">
             <Avatar
               isBordered
               radius="full"
               size="md"
-              src="	https://www.svgrepo.com/show/418032/user.svg"
+              src="https://www.svgrepo.com/show/418032/user.svg"
             />
             <div className="flex flex-col gap-1 items-start justify-center">
               <h4 className="text-small font-semibold leading-none text-default-600">
@@ -47,6 +46,7 @@ export function CodeCard() {
             <p className="text-default-400 text-small">Comments</p>
           </div>
         </CardFooter>
+        <CodeComments />
       </Card>
     </div>
   );
