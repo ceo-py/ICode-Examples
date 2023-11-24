@@ -12,6 +12,30 @@ import {
 import { useSignal } from "@preact/signals-react";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 
+const dropDownBtnSettings = [
+  {
+    textValue: "Edit",
+    onPress: (btn) => {
+      console.log(`${btn} Was clicked`);
+    },
+    iconSrc: "https://www.svgrepo.com/show/418007/edit-1.svg",
+  },
+  {
+    textValue: "Delete",
+    onPress: (btn) => {
+      console.log(`${btn} Was clicked`);
+    },
+    iconSrc: "https://www.svgrepo.com/show/418071/note-delete.svg",
+  },
+  {
+    textValue: "Report",
+    onPress: (btn) => {
+      console.log(`${btn} Was clicked`);
+    },
+    iconSrc: "https://www.svgrepo.com/show/418024/report.svg",
+  },
+];
+
 export function CodeComments({ actionName, display }) {
   const [focus, comment, hover] = [
     useSignal(false),
@@ -83,23 +107,20 @@ export function CodeComments({ actionName, display }) {
                   />
                 </DropdownTrigger>
                 <DropdownMenu variant="faded" aria-label="Static Actions">
-                  <DropdownItem
-                    textValue="report"
-                    key="report"
-                    onPress={() => {
-                      console.log("report was clicked");
-                    }}
-                    startContent={
-                      <DropDownMenuIcon alt={"report"} src={"https://www.svgrepo.com/show/418024/report.svg"}/>
-                      // <Avatar
-                      //   alt="report"
-                      //   className="w-4 h-4 bg-"
-                      //   src="https://www.svgrepo.com/show/418024/report.svg"
-                      // />
-                    }
-                  >
-                    {"report"}
-                  </DropdownItem>
+                  {dropDownBtnSettings.map((x) => (
+                    <DropdownItem
+                      textValue={x.textValue}
+                      key={x.textValue}
+                      onPress={() => 
+                        x.onPress(x.textValue)
+                      }
+                      startContent={
+                        <DropDownMenuIcon alt={x.textValue} src={x.iconSrc} />
+                      }
+                    >
+                      {x.textValue}
+                    </DropdownItem>
+                  ))}
                 </DropdownMenu>
               </Dropdown>
             ) : (
