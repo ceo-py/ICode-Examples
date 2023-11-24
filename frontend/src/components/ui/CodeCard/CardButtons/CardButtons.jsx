@@ -38,7 +38,7 @@ function CardButtons() {
       <div className="sm:hidden">
         <CardButtonsDropDownMenu onOpen={onOpen}/>
       </div>
-      <div className="hidden sm:block">
+      <div className="flex flex-row hidden sm:flex gap-2">
         {buttons.map((x, i) => (
           <Tooltip
             showArrow={true}
