@@ -5,6 +5,7 @@ import {
   CardBody,
   CardFooter,
   Avatar,
+  useDisclosure,
 } from "@nextui-org/react";
 import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
 import { CardButtons } from "./CardButtons/CardButtons";
@@ -12,6 +13,7 @@ import { CodeComments } from "./CodeComment/CodeComments";
 
 export function CodeCard() {
   const [isFollowed, setIsFollowed] = React.useState(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <div className="flex flex-wrap items-center justify-center w-full">
@@ -33,7 +35,7 @@ export function CodeCard() {
               </h5>
             </div>
           </div>
-          <CardButtons />
+          <CardButtons isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>
         </CardHeader>
         <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40 overflow-x-auto">
           <CodeSnippet />
@@ -45,7 +47,7 @@ export function CodeCard() {
           </div>
         </CardFooter>
         <CodeComments actionName={"Comment"} display={true}/>
-        <CodeComments actionName={"Comment"} display={false}/>
+        <CodeComments {...{ isOpen, onOpen, onOpenChange, display: false, actionName: "Edit" }} />
       </Card>
     </div>
   );

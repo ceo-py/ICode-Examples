@@ -11,12 +11,14 @@ import {
 } from "@nextui-org/react";
 import { useSignal } from "@preact/signals-react";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
+import { CardReportBtnModal } from "../CardButtons/CardReportBtnModal/CardReportBtnModal";
 
 const dropDownBtnSettings = [
   {
     textValue: "Edit",
     onPress: (btn) => {
-      console.log(`${btn} Was clicked`);
+      btn.value = true;
+      console.log(`Edit Was clicked`);
     },
     iconSrc: "https://www.svgrepo.com/show/418007/edit-1.svg",
   },
@@ -30,13 +32,20 @@ const dropDownBtnSettings = [
   {
     textValue: "Report",
     onPress: (btn) => {
-      console.log(`${btn} Was clicked`);
+      btn()
+      console.log(`Report Was clicked`);
     },
     iconSrc: "https://www.svgrepo.com/show/418024/report.svg",
   },
 ];
 
-export function CodeComments({ actionName, display }) {
+export function CodeComments({
+  isOpen,
+  onOpen,
+  onOpenChange,
+  display,
+  actionName,
+}) {
   const [focus, comment, hover] = [
     useSignal(false),
     useSignal(""),
@@ -78,8 +87,8 @@ export function CodeComments({ actionName, display }) {
                 inputWrapper:
                   "group-data-[focus-visible=true]:ring-3 group-data-[focus=true]:bg-default-0 data-[hover=true]:bg-default-0 bg-default-0 shadow-none px-0",
               }}
-              isReadOnly
-              variant="flat"
+              isReadOnly={!focus.value}
+              variant={focus.value ? "underlined" : "flat"}
               label={
                 <div className="flex gap-2">
                   <div className="font-bold">@testUser</div>
@@ -87,13 +96,12 @@ export function CodeComments({ actionName, display }) {
                 </div>
               }
               labelPlacement="outside"
+              minRows="1"
               maxRows="4"
-              value={
-                "this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment this is a huge ass comment "
-              }
+              value={comment.value}
+              onValueChange={(v) => (comment.value = v)}
             />
-
-            {hover.value ? (
+            {hover.value && !focus.value ? (
               <Dropdown>
                 <DropdownTrigger>
                   <Avatar
@@ -111,9 +119,10 @@ export function CodeComments({ actionName, display }) {
                     <DropdownItem
                       textValue={x.textValue}
                       key={x.textValue}
-                      onPress={() => 
-                        x.onPress(x.textValue)
-                      }
+                      onPress={() => {
+                        x.onPress(x.textValue === "Edit" ? focus : onOpen);
+                        hover.value = false;
+                      }}
                       startContent={
                         <DropDownMenuIcon alt={x.textValue} src={x.iconSrc} />
                       }
@@ -132,10 +141,10 @@ export function CodeComments({ actionName, display }) {
       {focus?.value && (
         <div className="flex flex-row-reverse gap-2 p-3">
           <Button
-            color={comment.value ? "primary" : "default"}
+            color={comment.value.trim() ? "primary" : "default"}
             radius="full"
             size="sm"
-            isDisabled={!comment.value}
+            isDisabled={!comment.value.trim()}
             onPress={""}
           >
             {actionName}
@@ -151,6 +160,7 @@ export function CodeComments({ actionName, display }) {
           >
             Cancel
           </Button>
+          <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange} />
         </div>
       )}
     </Card>
