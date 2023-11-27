@@ -6,7 +6,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Input,
   Button,
   DropdownTrigger,
   Dropdown,
@@ -16,13 +15,11 @@ import {
   User,
   Pagination,
 } from "@nextui-org/react";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
-import {ChevronDownIcon} from "./ChevronDownIcon";
-import {columns, users, statusOptions} from "./data";
-import { SearchIcon } from "../../utils/Icons/SearchIcon";
+import { VerticalDotsIcon } from "./VerticalDotsIcon";
+import { columns, users, statusOptions } from "./data";
 import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
 import { SearchInput } from "../NavMenu/SearchInput/SearchInput";
-
+import { SelectIcon } from "../../utils/Icons/SelectIcon";
 
 const statusColorMap = {
   active: "success",
@@ -34,7 +31,9 @@ const INITIAL_VISIBLE_COLUMNS = ["task name", "language", "type", "user"];
 export function ResultListTable() {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [visibleColumns, setVisibleColumns] = React.useState(
+    new Set(INITIAL_VISIBLE_COLUMNS)
+  );
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
   const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -51,7 +50,9 @@ export function ResultListTable() {
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.uid)
+    );
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
@@ -59,12 +60,15 @@ export function ResultListTable() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+        user.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+    if (
+      statusFilter !== "all" &&
+      Array.from(statusFilter).length !== statusOptions.length
+    ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+        Array.from(statusFilter).includes(user.status)
       );
     }
 
@@ -95,7 +99,7 @@ export function ResultListTable() {
       case "task name":
         return (
           <User
-            avatarProps={{radius: "full", size: "sm", src: user.avatar}}
+            avatarProps={{ radius: "full", size: "sm", src: user.avatar }}
             classNames={{
               description: "text-default-500",
             }}
@@ -109,7 +113,9 @@ export function ResultListTable() {
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-500">{user.team}</p>
+            <p className="text-bold text-tiny capitalize text-default-500">
+              {user.team}
+            </p>
           </div>
         );
       case "type":
@@ -150,7 +156,6 @@ export function ResultListTable() {
     setPage(1);
   }, []);
 
-
   const onSearchChange = React.useCallback((value) => {
     if (value) {
       setFilterValue(value);
@@ -164,13 +169,19 @@ export function ResultListTable() {
     return (
       <div className="flex flex-col gap-4 ">
         <div className="flex justify-between gap-3 items-end">
-          <SearchInput {...{value: filterValue, onValueChange: onSearchChange, placeholder: "Filter by task name..."}}/>
+          <SearchInput
+            {...{
+              value: filterValue,
+              onValueChange: onSearchChange,
+              placeholder: "Filter by task name...",
+            }}
+          />
           {console.log(filterValue)}
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
+                  endContent={<SelectIcon className="text-small" />}
                   size="sm"
                   variant="flat"
                 >
@@ -195,7 +206,7 @@ export function ResultListTable() {
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
+                  endContent={<SelectIcon className="text-small" />}
                   size="sm"
                   variant="flat"
                 >
@@ -220,9 +231,11 @@ export function ResultListTable() {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Exploring a pool of {users.length} tasks.</span>
+          <span className="text-default-400 text-small">
+            Exploring a pool of {users.length} tasks.
+          </span>
           <label className="flex items-center text-default-400 text-small">
-            Rows per page:
+            Tasks per page:
             <select
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
@@ -280,7 +293,7 @@ export function ResultListTable() {
         "group-data-[last=true]:last:before:rounded-none",
       ],
     }),
-    [],
+    []
   );
 
   return (
@@ -292,13 +305,13 @@ export function ResultListTable() {
       bottomContentPlacement="outside"
       checkboxesProps={{
         classNames: {
-          base:"flex flex-col gap-4",
+          base: "flex flex-col gap-4",
           wrapper: "after:bg-foreground after:text-background text-background",
         },
       }}
       classNames={classNames}
       selectedKeys={selectedKeys}
-      selectionMode="single" 
+      selectionMode="single"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
@@ -316,10 +329,12 @@ export function ResultListTable() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No tasks found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
           </TableRow>
         )}
       </TableBody>
