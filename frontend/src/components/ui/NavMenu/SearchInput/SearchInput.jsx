@@ -1,4 +1,5 @@
-import { Avatar, Input } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
+import { SearchIcon } from "../../../utils/Icons/SearchIcon";
 
 export function SearchInput() {
 
@@ -14,11 +15,12 @@ export function SearchInput() {
         placeholder="Search Task..."
         size="sm"
         startContent={
-          <Avatar
-            alt="search icon"
-            className="w-8 h-8 bg-"
-            src="https://www.svgrepo.com/show/418086/search.svg"
-          />
+        <SearchIcon/>
+          // <Avatar
+          //   alt="search icon"
+          //   className="w-8 h-8 bg-"
+          //   src="https://www.svgrepo.com/show/418086/search.svg"
+          // />
         }
         type="search"
       />
