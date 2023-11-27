@@ -21,6 +21,7 @@ import {ChevronDownIcon} from "./ChevronDownIcon";
 import {columns, users, statusOptions} from "./data";
 import { SearchIcon } from "../../utils/Icons/SearchIcon";
 import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
+import { SearchInput } from "../NavMenu/SearchInput/SearchInput";
 
 
 const statusColorMap = {
@@ -163,20 +164,8 @@ export function ResultListTable() {
     return (
       <div className="flex flex-col gap-4 ">
         <div className="flex justify-between gap-3 items-end">
-          <Input
-            isClearable
-            classNames={{
-              base: "w-full sm:max-w-[44%]",
-              inputWrapper: "border-1",
-            }}
-            placeholder="Filter by task name..."
-            size="sm"
-            startContent={<SearchIcon />}
-            value={filterValue}
-            variant="bordered"
-            onClear={() => setFilterValue("")}
-            onValueChange={onSearchChange}
-          />
+          <SearchInput {...{value: filterValue, onValueChange: onSearchChange, placeholder: "Filter by task name..."}}/>
+          {console.log(filterValue)}
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
@@ -323,7 +312,7 @@ export function ResultListTable() {
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
           >
-            {column.name}
+            {capitalizeWord(column.name)}
           </TableColumn>
         )}
       </TableHeader>

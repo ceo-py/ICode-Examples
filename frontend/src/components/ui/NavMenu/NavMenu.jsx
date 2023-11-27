@@ -16,7 +16,7 @@ export function NavMenu() {
       <LogoText/>
       </NavbarContent>
       <NavbarContent>
-        <SearchInput/>
+        <SearchInput {...{placeholder: "Search for Task"}}/>
         <CodeVideoButtons/>
       </NavbarContent>
       <NavbarContent data-justify="between">

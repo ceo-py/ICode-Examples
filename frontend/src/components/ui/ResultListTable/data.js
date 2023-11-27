@@ -1,8 +1,8 @@
 const columns = [
-  {name: "Task Name", uid: "task name", sortable: true},
-  {name: "Language", uid: "language", sortable: true},
-  {name: "Type", uid: "type", sortable: true},
-  {name: "User", uid: "user"},
+  {name: "task name", uid: "task name", sortable: true},
+  {name: "language", uid: "language", sortable: true},
+  {name: "type", uid: "type", sortable: true},
+  {name: "user", uid: "user"},
 ];
 
 const statusOptions = [
