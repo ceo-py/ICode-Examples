@@ -5,6 +5,13 @@ type User {
   password: String!
 }
 
+type AuthResult {
+  isAuthenticated: Boolean!
+  token: String
+  message: String
+  code: Int
+}
+
 input AuthDetailInput {
   username: String!
   password: String!
@@ -15,6 +22,6 @@ type Query {
 }
 
 type Mutation {
-  register(input: AuthDetailInput!): User!
-  login(username: String!, password: String!): User!
+  register(input: AuthDetailInput!): AuthResult!
+  login(username: String!, password: String!): AuthResult!
 }
