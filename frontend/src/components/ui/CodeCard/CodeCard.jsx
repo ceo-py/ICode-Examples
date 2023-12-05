@@ -37,7 +37,7 @@ export function CodeCard() {
           </div>
           <CardButtons isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>
         </CardHeader>
-        <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40 overflow-x-auto">
+        <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
           <CodeSnippet />
         </CardBody>
         <CardFooter className="gap-3">

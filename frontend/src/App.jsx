@@ -5,6 +5,7 @@ import { CodeCard } from "./components/ui/CodeCard/CodeCard";
 import { CodeSnippet } from "./components/ui/CodeCard/CodeSnippet/CodeSnippet";
 import { SearchInput } from "./components/ui/NavMenu/SearchInput/SearchInput";
 import { ResultListTable } from "./components/ui/ResultListTable/ResultListTable";
+import Auth from "./components/forms/Auth/Auth";
 
 function App() {
   return (
@@ -16,10 +17,10 @@ function App() {
         {/* {selectedCourseSignal?.value?.selectedModule && <SearchInput />} */}
         {/* <br /> */}
         {/* <CodeCard /> */}
-        <div className="flex px-6 mt-6 w-full flex-row relative flex-nowrap items-center justify-between max-w-[1536px]">
+        {/* <div className="flex px-6 mt-6 w-full flex-row relative flex-nowrap items-center justify-between max-w-[1536px]">
           <ResultListTable />
-        </div>
-
+        </div> */}
+        <Auth/>
         {/* <CodeSnippet /> */}
       </div>
     </>
