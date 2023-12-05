@@ -7,28 +7,41 @@ const resolvers = {
     register: async (_, { input }) => {
       const { username, password } = input;
 
-      // Check if the username already exists
       const existingUser = await User.findOne({ username });
       console.log(existingUser)
       if (existingUser) {
         throw new Error('Username already exists');
       }
 
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Create a new user
       const user = new User({ username, password: hashedPassword });
       console.log(`Create User: ${user}`)
 
-      // Save the user to the database
       await user.save();
 
-      // Return the registered user
       return user;
     },
     login: async (_, { username, password }) => {
-      // Implementation for login
+      console.log(`User : ${username}, pass: ${password}`)
+      const existingUser = await User.findOne({ username });
+      console.log(existingUser)
+      if (!existingUser) {
+        throw new Error('Invalid Username');
+      }
+      console.log(`User pass from db ${existingUser.password}`)
+      bcrypt.compare(password, existingUser.password, (err, result) => {
+        if (err) {
+          console.error('Error comparing passwords:', err);
+
+        } else if (result) {
+          console.log('Password is correct');
+          
+        } else {
+          console.log('Password is incorrect');
+        }
+      });
+      return existingUser
     },
   },
 };
