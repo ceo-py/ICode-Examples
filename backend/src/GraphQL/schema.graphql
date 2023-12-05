@@ -2,6 +2,12 @@
 type User {
   _id: ID!
   username: String!
+  password: String!
+}
+
+input AuthDetailInput {
+  username: String!
+  password: String!
 }
 
 type Query {
@@ -9,6 +15,6 @@ type Query {
 }
 
 type Mutation {
-  register(username: String!, password: String!): User!
-  login(username: String!, password: String!): User!
+  register(input: AuthDetailInput!): User!
+  login(input: AuthDetailInput!): User!
 }

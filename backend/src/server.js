@@ -7,11 +7,13 @@ const fs = require('fs/promises');
 const dotenv = require('dotenv');
 
 const pathToEnvFile = path.resolve(__dirname, '../../.env');
-dotenv.config({path: pathToEnvFile});
+dotenv.config({ path: pathToEnvFile });
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, { writeConcern: { w: 'majority' } });
+
+
 
 const typeDefsPath = path.join(__dirname, '/GraphQL/schema.graphql');
 
