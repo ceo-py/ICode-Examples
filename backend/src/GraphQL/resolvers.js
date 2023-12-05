@@ -101,7 +101,7 @@ const resolvers = {
             message: 'User details fetched successfully',
             code: 200
           },
-          userDetail: userDetail
+          userDetails: userDetail
         }
 
       } catch (error) {

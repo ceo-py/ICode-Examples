@@ -1,24 +1,47 @@
 import { Input, Link, Button } from "@nextui-org/react";
+import { useMutation } from "@apollo/client";
+
+import { useState } from "react";
+import { SIGNUP_MUTATION } from "../../../../graphql/mutations/signUpMutation";
 
 export default function SignUp({ setSelected }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [signUp] = useMutation(SIGNUP_MUTATION);
+
+  const handleLogin = async () => {
+    try {
+      const { data } = await signUp({
+        variables: {
+          input: {
+            username,
+            password,
+          },
+        },
+      });
+
+      console.log("SignUp Successful:", data.register.code);
+    } catch (error) {
+      console.error("SignUp Error:", error.message);
+    }
+  };
   return (
     <form className="flex flex-col gap-4 h-[300px]">
       <Input
         isRequired
-        label="Name"
-        placeholder="Enter your name"
-        type="password"
-      />
-      <Input
-        isRequired
-        label="Email"
-        placeholder="Enter your email"
-        type="email"
+        label="Username"
+        placeholder="Enter your username"
+        value={username}
+        onValueChange={(v) => setUsername(v)}
+        type="username"
       />
       <Input
         isRequired
         label="Password"
         placeholder="Enter your password"
+        value={password}
+        onValueChange={(v) => setPassword(v)}
         type="password"
       />
       <p className="text-center text-small">
@@ -28,7 +51,13 @@ export default function SignUp({ setSelected }) {
         </Link>
       </p>
       <div className="flex gap-2 justify-end">
-        <Button fullWidth color="primary">
+        <Button
+          fullWidth
+          color="primary"
+          onClick={() => {
+            handleLogin();
+          }}
+        >
           Sign up
         </Button>
       </div>

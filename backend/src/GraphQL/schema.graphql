@@ -6,7 +6,7 @@ type User {
 }
 
 type UserDetail {
-  userDetail: UserDetails
+  userDetails: UserDetails
   status: Status
 }
 
