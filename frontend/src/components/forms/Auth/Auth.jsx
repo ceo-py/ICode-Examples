@@ -3,7 +3,6 @@ import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import Login from "./Login/Login";
 import SignUp from "./SignUp/SignUp";
 
-
 export default function Auth() {
   const [selected, setSelected] = useState("login");
 

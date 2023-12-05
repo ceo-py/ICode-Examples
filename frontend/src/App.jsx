@@ -7,6 +7,7 @@ import { SearchInput } from "./components/ui/NavMenu/SearchInput/SearchInput";
 import { ResultListTable } from "./components/ui/ResultListTable/ResultListTable";
 import Auth from "./components/forms/Auth/Auth";
 
+
 function App() {
   return (
     <>
