@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../DataBase/Models/users');
 const UserDetail = require('../DataBase/Models/userDetails');
+const jwt = require('jsonwebtoken');
 
 
 
@@ -38,7 +39,7 @@ const resolvers = {
       };
     },
 
-    login: async (_, { username, password }) => {
+    login: async (_, { username, password }, { req, res }) => {
       // console.log(`User : ${username}, pass: ${password}`)
       const existingUser = await User.findOne({ username });
       if (!existingUser) {
@@ -64,6 +65,10 @@ const resolvers = {
             code: 401
           }
         };
+        
+        const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+        res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
+
 
         return {
           isAuthenticated: isValidPassword,

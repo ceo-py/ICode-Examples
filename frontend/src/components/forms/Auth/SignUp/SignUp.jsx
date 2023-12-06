@@ -10,7 +10,7 @@ export default function SignUp({ setSelected }) {
 
   const [signUp] = useMutation(SIGNUP_MUTATION);
 
-  const handleLogin = async () => {
+  const handleSignUP = async () => {
     try {
       const { data } = await signUp({
         variables: {
@@ -43,10 +43,15 @@ export default function SignUp({ setSelected }) {
         value={password}
         onValueChange={(v) => setPassword(v)}
         type="password"
+        autoComplete="new-password"
       />
       <p className="text-center text-small">
         Already have an account?{" "}
-        <Link size="sm" onPress={() => setSelected("login")}>
+        <Link
+          className="cursor-pointer"
+          size="sm"
+          onPress={() => setSelected("login")}
+        >
           Login
         </Link>
       </p>
@@ -55,7 +60,7 @@ export default function SignUp({ setSelected }) {
           fullWidth
           color="primary"
           onClick={() => {
-            handleLogin();
+            handleSignUP();
           }}
         >
           Sign up
