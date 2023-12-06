@@ -19,6 +19,7 @@ function App() {
             path="/login"
             element={<ProtectedRoute element={<Auth />} />}
           />
+          <Route path="*" element={<p>Nothing to be found here!!!</p>}/>
         </Routes>
       </div>
     </>
