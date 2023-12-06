@@ -6,9 +6,25 @@ import {
   DropdownTrigger,
 } from "@nextui-org/react";
 import { useAuth } from "../../../../AuthContext/AuthContext";
+import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
+import { useMutation } from "@apollo/client";
+
 
 export function UserMenu() {
   const { state, dispatch } = useAuth();
+
+  const [logout] = useMutation(LOGOUT_MUTATION);
+
+  const handleLogout = async () => {
+    try {
+      const { data } = await logout();
+      if (data.logout.code === 200) {
+        dispatch({ type: "LOGOUT" });
+      }
+    } catch (error) {
+      console.error("Login Error:", error.message);
+    }
+  };
 
   return (
     <Dropdown placement="bottom-end">
@@ -33,7 +49,11 @@ export function UserMenu() {
         <DropdownItem key="system">System</DropdownItem>
         <DropdownItem key="configurations">Configurations</DropdownItem>
         <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-        <DropdownItem key="logout" color="danger" onPress={() => dispatch({ type: "LOGOUT" })}>
+        <DropdownItem
+          key="logout"
+          color="danger"
+          onPress={() => handleLogout()}
+        >
           Log Out
         </DropdownItem>
       </DropdownMenu>

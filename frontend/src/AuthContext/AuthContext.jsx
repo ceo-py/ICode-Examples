@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!loading && !error && data) {
       const token = data.findToken.token;
-      console.log(token)
       if (token) {
         dispatch({ type: "LOGIN", payload: { token } });
       }
