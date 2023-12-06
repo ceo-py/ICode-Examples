@@ -7,6 +7,7 @@ import { SearchInput } from "./SearchInput/SearchInput";
 import { UserMenu } from "./UserMenu/User.Menu";
 import { LogoText } from "./LogoText/LogoText";
 import { useAuth } from "../../../AuthContext/AuthContext";
+import { LogIn } from "./LogoText/LogIn";
 
 
 
@@ -24,7 +25,7 @@ export function NavMenu() {
         <CodeVideoButtons/>
       </NavbarContent>
       <NavbarContent data-justify="between">
-        {state.isAuthenticated && <UserMenu/>}
+        {!state.isAuthenticated ? <LogIn/>: <UserMenu/>}
       </NavbarContent>
     </Navbar>
   );

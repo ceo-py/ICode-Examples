@@ -9,7 +9,6 @@ import { useAuth } from "../../../../AuthContext/AuthContext";
 import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
 import { useMutation } from "@apollo/client";
 
-
 export function UserMenu() {
   const { state, dispatch } = useAuth();
 
