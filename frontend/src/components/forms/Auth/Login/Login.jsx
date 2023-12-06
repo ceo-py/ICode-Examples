@@ -7,7 +7,7 @@ import { useAuth } from "../../../../AuthContext/AuthContext";
 export default function Login({ setSelected }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { state, dispatch } = useAuth();
+  const { dispatch } = useAuth();
 
   const [login] = useMutation(LOGIN_MUTATION);
 

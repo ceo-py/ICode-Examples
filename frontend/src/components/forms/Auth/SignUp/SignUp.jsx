@@ -3,10 +3,12 @@ import { useMutation } from "@apollo/client";
 
 import { useState } from "react";
 import { SIGNUP_MUTATION } from "../../../../graphql/mutations/signUpMutation";
+import { useAuth } from "../../../../AuthContext/AuthContext";
 
 export default function SignUp({ setSelected }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { dispatch } = useAuth();
 
   const [signUp] = useMutation(SIGNUP_MUTATION);
 
@@ -20,8 +22,12 @@ export default function SignUp({ setSelected }) {
           },
         },
       });
+      if (data.register.code === 200) {
+        console.log(data.register)
+        const token = data.register.token;
+        dispatch({ type: "LOGIN", payload: { token } });
+      }
 
-      console.log("SignUp Successful:", data.register.code);
     } catch (error) {
       console.error("SignUp Error:", error.message);
     }

@@ -8,12 +8,11 @@ const LoginToken = require('../DataBase/Models/loginToken');
 
 const resolvers = {
   Mutation: {
-    register: async (_, { input }) => {
+    register: async (_, { input }, { req, res }) => {
       const { username, password } = input;
 
 
       const existingUser = await User.findOne({ username });
-      // console.log(existingUser)
       if (existingUser) {
         return {
           isAuthenticated: false,
@@ -33,10 +32,13 @@ const resolvers = {
       const userDetail = UserDetail({ id: user._id })
       userDetail.save()
 
+      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
+      res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
+
       return {
         isAuthenticated: true,
         message: 'Registration Successful',
-        code: 200
+        code: 200,
       };
     },
 
