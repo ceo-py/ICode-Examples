@@ -23,7 +23,6 @@ type Status {
   code: Int
 }
 
-
 type AuthResult {
   isAuthenticated: Boolean!
   token: String
@@ -36,6 +35,10 @@ input AuthDetailInput {
   password: String!
 }
 
+type Token {
+  Token: String!
+}
+
 type Query {
   getUser(userId: ID!): UserDetail
 }
@@ -43,4 +46,5 @@ type Query {
 type Mutation {
   register(input: AuthDetailInput!): AuthResult!
   login(username: String!, password: String!): AuthResult!
+  findToken(Token: String!): Token!
 }

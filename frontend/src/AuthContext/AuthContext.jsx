@@ -1,6 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
-
-const AuthContext = createContext();
+import { createContext, useContext, useReducer, useEffect } from 'react';
 
 const initialState = {
   isAuthenticated: false,
@@ -11,23 +9,37 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
       return {
-        ...state,
         isAuthenticated: true,
         token: action.payload.token,
       };
     case 'LOGOUT':
-      return {
-        ...state,
-        isAuthenticated: false,
-        token: null,
-      };
+      return initialState;
     default:
       return state;
   }
 };
 
-const AuthProvider = ({ children }) => {
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+
+  useEffect(() => {
+    const token = getCookie('token');
+    console.log(token)
+    if (token) {
+      dispatch({ type: 'LOGIN', payload: { token } });
+    }
+  }, []);
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    console.log('get cookie',value)
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  };
+  
+  // Your other context provider logic...
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
@@ -36,12 +48,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-export { AuthProvider, useAuth };
+export const useAuth = () => useContext(AuthContext);

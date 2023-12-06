@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const User = require('../DataBase/Models/users');
 const UserDetail = require('../DataBase/Models/userDetails');
 const jwt = require('jsonwebtoken');
+const LoginToken = require('../DataBase/Models/loginToken');
 
 
 
@@ -66,9 +67,11 @@ const resolvers = {
           }
         };
         
-        const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
         res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
 
+        const loginToken = new LoginToken({ token });
+        await loginToken.save();
 
         return {
           isAuthenticated: isValidPassword,
