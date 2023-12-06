@@ -36,15 +36,15 @@ input AuthDetailInput {
 }
 
 type Token {
-  Token: String!
+  token: String
 }
 
 type Query {
   getUser(userId: ID!): UserDetail
+  findToken: Token!
 }
 
 type Mutation {
   register(input: AuthDetailInput!): AuthResult!
   login(username: String!, password: String!): AuthResult!
-  findToken(Token: String!): Token!
 }

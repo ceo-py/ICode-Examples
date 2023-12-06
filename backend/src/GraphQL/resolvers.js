@@ -66,17 +66,15 @@ const resolvers = {
             code: 401
           }
         };
-        
+
         const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
         res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
-
-        const loginToken = new LoginToken({ token });
-        await loginToken.save();
+        // const loginToken = new LoginToken({ token });
+        // await loginToken.save();
 
         return {
           isAuthenticated: isValidPassword,
           message: 'Login successful',
-          token,
           code: 200
         };
 
@@ -120,6 +118,27 @@ const resolvers = {
             code: 500
           }
         }
+      }
+    },
+    findToken: async (_, { __ }, { req, res }) => {
+      const cookieToken = req?.cookies?.token;
+
+      try {
+        const decoded = await new Promise((resolve, reject) => {
+          jwt.verify(cookieToken, process.env.SECRET_KEY, (err, decoded) => {
+            if (err) {
+              console.error('Token verification failed:', err.message);
+              reject(err);
+            } else {
+              console.log('Token verified successfully UserID:', decoded.userId);
+              resolve(decoded);
+            }
+          });
+        });
+
+        return { token: cookieToken };
+      } catch (err) {
+        return { code: 401, message: 'Token verification failed' };
       }
     },
   },

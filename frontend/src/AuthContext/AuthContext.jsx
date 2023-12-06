@@ -1,4 +1,6 @@
-import { createContext, useContext, useReducer, useEffect } from 'react';
+import { createContext, useContext, useReducer, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { FIND_TOKEN_QUERY } from "../graphql/queries/findTokenQuery";
 
 const initialState = {
   isAuthenticated: false,
@@ -7,12 +9,12 @@ const initialState = {
 
 const authReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case "LOGIN":
       return {
         isAuthenticated: true,
         token: action.payload.token,
       };
-    case 'LOGOUT':
+    case "LOGOUT":
       return initialState;
     default:
       return state;
@@ -23,23 +25,17 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const { loading, error, data } = useQuery(FIND_TOKEN_QUERY);
 
   useEffect(() => {
-    const token = getCookie('token');
-    console.log(token)
-    if (token) {
-      dispatch({ type: 'LOGIN', payload: { token } });
+    if (!loading && !error && data) {
+      const token = data.findToken.token;
+      console.log(token)
+      if (token) {
+        dispatch({ type: "LOGIN", payload: { token } });
+      }
     }
-  }, []);
-
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    console.log('get cookie',value)
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  };
-  
-  // Your other context provider logic...
+  }, [loading, error, data]);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
