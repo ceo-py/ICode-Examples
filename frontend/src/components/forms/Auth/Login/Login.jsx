@@ -2,10 +2,12 @@ import { Input, Link, Button } from "@nextui-org/react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../../../graphql/mutations/loginMutation";
 import { useState } from "react";
+import { useAuth } from "../../../../AuthContext/AuthContext";
 
 export default function Login({ setSelected }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { state, dispatch } = useAuth();
 
   const [login] = useMutation(LOGIN_MUTATION);
 
@@ -14,8 +16,10 @@ export default function Login({ setSelected }) {
       const { data } = await login({
         variables: { username, password },
       });
-
-      console.log("Login Successful:", data.login);
+      if (data.login.code === 200) {
+        const token = data.login.token;
+        dispatch({ type: "LOGIN", payload: { token } });
+      }
     } catch (error) {
       console.error("Login Error:", error.message);
     }

@@ -1,6 +1,15 @@
-import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import {
+  Avatar,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
+import { useAuth } from "../../../../AuthContext/AuthContext";
 
 export function UserMenu() {
+  const { state, dispatch } = useAuth();
+
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -24,7 +33,7 @@ export function UserMenu() {
         <DropdownItem key="system">System</DropdownItem>
         <DropdownItem key="configurations">Configurations</DropdownItem>
         <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-        <DropdownItem key="logout" color="danger">
+        <DropdownItem key="logout" color="danger" onPress={() => dispatch({ type: "LOGOUT" })}>
           Log Out
         </DropdownItem>
       </DropdownMenu>

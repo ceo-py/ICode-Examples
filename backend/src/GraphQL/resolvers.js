@@ -73,7 +73,7 @@ const resolvers = {
         return {
           isAuthenticated: isValidPassword,
           message: 'Login successful',
-          token: '123',
+          token,
           code: 200
         };
 
