@@ -23,7 +23,6 @@ export default function SignUp({ setSelected }) {
         },
       });
       if (data.register.code === 200) {
-        console.log(data.register)
         const token = data.register.token;
         dispatch({ type: "LOGIN", payload: { token } });
       }

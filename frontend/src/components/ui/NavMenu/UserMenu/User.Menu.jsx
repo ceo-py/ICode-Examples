@@ -7,40 +7,53 @@ import {
 } from "@nextui-org/react";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { NAV_MENU_QUERY } from "../../../../graphql/queries/navMenuQuery";
+import { useEffect, useState } from "react";
 
 export function UserMenu() {
-  const { state, dispatch } = useAuth();
+  const { dispatch } = useAuth();
+  const { data, refetch } = useQuery(NAV_MENU_QUERY);
+  const [username, setUsername] = useState("");
+  const [icon, setIcon] = useState("");
 
   const [logout] = useMutation(LOGOUT_MUTATION);
 
-  const handleLogout = async () => {
-    try {
-      const { data } = await logout();
-      if (data.logout.code === 200) {
-        dispatch({ type: "LOGOUT" });
-      }
-    } catch (error) {
-      console.error("Login Error:", error.message);
+  useEffect(() => {
+    if (data && data.getUser.userDetails) {
+      setUsername(data.getUser.userDetails.username);
+      setIcon(data.getUser.userDetails.icon);
     }
+  }, [data]);
+
+  const handleLogout = () => {
+    logout()
+      .then(({ data }) => {
+        if (data.logout.code === 200) {
+          dispatch({ type: "LOGOUT" });
+        }
+      })
+      .catch((error) => {
+        console.error("Logout Error:", error.message);
+      });
   };
+  refetch();
 
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
         <Avatar
+          className="ring-default"
           isBordered
           as="button"
-          className="transition-transform"
-          color="secondary"
           size="sm"
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+          src={icon ? icon : "https://www.svgrepo.com/show/418032/user.svg"}
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         <DropdownItem key="profile" className="h-14 gap-2" textValue="Details">
           <p className="font-semibold">Signed in as</p>
-          <p className="font-semibold">test@test.com</p>
+          <p className="font-semibold">{username}</p>
         </DropdownItem>
         <DropdownItem key="settings">My Settings</DropdownItem>
         <DropdownItem key="team_settings">Team Settings</DropdownItem>
@@ -51,7 +64,9 @@ export function UserMenu() {
         <DropdownItem
           key="logout"
           color="danger"
-          onPress={() => handleLogout()}
+          onPress={() => {
+            handleLogout();
+          }}
         >
           Log Out
         </DropdownItem>

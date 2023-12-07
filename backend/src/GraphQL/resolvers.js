@@ -95,37 +95,55 @@ const resolvers = {
     },
   },
   Query: {
-    getUser: async (_, { userId }) => {
+    getUser: async (_, __, { req }) => {
+      const cookieToken = req?.cookies?.token;
+
+      if (!cookieToken) {
+        return {
+          status: {
+            message: 'JWT must be provided',
+            code: 400,
+          },
+        };
+      }
+
       try {
-        const userDetail = await UserDetail.findOne({ id: userId });
-        // console.log(userDetail)
-        if (!userDetail) {
+        const decodedToken = jwt.verify(cookieToken, process.env.SECRET_KEY);
+        const id = decodedToken.userId;
+
+        const [userDetail, user] = await Promise.all([
+          UserDetail.findOne({ id }),
+          User.findOne({ _id: id }),
+        ]);
+
+        if (!userDetail || !user) {
           return {
             status: {
               message: 'Error fetching user details',
-              code: 400
-            }
-          }
+              code: 400,
+            },
+          };
         }
 
         return {
           status: {
             message: 'User details fetched successfully',
-            code: 200
+            code: 200,
           },
-          userDetails: userDetail
-        }
-
+          userDetails: { ...userDetail.toObject(), id, username: user.username },
+        };
       } catch (error) {
         console.error('Error fetching user details:', error);
         return {
           status: {
             message: 'Error fetching user details',
-            code: 500
-          }
-        }
+            code: 500,
+          },
+        };
       }
     },
+
+
     findToken: async (_, { __ }, { req, res }) => {
       const cookieToken = req?.cookies?.token;
 
