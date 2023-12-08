@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
       const username = data.getToken.username;
       const iconUrl = data.getToken.iconUrl;
       if (username) {
-        dispatch({ type: "LOGIN", payload: { username,  iconUrl} });
+        dispatch({ type: "LOGIN", payload: { username, iconUrl } });
       }
     }
   }, [loading, error, data]);

@@ -37,6 +37,7 @@ input AuthDetailInput {
 }
 
 input updateUserDetails {
+  icon: String
   email: String
   youtube: String
   github: String

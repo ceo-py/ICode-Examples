@@ -21,7 +21,6 @@ const deleteUserResolver = {
                 await UserDetail.deleteOne({ id });
                 await User.deleteOne({ _id: id });
                 await Followers.deleteOne({ id });
-                // res.clearCookie('token');
                 return {
                     message: 'User Successfully Deleted',
                     code: 200,

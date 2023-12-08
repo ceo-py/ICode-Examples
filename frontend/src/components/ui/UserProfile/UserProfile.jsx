@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { USER_UPDATE_MUTATION } from "../../../graphql/mutations/userUpdateDetails";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import UserProfileDeleteModal from "./UserProfileDeleteModal/UserProfileDeleteModal";
+import { useAuth } from "../../../AuthContext/AuthContext";
 
 export function UserProfile() {
   const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
@@ -24,12 +25,12 @@ export function UserProfile() {
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   const [userUpdate] = useMutation(USER_UPDATE_MUTATION);
+  const { dispatch } = useAuth();
 
   const handleUserUpdate = async (userData) => {
     const updateFields = (userData) => {
-      const [, , , , ...remainingKeys] = Object.keys(userData);
+      const [, , , ...remainingKeys] = Object.keys(userData);
       const remainingObject = Object.fromEntries(
         Object.entries(userData).filter(([key]) => remainingKeys.includes(key))
       );
@@ -47,6 +48,7 @@ export function UserProfile() {
           : "User update unsuccessful"
       );
       refetch();
+      dispatch({ type: "LOGIN", payload: {username: user.username, iconUrl: user.icon} });
     } catch (error) {
       setUpdateMessage("User update unsuccessful");
       console.error("User Update Error:", error.message);
@@ -108,7 +110,7 @@ export function UserProfile() {
                 </p>
                 <div className="flex flex-col max-w-[600px] w-full items-end mb-6 md:mb-0 gap-4">
                   {Object.keys(user)
-                    .slice(4)
+                    .slice(3)
                     .map((key) => (
                       <Input
                         key={key}
