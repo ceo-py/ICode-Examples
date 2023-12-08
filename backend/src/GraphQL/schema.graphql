@@ -54,4 +54,5 @@ type Mutation {
   login(username: String!, password: String!): AuthResult!
   logout: Status!
   updateUser(input: updateUserDetails!): Status!
+  deleteUser: Status!
 }

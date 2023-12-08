@@ -1,3 +1,4 @@
+const deleteUserResolver = require('./Resolvers/Mutation/deleteUser');
 const loginResolver = require('./Resolvers/Mutation/login');
 const logOutResolver = require('./Resolvers/Mutation/logout');
 const registerResolver = require('./Resolvers/Mutation/register');
@@ -7,6 +8,6 @@ const userResolver = require('./Resolvers/Query/getUser');
 
 
 
-const resolvers = [loginResolver, logOutResolver, registerResolver, tokenResolver, userResolver, updateUserResolver];
+const resolvers = [loginResolver, logOutResolver, registerResolver, tokenResolver, userResolver, updateUserResolver, deleteUserResolver];
 
 module.exports = resolvers;
