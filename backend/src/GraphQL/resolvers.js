@@ -1,11 +1,10 @@
-const bcrypt = require('bcrypt');
 const User = require('../DataBase/Models/users');
 const UserDetail = require('../DataBase/Models/userDetails');
 const jwt = require('jsonwebtoken');
-const LoginToken = require('../DataBase/Models/loginToken');
 const loginResolver = require('./Resolvers/Mutation/login');
 const logOutResolver = require('./Resolvers/Mutation/logout');
 const registerResolver = require('./Resolvers/Mutation/register');
+const tokenResolver = require('./Resolvers/Query/getToken');
 
 
 
@@ -59,38 +58,9 @@ const resolversC = {
         };
       }
     },
-
-
-    findToken: async (_, { __ }, { req, res }) => {
-      const cookieToken = req?.cookies?.token;
-
-      try {
-        const decoded = await new Promise((resolve, reject) => {
-          jwt.verify(cookieToken, process.env.SECRET_KEY, (err, decoded) => {
-            if (err) {
-              console.error('Token verification failed:', err.message);
-              reject(err);
-              return { code: 401, message: 'Token verification failed' };
-            } else {
-              console.log('Token verified successfully UserID:', decoded.userId);
-              resolve(decoded);
-            }
-          });
-        });
-
-        return {
-          code: 200,
-          username:decoded.username,
-          iconUrl: decoded.icon,
-          message: 'Token verified successfully'
-        };
-      } catch (err) {
-        return { code: 401, message: 'Token verification failed' };
-      }
-    },
   },
 };
 
-const resolvers = [resolversC, loginResolver, logOutResolver, registerResolver];
+const resolvers = [resolversC, loginResolver, logOutResolver, registerResolver, tokenResolver];
 
 module.exports = resolvers;

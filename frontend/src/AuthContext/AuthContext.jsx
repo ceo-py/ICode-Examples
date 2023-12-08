@@ -31,8 +31,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      const username = data.findToken.username;
-      const iconUrl = data.findToken.iconUrl;
+      const username = data.getToken.username;
+      const iconUrl = data.getToken.iconUrl;
       if (username) {
         dispatch({ type: "LOGIN", payload: { username,  iconUrl} });
       }

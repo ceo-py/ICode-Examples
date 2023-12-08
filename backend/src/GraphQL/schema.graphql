@@ -36,7 +36,7 @@ input AuthDetailInput {
 
 type Query {
   getUser: UserDetail
-  findToken: AuthResult!
+  getToken: AuthResult!
 }
 
 type Mutation {
