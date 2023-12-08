@@ -36,6 +36,14 @@ input AuthDetailInput {
   password: String!
 }
 
+input updateUserDetails {
+  email: String
+  youtube: String
+  github: String
+  linkedin: String
+  about: String
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -45,4 +53,5 @@ type Mutation {
   register(input: AuthDetailInput!): AuthResult!
   login(username: String!, password: String!): AuthResult!
   logout: Status!
+  updateUser(input: updateUserDetails!): Status!
 }

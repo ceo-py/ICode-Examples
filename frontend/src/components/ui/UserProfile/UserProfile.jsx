@@ -8,16 +8,39 @@ import {
   Button,
 } from "@nextui-org/react";
 import { GET_USER_DETAILS } from "../../../graphql/queries/userQuery";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { numbersFormat } from "../../utils/numberFormat/numberFormat";
 import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
 import { useNavigate } from "react-router-dom";
+import { USER_UPDATE_MUTATION } from "../../../graphql/mutations/userUpdateDetails";
 
 export function UserProfile() {
-  const { loading, error, data } = useQuery(GET_USER_DETAILS);
+  const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
   const [user, setUser] = useState({});
   const navigate = useNavigate();
+
+  const [userUpdate] = useMutation(USER_UPDATE_MUTATION);
+
+  const handleUserUpdate = async (userData) => {
+    const updateFields = (userData) => {
+      const [, , , , ...remainingKeys] = Object.keys(userData);
+      const remainingObject = Object.fromEntries(
+        Object.entries(userData).filter(([key]) => remainingKeys.includes(key))
+      );
+      return remainingObject;
+    };
+    try {
+      await userUpdate({
+        variables: {
+          input: updateFields(userData),
+        },
+      });
+      refetch();
+    } catch (error) {
+      console.error("User Update Error:", error.message);
+    }
+  };
 
   useEffect(() => {
     if (!loading && !error && data && data.getUser.status.code == 200) {
@@ -87,7 +110,9 @@ export function UserProfile() {
           radius="full"
           size="lg"
           variant="bordered"
-          onPress={() => navigate("/")}
+          onPress={() => {
+            handleUserUpdate(user);
+          }}
         >
           Update
         </Button>
