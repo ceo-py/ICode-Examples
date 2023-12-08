@@ -14,7 +14,9 @@ type UserDetails {
   icon: String
   youtube: String
   github: String
+  linkedin: String
   about: String
+  followers: Int
 }
 
 type Status {

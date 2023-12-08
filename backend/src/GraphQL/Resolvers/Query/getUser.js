@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const UserDetail = require('../../../DataBase/Models/userDetails');
 const User = require('../../../DataBase/Models/users');
+const Followers = require('../../../DataBase/Models/followers');
 
 const userResolver = {
     Query: {
@@ -15,16 +16,16 @@ const userResolver = {
                     },
                 };
             }
-
             try {
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
 
-                const [userDetail, user] = await Promise.all([
+                const [userDetail, user, followers] = await Promise.all([
                     UserDetail.findOne({ id }),
                     User.findOne({ _id: id }),
+                    Followers.findOne({ id }),
                 ]);
 
-                if (!userDetail || !user) {
+                if (!userDetail || !user || !followers) {
                     return {
                         status: {
                             message: 'Error fetching user details',
@@ -32,13 +33,12 @@ const userResolver = {
                         },
                     };
                 }
-
                 return {
                     status: {
-                        message: 'User details fetched successfully',
+                        message: 'User details fetched successfully1',
                         code: 200,
                     },
-                    userDetails: { ...userDetail.toObject(), id, username: user.username },
+                    userDetails: { ...userDetail.toObject(), username: user.username, followers: followers.followers.length },
                 };
             } catch (error) {
                 console.error('Error fetching user details:', error);

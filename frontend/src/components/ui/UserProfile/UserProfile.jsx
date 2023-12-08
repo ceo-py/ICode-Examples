@@ -5,10 +5,21 @@ import {
   CardFooter,
   Avatar,
 } from "@nextui-org/react";
-import { useAuth } from "../../../AuthContext/AuthContext";
+import { GET_USER_DETAILS } from "../../../graphql/queries/userQuery";
+import { useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { numbersFormat } from "../../utils/numberFormat/numberFormat";
+
 
 export function UserProfile() {
-  const { state, dispatch } = useAuth();
+  const { loading, error, data } = useQuery(GET_USER_DETAILS);
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    if (!loading && !error && data && data.getUser.status.code == 200) {
+      setUser(data.getUser.userDetails)
+    }
+  }, [loading, error, data]);
 
   return (
     <Card className="grow">
@@ -22,7 +33,7 @@ export function UserProfile() {
           />
           <div className="flex flex-col gap-1 items-start justify-center">
             <p className="text-small font-semibold leading-none text-default-600">
-              3.75K followers
+              {numbersFormat(user.followers)} followers
             </p>
             <p className="text-small font-semibold leading-none text-default-600">
               1K code solutions
@@ -31,7 +42,7 @@ export function UserProfile() {
               1K video explanations
             </p>
             <h5 className="text-small tracking-tight text-default-400">
-              @{state.username}
+              @{user.username}
             </h5>
           </div>
         </div>
