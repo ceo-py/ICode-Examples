@@ -23,8 +23,8 @@ export default function SignUp({ setSelected }) {
         },
       });
       if (data.register.code === 200) {
-        const token = data.register.token;
-        dispatch({ type: "LOGIN", payload: { token } });
+        const iconUrl = data.register.iconUrl;
+        dispatch({ type: "LOGIN", payload: { iconUrl, username } });
       }
 
     } catch (error) {
