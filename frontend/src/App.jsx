@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes/ProtectedRoutes";
 import { UserProfile } from "./components/ui/UserProfile/UserProfile";
 import { Navigate } from "react-router-dom";
+import { NotFound } from "./components/ui/NotFound/NotFound";
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
                 />
               }
             />
-            <Route path="*" element={<p>Nothing to be found here!!!</p>} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </div>

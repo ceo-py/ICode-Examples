@@ -73,7 +73,7 @@ export function UserProfile() {
 
   return (
     <>
-      {!data?.getUser?.status?.code == 200 ? (
+      {!data?.getUser?.userDetails?.icon? (
         <LoadingCircle />
       ) : (
         <Card className="grow">
