@@ -5,7 +5,6 @@ export const SIGNUP_MUTATION = gql`
         register(input: $input) {
         iconUrl
         code
-        isAuthenticated
         message
         }
     }

@@ -4,50 +4,13 @@ const UserDetail = require('../DataBase/Models/userDetails');
 const jwt = require('jsonwebtoken');
 const LoginToken = require('../DataBase/Models/loginToken');
 const loginResolver = require('./Resolvers/Mutation/login');
+const logOutResolver = require('./Resolvers/Mutation/logout');
+const registerResolver = require('./Resolvers/Mutation/register');
 
 
 
 
 const resolversC = {
-  Mutation: {
-    register: async (_, { input }, { req, res }) => {
-      const { username, password } = input;
-
-
-      const existingUser = await User.findOne({ username });
-      if (existingUser) {
-        return {
-          isAuthenticated: false,
-          message: 'User Already exist',
-          code: 409
-        };
-      }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const user = new User({ username, password: hashedPassword });
-      // console.log(`Create User: ${user}`)
-
-
-      await user.save();
-
-      const userDetail = UserDetail({ id: user._id })
-      userDetail.save()
-
-      const token = jwt.sign({ userId: user._id, username, icon: userDetail.icon }, process.env.SECRET_KEY, { expiresIn: '30d' });
-      res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
-
-      return {
-        isAuthenticated: true,
-        message: 'Registration Successful',
-        code: 200,
-      };
-    },
-    logout: async (_, { __ }, { req, res }) => {
-      res.clearCookie('token');
-      return { message: 'Logout successful', code: 200 }
-    },
-  },
   Query: {
     getUser: async (_, __, { req }) => {
       const cookieToken = req?.cookies?.token;
@@ -128,6 +91,6 @@ const resolversC = {
   },
 };
 
-const resolvers = [resolversC, loginResolver];
+const resolvers = [resolversC, loginResolver, logOutResolver, registerResolver];
 
 module.exports = resolvers;
