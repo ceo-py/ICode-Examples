@@ -68,12 +68,13 @@ export function UserProfile() {
   }, [data]);
 
   useEffect(() => {
+    setUser({});
     refetch();
   }, []);
 
   return (
     <>
-      {!data?.getUser?.userDetails?.icon? (
+      {Object.keys(user).length === 0 ? (
         <LoadingCircle />
       ) : (
         <Card className="grow">
