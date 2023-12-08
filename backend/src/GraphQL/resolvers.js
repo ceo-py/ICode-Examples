@@ -3,10 +3,12 @@ const User = require('../DataBase/Models/users');
 const UserDetail = require('../DataBase/Models/userDetails');
 const jwt = require('jsonwebtoken');
 const LoginToken = require('../DataBase/Models/loginToken');
+const loginResolver = require('./Resolvers/Mutation/login');
 
 
 
-const resolvers = {
+
+const resolversC = {
   Mutation: {
     register: async (_, { input }, { req, res }) => {
       const { username, password } = input;
@@ -32,7 +34,7 @@ const resolvers = {
       const userDetail = UserDetail({ id: user._id })
       userDetail.save()
 
-      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
+      const token = jwt.sign({ userId: user._id, username, icon: userDetail.icon }, process.env.SECRET_KEY, { expiresIn: '30d' });
       res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
 
       return {
@@ -40,68 +42,6 @@ const resolvers = {
         message: 'Registration Successful',
         code: 200,
       };
-    },
-
-    login: async (_, { username, password }, { req, res }) => {
-      // console.log(`User : ${username}, pass: ${password}`)
-      const existingUser = await User.findOne({ username });
-
-      if (!existingUser) {
-
-        return {
-          isAuthenticated: false,
-          message: 'Login unsuccessful. Invalid credentials.',
-          code: 401
-        };
-      }
-
-      // console.log(`User pass from db ${existingUser.password}`)
-
-      try {
-        const isValidPassword = await bcrypt.compare(password, existingUser.password);
-        // console.log(`Password is : ${isValidPassword}`)
-
-        if (!isValidPassword) {
-
-          return {
-            isAuthenticated: isValidPassword,
-            message: 'Login unsuccessful. Invalid credentials.',
-            code: 401
-          }
-        };
-
-        const userDetail = UserDetail.findOne({ id: existingUser._id })
-
-        if (!userDetail) {
-
-          return {
-            isAuthenticated: false,
-            message: 'Error User details.',
-            code: 500
-          };
-        }
-
-        const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
-        res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
-        // const loginToken = new LoginToken({ token });
-        // await loginToken.save();
-
-        return {
-          isAuthenticated: isValidPassword,
-          message: 'Login successful',
-          iconUrl: userDetail.icon,
-          username,
-          code: 200
-        };
-
-      } catch (error) {
-        console.error(error)
-        return {
-          isAuthenticated: false,
-          message: 'Error during password comparison',
-          code: 500
-        }
-      }
     },
     logout: async (_, { __ }, { req, res }) => {
       res.clearCookie('token');
@@ -167,6 +107,7 @@ const resolvers = {
             if (err) {
               console.error('Token verification failed:', err.message);
               reject(err);
+              return { code: 401, message: 'Token verification failed' };
             } else {
               console.log('Token verified successfully UserID:', decoded.userId);
               resolve(decoded);
@@ -174,12 +115,19 @@ const resolvers = {
           });
         });
 
-        return { token: cookieToken };
+        return {
+          code: 200,
+          username:decoded.username,
+          iconUrl: decoded.icon,
+          message: 'Token verified successfully'
+        };
       } catch (err) {
         return { code: 401, message: 'Token verification failed' };
       }
     },
   },
 };
+
+const resolvers = [resolversC, loginResolver];
 
 module.exports = resolvers;

@@ -6,7 +6,6 @@ export const LOGIN_MUTATION = gql`
       iconUrl
       username
       message
-      isAuthenticated
       code
     }
   }

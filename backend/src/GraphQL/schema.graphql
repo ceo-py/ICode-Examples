@@ -23,7 +23,6 @@ type Status {
 }
 
 type AuthResult {
-  isAuthenticated: Boolean!
   username: String
   iconUrl: String
   message: String
@@ -35,13 +34,9 @@ input AuthDetailInput {
   password: String!
 }
 
-type Token {
-  token: String
-}
-
 type Query {
   getUser: UserDetail
-  findToken: Token!
+  findToken: AuthResult!
 }
 
 type Mutation {
