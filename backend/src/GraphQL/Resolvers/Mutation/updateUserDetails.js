@@ -23,7 +23,6 @@ const updateUserResolver = {
                         code: 400,
                     };
                 }
-                console.log('')
                 return {
                     message: 'User details updated successfully',
                     code: 200,
