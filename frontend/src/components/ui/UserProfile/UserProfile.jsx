@@ -48,7 +48,10 @@ export function UserProfile() {
           : "User update unsuccessful"
       );
       refetch();
-      dispatch({ type: "LOGIN", payload: {username: user.username, iconUrl: user.icon} });
+      dispatch({
+        type: "LOGIN",
+        payload: { username: user.username, iconUrl: user.icon },
+      });
     } catch (error) {
       setUpdateMessage("User update unsuccessful");
       console.error("User Update Error:", error.message);
@@ -70,7 +73,7 @@ export function UserProfile() {
 
   return (
     <>
-      {loading ? (
+      {!data?.getUser?.status?.code == 200 ? (
         <LoadingCircle />
       ) : (
         <Card className="grow">

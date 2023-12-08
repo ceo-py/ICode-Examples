@@ -43,23 +43,6 @@ function App() {
       </div>
     </>
   );
-
-  // return (
-  //   <>
-  //     <NavMenu menu={selectedCourseSignal} />
-  //     <div className="flex mt-6 flex-col w-full h-auto items-center justify-center">
-  //       {/* <SelectMenu menu={selectedCourseSignal} /> */}
-  //       {/* <br /> */}
-  //       {/* {selectedCourseSignal?.value?.selectedModule && <SearchInput />} */}
-  //       {/* <br /> */}
-  //       <CodeCard />
-  //       <div className="flex px-6 mt-6 w-full flex-row relative flex-nowrap items-center justify-between max-w-[1536px]">
-  //         <ResultListTable />
-  //       </div>
-  //       <Auth />
-  //     </div>
-  //   </>
-  // );
 }
 
 export default App;
