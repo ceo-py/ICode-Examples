@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../../../DataBase/Models/users');
 const UserDetail = require('../../../DataBase/Models/userDetails');
+const Followers = require('../../../DataBase/Models/followers');
 
 const registerResolver = {
   Mutation: {
@@ -25,6 +26,9 @@ const registerResolver = {
 
         const userDetail = new UserDetail({ id: user._id });
         await userDetail.save();
+
+        const followers = new Followers({ id: user._id });
+        await followers.save();
 
         const token = jwt.sign(
           { userId: user._id, username, icon: userDetail.icon },
