@@ -4,14 +4,14 @@ export const GET_USER_DETAILS = gql`
     query GetUser {
         getUser {
             userDetails {
+                followers
                 username
-                email
                 icon
+                email
                 youtube
                 github
                 linkedin
                 about
-                followers
             }
             status {
                 message

@@ -9,6 +9,7 @@ type UserDetail {
 }
 
 type UserDetails {
+  followers: Int
   username: String
   email: String
   icon: String
@@ -16,7 +17,6 @@ type UserDetails {
   github: String
   linkedin: String
   about: String
-  followers: Int
 }
 
 type Status {
