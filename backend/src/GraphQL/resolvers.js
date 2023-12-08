@@ -45,6 +45,7 @@ const resolvers = {
     login: async (_, { username, password }, { req, res }) => {
       // console.log(`User : ${username}, pass: ${password}`)
       const existingUser = await User.findOne({ username });
+
       if (!existingUser) {
 
         return {
@@ -69,6 +70,17 @@ const resolvers = {
           }
         };
 
+        const userDetail = UserDetail.findOne({ id: existingUser._id })
+
+        if (!userDetail) {
+
+          return {
+            isAuthenticated: false,
+            message: 'Error User details.',
+            code: 500
+          };
+        }
+
         const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
         res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
         // const loginToken = new LoginToken({ token });
@@ -77,6 +89,8 @@ const resolvers = {
         return {
           isAuthenticated: isValidPassword,
           message: 'Login successful',
+          iconUrl: userDetail.icon,
+          username,
           code: 200
         };
 

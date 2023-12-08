@@ -24,7 +24,8 @@ type Status {
 
 type AuthResult {
   isAuthenticated: Boolean!
-  token: String
+  username: String
+  iconUrl: String
   message: String
   code: Int
 }

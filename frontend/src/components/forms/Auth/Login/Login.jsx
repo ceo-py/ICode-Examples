@@ -17,8 +17,9 @@ export default function Login({ setSelected }) {
         variables: { username, password },
       });
       if (data.login.code === 200) {
-        const token = data.login.token;
-        dispatch({ type: "LOGIN", payload: { token } });
+        const iconUrl = data.login.iconUrl;
+        // const usernameLogin = data.login.username;
+        dispatch({ type: "LOGIN", payload: { username, iconUrl } });
       }
     } catch (error) {
       console.error("Login Error:", error.message);

@@ -16,8 +16,8 @@ export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <div className="flex flex-wrap items-center justify-center w-full">
-      <Card>
+      <Card
+      className="grow">
         <CardHeader className="justify-between">
           <div className="flex gap-5">
             <Avatar
@@ -49,6 +49,5 @@ export function CodeCard() {
         <CodeComments actionName={"Comment"} display={true}/>
         <CodeComments {...{ isOpen, onOpen, onOpenChange, display: false, actionName: "Edit" }} />
       </Card>
-    </div>
   );
 }

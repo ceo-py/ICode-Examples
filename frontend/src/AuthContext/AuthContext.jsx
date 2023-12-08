@@ -4,7 +4,8 @@ import { FIND_TOKEN_QUERY } from "../graphql/queries/findTokenQuery";
 
 const initialState = {
   isAuthenticated: false,
-  token: null,
+  username: null,
+  iconUrl: null,
 };
 
 const authReducer = (state, action) => {
@@ -12,7 +13,8 @@ const authReducer = (state, action) => {
     case "LOGIN":
       return {
         isAuthenticated: true,
-        token: action.payload.token,
+        username: action.payload.username,
+        iconUrl: action.payload.iconUrl,
       };
     case "LOGOUT":
       return initialState;
