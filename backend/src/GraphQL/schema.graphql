@@ -45,7 +45,7 @@ input updateUserDetails {
   about: String
 }
 
-input uploadTaskDetails {
+input TaskDetails {
   taskName: String!
   language: String!
   course: String!
@@ -65,5 +65,5 @@ type Mutation {
   logout: Status!
   updateUser(input: updateUserDetails!): Status!
   deleteUser: Status!
-  uploadTask(input: uploadTaskDetails!): Status!
+  uploadTask(input: TaskDetails!): Status!
 }
