@@ -4,7 +4,7 @@ import {
   NavbarContent,
 } from "@nextui-org/react";
 import { SearchInput } from "./SearchInput/SearchInput";
-import { UserMenu } from "./UserMenu/User.Menu";
+import { UserMenu } from "./UserMenu/UserMenu";
 import { LogoText } from "./LogoText/LogoText";
 import { useAuth } from "../../../AuthContext/AuthContext";
 import { LogIn } from "./LogoText/LogIn";
@@ -12,7 +12,7 @@ import { LogIn } from "./LogoText/LogIn";
 
 
 export function NavMenu() {
-  const { state, dispatch } = useAuth();
+  const { state } = useAuth();
 
 
   return (

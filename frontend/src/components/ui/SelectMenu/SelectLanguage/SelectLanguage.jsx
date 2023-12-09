@@ -1,19 +1,18 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import { languages } from "./data";
 
-
 export function SelectLanguage({ menu }) {
   return (
     <>
       <Autocomplete
-        className="max-w-[290px]"
+        className="flex-grow w-"
         label="Select Language"
         onSelectionChange={(x) => {
           menu.value = Object.values(languages).find(
             (y) => y?.name?.language === x
           );
         }}
-        defaultSelectedKey={menu?.value?.name ? menu.value.name.language: ''}
+        defaultSelectedKey={menu?.value?.name ? menu.value.name.language : ""}
         startContent={
           <Avatar
             alt=""

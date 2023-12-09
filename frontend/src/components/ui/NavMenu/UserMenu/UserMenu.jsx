@@ -9,7 +9,7 @@ import { useAuth } from "../../../../AuthContext/AuthContext";
 import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-
+import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 
 export function UserMenu() {
   const { state, dispatch } = useAuth();
@@ -36,33 +36,70 @@ export function UserMenu() {
           isBordered
           as="button"
           size="sm"
-          src={state.iconUrl ? state.iconUrl : "https://www.svgrepo.com/show/418032/user.svg"}
+          src={
+            state.iconUrl
+              ? state.iconUrl
+              : "https://www.svgrepo.com/show/418032/user.svg"
+          }
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        <DropdownItem key="profile" className="h-14 gap-2" textValue="Details">
+        <DropdownItem key="user" className="h-14 gap-2" textValue="Details">
           <p className="font-semibold">Signed in as</p>
           <p className="font-semibold">{state.username}</p>
         </DropdownItem>
         <DropdownItem
-          key="settings"
-          onPress={() => {
-            navigate('/profile');
-          }}
+          key="home"
+          onPress={() => console.log("home press")}
+          startContent={
+            <DropDownMenuIcon
+              alt={"home"}
+              src={"https://www.svgrepo.com/show/418081/home.svg"}
+            />
+          }
         >
-          My Settings
+          Home
         </DropdownItem>
-        <DropdownItem key="team_settings">Team Settings</DropdownItem>
-        <DropdownItem key="analytics">Analytics</DropdownItem>
-        <DropdownItem key="system">System</DropdownItem>
-        <DropdownItem key="configurations">Configurations</DropdownItem>
-        <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+        <DropdownItem
+          key="upload"
+          onPress={() => {
+            navigate("/upload");
+          }}
+          startContent={
+            <DropDownMenuIcon
+              alt={"upload"}
+              src={"https://www.svgrepo.com/show/418110/send.svg"}
+            />
+          }
+        >
+          Upload
+        </DropdownItem>
+        <DropdownItem
+          key="profile"
+          onPress={() => {
+            navigate("/profile");
+          }}
+          startContent={
+            <DropDownMenuIcon
+              alt={"profile"}
+              src={"https://www.svgrepo.com/show/418085/setting.svg"}
+            />
+          }
+        >
+          Profile
+        </DropdownItem>
         <DropdownItem
           key="logout"
           color="danger"
           onPress={() => {
             handleLogout();
           }}
+          startContent={
+            <DropDownMenuIcon
+              alt={"logout"}
+              src={"https://www.svgrepo.com/show/418030/turn-off.svg"}
+            />
+          }
         >
           Log Out
         </DropdownItem>

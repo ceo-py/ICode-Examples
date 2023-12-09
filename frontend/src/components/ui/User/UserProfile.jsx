@@ -65,7 +65,7 @@ export function UserProfile() {
     if (!loading && !error && data && data.getUser.status.code == 200) {
       setUser(data.getUser.userDetails);
     }
-  }, [data]);
+  }, [loading, error, data]);
 
   useEffect(() => {
     setUser({});
@@ -74,7 +74,7 @@ export function UserProfile() {
 
   return (
     <>
-      {Object.keys(user).length === 0 ? (
+      {Object.keys(user).length == 0 ? (
         <LoadingCircle />
       ) : (
         <Card className="grow">
