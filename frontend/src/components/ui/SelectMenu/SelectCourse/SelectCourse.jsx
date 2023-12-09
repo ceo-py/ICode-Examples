@@ -6,6 +6,7 @@ export function SelectCourse({ menu }) {
       <Autocomplete
         className="flex-grow w-"
         label="Select Course"
+        isRequired={true}
         onSelectionChange={(x) => {
           menu.value = { ...menu?.value, ...{module: menu?.value?.modules[x]}, ...{selectedCourse: x}, ...{selectedModule: ''} };
         }}

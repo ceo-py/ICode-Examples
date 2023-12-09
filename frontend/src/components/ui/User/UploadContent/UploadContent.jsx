@@ -67,7 +67,7 @@ export function UploadContent() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2 items-center">
               <p className="flex text-default-500 text-large justify-center">
-                Easily upload your task solution by first selecting your
+                Easily upload your task by first selecting your
                 language, course, and module through our select menu above.
               </p>
               <p>

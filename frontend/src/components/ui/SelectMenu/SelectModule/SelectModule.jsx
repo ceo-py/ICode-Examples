@@ -7,6 +7,7 @@ export function SelectModule({menu}) {
     <Autocomplete
       className="flex-grow w-"
       label="Select Module"
+      isRequired={true}
       onSelectionChange={(x) => {
         menu.value = {...menu?.value, ...{selectedModule: x}}
       }}
