@@ -54,9 +54,19 @@ input TaskDetails {
   githubLink: String!
 }
 
+input TaskDetailGlobal {
+  taskName: String!
+}
+
+type TasksDetailGlobal {
+  result: String
+  status: Status
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
+  getTaskGlobal(input: TaskDetailGlobal!): TasksDetailGlobal!
 }
 
 type Mutation {
