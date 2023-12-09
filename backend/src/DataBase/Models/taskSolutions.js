@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const taskSolution = new mongoose.Schema({
-    id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+    id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     taskName: { type: String, require: true },
     language: { type: String, require: true },
     course: { type: String, require: true },

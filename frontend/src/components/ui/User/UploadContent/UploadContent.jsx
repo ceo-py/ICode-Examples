@@ -14,7 +14,8 @@ import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 import { useState } from "react";
 import { areAllValuesFilled } from "../../../utils/areAllValuesFilled/areAllValuesFilled";
 import { useMutation } from "@apollo/client";
-import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreatMutation";
+import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreateMutation";
+
 const uploadFields = [
   {
     source: "task",
@@ -40,7 +41,7 @@ const uploadFields = [
 ];
 
 export function UploadContent() {
-  const [inputFields, setInput] = useState({
+  const [inputFields, setInputFields] = useState({
     video: "",
     task: "",
     github: "",
@@ -75,10 +76,11 @@ export function UploadContent() {
         },
       });
       setUpdateMessage(
-        data.updateUser.code == 200
+        data.uploadTask.code == 200
           ? "Task upload successful"
           : "Task upload unsuccessful"
       );
+      setInputFields({ video: "", task: "", github: "" });
     } catch (error) {
       setUpdateMessage("Task upload unsuccessful");
       console.error("Task upload Error:", error.message);
@@ -87,7 +89,7 @@ export function UploadContent() {
       setUpdateMessage("");
     }, 5000);
   };
-  console.log(selectedCourseSignal.value)
+  console.log(selectedCourseSignal.value);
   return (
     <>
       <Card className="grow">
@@ -127,7 +129,9 @@ export function UploadContent() {
                       <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
                     }
                     value={inputFields[o.source]}
-                    onValueChange={(v) => setInput({ ...inputFields, [o.source]: v })}
+                    onValueChange={(v) =>
+                      setInputFields({ ...inputFields, [o.source]: v })
+                    }
                   />
                 ))}
               </div>
@@ -156,6 +160,9 @@ export function UploadContent() {
             Upload
           </Button>
         </CardFooter>
+        {updateMessage && (
+          <p className="m-2 flex justify-center font-bold">{updateMessage}</p>
+        )}
       </Card>
     </>
   );
