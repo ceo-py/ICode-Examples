@@ -4,10 +4,32 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Input,
 } from "@nextui-org/react";
 import { selectedCourseSignal } from "../../SelectMenu/SelectLanguage/selectMenuSignal";
 import { SelectMenu } from "../../SelectMenu/SelectMenu";
 import { useNavigate } from "react-router-dom";
+import { capitalizeWord } from "../../../utils/capitalizeWord/capitalizeWord";
+import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
+
+const uploadFields = [
+  {
+    source: "task",
+    description: "*Task name for the solution",
+    iconUrl: "https://www.svgrepo.com/show/418007/edit-1.svg",
+  },
+  {
+    source: "video",
+    description: "*Bring your solution to life with a video explanation link",
+    iconUrl: "https://www.svgrepo.com/show/418154/video.svg",
+  },
+  {
+    source: "github",
+    description: "*Show your code with a GitHub link",
+    urlStart: "https://github.com/",
+    iconUrl: "https://www.svgrepo.com/show/475654/github-color.svg",
+  },
+];
 
 export function UploadContent() {
   const navigate = useNavigate();
@@ -18,34 +40,48 @@ export function UploadContent() {
         <CardHeader className="justify-between">
           <SelectMenu menu={selectedCourseSignal} />
         </CardHeader>
-        <CardBody className="px-3 py-10 text-small text-default-400 bg-default">
+        <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2 items-center">
-              <p className="flex text-default-500 text-small justify-center">
-                User Profile Update
+              <p className="flex text-default-500 text-large justify-center">
+                Easily upload your task solution by first selecting your
+                language, course, and module through our select menu above.
               </p>
-              <p>Push the tempo</p>
-              {/* <div className="flex flex-col max-w-[600px] w-full items-end mb-6 md:mb-0 gap-4">
-                  {Object.keys(user)
-                    .slice(3)
-                    .map((key) => (
-                      <Input
-                        key={key}
-                        type={key}
-                        label={`Change ${capitalizeWord(key)}`}
-                        labelPlacement="outside"
-                        value={user[key]}
-                        onValueChange={(v) => setUser({ ...user, [key]: v })}
-                      />
-                    ))}
-                </div> */}
+              <p>
+                *Share your solution visually—include a video explanation and/or
+                upload the task code itself to offer a well-rounded perspective
+                of your work.
+              </p>
+              <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
+                {uploadFields.map((o) => (
+                  <Input
+                    key={o.source}
+                    type={o.source}
+                    label={`${capitalizeWord(o.source)}`}
+                    labelPlacement="outside"
+                    description={o.description}
+                    startContent={
+                      <div className="pointer-events-none flex items-center">
+                        <span className="text-default-400 text-small">
+                          {o?.urlStart}
+                        </span>
+                      </div>
+                    }
+                    endContent={
+                      <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
+                    }
+                    // value={user[key]}
+                    // onValueChange={(v) => setUser({ ...user, [key]: v })}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </CardBody>
         <CardFooter className="gap-10 flex justify-center">
           <Button
             radius="full"
-            size="lg"
+            size="sm"
             variant="bordered"
             onPress={() => navigate("/")}
           >
@@ -53,7 +89,7 @@ export function UploadContent() {
           </Button>
           <Button
             radius="full"
-            size="lg"
+            size="sm"
             variant="bordered"
             onPress={() => {
               console.log("test");

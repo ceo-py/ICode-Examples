@@ -106,13 +106,13 @@ export function UserProfile() {
               </div>
             </div>
           </CardHeader>
-          <CardBody className="px-3 py-10 text-small text-default-400 bg-default">
+          <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2 items-center">
                 <p className="flex text-default-500 text-small justify-center">
                   User Profile Update
                 </p>
-                <div className="flex flex-col max-w-[600px] w-full items-end mb-6 md:mb-0 gap-4">
+                <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-4">
                   {Object.keys(user)
                     .slice(3)
                     .map((key) => (
@@ -132,7 +132,7 @@ export function UserProfile() {
           <CardFooter className="gap-10 flex justify-center">
             <Button
               radius="full"
-              size="lg"
+              size="sm"
               variant="bordered"
               onPress={() => navigate("/")}
             >
@@ -140,7 +140,7 @@ export function UserProfile() {
             </Button>
             <Button
               radius="full"
-              size="lg"
+              size="sm"
               variant="bordered"
               onPress={() => {
                 handleUserUpdate(user);
@@ -151,7 +151,7 @@ export function UserProfile() {
             <Button
               radius="full"
               color="danger"
-              size="lg"
+              size="sm"
               variant="bordered"
               onPress={onOpen}
             >
