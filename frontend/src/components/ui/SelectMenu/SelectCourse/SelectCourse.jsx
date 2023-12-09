@@ -7,7 +7,7 @@ export function SelectCourse({ menu }) {
         className="flex-grow w-"
         label="Select Course"
         onSelectionChange={(x) => {
-          menu.value = { ...menu?.value, ...{module: menu?.value?.modules[x]}, ...{selectedCourse: x} };
+          menu.value = { ...menu?.value, ...{module: menu?.value?.modules[x]}, ...{selectedCourse: x}, ...{selectedModule: ''} };
         }}
         inputValue = {menu?.value?.selectedCourse? menu.value.selectedCourse: ''}
         startContent={
