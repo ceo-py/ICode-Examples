@@ -45,6 +45,15 @@ input updateUserDetails {
   about: String
 }
 
+input uploadTaskDetails {
+  taskName: String!
+  language: String!
+  course: String!
+  module: String!
+  videoLink: String
+  githubLink: String!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -56,4 +65,5 @@ type Mutation {
   logout: Status!
   updateUser(input: updateUserDetails!): Status!
   deleteUser: Status!
+  uploadTask(input: uploadTaskDetails!): Status!
 }
