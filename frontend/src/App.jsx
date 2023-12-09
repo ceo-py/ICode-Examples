@@ -20,7 +20,7 @@ function App() {
         <div className="flex px-6 mt-6 w-full flex-row flex-nowrap items-center justify-between max-w-[1536px]">
           <Routes>
             <Route path="/" element={<CodeCard />} />
-            {/* <Route path="/" element={<ResultListTable />} /> */}
+            <Route path="/result" element={<ResultListTable />} />
             <Route
               path="/login"
               element={
@@ -39,7 +39,7 @@ function App() {
                 />
               }
             />
-             <Route
+            <Route
               path="/upload"
               element={
                 <ProtectedRoute

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -20,6 +20,9 @@ import { columns, users, statusOptions } from "./data";
 import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
 import { SearchInput } from "../NavMenu/SearchInput/SearchInput";
 import { SelectIcon } from "../../utils/Icons/SelectIcon";
+import { useLazyQuery } from "@apollo/client";
+import { TASK_SEARCH_QUERY } from "../../../graphql/queries/taskFindQuery";
+import { useSearchParams } from "react-router-dom";
 
 const statusColorMap = {
   active: "success",
@@ -42,6 +45,37 @@ export function ResultListTable() {
   });
 
   const [page, setPage] = React.useState(1);
+
+  // gg u not
+  const [searchTask, { loading, error, data }] =
+    useLazyQuery(TASK_SEARCH_QUERY);
+  const [searchParams] = useSearchParams();
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    try {
+      searchTask({
+        variables: {
+          input: {
+            taskName: searchParams.get("query"),
+          },
+        },
+      });
+      setSearchResults([data]);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  }, [searchParams]);
+
+  console.log(data?.getTaskGlobal?.status?.code);
+  const test = data?.getTaskGlobal?.result;
+
+  if (test) {
+    const jsonIhope = JSON.parse(test);
+    console.log(jsonIhope);
+  }
+
+  //gg not
 
   const pages = Math.ceil(users.length / rowsPerPage);
 
@@ -297,48 +331,47 @@ export function ResultListTable() {
   );
 
   return (
-      <Table
-        isCompact
-        removeWrapper
-        aria-label="Task Result Table"
-        bottomContent={bottomContent}
-        bottomContentPlacement="outside"
-        checkboxesProps={{
-          classNames: {
-            base: "flex flex-col gap-4",
-            wrapper:
-              "after:bg-foreground after:text-background text-background",
-          },
-        }}
-        classNames={classNames}
-        selectedKeys={selectedKeys}
-        selectionMode="single"
-        sortDescriptor={sortDescriptor}
-        topContent={topContent}
-        topContentPlacement="outside"
-        onSelectionChange={setSelectedKeys}
-        onSortChange={setSortDescriptor}
-      >
-        <TableHeader columns={headerColumns}>
-          {(column) => (
-            <TableColumn
-              key={column.uid}
-              align={column.uid === "actions" ? "center" : "start"}
-              allowsSorting={column.sortable}
-            >
-              {capitalizeWord(column.name)}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody emptyContent={"No tasks found"} items={sortedItems}>
-          {(item) => (
-            <TableRow key={item.id}>
-              {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+    <Table
+      isCompact
+      removeWrapper
+      aria-label="Task Result Table"
+      bottomContent={bottomContent}
+      bottomContentPlacement="outside"
+      checkboxesProps={{
+        classNames: {
+          base: "flex flex-col gap-4",
+          wrapper: "after:bg-foreground after:text-background text-background",
+        },
+      }}
+      classNames={classNames}
+      selectedKeys={selectedKeys}
+      selectionMode="single"
+      sortDescriptor={sortDescriptor}
+      topContent={topContent}
+      topContentPlacement="outside"
+      onSelectionChange={setSelectedKeys}
+      onSortChange={setSortDescriptor}
+    >
+      <TableHeader columns={headerColumns}>
+        {(column) => (
+          <TableColumn
+            key={column.uid}
+            align={column.uid === "actions" ? "center" : "start"}
+            allowsSorting={column.sortable}
+          >
+            {capitalizeWord(column.name)}
+          </TableColumn>
+        )}
+      </TableHeader>
+      <TableBody emptyContent={"No tasks found"} items={sortedItems}>
+        {(item) => (
+          <TableRow key={item.id}>
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 }
