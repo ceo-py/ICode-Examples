@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -6,6 +5,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Input,
   Button,
   DropdownTrigger,
   Dropdown,
@@ -15,42 +15,21 @@ import {
   User,
   Pagination,
 } from "@nextui-org/react";
-import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { columns, users, statusOptions } from "./data";
-import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
-import { SearchInput } from "../NavMenu/SearchInput/SearchInput";
-import { SelectIcon } from "../../utils/Icons/SelectIcon";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { useLazyQuery } from "@apollo/client";
 import { TASK_SEARCH_QUERY } from "../../../graphql/queries/taskFindQuery";
 import { useSearchParams } from "react-router-dom";
+import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
 
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-};
-
-const INITIAL_VISIBLE_COLUMNS = ["task name", "language", "type", "user"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
 
 export function ResultListTable() {
-  const [filterValue, setFilterValue] = React.useState("");
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(
-    new Set(INITIAL_VISIBLE_COLUMNS)
-  );
-  const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(15);
-  const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "age",
-    direction: "ascending",
-  });
-
-  const [page, setPage] = React.useState(1);
-
-  // gg u not
-  const [searchTask, { loading, error, data }] =
-    useLazyQuery(TASK_SEARCH_QUERY);
+  const [searchTask, { data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = React.useState([]);
 
   useEffect(() => {
     try {
@@ -61,21 +40,31 @@ export function ResultListTable() {
           },
         },
       });
-      setSearchResults([data]);
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
   }, [searchParams]);
 
-  console.log(data?.getTaskGlobal?.status?.code);
-  const test = data?.getTaskGlobal?.result;
+  useEffect(() => {
+    if (!data?.getTaskGlobal?.result) return;
+    setSearchResults(JSON.parse(data?.getTaskGlobal?.result));
+  }, [data]);
 
-  if (test) {
-    const jsonIhope = JSON.parse(test);
-    console.log(jsonIhope);
-  }
+  // {searchResults.map((x) => (
+  //   <p key={x.taskName}>{x.taskName}</p>
+  // ))}
 
-  //gg not
+  const [filterValue, setFilterValue] = React.useState("");
+  const [visibleColumns, setVisibleColumns] = React.useState(
+    new Set(INITIAL_VISIBLE_COLUMNS)
+  );
+  const [statusFilter, setStatusFilter] = React.useState("all");
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
+  const [sortDescriptor, setSortDescriptor] = React.useState({
+    column: "age",
+    direction: "ascending",
+  });
+  const [page, setPage] = React.useState(1);
 
   const pages = Math.ceil(users.length / rowsPerPage);
 
@@ -130,7 +119,7 @@ export function ResultListTable() {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
-      case "task name":
+      case "name":
         return (
           <User
             avatarProps={{ radius: "full", size: "sm", src: user.avatar }}
@@ -143,7 +132,7 @@ export function ResultListTable() {
             {user.email}
           </User>
         );
-      case "language":
+      case "role":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
@@ -152,18 +141,18 @@ export function ResultListTable() {
             </p>
           </div>
         );
-      case "type":
+      case "status":
         return (
           <Chip
             className="capitalize border-none gap-1 text-default-600"
-            color={statusColorMap[user.status]}
+            // color={statusColorMap[user.status]}
             size="sm"
             variant="dot"
           >
             {cellValue}
           </Chip>
         );
-      case "user":
+      case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
             <Dropdown className="bg-background border-1 border-default-200">
@@ -201,25 +190,31 @@ export function ResultListTable() {
 
   const topContent = React.useMemo(() => {
     return (
-      <div className="flex flex-col gap-4 ">
+      <div className="flex flex-col gap-4">
         <div className="flex justify-between gap-3 items-end">
-          <SearchInput
-            {...{
-              value: filterValue,
-              onValueChange: onSearchChange,
-              placeholder: "Filter by task name...",
+          <Input
+            isClearable
+            classNames={{
+              base: "w-full sm:max-w-[44%]",
+              inputWrapper: "border-1",
             }}
+            placeholder="Search by name..."
+            size="sm"
+            // startContent={<SearchIcon className="text-default-300" />}
+            value={filterValue}
+            variant="bordered"
+            onClear={() => setFilterValue("")}
+            onValueChange={onSearchChange}
           />
-          {console.log(filterValue)}
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  endContent={<SelectIcon className="text-small" />}
+                  // endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
                   variant="flat"
                 >
-                  Types
+                  Type
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -240,7 +235,7 @@ export function ResultListTable() {
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  endContent={<SelectIcon className="text-small" />}
+                  // endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
                   variant="flat"
                 >
@@ -266,17 +261,17 @@ export function ResultListTable() {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Exploring a pool of {users.length} tasks.
+            Total {users.length} tasks
           </span>
           <label className="flex items-center text-default-400 text-small">
-            Tasks per page:
+            Rows per page:
             <select
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
             >
               <option value="15">15</option>
               <option value="25">25</option>
-              <option value="35">35</option>
+              <option value="50">50</option>
             </select>
           </label>
         </div>
@@ -294,7 +289,7 @@ export function ResultListTable() {
 
   const bottomContent = React.useMemo(() => {
     return (
-      <div className="flex py-2 px-2 flex justify-center items-center">
+      <div className="py-2 px-2 flex justify-between items-center">
         <Pagination
           showControls
           classNames={{
@@ -309,7 +304,7 @@ export function ResultListTable() {
         />
       </div>
     );
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+  }, [items.length, page, pages, hasSearchFilter]);
 
   const classNames = React.useMemo(
     () => ({
@@ -334,22 +329,14 @@ export function ResultListTable() {
     <Table
       isCompact
       removeWrapper
-      aria-label="Task Result Table"
+      aria-label="Example table with custom cells, pagination and sorting"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      checkboxesProps={{
-        classNames: {
-          base: "flex flex-col gap-4",
-          wrapper: "after:bg-foreground after:text-background text-background",
-        },
-      }}
       classNames={classNames}
-      selectedKeys={selectedKeys}
-      selectionMode="single"
+      selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
     >
       <TableHeader columns={headerColumns}>
@@ -359,11 +346,11 @@ export function ResultListTable() {
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
           >
-            {capitalizeWord(column.name)}
+            {column.name}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No tasks found"} items={sortedItems}>
+      <TableBody emptyContent={"No users found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (

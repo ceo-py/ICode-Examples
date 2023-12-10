@@ -22,12 +22,13 @@ app.use(
   })
 );
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: 'http://localhost:5173',
   credentials: true,
 }));
 
 
-mongoose.connect(process.env.MONGO_URI, { writeConcern: { w: 'majority' } });
+mongoose.connect(process.env.MONGO_URI, { writeConcern: { w: 'majority' } }).catch(error => console.error('Connection ERROR:\n', error));
+
 
 
 
@@ -48,7 +49,7 @@ async function startApolloServer() {
 
   await server.start();
 
-  server.applyMiddleware({ app, cors: false});
+  server.applyMiddleware({ app, cors: false });
 }
 
 startApolloServer();

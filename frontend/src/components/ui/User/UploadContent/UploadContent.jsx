@@ -89,7 +89,6 @@ export function UploadContent() {
       setUpdateMessage("");
     }, 5000);
   };
-  console.log(selectedCourseSignal.value);
   return (
     <>
       <Card className="grow">
@@ -107,7 +106,6 @@ export function UploadContent() {
                 *Share your solution visually—include a video explanation and/or
                 upload the task code itself to offer a well-rounded perspective
                 of your work.
-                {console.log(selectedCourseSignal.value?.selectedModule)}
               </p>
               <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
                 {uploadFields.map((o) => (
