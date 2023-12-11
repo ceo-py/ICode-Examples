@@ -5,15 +5,17 @@ const registerResolver = require('./Resolvers/Mutation/register');
 const updateUserResolver = require('./Resolvers/Mutation/updateUserDetails');
 const uploadTaskResolver = require('./Resolvers/Mutation/uploadTask');
 const getTaskGlobalResolver = require('./Resolvers/Query/getTaskGlobal');
+const getTaskSingleDetailsResolver = require('./Resolvers/Query/getTaskSIngle');
 const tokenResolver = require('./Resolvers/Query/getToken');
 const userResolver = require('./Resolvers/Query/getUser');
+
 
 
 
 const resolvers = [
     loginResolver, logOutResolver, registerResolver, tokenResolver,
     userResolver, updateUserResolver, deleteUserResolver, uploadTaskResolver,
-    getTaskGlobalResolver
+    getTaskGlobalResolver, getTaskSingleDetailsResolver
 ];
 
 module.exports = resolvers;

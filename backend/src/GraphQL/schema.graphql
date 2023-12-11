@@ -63,10 +63,25 @@ type TasksDetailGlobal {
   status: Status
 }
 
+
+input TaskSingleId {
+  id: String!
+}
+
+type TaskSingleDetails {
+  userDetails: UserDetails
+  content: String
+  like: Boolean
+  follow: Boolean
+  comments: String
+}
+
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
   getTaskGlobal(input: TaskDetailGlobal!): TasksDetailGlobal!
+  getTaskSingleDetails(input: TaskSingleId): TaskSingleDetails!
 }
 
 type Mutation {
