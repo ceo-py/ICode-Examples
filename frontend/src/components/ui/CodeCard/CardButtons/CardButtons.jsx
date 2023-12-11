@@ -30,10 +30,10 @@ const buttons = [
   },
 ];
 
-function CardButtons({ isOpen, onOpen, onOpenChange }) {
+function CardButtons({ isOpen, onOpen, onOpenChange, follow, like }) {
   const [buttonData, setButtonData] = useState({
-    Follow: true,
-    Like: true,
+    Follow: follow,
+    Like: like,
   });
   // const { isOpen, onOpen, onOpenChange } = useDisclosure();
 

@@ -1,5 +1,5 @@
 type User {
-  _id: ID!
+  id: ID!
   username: String!
 }
 
@@ -69,7 +69,9 @@ input TaskSingleId {
 }
 
 type TaskSingleDetails {
-  userDetails: UserDetails
+  userDetails: User
+  taskName: String
+  icon: String
   content: String
   like: Boolean
   follow: Boolean

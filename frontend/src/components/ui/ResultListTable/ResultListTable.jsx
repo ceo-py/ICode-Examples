@@ -17,6 +17,7 @@ import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
 import { languageIcons } from "../../utils/languageIcons/languageIcons";
 import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { linkIcons } from "../../utils/Icons/linkicons.jsI";
+import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 
 export function ResultListTable() {
   const [searchTask, { data }] = useLazyQuery(TASK_SEARCH_QUERY);
@@ -44,7 +45,6 @@ export function ResultListTable() {
         <DropDownMenuIcon
           alt={item.language}
           src={languageIcons(item.language)}
-          size="lg"
         />
       );
     }
@@ -95,51 +95,47 @@ export function ResultListTable() {
   }, [page, searchResults]);
 
   return (
-    <Table
-      aria-label="table with client side pagination"
-      onRowAction={(e) => taskDetails(e)}
-      selectionMode="single"
-      bottomContent={
-        <div className="flex w-full justify-center">
-          <Pagination
-            isCompact
-            showControls
-            showShadow
-            color="default"
-            page={page}
-            total={pages}
-            onChange={(page) => setPage(page)}
-          />
-        </div>
-      }
-      classNames={{
-        wrapper: "min-h-[calc(100vh-15rem)]",
-      }}
-    >
-      <TableHeader>
-        <TableColumn key="taskName">TASK NAME</TableColumn>
-        <TableColumn key="language">LANGUAGE</TableColumn>
-        <TableColumn key="codeAndVIdeo">CODE & VIDEO</TableColumn>
-      </TableHeader>
-      <TableBody items={items}>
-        {(item) => (
-          <TableRow key={item._id}>
-            {(columnKey) => (
-              <TableCell>
-                {tableValues(columnKey, item)}
-                {/* {columnKey === "language" ? (
-                  <DropDownMenuIcon
-                    alt={item.language}
-                    src={languageIcons(item.language)}
-                  />
-                ) : (
-                  getKeyValue(item, columnKey)
-                )} */}
-              </TableCell>
+    <>
+      {searchResults.length == 0 ? (
+        <LoadingCircle />
+      ) : (
+        <Table
+          aria-label="table with client side pagination"
+          onRowAction={(e) => taskDetails(e)}
+          selectionMode="single"
+          bottomContent={
+            <div className="flex w-full justify-center">
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                color="default"
+                page={page}
+                total={pages}
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          }
+          classNames={{
+            wrapper: "min-h-[calc(100vh-15rem)]",
+          }}
+        >
+          <TableHeader>
+            <TableColumn key="taskName">TASK NAME</TableColumn>
+            <TableColumn key="language">LANGUAGE</TableColumn>
+            <TableColumn key="codeAndVIdeo">CODE & VIDEO</TableColumn>
+          </TableHeader>
+          <TableBody items={items}>
+            {(item) => (
+              <TableRow key={item._id}>
+                {(columnKey) => (
+                  <TableCell>{tableValues(columnKey, item)}</TableCell>
+                )}
+              </TableRow>
             )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+          </TableBody>
+        </Table>
+      )}
+    </>
   );
 }

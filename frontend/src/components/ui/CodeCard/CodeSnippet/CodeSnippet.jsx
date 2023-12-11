@@ -12,10 +12,10 @@ export function CodeSnippet({ code }) {
           base: "items-start bg-default/ ",
         }}
         tooltipProps={{
-          color: "foreground",
+          color: "primary",
           content: "Copy this snippet",
           disableAnimation: true,
-          placement: "top",
+          placement: "bottom",
           closeDelay: 0,
         }}
       >
