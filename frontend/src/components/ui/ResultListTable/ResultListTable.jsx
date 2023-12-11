@@ -9,12 +9,14 @@ import {
   Pagination,
   getKeyValue,
 } from "@nextui-org/react";
-import { users } from "./data";
 // import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { useLazyQuery } from "@apollo/client";
 import { TASK_SEARCH_QUERY } from "../../../graphql/queries/taskFindQuery";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
+import { languageIcons } from "../../utils/languageIcons/languageIcons";
+import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
+import { linkIcons } from "../../utils/Icons/linkicons.jsI";
 
 export function ResultListTable() {
   const [searchTask, { data }] = useLazyQuery(TASK_SEARCH_QUERY);
@@ -24,13 +26,41 @@ export function ResultListTable() {
 
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
-    const desc = `${taskDetail.language} ${taskDetail.course} ${taskDetail.module} ${taskDetail.taskName}`.replace(/-./g, "").replace(/ /g, "-");
+    const desc =
+      `${taskDetail.language} ${taskDetail.course} ${taskDetail.module} ${taskDetail.taskName}`
+        .replace(/-./g, "")
+        .replace(/ /g, "-");
     const encodedDesc = encodeURIComponent(desc);
     return encodedDesc;
   };
 
   const taskDetails = (taskId) => {
     navigate(`/solution?desc=${genTaskDesc(taskId)}&task_details=${taskId}`);
+  };
+
+  const tableValues = (column, item) => {
+    if (column === "language") {
+      return (
+        <DropDownMenuIcon
+          alt={item.language}
+          src={languageIcons(item.language)}
+          size="lg"
+        />
+      );
+    }
+    if (column === "taskName") {
+      return getKeyValue(item, column);
+    }
+    if (column === "codeAndVIdeo") {
+      return (
+        <div className="flex gap-3">
+          <DropDownMenuIcon alt="code" src={linkIcons("code")} />
+          {item.videoLink && (
+            <DropDownMenuIcon alt="video" src={linkIcons("youTube")} />
+          )}
+        </div>
+      );
+    }
   };
 
   useEffect(() => {
@@ -89,13 +119,23 @@ export function ResultListTable() {
       <TableHeader>
         <TableColumn key="taskName">TASK NAME</TableColumn>
         <TableColumn key="language">LANGUAGE</TableColumn>
-        <TableColumn key="status">TYPE</TableColumn>
+        <TableColumn key="codeAndVIdeo">CODE & VIDEO</TableColumn>
       </TableHeader>
       <TableBody items={items}>
         {(item) => (
           <TableRow key={item._id}>
             {(columnKey) => (
-              <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+              <TableCell>
+                {tableValues(columnKey, item)}
+                {/* {columnKey === "language" ? (
+                  <DropDownMenuIcon
+                    alt={item.language}
+                    src={languageIcons(item.language)}
+                  />
+                ) : (
+                  getKeyValue(item, columnKey)
+                )} */}
+              </TableCell>
             )}
           </TableRow>
         )}
