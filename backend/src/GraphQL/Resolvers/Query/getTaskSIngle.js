@@ -1,13 +1,26 @@
 const TaskSolution = require("../../../DataBase/Models/taskSolutions");
+const { getCodeContent } = require("../../../GitHub/gihubApiRequest");
+
 
 
 const getTaskSingleDetailsResolver = {
     Query: {
         getTaskSingleDetails: async (_, { input }) => {
-            console.log(input.id)
-            const result = await TaskSolution.find({"_id": input.id})
+            const result = await TaskSolution.findOne({ "_id": input.id })
+
+            const codeContent = await getCodeContent(result.githubLink)
+
+            // console.log('Code Content', codeContent)
+            if (codeContent?.status) {
+                return {
+                    status: {
+                        code: codeContent.status,
+                        message: codeContent.response.data.message
+                    }
+                }
+            }
             return {
-                content: JSON.stringify(result),
+                content: codeContent,
                 status: {
                     code: 200,
                     message: "Successful Found Task"
