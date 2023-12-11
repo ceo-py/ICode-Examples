@@ -1,16 +1,37 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, getKeyValue} from "@nextui-org/react";
-import {users} from "./data";
-import { VerticalDotsIcon } from "./VerticalDotsIcon";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Pagination,
+  getKeyValue,
+} from "@nextui-org/react";
+import { users } from "./data";
+// import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { useLazyQuery } from "@apollo/client";
 import { TASK_SEARCH_QUERY } from "../../../graphql/queries/taskFindQuery";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { capitalizeWord } from "../../utils/capitalizeWord/capitalizeWord";
 
 export function ResultListTable() {
   const [searchTask, { data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
   const [searchResults, setSearchResults] = React.useState([]);
+  const navigate = useNavigate();
+
+  const genTaskDesc = (taskId) => {
+    const taskDetail = searchResults.find((x) => x._id === taskId);
+    const desc = `${taskDetail.language} ${taskDetail.course} ${taskDetail.module} ${taskDetail.taskName}`.replace(/-./g, "").replace(/ /g, "-");
+    const encodedDesc = encodeURIComponent(desc);
+    return encodedDesc;
+  };
+
+  const taskDetails = (taskId) => {
+    navigate(`/solution?desc=${genTaskDesc(taskId)}&task_details=${taskId}`);
+  };
 
   useEffect(() => {
     try {
@@ -31,9 +52,6 @@ export function ResultListTable() {
     setSearchResults(JSON.parse(data?.getTaskGlobal?.result));
   }, [data]);
 
-  // {searchResults.map((x) => (
-  //   <p key={x.taskName}>{x.taskName}</p>
-  // ))}
   const [page, setPage] = React.useState(1);
   const rowsPerPage = 4;
 
@@ -49,7 +67,7 @@ export function ResultListTable() {
   return (
     <Table
       aria-label="table with client side pagination"
-      onRowAction={(e) => console.log(e)}
+      onRowAction={(e) => taskDetails(e)}
       selectionMode="single"
       bottomContent={
         <div className="flex w-full justify-center">

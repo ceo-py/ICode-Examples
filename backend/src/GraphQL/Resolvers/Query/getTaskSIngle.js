@@ -10,7 +10,8 @@ const getTaskSingleDetailsResolver = {
 
             const codeContent = await getCodeContent(result.githubLink)
 
-            // console.log('Code Content', codeContent)
+            console.log('Code Result: \n', result)
+            console.log('Code Content: \n', codeContent)
             if (codeContent?.status) {
                 return {
                     status: {

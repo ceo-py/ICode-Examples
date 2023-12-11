@@ -19,8 +19,9 @@ function App() {
       <div className="flex mt-6 flex-col w-full h-auto items-center justify-center">
         <div className="flex px-6 mt-6 w-full flex-row flex-nowrap items-center justify-between max-w-[1536px]">
           <Routes>
-            <Route path="/" element={<CodeCard />} />
+            <Route path="/" element={<p>Home Page</p>} />
             <Route path="/result" element={<ResultListTable />} />
+            <Route path="/solution" element={<CodeCard />} />
             <Route
               path="/login"
               element={

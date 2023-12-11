@@ -16,7 +16,7 @@ const generateUrl = (url) => {
 const getCodeContent = async (url) => {
 
     try {
-        const response = await octokit.request(`GET ${generateUrl(url)}1`)
+        const response = await octokit.request(`GET ${generateUrl(url)}`)
         return atob(response.data.content)
     } catch (e) { return e }
 }
