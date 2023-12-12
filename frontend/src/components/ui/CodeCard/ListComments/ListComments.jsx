@@ -50,7 +50,9 @@ export function ListComments({ commentData }) {
     focus.value = !focus.value;
     comment.value = "";
   };
-  {console.log(commentData)}
+  {
+    console.log(commentData);
+  }
   return (
     <Card
       className="max-w-full shadow-none"
@@ -63,7 +65,11 @@ export function ListComments({ commentData }) {
             isBordered
             radius="full"
             size="md"
-            src="https://www.svgrepo.com/show/418032/user.svg"
+            src={
+              commentData.icon
+                ? commentData.icon
+                : "https://www.svgrepo.com/show/418032/user.svg"
+            }
           />
         </div>
         <div className="w-full flex gap-2">
@@ -77,7 +83,7 @@ export function ListComments({ commentData }) {
             label={
               <div className="flex gap-2">
                 <div className="font-bold">@{commentData.username}</div>
-                <div>2 years ago</div>
+                <div>{commentData.timePast} ago</div>
               </div>
             }
             labelPlacement="outside"
@@ -96,7 +102,7 @@ export function ListComments({ commentData }) {
                     img: "rotate-90",
                   }}
                   size="xl"
-                  src="https://www.svgrepo.com/show/418040/more.svg"
+                  src={"https://www.svgrepo.com/show/418040/more.svg"}
                 />
               </DropdownTrigger>
               <DropdownMenu variant="faded" aria-label="Static Actions">

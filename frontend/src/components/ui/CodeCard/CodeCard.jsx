@@ -87,8 +87,8 @@ export function CodeCard() {
               taskId={data?.getTaskSingleDetails?.taskId}
             />
             {commentsList.length !== 0 &&
-              commentsList.map((comment) => (
-                <ListComments key={comment._id} commentData={comment} />
+              commentsList.map((comment, i) => (
+                <ListComments key={i} commentData={comment} />
               ))}
           </Card>
         </Card>
