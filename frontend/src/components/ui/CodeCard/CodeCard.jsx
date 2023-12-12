@@ -14,11 +14,13 @@ import { useLazyQuery } from "@apollo/client";
 import { useSearchParams } from "react-router-dom";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { CreateComment } from "./CreateComment/CreateComment";
+import { ListComments } from "./ListComments/ListComments";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [getTaskDetails, { data }] = useLazyQuery(TASK_DETAILS_QUERY);
   const [searchParams] = useSearchParams();
+  const [commentsList, setCommentsList] = useState([]);
 
   useEffect(() => {
     try {
@@ -34,16 +36,15 @@ export function CodeCard() {
     }
   }, [searchParams]);
 
-  const getTotalComments = (comments) => {
-    if (!comments) return 0;
-    return JSON.parse(comments).length;
-  };
+  useEffect(() => {
+    if (!data?.getTaskSingleDetails?.comments) return;
+    setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
+  }, [data]);
 
-  return (
-    <>
-      {!data ? (
-        <LoadingCircle />
-      ) : (
+  const showPage = (result) => {
+    if (!result) return <LoadingCircle />;
+    if (result?.getTaskSingleDetails?.status?.code === 200)
+      return (
         <Card className="grow">
           <CardHeader className="justify-between">
             <div className="flex gap-5">
@@ -75,23 +76,25 @@ export function CodeCard() {
           </CardBody>
           <CardFooter className="gap-3">
             <div className="flex gap-1">
-              <p className="font-semibold text-default-400 text-small">
-                {getTotalComments(data?.getTaskSingleDetails?.comments)}
+              <p className="font-bold text-default-800 text-large">
+                {commentsList.length}
               </p>
-              <p className="text-default-400 text-small">Comments</p>
+              <p className="font-bold text-default-800 text-large">Comments</p>
             </div>
           </CardFooter>
           <Card>
             <CreateComment
               taskId={data?.getTaskSingleDetails?.taskId}
-              icon={data?.getTaskSingleDetails?.icon}
             />
-            {getTotalComments(data?.getTaskSingleDetails?.comments) !== 0 && (
-              <p>ima komentari</p>
-            )}
+            {commentsList.length !== 0 &&
+              commentsList.map((comment) => (
+                <ListComments key={comment._id} commentData={comment} />
+              ))}
           </Card>
         </Card>
-      )}
-    </>
-  );
+      );
+    return <p>OPS there is error</p>;
+  };
+
+  return showPage(data);
 }

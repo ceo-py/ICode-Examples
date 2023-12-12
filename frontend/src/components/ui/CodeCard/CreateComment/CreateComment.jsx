@@ -14,7 +14,7 @@ export function CreateComment({ taskId, icon }) {
       const { data } = await commentCreate({
         variables: { input: { id, text } },
       });
-      if (data.status.code === 200) {
+      if (data?.status?.code === 200) {
         console.log("success");
         // logic for fetching the comments again
       }
@@ -36,7 +36,7 @@ export function CreateComment({ taskId, icon }) {
             isBordered
             radius="full"
             size="md"
-            src={state.isAuthenticated ? icon : "https://www.svgrepo.com/show/418032/user.svg"}
+            src={state?.iconUrl ? state.iconUrl : "https://www.svgrepo.com/show/418032/user.svg"}
           />
         </div>
         <div className="w-full flex gap-2">
