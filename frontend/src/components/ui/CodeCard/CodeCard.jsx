@@ -15,6 +15,7 @@ import { useSearchParams } from "react-router-dom";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { CreateComment } from "./CreateComment/CreateComment";
 import { ListComments } from "./ListComments/ListComments";
+import { RateLimitReach } from "../RateLimitReach/RateLimitReach";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -83,9 +84,7 @@ export function CodeCard() {
             </div>
           </CardFooter>
           <Card>
-            <CreateComment
-              taskId={data?.getTaskSingleDetails?.taskId}
-            />
+            <CreateComment taskId={data?.getTaskSingleDetails?.taskId} />
             {commentsList.length !== 0 &&
               commentsList.map((comment, i) => (
                 <ListComments key={i} commentData={comment} />
@@ -93,7 +92,7 @@ export function CodeCard() {
           </Card>
         </Card>
       );
-    return <p>OPS there is error</p>;
+    return <RateLimitReach />;
   };
 
   return showPage(data);

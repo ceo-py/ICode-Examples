@@ -11,10 +11,10 @@ const getTaskSingleDetailsResolver = {
     Query: {
         getTaskSingleDetails: async (_, { input }, { res, req }) => {
 
-            const result = await TaskSolution.findOne({ "_id": input.id })
-            const user = await User.findOne({ "_id": result.id })
-            const userDetail = await UserDetail.findOne({ "id": result.id })
-            const findComments = await Comments.find({ "taskId": input.id })
+            const result = await TaskSolution.findOne({ "_id": input.id });
+            const user = await User.findOne({ "_id": result.id });
+            const userDetail = await UserDetail.findOne({ "id": result.id });
+            const findComments = await Comments.find({ "taskId": input.id }).sort({ createdAt: -1 });
             let [follow, like, comments] = [true, true, []]
             if (findComments) {
                 findComments.map(async (x) => {
