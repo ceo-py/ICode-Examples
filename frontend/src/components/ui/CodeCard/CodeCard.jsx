@@ -16,10 +16,10 @@ import { useSearchParams } from "react-router-dom";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 
 export function CodeCard() {
-  const [isFollowed, setIsFollowed] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [getTaskDetails, { data }] = useLazyQuery(TASK_DETAILS_QUERY);
   const [searchParams] = useSearchParams();
+
 
   useEffect(() => {
     try {
@@ -34,7 +34,6 @@ export function CodeCard() {
       console.error("Error fetching search results:", error);
     }
   }, [searchParams]);
-  console.log(data);
   return (
     <>
       {!data ? (
@@ -75,7 +74,7 @@ export function CodeCard() {
               <p className="text-default-400 text-small">Comments</p>
             </div>
           </CardFooter>
-          <CodeComments actionName={"Comment"} display={true} />
+          <CodeComments actionName={"Comment"} display={true} taskId={data?.getTaskSingleDetails?.taskId} />
           <CodeComments
             {...{
               isOpen,

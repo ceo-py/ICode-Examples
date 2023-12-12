@@ -12,6 +12,8 @@ import {
 import { useSignal } from "@preact/signals-react";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 import { CardReportBtnModal } from "../CardButtons/CardReportBtnModal/CardReportBtnModal";
+import { useMutation } from "@apollo/client";
+import { CREATE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentCreateMutation";
 
 const dropDownBtnSettings = [
   {
@@ -32,7 +34,7 @@ const dropDownBtnSettings = [
   {
     textValue: "Report",
     onPress: (btn) => {
-      btn()
+      btn();
       console.log(`Report Was clicked`);
     },
     iconSrc: "https://www.svgrepo.com/show/418024/report.svg",
@@ -45,12 +47,33 @@ export function CodeComments({
   onOpenChange,
   display,
   actionName,
+  taskId,
 }) {
   const [focus, comment, hover] = [
     useSignal(false),
     useSignal(""),
     useSignal(false),
   ];
+  const [commentCreate] = useMutation(CREATE_COMMENT_MUTATION);
+
+  const handleCreateComment = async (id, text) => {
+    try {
+      const { data } = await commentCreate({
+        variables: { input: { id, text } },
+      });
+      if (data.status.code === 200) {
+        console.log("success");
+        // logic for fetching the comments again
+      }
+    } catch (error) {
+      console.error("Comment Error:", error.message);
+    }
+  };
+
+  const closeAndResetCommentData = () => {
+    focus.value = !focus.value;
+    comment.value = "";
+  };
 
   return (
     <Card
@@ -145,7 +168,10 @@ export function CodeComments({
             radius="full"
             size="sm"
             isDisabled={!comment.value.trim()}
-            onPress={""}
+            onPress={() => {
+              handleCreateComment(taskId, comment.value);
+              closeAndResetCommentData();
+            }}
           >
             {actionName}
           </Button>
@@ -153,10 +179,7 @@ export function CodeComments({
             radius="full"
             size="sm"
             variant="light"
-            onPress={() => {
-              focus.value = !focus.value;
-              comment.value = "";
-            }}
+            onPress={() => closeAndResetCommentData()}
           >
             Cancel
           </Button>

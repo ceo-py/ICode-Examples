@@ -7,6 +7,7 @@ export const TASK_DETAILS_QUERY = gql`
         follow
         content
         taskName
+        taskId
         icon
         userDetails {
             id

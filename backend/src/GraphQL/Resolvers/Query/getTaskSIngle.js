@@ -41,6 +41,7 @@ const getTaskSingleDetailsResolver = {
                 content: codeContent,
                 icon: userDetail.icon,
                 taskName: result.taskName,
+                taskId: input.id,
                 status: {
                     code: 200,
                     message: "Successful Found Task"

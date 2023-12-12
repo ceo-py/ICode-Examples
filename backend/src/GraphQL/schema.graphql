@@ -71,6 +71,7 @@ input TaskSingleId {
 type TaskSingleDetails {
   userDetails: User
   taskName: String
+  taskId: String
   icon: String
   content: String
   like: Boolean
