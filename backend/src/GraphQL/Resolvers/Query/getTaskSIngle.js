@@ -1,3 +1,4 @@
+const Comments = require("../../../DataBase/Models/comments");
 const TaskSolution = require("../../../DataBase/Models/taskSolutions");
 const UserDetail = require("../../../DataBase/Models/userDetails");
 const User = require("../../../DataBase/Models/users");
@@ -12,20 +13,18 @@ const getTaskSingleDetailsResolver = {
             const result = await TaskSolution.findOne({ "_id": input.id })
             const user = await User.findOne({ "_id": result.id })
             const userDetail = await UserDetail.findOne({ "id": result.id })
+            const comments = await Comments.find({ "taskId": input.id })
             let [follow, like] = [true, true]
 
-            console.log(userDetail)
 
             const cookieToken = req?.cookies?.token;
             if (!cookieToken) {
-                follow = false
                 like = false
+                icon = null
             }
 
             const codeContent = await getCodeContent(result.githubLink)
 
-            // console.log('Code Result: \n', result)
-            // console.log('Code Content: \n', codeContent)
             if (codeContent?.status) {
                 return {
                     status: {
@@ -42,6 +41,7 @@ const getTaskSingleDetailsResolver = {
                 icon: userDetail.icon,
                 taskName: result.taskName,
                 taskId: input.id,
+                comments: comments ? JSON.stringify(comments) : '',
                 status: {
                     code: 200,
                     message: "Successful Found Task"

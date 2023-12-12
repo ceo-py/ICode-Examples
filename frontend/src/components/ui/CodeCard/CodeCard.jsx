@@ -9,17 +9,16 @@ import {
 } from "@nextui-org/react";
 import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
 import { CardButtons } from "./CardButtons/CardButtons";
-import { CodeComments } from "./CodeComment/CodeComments";
 import { TASK_DETAILS_QUERY } from "../../../graphql/queries/taskDetailsQuery";
 import { useLazyQuery } from "@apollo/client";
 import { useSearchParams } from "react-router-dom";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
+import { CreateComment } from "./CreateComment/CreateComment";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [getTaskDetails, { data }] = useLazyQuery(TASK_DETAILS_QUERY);
   const [searchParams] = useSearchParams();
-
 
   useEffect(() => {
     try {
@@ -34,6 +33,12 @@ export function CodeCard() {
       console.error("Error fetching search results:", error);
     }
   }, [searchParams]);
+
+  const getTotalComments = (comments) => {
+    if (!comments) return 0;
+    return JSON.parse(comments).length;
+  };
+
   return (
     <>
       {!data ? (
@@ -70,20 +75,21 @@ export function CodeCard() {
           </CardBody>
           <CardFooter className="gap-3">
             <div className="flex gap-1">
-              <p className="font-semibold text-default-400 text-small">4</p>
+              <p className="font-semibold text-default-400 text-small">
+                {getTotalComments(data?.getTaskSingleDetails?.comments)}
+              </p>
               <p className="text-default-400 text-small">Comments</p>
             </div>
           </CardFooter>
-          <CodeComments actionName={"Comment"} display={true} taskId={data?.getTaskSingleDetails?.taskId} />
-          <CodeComments
-            {...{
-              isOpen,
-              onOpen,
-              onOpenChange,
-              display: false,
-              actionName: "Edit",
-            }}
-          />
+          <Card>
+            <CreateComment
+              taskId={data?.getTaskSingleDetails?.taskId}
+              icon={data?.getTaskSingleDetails?.icon}
+            />
+            {getTotalComments(data?.getTaskSingleDetails?.comments) !== 0 && (
+              <p>ima komentari</p>
+            )}
+          </Card>
         </Card>
       )}
     </>

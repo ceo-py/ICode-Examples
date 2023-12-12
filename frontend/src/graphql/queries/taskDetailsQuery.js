@@ -9,6 +9,7 @@ export const TASK_DETAILS_QUERY = gql`
         taskName
         taskId
         icon
+        comments
         userDetails {
             id
             username

@@ -2,7 +2,7 @@
 const logOutResolver = {
     Mutation: {
         logout: async (_, { __ }, { req, res }) => {
-            res.clearCookie('token');
+            await res.clearCookie('token');
             return { message: 'Logout successful', code: 200 }
         },
     },

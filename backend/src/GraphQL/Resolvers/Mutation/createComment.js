@@ -13,16 +13,14 @@ const createCommentResolver = {
             }
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
-
+                
                 const comment = new Comments({
                     taskId: input.id,
-                    createdById: decoded.id,
+                    createdById: decoded.userId,
                     username: decoded.username,
-                    text: input.text,
-                    createdAt: { type: Date, default: Date.now },
-                    updatedAt: { type: Date, default: Date.now },
+                    text: input.text.trim(),
                 })
-                comment.save()
+                await comment.save()
 
                 return {
                     code: 200,

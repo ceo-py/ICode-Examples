@@ -6,12 +6,11 @@ const commentsSchema = new mongoose.Schema({
     username: { type: String, ref: 'User', required: true },
     text: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date },
 });
 
 commentsSchema.pre('save', function (next) {
     const now = new Date();
-    this.updatedAt = now;
 
     if (!this.createdAt) {
         this.createdAt = now;
