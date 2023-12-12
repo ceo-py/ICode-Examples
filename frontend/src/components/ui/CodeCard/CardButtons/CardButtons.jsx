@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
-// import { useDisclosure } from "@nextui-org/react";
 import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
 
 const buttons = [
@@ -35,7 +34,6 @@ function CardButtons({ isOpen, onOpen, onOpenChange, follow, like }) {
     Follow: follow,
     Like: like,
   });
-  // const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>
