@@ -85,6 +85,10 @@ input CommentDetails {
   text: String!
 }
 
+type CreateCommentDetails {
+  commentDetails: String!
+  status: Status!
+}
 
 type Query {
   getUser: UserDetail
@@ -100,6 +104,7 @@ type Mutation {
   updateUser(input: updateUserDetails!): Status!
   deleteUser: Status!
   uploadTask(input: TaskDetails!): Status!
-  createComment(input: CommentDetails!): Status!
+  createComment(input: CommentDetails!): CreateCommentDetails!
   editComment(input: CommentDetails!): Status!
+  deleteComment(input: TaskSingleId!): Status!
 }

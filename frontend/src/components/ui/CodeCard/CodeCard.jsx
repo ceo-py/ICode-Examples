@@ -19,7 +19,7 @@ import { RateLimitReach } from "../RateLimitReach/RateLimitReach";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [getTaskDetails, { data }] = useLazyQuery(TASK_DETAILS_QUERY);
+  const [getTaskDetails, { data } ] = useLazyQuery(TASK_DETAILS_QUERY);
   const [searchParams] = useSearchParams();
   const [commentsList, setCommentsList] = useState([]);
 
@@ -41,6 +41,9 @@ export function CodeCard() {
     if (!data?.getTaskSingleDetails?.comments) return;
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
   }, [data]);
+
+
+  console.log(commentsList)
 
   const showPage = (result) => {
     if (!result) return <LoadingCircle />;
@@ -84,7 +87,12 @@ export function CodeCard() {
             </div>
           </CardFooter>
           <Card>
-            <CreateComment taskId={data?.getTaskSingleDetails?.taskId} />
+            <CreateComment
+              taskId={data?.getTaskSingleDetails?.taskId}
+              setCommentsList={setCommentsList}
+              commentsList={commentsList}
+              userDetails={data?.getTaskSingleDetails.userDetails}
+            />
             {commentsList.length !== 0 &&
               commentsList.map((comment, i) => (
                 <ListComments key={i} commentData={comment} />

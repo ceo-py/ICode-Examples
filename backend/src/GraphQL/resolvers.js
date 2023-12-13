@@ -1,4 +1,5 @@
 const createCommentResolver = require('./Resolvers/Mutation/createComment');
+const deleteCommentResolver = require('./Resolvers/Mutation/deleteComment');
 const deleteUserResolver = require('./Resolvers/Mutation/deleteUser');
 const editCommentResolver = require('./Resolvers/Mutation/editComment');
 const loginResolver = require('./Resolvers/Mutation/login');
@@ -18,7 +19,7 @@ const resolvers = [
     loginResolver, logOutResolver, registerResolver, tokenResolver,
     userResolver, updateUserResolver, deleteUserResolver, uploadTaskResolver,
     getTaskGlobalResolver, getTaskSingleDetailsResolver, createCommentResolver,
-    editCommentResolver
+    editCommentResolver, deleteCommentResolver
 ];
 
 module.exports = resolvers;

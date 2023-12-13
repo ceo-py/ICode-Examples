@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Comments = require('../../../DataBase/Models/comments');
+const timeTimeDifference = require('../../../utils/getTimeNow');
 
 const createCommentResolver = {
     Mutation: {
@@ -7,13 +8,15 @@ const createCommentResolver = {
             const cookieToken = req?.cookies?.token;
             if (!input.id || !input.text) {
                 return {
-                    code: 401,
-                    message: 'Missing comment details'
+                    status: {
+                        code: 401,
+                        message: 'Missing comment details'
+                    }
                 }
             }
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
-                
+
                 const comment = new Comments({
                     taskId: input.id,
                     createdById: decoded.userId,
@@ -23,14 +26,27 @@ const createCommentResolver = {
                 await comment.save()
 
                 return {
-                    code: 200,
-                    message: 'Create comment successfully'
+                    status: {
+                        code: 200,
+                        message: 'Create comment successfully'
+                    },
+
+                    commentDetails: JSON.stringify({
+                        timePast: `1 second ago`,
+                        username: decoded.username,
+                        createdById: decoded.userId,
+                        commentId: comment._id,
+                        text: comment.text,
+                        icon: decoded.iconUrl
+                    }),
                 };
 
             } catch (e) {
                 return {
-                    code: 401,
-                    message: 'Create comment unsuccessfully'
+                    status: {
+                        code: 401,
+                        message: 'Create comment unsuccessfully'
+                    }
                 }
             }
         }

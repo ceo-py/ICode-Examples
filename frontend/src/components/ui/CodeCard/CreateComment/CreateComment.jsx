@@ -1,10 +1,15 @@
 import { CardHeader, Avatar, Textarea, Button } from "@nextui-org/react";
 import { useSignal } from "@preact/signals-react";
-import { useMutation } from "@apollo/client";
 import { CREATE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentCreateMutation";
 import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useMutation } from "@apollo/client";
 
-export function CreateComment({ taskId, icon }) {
+
+export function CreateComment({
+  taskId,
+  setCommentsList,
+  commentsList,
+}) {
   const { state } = useAuth();
   const [focus, comment] = [useSignal(false), useSignal("")];
   const [commentCreate] = useMutation(CREATE_COMMENT_MUTATION);
@@ -14,9 +19,11 @@ export function CreateComment({ taskId, icon }) {
       const { data } = await commentCreate({
         variables: { input: { id, text } },
       });
-      if (data?.status?.code === 200) {
-        console.log("success");
-        // logic for fetching the comments again
+      if (data?.createComment?.status?.code === 200) {
+        // console.log("success");
+        // console.log(data.createComment.commentDetails)
+        console.log('new result', JSON.parse(data.createComment.commentDetails))
+        setCommentsList([JSON.parse(data.createComment.commentDetails), ...commentsList]);
       }
     } catch (error) {
       console.error("Comment Error:", error.message);
@@ -36,7 +43,11 @@ export function CreateComment({ taskId, icon }) {
             isBordered
             radius="full"
             size="md"
-            src={state?.iconUrl ? state.iconUrl : "https://www.svgrepo.com/show/418032/user.svg"}
+            src={
+              state?.iconUrl
+                ? state.iconUrl
+                : "https://www.svgrepo.com/show/418032/user.svg"
+            }
           />
         </div>
         <div className="w-full flex gap-2">
