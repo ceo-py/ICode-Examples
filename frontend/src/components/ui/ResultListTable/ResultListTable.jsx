@@ -18,6 +18,7 @@ import { languageIcons } from "../../utils/languageIcons/languageIcons";
 import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { linkIcons } from "../../utils/Icons/linkicons.jsI";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
+import { NoResultFound } from "../NoResultFound/NoResultFound";
 
 export function ResultListTable() {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
@@ -136,12 +137,7 @@ export function ResultListTable() {
           </TableBody>
         </Table>
       ) : (
-        <div className="flex flex-col w-full items-center text-default-500 text-4xl gap-6">
-          <p> Sorry, we couldn't find any relevant solutions for your task.</p>
-          <p>
-            You can help us improve our knowledge base by adding it yourself!
-          </p>
-        </div>
+        <NoResultFound />
       )}
     </>
   );
