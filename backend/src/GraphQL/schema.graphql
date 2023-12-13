@@ -100,5 +100,6 @@ type Mutation {
   updateUser(input: updateUserDetails!): Status!
   deleteUser: Status!
   uploadTask(input: TaskDetails!): Status!
-  createComment(input: CommentDetails): Status!
+  createComment(input: CommentDetails!): Status!
+  editComment(input: CommentDetails!): Status!
 }

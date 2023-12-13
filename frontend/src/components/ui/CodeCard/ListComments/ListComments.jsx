@@ -14,6 +14,8 @@ import { useSignal } from "@preact/signals-react";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 import { CardReportBtnModal } from "../CardButtons/CardReportBtnModal/CardReportBtnModal";
 import { useAuth } from "../../../../AuthContext/AuthContext";
+import { EDIT_COMMENT_MUTATION } from "../../../../graphql/mutations/commentEditMutation";
+import { useMutation } from "@apollo/client";
 
 const dropDownBtnSettings = [
   {
@@ -49,6 +51,23 @@ export function ListComments({ commentData }) {
   ];
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { state } = useAuth();
+  const [commentEdit] = useMutation(EDIT_COMMENT_MUTATION);
+
+  const handleEditComment = async (id, text) => {
+    console.log(id)
+    console.log(text)
+    try {
+      const { data } = await commentEdit({
+        variables: { input: { id, text } },
+      });
+      if (data?.status?.code === 200) {
+        console.log("success");
+        // logic for fetching the comments again
+      }
+    } catch (error) {
+      console.error("Comment Error:", error.message);
+    }
+  };
 
   // {
   //   console.log(commentData);
@@ -83,7 +102,7 @@ export function ListComments({ commentData }) {
             label={
               <div className="flex gap-2">
                 <div className="font-bold">@{commentData.username}</div>
-                <div>{commentData.timePast} ago</div>
+                <div>{commentData.timePast}</div>
               </div>
             }
             labelPlacement="outside"
@@ -138,6 +157,8 @@ export function ListComments({ commentData }) {
             isDisabled={comment.value.trim() === commentData.text}
             onPress={() => {
               focus.value = !focus.value;
+              comment.value = comment.value.trim();
+              handleEditComment(commentData.commentId, comment.value);
             }}
           >
             Edit

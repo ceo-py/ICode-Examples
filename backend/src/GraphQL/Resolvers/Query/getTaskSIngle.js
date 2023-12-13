@@ -23,9 +23,10 @@ const getTaskSingleDetailsResolver = {
                         const user = await UserDetail.findOne({ "id": x.createdById });
 
                         return {
-                            timePast: timeTimeDifference(x.createdAt),
+                            timePast: `${timeTimeDifference(x.createdAt)} ago ${x?.updatedAt ? '(edited)' : ''}`,
                             username: x.username,
                             createdById: x.createdById,
+                            commentId: x._id,
                             text: x.text,
                             icon: user.icon
                         };
