@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const UserDetail = require('../../../DataBase/Models/userDetails');
 
 const tokenResolver = {
     Query: {
@@ -7,11 +8,12 @@ const tokenResolver = {
 
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
+                const user = await UserDetail.findOne({id: decoded.userId})
                 
                 return {
                     code: 200,
                     username: decoded.username,
-                    iconUrl: decoded.icon,
+                    iconUrl: user.icon,
                     message: 'Token verified successfully'
                 };
             } catch (err) {

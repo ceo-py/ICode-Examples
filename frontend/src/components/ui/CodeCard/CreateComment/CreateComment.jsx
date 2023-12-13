@@ -3,16 +3,13 @@ import { useSignal } from "@preact/signals-react";
 import { CREATE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentCreateMutation";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
 
-
-export function CreateComment({
-  taskId,
-  setCommentsList,
-  commentsList,
-}) {
-  const { state } = useAuth();
+export function CreateComment({ taskId, setCommentsList, commentsList }) {
+  const { state, dispatch } = useAuth();
   const [focus, comment] = [useSignal(false), useSignal("")];
   const [commentCreate] = useMutation(CREATE_COMMENT_MUTATION);
+  const navigate = useNavigate();
 
   const handleCreateComment = async (id, text) => {
     try {
@@ -20,7 +17,10 @@ export function CreateComment({
         variables: { input: { id, text } },
       });
       if (data?.createComment?.status?.code === 200) {
-        setCommentsList([JSON.parse(data.createComment.commentDetails), ...commentsList]);
+        setCommentsList([
+          JSON.parse(data.createComment.commentDetails),
+          ...commentsList,
+        ]);
       }
     } catch (error) {
       console.error("Comment Error:", error.message);
@@ -32,6 +32,10 @@ export function CreateComment({
     comment.value = "";
   };
 
+  const handleLogin = () => {
+    navigate(`/login`);
+  };
+
   return (
     <>
       <CardHeader className="flex items-start gap-6">
@@ -40,6 +44,7 @@ export function CreateComment({
             isBordered
             radius="full"
             size="md"
+            showFallback
             src={
               state?.iconUrl
                 ? state.iconUrl
@@ -56,7 +61,9 @@ export function CreateComment({
             maxRows="200"
             value={comment.value}
             onValueChange={(v) => (comment.value = v)}
-            onFocus={() => (focus.value = true)}
+            onFocus={() =>
+              !state.isAuthenticated ? handleLogin() : (focus.value = true)
+            }
           />
         </div>
       </CardHeader>
