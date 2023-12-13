@@ -7,7 +7,7 @@ const tokenResolver = {
 
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
-
+                
                 return {
                     code: 200,
                     username: decoded.username,

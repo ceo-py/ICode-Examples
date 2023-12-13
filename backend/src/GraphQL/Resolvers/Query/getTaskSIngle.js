@@ -15,18 +15,25 @@ const getTaskSingleDetailsResolver = {
             const user = await User.findOne({ "_id": result.id });
             const userDetail = await UserDetail.findOne({ "id": result.id });
             const findComments = await Comments.find({ "taskId": input.id }).sort({ createdAt: -1 });
+
             let [follow, like, comments] = [true, true, []]
             if (findComments) {
-                findComments.map(async (x) => {
-                    const user = await UserDetail.findOne({ "id": x.createdById })
-                    comments.push({
-                        timePast: timeTimeDifference(x.createdAt),
-                        username: x.username,
-                        createdById: x.createdById,
-                        text: x.text,
-                        icon: user.icon
+                const commentsData = await Promise.all(
+                    findComments.map(async (x) => {
+                        const user = await UserDetail.findOne({ "id": x.createdById });
+
+                        return {
+                            timePast: timeTimeDifference(x.createdAt),
+                            username: x.username,
+                            createdById: x.createdById,
+                            text: x.text,
+                            icon: user.icon
+                        };
                     })
-                })
+                );
+
+                comments = commentsData;
+
             }
 
             const cookieToken = req?.cookies?.token;
