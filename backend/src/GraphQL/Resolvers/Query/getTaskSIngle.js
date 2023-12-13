@@ -15,7 +15,6 @@ const getTaskSingleDetailsResolver = {
             const user = await User.findOne({ "_id": result.id });
             const userDetail = await UserDetail.findOne({ "id": result.id });
             const findComments = await Comments.find({ "taskId": input.id }).sort({ createdAt: -1 });
-            console.log(findComments)
 
             let [follow, like, comments] = [true, true, []]
             if (findComments) {

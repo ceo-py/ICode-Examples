@@ -79,7 +79,9 @@ export function ListComments({ commentData, setCommentsList, commentsList }) {
         variables: { input: { id } },
       });
       if (data?.deleteComment?.code === 200) {
-        console.log("correct");
+        setCommentsList(
+          commentsList.filter((x) => x.commentId !== commentData.commentId)
+        );
       }
     } catch (error) {
       console.error("Comment Error:", error.message);
@@ -153,10 +155,6 @@ export function ListComments({ commentData, setCommentsList, commentsList }) {
                           focus.value = true;
                         } else if (x.textValue === "Delete") {
                           handleDeleteComment(commentData.commentId);
-                          const commentsNoDelete = commentsList.filter(
-                            (x) => x.commentId !== commentData.commentId
-                          );
-                          setCommentsList(commentsNoDelete);
                         } else if (x.textValue === "Report") {
                           onOpen();
                         }

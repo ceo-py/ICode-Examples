@@ -20,7 +20,7 @@ import { linkIcons } from "../../utils/Icons/linkicons.jsI";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 
 export function ResultListTable() {
-  const [searchTask, { data }] = useLazyQuery(TASK_SEARCH_QUERY);
+  const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
   const [searchResults, setSearchResults] = React.useState([]);
   const navigate = useNavigate();
@@ -96,9 +96,9 @@ export function ResultListTable() {
 
   return (
     <>
-      {searchResults.length == 0 ? (
+      {loading ? (
         <LoadingCircle />
-      ) : (
+      ) : searchResults.length !== 0 ? (
         <Table
           aria-label="table with client side pagination"
           onRowAction={(e) => taskDetails(e)}
@@ -135,6 +135,13 @@ export function ResultListTable() {
             )}
           </TableBody>
         </Table>
+      ) : (
+        <div className="flex flex-col w-full items-center text-default-500 text-4xl gap-6">
+          <p> Sorry, we couldn't find any relevant solutions for your task.</p>
+          <p>
+            You can help us improve our knowledge base by adding it yourself!
+          </p>
+        </div>
       )}
     </>
   );

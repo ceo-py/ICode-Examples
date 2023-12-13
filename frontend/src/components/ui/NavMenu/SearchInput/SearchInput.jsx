@@ -9,7 +9,7 @@ export function SearchInput() {
 
   const taskSearch = (e) => {
     if (e.key === "Enter" && value.trim() != "") {
-      const encodedQuery = encodeURIComponent(value);
+      const encodedQuery = encodeURIComponent(value.trim());
       navigate(`/result?query=${encodedQuery}`);
     }
   };

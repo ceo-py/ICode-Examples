@@ -86,7 +86,7 @@ input CommentDetails {
 }
 
 type CreateCommentDetails {
-  commentDetails: String!
+  commentDetails: String
   status: Status!
 }
 

@@ -5,7 +5,6 @@ const getTaskGlobalResolver = {
     Query: {
         getTaskGlobal: async (_, { input }) => {
             const result = await TaskSolution.find({"taskName": {"$regex": new RegExp(input.taskName, 'i')}})
-            console.log(result.length)
             return {
                 result: JSON.stringify(result),
                 status: {

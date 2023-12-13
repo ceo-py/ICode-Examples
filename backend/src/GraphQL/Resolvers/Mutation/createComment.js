@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const Comments = require('../../../DataBase/Models/comments');
-const timeTimeDifference = require('../../../utils/getTimeNow');
 
 const createCommentResolver = {
     Mutation: {
@@ -42,6 +41,7 @@ const createCommentResolver = {
                 };
 
             } catch (e) {
+                console.log('Create comment error:\n', e)
                 return {
                     status: {
                         code: 401,

@@ -22,7 +22,7 @@ const deleteCommentResolver = {
                 };
 
             } catch (e) {
-                console.log('Error on delete Comment', e)
+                console.error('Error on delete Comment', e)
                 return {
                     code: 401,
                     message: 'Delete comment unsuccessfully'
