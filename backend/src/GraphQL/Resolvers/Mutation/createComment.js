@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Comments = require('../../../DataBase/Models/comments');
+const UserDetail = require('../../../DataBase/Models/userDetails');
 
 const createCommentResolver = {
     Mutation: {
@@ -15,7 +16,7 @@ const createCommentResolver = {
             }
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
-
+                const user = await UserDetail.findOne({id: decoded.userId})
                 const comment = new Comments({
                     taskId: input.id,
                     createdById: decoded.userId,
@@ -36,7 +37,7 @@ const createCommentResolver = {
                         createdById: decoded.userId,
                         commentId: comment._id,
                         text: comment.text,
-                        icon: decoded.icon
+                        icon: user.icon
                     }),
                 };
 
