@@ -20,9 +20,6 @@ export function CreateComment({
         variables: { input: { id, text } },
       });
       if (data?.createComment?.status?.code === 200) {
-        // console.log("success");
-        // console.log(data.createComment.commentDetails)
-        console.log('new result', JSON.parse(data.createComment.commentDetails))
         setCommentsList([JSON.parse(data.createComment.commentDetails), ...commentsList]);
       }
     } catch (error) {

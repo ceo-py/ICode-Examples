@@ -16,6 +16,7 @@ import { CardReportBtnModal } from "../CardButtons/CardReportBtnModal/CardReport
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { EDIT_COMMENT_MUTATION } from "../../../../graphql/mutations/commentEditMutation";
 import { useMutation } from "@apollo/client";
+import { DELETE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentDeleteMutation";
 
 const dropDownBtnSettings = [
   {
@@ -28,9 +29,7 @@ const dropDownBtnSettings = [
   },
   {
     textValue: "Delete",
-    onPress: (btn) => {
-      console.log(`${btn} Was clicked`);
-    },
+
     iconSrc: "https://www.svgrepo.com/show/418071/note-delete.svg",
   },
   {
@@ -43,7 +42,7 @@ const dropDownBtnSettings = [
   },
 ];
 
-export function ListComments({ commentData }) {
+export function ListComments({ commentData, setCommentsList, commentsList }) {
   const [focus, comment, hover] = [
     useSignal(false),
     useSignal(commentData.text),
@@ -52,17 +51,35 @@ export function ListComments({ commentData }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { state } = useAuth();
   const [commentEdit] = useMutation(EDIT_COMMENT_MUTATION);
+  const [commentDelete] = useMutation(DELETE_COMMENT_MUTATION);
 
   const handleEditComment = async (id, text) => {
-    console.log(id)
-    console.log(text)
     try {
       const { data } = await commentEdit({
         variables: { input: { id, text } },
       });
-      if (data?.status?.code === 200) {
-        console.log("success");
-        // logic for fetching the comments again
+      console.log(data);
+      if (data?.editComment?.code === 200) {
+        const commentForEdit = commentsList.find((x) => x.commentId === id);
+        commentForEdit.text = text;
+        commentForEdit.timePast = `${commentForEdit.timePast.replace(
+          "(edited)",
+          ""
+        )} (edited)`;
+        setCommentsList([...commentsList]);
+      }
+    } catch (error) {
+      console.error("Comment Error:", error.message);
+    }
+  };
+
+  const handleDeleteComment = async (id) => {
+    try {
+      const { data } = await commentDelete({
+        variables: { input: { id } },
+      });
+      if (data?.deleteComment?.code === 200) {
+        console.log("correct");
       }
     } catch (error) {
       console.error("Comment Error:", error.message);
@@ -132,7 +149,17 @@ export function ListComments({ commentData }) {
                       textValue={x.textValue}
                       key={x.textValue}
                       onPress={() => {
-                        x.onPress(x.textValue === "Edit" ? focus : onOpen);
+                        if (x.textValue === "Edit") {
+                          focus.value = true;
+                        } else if (x.textValue === "Delete") {
+                          handleDeleteComment(commentData.commentId);
+                          const commentsNoDelete = commentsList.filter(
+                            (x) => x.commentId !== commentData.commentId
+                          );
+                          setCommentsList(commentsNoDelete);
+                        } else if (x.textValue === "Report") {
+                          onOpen();
+                        }
                       }}
                       startContent={
                         <DropDownMenuIcon alt={x.textValue} src={x.iconSrc} />

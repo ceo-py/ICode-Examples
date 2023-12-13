@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const Comments = require('../../../DataBase/Models/comments');
-const timeTimeDifference = require('../../../utils/getTimeNow');
 
 const deleteCommentResolver = {
     Mutation: {
@@ -15,15 +14,15 @@ const deleteCommentResolver = {
                 }
             }
             try {
-                const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
-                await Comments.deleteOne({ _id: id });
-
+                jwt.verify(cookieToken, process.env.SECRET_KEY);
+                await Comments.deleteOne({ _id: input.id });
                 return {
                     code: 200,
                     message: 'Delete comment successfully'
                 };
 
             } catch (e) {
+                console.log('Error on delete Comment', e)
                 return {
                     code: 401,
                     message: 'Delete comment unsuccessfully'

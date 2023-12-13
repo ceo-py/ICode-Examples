@@ -37,7 +37,7 @@ const createCommentResolver = {
                         createdById: decoded.userId,
                         commentId: comment._id,
                         text: comment.text,
-                        icon: decoded.iconUrl
+                        icon: decoded.icon
                     }),
                 };
 
