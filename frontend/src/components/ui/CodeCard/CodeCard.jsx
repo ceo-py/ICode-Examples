@@ -28,7 +28,7 @@ export function CodeCard() {
       getTaskDetails({
         variables: {
           input: {
-            id: searchParams.get("task_details"),
+            id: searchParams.get("id"),
           },
         },
       });

@@ -36,7 +36,7 @@ export function ResultListTable() {
   };
 
   const taskDetails = (taskId) => {
-    navigate(`/solution?desc=${genTaskDesc(taskId)}&task_details=${taskId}`);
+    navigate(`/solution?desc=${genTaskDesc(taskId)}&id=${taskId}`);
   };
 
   const tableValues = (column, item) => {

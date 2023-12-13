@@ -8,10 +8,12 @@ import {
   DropdownTrigger,
   DropdownItem,
   DropdownMenu,
+  useDisclosure,
 } from "@nextui-org/react";
 import { useSignal } from "@preact/signals-react";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 import { CardReportBtnModal } from "../CardButtons/CardReportBtnModal/CardReportBtnModal";
+import { useAuth } from "../../../../AuthContext/AuthContext";
 
 const dropDownBtnSettings = [
   {
@@ -45,14 +47,12 @@ export function ListComments({ commentData }) {
     useSignal(commentData.text),
     useSignal(false),
   ];
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { state } = useAuth();
 
-  const closeAndResetCommentData = () => {
-    focus.value = !focus.value;
-    comment.value = "";
-  };
-  {
-    console.log(commentData);
-  }
+  // {
+  //   console.log(commentData);
+  // }
   return (
     <Card
       className="max-w-full shadow-none"
@@ -106,21 +106,22 @@ export function ListComments({ commentData }) {
                 />
               </DropdownTrigger>
               <DropdownMenu variant="faded" aria-label="Static Actions">
-                {dropDownBtnSettings.map((x) => (
-                  <DropdownItem
-                    textValue={x.textValue}
-                    key={x.textValue}
-                    onPress={() => {
-                      x.onPress(x.textValue === "Edit" ? focus : onOpen);
-                      hover.value = false;
-                    }}
-                    startContent={
-                      <DropDownMenuIcon alt={x.textValue} src={x.iconSrc} />
-                    }
-                  >
-                    {x.textValue}
-                  </DropdownItem>
-                ))}
+                {dropDownBtnSettings
+                  .slice(state.username === commentData.username ? 0 : 2)
+                  .map((x) => (
+                    <DropdownItem
+                      textValue={x.textValue}
+                      key={x.textValue}
+                      onPress={() => {
+                        x.onPress(x.textValue === "Edit" ? focus : onOpen);
+                      }}
+                      startContent={
+                        <DropDownMenuIcon alt={x.textValue} src={x.iconSrc} />
+                      }
+                    >
+                      {x.textValue}
+                    </DropdownItem>
+                  ))}
               </DropdownMenu>
             </Dropdown>
           ) : (
@@ -134,24 +135,26 @@ export function ListComments({ commentData }) {
             color={comment.value.trim() ? "primary" : "default"}
             radius="full"
             size="sm"
-            isDisabled={!comment.value.trim()}
+            isDisabled={comment.value.trim() === commentData.text}
             onPress={() => {
-              closeAndResetCommentData();
+              focus.value = !focus.value;
             }}
           >
-            {actionName}
+            Edit
           </Button>
           <Button
             radius="full"
             size="sm"
             variant="light"
-            onPress={() => closeAndResetCommentData()}
+            onPress={() => {
+              focus.value = !focus.value;
+            }}
           >
             Cancel
           </Button>
-          {/* <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange} /> */}
         </div>
       )}
+      <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange} />
     </Card>
   );
 }
