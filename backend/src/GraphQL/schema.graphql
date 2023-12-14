@@ -66,6 +66,7 @@ type TasksDetailGlobal {
 
 input TaskSingleId {
   id: String!
+  UserId: String
 }
 
 type TaskSingleDetails {
@@ -75,7 +76,9 @@ type TaskSingleDetails {
   icon: String
   content: String
   like: Boolean
+  likeCounter: Int
   follow: Boolean
+  followCounter: Int
   comments: String
   status: Status!
 }

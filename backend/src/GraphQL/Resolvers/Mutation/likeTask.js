@@ -7,7 +7,6 @@ const likeTaskResolver = {
             const cookieToken = req?.cookies?.token;
             const taskId = input.id
 
-            console.log('task id is:\n', taskId)
             if (!taskId) {
                 return {
                     code: 401,
@@ -27,15 +26,15 @@ const likeTaskResolver = {
                 return {
 
                     code: 200,
-                    message: 'Like comment successfully'
+                    message: 'Tasks request successful'
 
                 };
 
             } catch (e) {
-                console.log('Like comment error:\n', e)
+                console.log('Like tasks error:\n', e)
                 return {
                     code: 500,
-                    message: 'Like comment unsuccessfully'
+                    message: 'Tasks request unsuccessful'
                 }
             }
         }
