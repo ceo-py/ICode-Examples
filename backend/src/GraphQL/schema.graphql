@@ -66,7 +66,6 @@ type TasksDetailGlobal {
 
 input TaskSingleId {
   id: String!
-  UserId: String
 }
 
 type TaskSingleDetails {
@@ -109,6 +108,7 @@ type Query {
   getIndexTop20: IndexTop20!
 }
 
+
 type Mutation {
   register(input: AuthDetailInput!): AuthResult!
   login(username: String!, password: String!): AuthResult!
@@ -120,4 +120,5 @@ type Mutation {
   editComment(input: CommentDetails!): Status!
   deleteComment(input: TaskSingleId!): Status!
   likeTask(input: TaskSingleId!): Status!
+  followUser(input: TaskSingleId!): Status!
 }

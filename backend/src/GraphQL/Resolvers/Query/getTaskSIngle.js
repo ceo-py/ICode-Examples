@@ -29,7 +29,7 @@ const getTaskSingleDetailsResolver = {
                     likeCounter = taskLikes.likes.length
                     like = taskLikes.likes.find(x => x.toString() === decoded.userId) ? true : false
 
-                    const followers = await Followers.findOne({ id: decoded.userId })
+                    const followers = await Followers.findOne({ id: taskId }) // thats user id
                     followCounter = followers.followers.length
                     follow = followers.followers.find(x => x.toString() === decoded.userId) ? true : false
 
