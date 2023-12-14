@@ -15,9 +15,9 @@ import { TASK_SEARCH_QUERY } from "../../../graphql/queries/taskFindQuery";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { languageIcons } from "../../utils/languageIcons/languageIcons";
 import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
-import { linkIcons } from "../../utils/Icons/linkicons.jsI";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
+import { linkIcons } from "../../utils/Icons/linkIcons";
 
 export function ResultListTable() {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);

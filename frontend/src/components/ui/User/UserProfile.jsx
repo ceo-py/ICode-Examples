@@ -3,10 +3,10 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Avatar,
   Input,
   Button,
   useDisclosure,
+  Avatar,
 } from "@nextui-org/react";
 import { GET_USER_DETAILS } from "../../../graphql/queries/userQuery";
 import { useMutation, useQuery } from "@apollo/client";
@@ -84,11 +84,17 @@ export function UserProfile() {
                 isBordered
                 radius="full"
                 className="w-20 h-20 text-large"
-                src={
-                  user.icon
-                    ? user.icon
-                    : "https://www.svgrepo.com/show/418032/user.svg"
+                showFallback
+                fallback={
+                  <Avatar
+                    className="ring-default"
+                    isBordered
+                    as="button"
+                    size="sm"
+                    src={"https://www.svgrepo.com/show/418032/user.svg"}
+                  />
                 }
+                src={user.icon}
               />
               <div className="flex flex-col gap-1 items-start justify-center">
                 <p className="text-small font-semibold leading-none text-default-600">

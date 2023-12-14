@@ -21,6 +21,7 @@ export function UserMenu() {
       .then(({ data }) => {
         if (data.logout.code === 200) {
           dispatch({ type: "LOGOUT" });
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -36,11 +37,17 @@ export function UserMenu() {
           isBordered
           as="button"
           size="sm"
-          src={
-            state.iconUrl
-              ? state.iconUrl
-              : "https://www.svgrepo.com/show/418032/user.svg"
+          showFallback
+          fallback={
+            <Avatar
+              className="ring-default"
+              isBordered
+              as="button"
+              size="sm"
+              src={"https://www.svgrepo.com/show/418032/user.svg"}
+            />
           }
+          src={state.iconUrl}
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
