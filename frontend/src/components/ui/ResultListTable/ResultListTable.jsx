@@ -16,7 +16,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { languageIcons } from "../../utils/languageIcons/languageIcons";
 import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
-import { NoResultFound } from "../NoResultFound/NoResultFound";
 import { linkIcons } from "../../utils/Icons/linkIcons";
 
 export function ResultListTable() {
@@ -64,6 +63,7 @@ export function ResultListTable() {
   };
 
   useEffect(() => {
+    if (!searchParams.get("query")) return
     try {
       searchTask({
         variables: {

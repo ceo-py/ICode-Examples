@@ -34,6 +34,7 @@ export function UserMenu() {
       <DropdownTrigger>
         <Avatar
           className="ring-default"
+          as="button"
           isBordered
           size="sm"
           showFallback

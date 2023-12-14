@@ -90,11 +90,20 @@ type CreateCommentDetails {
   status: Status!
 }
 
+type IndexTop10 {
+  python: String!
+  javascript: String!
+  csharp: String!
+  java: String!
+  status: Status!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
   getTaskGlobal(input: TaskDetailGlobal!): TasksDetailGlobal!
   getTaskSingleDetails(input: TaskSingleId): TaskSingleDetails!
+  getIndexTop10: IndexTop10!
 }
 
 type Mutation {
