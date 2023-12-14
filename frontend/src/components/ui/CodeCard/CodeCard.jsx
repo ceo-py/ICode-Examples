@@ -72,6 +72,7 @@ export function CodeCard() {
               onOpenChange={onOpenChange}
               follow={data.getTaskSingleDetails.follow}
               like={data.getTaskSingleDetails.like}
+              taskId={data.getTaskSingleDetails.taskId}
             />
           </CardHeader>
           <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">

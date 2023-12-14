@@ -6,6 +6,8 @@ const likeTaskResolver = {
         likeTask: async (_, { input }, { req, res }) => {
             const cookieToken = req?.cookies?.token;
             const taskId = input.id
+
+            console.log('task id is:\n', taskId)
             if (!taskId) {
                 return {
                     code: 401,

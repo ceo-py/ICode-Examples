@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
 import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
+import { LIKE_TASK_MUTATION } from "../../../../graphql/mutations/likeTask";
+import { useMutation } from "@apollo/client";
 
 const buttons = [
   {
@@ -29,11 +31,33 @@ const buttons = [
   },
 ];
 
-function CardButtons({ isOpen, onOpen, onOpenChange, follow, like }) {
+function CardButtons({ isOpen, onOpen, onOpenChange, follow, like, taskId }) {
   const [buttonData, setButtonData] = useState({
     Follow: follow,
     Like: like,
   });
+
+  const [likeTask] = useMutation(LIKE_TASK_MUTATION);
+
+  const handleLikeTask = async (id) => {
+    try {
+      const { data } = await likeTask({
+        variables: { input: { id } },
+      });
+      console.log(data);
+      if (data?.createComment?.status?.code === 200) {
+        console.log("liknah li ?!");
+      }
+    } catch (error) {
+      console.error("Comment Error:", error.message);
+    }
+  };
+
+  console.log(buttonData.Follow);
+
+  // useEffect(() => {
+  //   console.log('change follow', buttonData.Follow)
+  // }, [buttonData.Follow])
 
   return (
     <>
@@ -62,11 +86,15 @@ function CardButtons({ isOpen, onOpen, onOpenChange, follow, like }) {
               variant="bordered"
               onPress={
                 [0, 1].includes(i)
-                  ? () =>
+                  ? () => {
                       setButtonData({
                         ...buttonData,
                         [x.btnText]: !buttonData[x.btnText],
-                      })
+                      });
+                      if (i === 1) {
+                        handleLikeTask(taskId);
+                      }
+                    }
                   : i === 3
                   ? onOpen
                   : x.onPress
