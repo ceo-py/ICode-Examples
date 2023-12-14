@@ -83,7 +83,7 @@ export function ResultListTable() {
   }, [data]);
 
   const [page, setPage] = React.useState(1);
-  const rowsPerPage = 4;
+  const rowsPerPage = 20;
 
   const pages = Math.ceil(searchResults.length / rowsPerPage);
 
@@ -98,7 +98,7 @@ export function ResultListTable() {
     <>
       {loading ? (
         <LoadingCircle />
-      ) : searchResults.length !== 0 ? (
+      ) : (
         <Table
           aria-label="table with client side pagination"
           onRowAction={(e) => taskDetails(e)}
@@ -125,7 +125,7 @@ export function ResultListTable() {
             <TableColumn key="language">LANGUAGE</TableColumn>
             <TableColumn key="codeAndVIdeo">CODE & VIDEO</TableColumn>
           </TableHeader>
-          <TableBody items={items}>
+          <TableBody items={items} emptyContent={"No task solutions found"}>
             {(item) => (
               <TableRow key={item._id}>
                 {(columnKey) => (
@@ -135,8 +135,6 @@ export function ResultListTable() {
             )}
           </TableBody>
         </Table>
-      ) : (
-        <NoResultFound />
       )}
     </>
   );

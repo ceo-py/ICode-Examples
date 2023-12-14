@@ -18,7 +18,8 @@ const generateUrl = (url) => {
 const getCodeContent = async (url) => {
     try {
         const response = await octokit.request(`GET ${generateUrl(url)}`)
-        return atob(response.data.content)
+        const decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
+        return decodedContent
     } catch (e) { return e }
 }
 
