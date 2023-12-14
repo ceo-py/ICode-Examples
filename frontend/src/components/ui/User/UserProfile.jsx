@@ -95,7 +95,7 @@ export function UserProfile() {
                   1K code solutions
                 </p>
                 <p className="text-small font-semibold leading-none text-default-600">
-                  1K videos
+                  1K video tutorials
                 </p>
                 <h5 className="text-small tracking-tight text-default-400">
                   @{user.username}
@@ -106,7 +106,7 @@ export function UserProfile() {
           <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2 items-center">
-                <p className="flex text-default-500 text-small justify-center">
+                <p className="flex text-default-500 text-large justify-center">
                   User Profile Update
                 </p>
                 <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-4">
@@ -126,6 +126,9 @@ export function UserProfile() {
               </div>
             </div>
           </CardBody>
+          {updateMessage && (
+            <p className="m-2 flex justify-center font-bold">{updateMessage}</p>
+          )}
           <CardFooter className="gap-10 flex justify-center">
             <Button
               radius="full"
@@ -156,9 +159,6 @@ export function UserProfile() {
             </Button>
             <UserProfileDeleteModal {...{ isOpen, onOpenChange }} />
           </CardFooter>
-          {updateMessage && (
-            <p className="m-2 flex justify-center font-bold">{updateMessage}</p>
-          )}
         </Card>
       )}
     </>

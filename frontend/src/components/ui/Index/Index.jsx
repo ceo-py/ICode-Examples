@@ -25,19 +25,13 @@ export default function Index() {
   return (
     <div className="flex items-center w-full flex-col">
       <Tabs
+        key="Options"
         size="lg"
         aria-label="Options"
-        color="primary"
+        color="success"
         variant="underlined"
         defaultSelectedKey={language}
         onSelectionChange={(e) => setLanguage(e)}
-        classNames={{
-          tabList:
-            "sm:gap-10 w-full relative rounded-none p-0 border-b border-divider",
-          cursor: "w-full bg-[#22d3ee]",
-          tab: "max-w-fit px-0 h-12",
-          tabContent: "group-data-[selected=true]:text-[#06b6d4]",
-        }}
       >
         <Tab
           key="python"
