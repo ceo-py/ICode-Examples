@@ -4,21 +4,31 @@ import { languageIcons } from "../../utils/languageIcons/languageIcons";
 import { ResultListTable } from "../ResultListTable/ResultListTable";
 import { useQuery } from "@apollo/client";
 import { INDEX_TOP_20_QUERY } from "../../../graphql/queries/indexTop20Query";
-import { useState } from "react";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
+import { selectedCourseSignal } from "../SelectMenu/SelectLanguage/selectMenuSignal";
 
 export default function Index() {
   const { loading, data } = useQuery(INDEX_TOP_20_QUERY);
-  const [language, setLanguage] = useState("");
 
   return (
     <div className="flex items-center w-full flex-col">
       <Tabs
+        size="lg"
         aria-label="Options"
         color="primary"
         variant="underlined"
-        onSelectionChange={(e) => setLanguage(e)}
+        defaultSelectedKey={
+          selectedCourseSignal?.value?.indexPageSelection
+            ? selectedCourseSignal?.value?.indexPageSelection
+            : ""
+        }
+        onSelectionChange={(e) =>
+          (selectedCourseSignal.value = {
+            ...selectedCourseSignal.value,
+            ...{ indexPageSelection: e },
+          })
+        }
         classNames={{
           tabList:
             "sm:gap-10 w-full relative rounded-none p-0 border-b border-divider",
@@ -70,7 +80,11 @@ export default function Index() {
       {loading ? (
         <LoadingCircle />
       ) : data?.getIndexTop20?.status?.code === 200 ? (
-        <ResultListTable outsideData={data?.getIndexTop20[language]} />
+        <ResultListTable
+          outsideData={
+            data?.getIndexTop20[selectedCourseSignal?.value?.indexPageSelection]
+          }
+        />
       ) : (
         <NoResultFound />
       )}
