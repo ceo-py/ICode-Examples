@@ -85,15 +85,6 @@ export function UserProfile() {
                 radius="full"
                 className="w-20 h-20 text-large"
                 showFallback
-                fallback={
-                  <Avatar
-                    className="ring-default"
-                    isBordered
-                    as="button"
-                    size="sm"
-                    src={"https://www.svgrepo.com/show/418032/user.svg"}
-                  />
-                }
                 src={user.icon}
               />
               <div className="flex flex-col gap-1 items-start justify-center">

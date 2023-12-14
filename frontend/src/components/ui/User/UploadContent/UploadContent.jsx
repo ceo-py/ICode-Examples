@@ -118,7 +118,7 @@ export function UploadContent() {
                 of your work.
               </p>
               <p className="text-red-500">
-                {`**Make sure you fill up all 5 / ${getFilledReqFields()} required fields to upload task solution!`}
+                {`**To upload your task solution, kindly complete 5 / ${getFilledReqFields()} required fields as indicated.`}
               </p>
               <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
                 {uploadFields.map((o) => (

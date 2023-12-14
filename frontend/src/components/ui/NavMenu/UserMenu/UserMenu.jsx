@@ -35,18 +35,8 @@ export function UserMenu() {
         <Avatar
           className="ring-default"
           isBordered
-          as="button"
           size="sm"
           showFallback
-          fallback={
-            <Avatar
-              className="ring-default"
-              isBordered
-              as="button"
-              size="sm"
-              src={"https://www.svgrepo.com/show/418032/user.svg"}
-            />
-          }
           src={state.iconUrl}
         />
       </DropdownTrigger>

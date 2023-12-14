@@ -1,47 +1,60 @@
 import {Tabs, Tab, Chip} from "@nextui-org/react";
+import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
+import { languageIcons } from "../../utils/languageIcons/languageIcons";
 
 
 export default function Index() {
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex items-center w-full flex-col">
       <Tabs 
         aria-label="Options" 
         color="primary" 
         variant="underlined"
+        onSelectionChange={(e) => console.log(e)}
         classNames={{
-          tabList: "gap-6 w-full relative rounded-none p-0 border-b border-divider",
+          tabList: "sm:gap-10 w-full relative rounded-none p-0 border-b border-divider",
           cursor: "w-full bg-[#22d3ee]",
           tab: "max-w-fit px-0 h-12",
           tabContent: "group-data-[selected=true]:text-[#06b6d4]"
         }}
       >
         <Tab
-          key="photos"
+          key="Python"
           title={
             <div className="flex items-center space-x-2">
-              {/* <GalleryIcon/> */}
-              <span>Photos</span>
-              <Chip size="sm" variant="faded">9</Chip>
+              <DropDownMenuIcon alt="Python" src={languageIcons("Python")} />
+              <span>Python</span>
+              {/* <Chip size="sm" variant="faded">9</Chip> */}
             </div>
           }
         />
         <Tab
-          key="music"
+          key="JavaScript"
           title={
             <div className="flex items-center space-x-2">
-              {/* <MusicIcon/> */}
-              <span>Music</span>
-              <Chip size="sm" variant="faded">3</Chip>
+              <DropDownMenuIcon alt="JavaScript" src={languageIcons("JavaScript")} />
+              <span>JavaScript</span>
+              {/* <Chip size="sm" variant="faded">3</Chip> */}
             </div>
           }
         />
         <Tab
-          key="videos"
+          key="C#"
           title={
             <div className="flex items-center space-x-2">
-              {/* <VideoIcon/> */}
-              <span>Videos</span>
-              <Chip size="sm" variant="faded">1</Chip>
+              <DropDownMenuIcon alt="C#" src={languageIcons("C#")} />
+              <span>C#</span>
+              {/* <Chip size="sm" variant="faded">1</Chip> */}
+            </div>
+          }
+        />
+                <Tab
+          key="Java"
+          title={
+            <div className="flex items-center space-x-2">
+              <DropDownMenuIcon alt="Java#" src={languageIcons("Java")} />
+              <span>Java</span>
+              {/* <Chip size="sm" variant="faded">1</Chip> */}
             </div>
           }
         />

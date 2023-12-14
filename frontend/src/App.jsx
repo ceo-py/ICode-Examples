@@ -21,6 +21,7 @@ function App() {
         <div className="flex px-6 mt-6 w-full flex-row flex-nowrap items-center justify-between max-w-[1536px]">
           <Routes>
             <Route path="/" element={<Index/>} />
+            {/* <Route path="/" element={<p>This is Home Page</p>} /> */}
             <Route path="/result" element={<ResultListTable />} />
             <Route path="/solution" element={<CodeCard />} />
             <Route
