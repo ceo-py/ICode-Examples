@@ -6,10 +6,21 @@ import { useQuery } from "@apollo/client";
 import { INDEX_TOP_20_QUERY } from "../../../graphql/queries/indexTop20Query";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
-import { selectedCourseSignal } from "../SelectMenu/SelectLanguage/selectMenuSignal";
+import { useEffect, useState } from "react";
 
 export default function Index() {
   const { loading, data } = useQuery(INDEX_TOP_20_QUERY);
+  const [language, setLanguage] = useState(() => {
+    const localValue = localStorage.getItem("Icode-Example-Index-Select");
+    return localValue ? JSON.parse(localValue) : "";
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "Icode-Example-Index-Select",
+      JSON.stringify(language)
+    );
+  }, [language]);
 
   return (
     <div className="flex items-center w-full flex-col">
@@ -18,17 +29,8 @@ export default function Index() {
         aria-label="Options"
         color="primary"
         variant="underlined"
-        defaultSelectedKey={
-          selectedCourseSignal?.value?.indexPageSelection
-            ? selectedCourseSignal?.value?.indexPageSelection
-            : ""
-        }
-        onSelectionChange={(e) =>
-          (selectedCourseSignal.value = {
-            ...selectedCourseSignal.value,
-            ...{ indexPageSelection: e },
-          })
-        }
+        defaultSelectedKey={language}
+        onSelectionChange={(e) => setLanguage(e)}
         classNames={{
           tabList:
             "sm:gap-10 w-full relative rounded-none p-0 border-b border-divider",
@@ -80,11 +82,7 @@ export default function Index() {
       {loading ? (
         <LoadingCircle />
       ) : data?.getIndexTop20?.status?.code === 200 ? (
-        <ResultListTable
-          outsideData={
-            data?.getIndexTop20[selectedCourseSignal?.value?.indexPageSelection]
-          }
-        />
+        <ResultListTable outsideData={data?.getIndexTop20[language]} />
       ) : (
         <NoResultFound />
       )}

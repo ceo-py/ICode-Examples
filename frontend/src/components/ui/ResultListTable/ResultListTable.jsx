@@ -84,7 +84,6 @@ export function ResultListTable({ outsideData }) {
 
   useEffect(() => {
     if (!outsideData) return;
-    console.log('minava')
     setSearchResults(JSON.parse(outsideData));
   }, [outsideData]);
 
