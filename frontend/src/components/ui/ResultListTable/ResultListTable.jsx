@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -18,10 +18,10 @@ import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { linkIcons } from "../../utils/Icons/linkIcons";
 
-export function ResultListTable() {
+export function ResultListTable({ outsideData }) {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
-  const [searchResults, setSearchResults] = React.useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
 
   const genTaskDesc = (taskId) => {
@@ -63,7 +63,7 @@ export function ResultListTable() {
   };
 
   useEffect(() => {
-    if (!searchParams.get("query")) return
+    if (!searchParams.get("query")) return;
     try {
       searchTask({
         variables: {
@@ -82,12 +82,18 @@ export function ResultListTable() {
     setSearchResults(JSON.parse(data?.getTaskGlobal?.result));
   }, [data]);
 
-  const [page, setPage] = React.useState(1);
+  useEffect(() => {
+    if (!outsideData) return;
+    console.log('minava')
+    // setSearchResults(JSON.parse(data?.getTaskGlobal?.result));
+  }, [outsideData]);
+
+  const [page, setPage] = useState(1);
   const rowsPerPage = 20;
 
   const pages = Math.ceil(searchResults.length / rowsPerPage);
 
-  const items = React.useMemo(() => {
+  const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 

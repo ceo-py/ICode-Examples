@@ -90,7 +90,7 @@ type CreateCommentDetails {
   status: Status!
 }
 
-type IndexTop10 {
+type IndexTop20 {
   python: String!
   javascript: String!
   csharp: String!
@@ -103,7 +103,7 @@ type Query {
   getToken: AuthResult!
   getTaskGlobal(input: TaskDetailGlobal!): TasksDetailGlobal!
   getTaskSingleDetails(input: TaskSingleId): TaskSingleDetails!
-  getIndexTop10: IndexTop10!
+  getIndexTop20: IndexTop20!
 }
 
 type Mutation {
