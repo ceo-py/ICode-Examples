@@ -16,12 +16,13 @@ const followUserResolver = {
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
                 const userId = decoded.userId
+
                 const followers = await Followers.findOne({ id: followId })
-                const updateQuery = { id: taskId };
+                const updateQuery = { id: followId };
                 const userIndex = followers.followers.indexOf(userId);
 
-                userIndex === -1 ? updateQuery.$addToSet = { likes: userId } : updateQuery.$pull = { likes: userId };
-                await followers.updateOne({ id: taskId }, updateQuery);
+                userIndex === -1 ? updateQuery.$addToSet = { followers: userId } : updateQuery.$pull = { followers: userId };
+                await Followers.updateOne({ id: followId }, updateQuery);
 
                 return {
 

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
 import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
 import { LIKE_TASK_MUTATION } from "../../../../graphql/mutations/likeTask";
 import { useMutation } from "@apollo/client";
+import { FOLLOW_USER_MUTATION } from "../../../../graphql/mutations/followUser";
 
 const buttons = [
   {
@@ -31,13 +32,22 @@ const buttons = [
   },
 ];
 
-function CardButtons({ isOpen, onOpen, onOpenChange, follow, like, taskId }) {
+function CardButtons({
+  isOpen,
+  onOpen,
+  onOpenChange,
+  follow,
+  like,
+  taskId,
+  userToFollowId,
+}) {
   const [buttonData, setButtonData] = useState({
     Follow: follow,
     Like: like,
   });
 
   const [likeTask] = useMutation(LIKE_TASK_MUTATION);
+  const [followUser] = useMutation(FOLLOW_USER_MUTATION);
 
   const handleLikeTask = async (id) => {
     try {
@@ -53,11 +63,19 @@ function CardButtons({ isOpen, onOpen, onOpenChange, follow, like, taskId }) {
     }
   };
 
-  console.log(buttonData.Follow);
-
-  // useEffect(() => {
-  //   console.log('change follow', buttonData.Follow)
-  // }, [buttonData.Follow])
+  const handleFollowUser = async (id) => {
+    try {
+      const { data } = await followUser({
+        variables: { input: { id } },
+      });
+      console.log(data);
+      if (data?.createComment?.status?.code === 200) {
+        console.log("liknah li ?!");
+      }
+    } catch (error) {
+      console.error("Comment Error:", error.message);
+    }
+  };
 
   return (
     <>
@@ -93,6 +111,9 @@ function CardButtons({ isOpen, onOpen, onOpenChange, follow, like, taskId }) {
                       });
                       if (i === 1) {
                         handleLikeTask(taskId);
+                      }
+                      if (i === 0) {
+                        handleFollowUser(userToFollowId);
                       }
                     }
                   : i === 3

@@ -66,6 +66,7 @@ type TasksDetailGlobal {
 
 input TaskSingleId {
   id: String!
+  toFollowId: String
 }
 
 type TaskSingleDetails {

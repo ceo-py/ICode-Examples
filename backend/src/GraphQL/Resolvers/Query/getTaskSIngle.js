@@ -14,7 +14,7 @@ const getTaskSingleDetailsResolver = {
     Query: {
         getTaskSingleDetails: async (_, { input }, { res, req }) => {
             try {
-                const taskId = input.id
+                const [taskId] = [input.id]
                 let [follow, like, comments, likeCounter, followCounter] = [true, true, [], 0, 0]
 
                 const cookieToken = req?.cookies?.token;
@@ -29,7 +29,9 @@ const getTaskSingleDetailsResolver = {
                     likeCounter = taskLikes.likes.length
                     like = taskLikes.likes.find(x => x.toString() === decoded.userId) ? true : false
 
-                    const followers = await Followers.findOne({ id: taskId }) // thats user id
+                    const findTask = await TaskSolution.findOne({ _id: taskId })
+
+                    const followers = await Followers.findOne({ id: findTask.id }) // thats user id
                     followCounter = followers.followers.length
                     follow = followers.followers.find(x => x.toString() === decoded.userId) ? true : false
 
