@@ -116,4 +116,5 @@ type Mutation {
   createComment(input: CommentDetails!): CreateCommentDetails!
   editComment(input: CommentDetails!): Status!
   deleteComment(input: TaskSingleId!): Status!
+  likeTask(input: TaskSingleId!): Status!
 }
