@@ -61,6 +61,16 @@ export function UploadContent() {
     );
   };
 
+  const getFilledReqFields = () => {
+    let counter = 0;
+    if (inputFields.task.trim()) counter += 1;
+    if (inputFields.github.trim()) counter += 1;
+    if (selectedCourseSignal.value?.selectedModule) counter += 1;
+    if (selectedCourseSignal.value?.selectedCourse) counter += 1;
+    if (selectedCourseSignal.value?.modules) counter += 1;
+    return counter;
+  };
+
   const handleUserUpdate = async (userData) => {
     try {
       const { data } = await taskCreate({
@@ -71,7 +81,7 @@ export function UploadContent() {
             course: selectedCourseSignal.value?.selectedCourse,
             module: selectedCourseSignal.value?.selectedModule,
             videoLink: userData.video,
-            githubLink: userData.github,
+            githubLink: userData.github.replace("https://github.com/", ""),
           },
         },
       });
@@ -107,6 +117,9 @@ export function UploadContent() {
                 upload the task code itself to offer a well-rounded perspective
                 of your work.
               </p>
+              <p className="text-red-500">
+                {`**Make sure you fill up all 5 / ${getFilledReqFields()} required fields to upload task solution!`}
+              </p>
               <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
                 {uploadFields.map((o) => (
                   <Input
@@ -136,6 +149,9 @@ export function UploadContent() {
             </div>
           </div>
         </CardBody>
+        {updateMessage && (
+          <p className="m-2 flex justify-center font-bold">{updateMessage}</p>
+        )}
         <CardFooter className="gap-10 flex justify-center">
           <Button
             radius="full"
@@ -158,9 +174,6 @@ export function UploadContent() {
             Upload
           </Button>
         </CardFooter>
-        {updateMessage && (
-          <p className="m-2 flex justify-center font-bold">{updateMessage}</p>
-        )}
       </Card>
     </>
   );
