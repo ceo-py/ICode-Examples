@@ -16,8 +16,13 @@ const getTaskSingleDetailsResolver = {
             try {
                 const [taskId] = [input.id]
                 let [follow, like, comments, likeCounter, followCounter] = [true, true, [], 0, 0]
-
+                const taskLikes = await Likes.findOne({ id: taskId })
+                likeCounter = taskLikes.likes.length;
                 const cookieToken = req?.cookies?.token;
+                const findTask = await TaskSolution.findOne({ _id: taskId })
+
+                const followers = await Followers.findOne({ id: findTask.id })
+                followCounter = followers.followers.length;
                 if (!cookieToken) {
                     like = false
                     follow = false
@@ -25,14 +30,9 @@ const getTaskSingleDetailsResolver = {
                 } else {
                     const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
 
-                    const taskLikes = await Likes.findOne({ id: taskId })
-                    likeCounter = taskLikes.likes.length
+                    // const taskLikes = await Likes.findOne({ id: taskId })
+                    // likeCounter = taskLikes.likes.length
                     like = taskLikes.likes.find(x => x.toString() === decoded.userId) ? true : false
-
-                    const findTask = await TaskSolution.findOne({ _id: taskId })
-
-                    const followers = await Followers.findOne({ id: findTask.id }) // thats user id
-                    followCounter = followers.followers.length
                     follow = followers.followers.find(x => x.toString() === decoded.userId) ? true : false
 
                 }

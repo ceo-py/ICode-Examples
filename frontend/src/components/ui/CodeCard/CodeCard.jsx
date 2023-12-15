@@ -10,32 +10,26 @@ import {
 import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
 import { CardButtons } from "./CardButtons/CardButtons";
 import { TASK_DETAILS_QUERY } from "../../../graphql/queries/taskDetailsQuery";
-import { useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useSearchParams } from "react-router-dom";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { CreateComment } from "./CreateComment/CreateComment";
 import { ListComments } from "./ListComments/ListComments";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
+import { numbersFormat } from "../../utils/numberFormat/numberFormat";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [getTaskDetails, { data, loading }] = useLazyQuery(TASK_DETAILS_QUERY);
   const [searchParams] = useSearchParams();
-  const [commentsList, setCommentsList] = useState([]);
+  const { loading, data, refetch } = useQuery(TASK_DETAILS_QUERY, {
+    variables: {
+      input: {
+        id: searchParams.get("id"),
+      },
+    },
+  });
 
-  useEffect(() => {
-    try {
-      getTaskDetails({
-        variables: {
-          input: {
-            id: searchParams.get("id"),
-          },
-        },
-      });
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
-  }, [searchParams]);
+  const [commentsList, setCommentsList] = useState([]);
 
   useEffect(() => {
     if (!data?.getTaskSingleDetails?.comments) return;
@@ -61,6 +55,10 @@ export function CodeCard() {
                 <h4 className="text-small font-semibold leading-none text-default-600">
                   {data.getTaskSingleDetails.taskName}
                 </h4>
+                <h4 className="text-small tracking-tight text-default-400">
+                  followers{" "}
+                  {numbersFormat(data.getTaskSingleDetails.followCounter)}
+                </h4>
                 <h5 className="text-small tracking-tight text-default-400">
                   @{data.getTaskSingleDetails.userDetails.username}
                 </h5>
@@ -74,6 +72,8 @@ export function CodeCard() {
               like={data.getTaskSingleDetails.like}
               taskId={data.getTaskSingleDetails.taskId}
               userToFollowId={data.getTaskSingleDetails.userDetails.id}
+              likeCounter={data.getTaskSingleDetails.likeCounter}
+              refetch={refetch}
             />
           </CardHeader>
           <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">

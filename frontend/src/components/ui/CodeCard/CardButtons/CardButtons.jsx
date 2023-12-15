@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
 import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
@@ -40,6 +40,8 @@ function CardButtons({
   like,
   taskId,
   userToFollowId,
+  likeCounter,
+  refetch,
 }) {
   const [buttonData, setButtonData] = useState({
     Follow: follow,
@@ -54,12 +56,15 @@ function CardButtons({
       const { data } = await likeTask({
         variables: { input: { id } },
       });
-      console.log(data);
-      if (data?.createComment?.status?.code === 200) {
-        console.log("liknah li ?!");
+      if (data?.likeTask?.code === 200) {
+        setButtonData({
+          ...buttonData,
+          Like: !buttonData.Like,
+        });
+        refetch();
       }
     } catch (error) {
-      console.error("Comment Error:", error.message);
+      console.error("Like Error:", error.message);
     }
   };
 
@@ -68,12 +73,16 @@ function CardButtons({
       const { data } = await followUser({
         variables: { input: { id } },
       });
-      console.log(data);
-      if (data?.createComment?.status?.code === 200) {
-        console.log("liknah li ?!");
+
+      if (data?.followUser?.code === 200) {
+        setButtonData({
+          ...buttonData,
+          Follow: !buttonData.Follow,
+        });
+        refetch();
       }
     } catch (error) {
-      console.error("Comment Error:", error.message);
+      console.error("Follow Error:", error.message);
     }
   };
 
@@ -105,10 +114,6 @@ function CardButtons({
               onPress={
                 [0, 1].includes(i)
                   ? () => {
-                      setButtonData({
-                        ...buttonData,
-                        [x.btnText]: !buttonData[x.btnText],
-                      });
                       if (i === 1) {
                         handleLikeTask(taskId);
                       }
@@ -121,7 +126,12 @@ function CardButtons({
                   : x.onPress
               }
             >
-              {x.btnText}
+              {/* {x.btnText} */}
+              {![0, 1].includes(i)
+                ? x.btnText
+                : i === 0
+                ? x.btnText
+                : `${x.btnText} ${likeCounter}`}
               <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange} />
             </Button>
           </Tooltip>

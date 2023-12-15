@@ -26,7 +26,7 @@ const likeTaskResolver = {
                 return {
 
                     code: 200,
-                    message: 'Tasks request successful'
+                    message: 'Like request successful'
 
                 };
 
@@ -34,7 +34,7 @@ const likeTaskResolver = {
                 console.log('Like tasks error:\n', e)
                 return {
                     code: 500,
-                    message: 'Tasks request unsuccessful'
+                    message: 'Like request unsuccessful'
                 }
             }
         }
