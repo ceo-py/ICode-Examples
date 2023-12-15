@@ -102,7 +102,7 @@ function CardButtons({
       console.error("Follow Error:", error.message);
     }
   };
-  console.log(state);
+  
   return (
     <>
       <div className="sm:hidden">

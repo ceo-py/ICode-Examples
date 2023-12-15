@@ -60,8 +60,8 @@ export function CodeCard() {
                   {data.getTaskSingleDetails.taskName}
                 </h4>
                 <h4 className="text-small tracking-tight text-default-400">
-                  followers{" "}
-                  {numbersFormat(data.getTaskSingleDetails.followCounter)}
+                {numbersFormat(data.getTaskSingleDetails.followCounter)} followers
+                  
                 </h4>
                 <h5 className="text-small tracking-tight text-default-400">
                   @{data.getTaskSingleDetails.userDetails.username}

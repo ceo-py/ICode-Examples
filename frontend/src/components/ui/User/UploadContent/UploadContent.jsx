@@ -15,6 +15,7 @@ import { useState } from "react";
 import { areAllValuesFilled } from "../../../utils/areAllValuesFilled/areAllValuesFilled";
 import { useMutation } from "@apollo/client";
 import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreateMutation";
+import { checkValidGithubAddress } from "../../../utils/isValidGitHubUrl";
 
 const uploadFields = [
   {
@@ -61,6 +62,12 @@ export function UploadContent() {
     );
   };
 
+  const resetMessage = () => {
+    setTimeout(() => {
+      setUpdateMessage("");
+    }, 5000);
+  };
+
   const getFilledReqFields = () => {
     let counter = 0;
     if (inputFields.task.trim()) counter += 1;
@@ -72,6 +79,12 @@ export function UploadContent() {
   };
 
   const handleUserUpdate = async (userData) => {
+    const isValid = await checkValidGithubAddress(userData.github);
+    if (!isValid) {
+      setUpdateMessage("Provided GitHub URL seems to be invalid.");
+      resetMessage();
+      return;
+    }
     try {
       const { data } = await taskCreate({
         variables: {
@@ -93,11 +106,8 @@ export function UploadContent() {
       setInputFields({ video: "", task: "", github: "" });
     } catch (error) {
       setUpdateMessage("Task upload unsuccessful");
-      console.error("Task upload Error:", error.message);
     }
-    setTimeout(() => {
-      setUpdateMessage("");
-    }, 5000);
+    resetMessage();
   };
   return (
     <>
@@ -117,7 +127,11 @@ export function UploadContent() {
                 upload the task code itself to offer a well-rounded perspective
                 of your work.
               </p>
-              <p className="text-red-500">
+              <p
+                className={
+                  getFilledReqFields() === 5 ? "text-green-500" : "text-red-500"
+                }
+              >
                 {`**To upload your task solution, kindly complete 5 / ${getFilledReqFields()} required fields as indicated.`}
               </p>
               <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
