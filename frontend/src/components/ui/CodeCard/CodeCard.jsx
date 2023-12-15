@@ -93,6 +93,7 @@ export function CodeCard() {
               setCommentsList={setCommentsList}
               commentsList={commentsList}
               userDetails={data?.getTaskSingleDetails.userDetails}
+              refetch={refetch}
             />
             {commentsList.length !== 0 &&
               commentsList.map((comment) => (
@@ -101,6 +102,7 @@ export function CodeCard() {
                   commentData={comment}
                   setCommentsList={setCommentsList}
                   commentsList={commentsList}
+                  refetch={refetch}
                 />
               ))}
           </Card>

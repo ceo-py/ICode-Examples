@@ -42,7 +42,12 @@ const dropDownBtnSettings = [
   },
 ];
 
-export function ListComments({ commentData, setCommentsList, commentsList }) {
+export function ListComments({
+  commentData,
+  refetch,
+  setCommentsList,
+  commentsList,
+}) {
   const [focus, comment, hover] = [
     useSignal(false),
     useSignal(commentData.text),
@@ -60,13 +65,7 @@ export function ListComments({ commentData, setCommentsList, commentsList }) {
       });
       console.log(data);
       if (data?.editComment?.code === 200) {
-        const commentForEdit = commentsList.find((x) => x.commentId === id);
-        commentForEdit.text = text;
-        commentForEdit.timePast = `${commentForEdit.timePast.replace(
-          "(edited)",
-          ""
-        )} (edited)`;
-        setCommentsList([...commentsList]);
+        refetch();
       }
     } catch (error) {
       console.error("Comment Error:", error.message);
@@ -79,6 +78,7 @@ export function ListComments({ commentData, setCommentsList, commentsList }) {
         variables: { input: { id } },
       });
       if (data?.deleteComment?.code === 200) {
+        refetch();
         setCommentsList(
           commentsList.filter((x) => x.commentId !== commentData.commentId)
         );
@@ -88,9 +88,6 @@ export function ListComments({ commentData, setCommentsList, commentsList }) {
     }
   };
 
-  // {
-  //   console.log(commentData);
-  // }
   return (
     <Card
       className="max-w-full shadow-none"
@@ -121,7 +118,7 @@ export function ListComments({ commentData, setCommentsList, commentsList }) {
             label={
               <div className="flex gap-2">
                 <div className="font-bold">@{commentData.username}</div>
-                <div>{commentData.timePast}</div>
+                <div>{commentData.timePast.replace("undefined", "1 second")}</div>
               </div>
             }
             labelPlacement="outside"

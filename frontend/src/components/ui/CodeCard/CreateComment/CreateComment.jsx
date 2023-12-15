@@ -5,8 +5,8 @@ import { useAuth } from "../../../../AuthContext/AuthContext";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
-export function CreateComment({ taskId, setCommentsList, commentsList }) {
-  const { state, dispatch } = useAuth();
+export function CreateComment({ taskId, refetch }) {
+  const { state } = useAuth();
   const [focus, comment] = [useSignal(false), useSignal("")];
   const [commentCreate] = useMutation(CREATE_COMMENT_MUTATION);
   const navigate = useNavigate();
@@ -17,10 +17,7 @@ export function CreateComment({ taskId, setCommentsList, commentsList }) {
         variables: { input: { id, text } },
       });
       if (data?.createComment?.status?.code === 200) {
-        setCommentsList([
-          JSON.parse(data.createComment.commentDetails),
-          ...commentsList,
-        ]);
+        refetch()
       }
     } catch (error) {
       console.error("Comment Error:", error.message);

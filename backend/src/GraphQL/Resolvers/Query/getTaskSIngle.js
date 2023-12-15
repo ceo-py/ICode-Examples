@@ -30,8 +30,6 @@ const getTaskSingleDetailsResolver = {
                 } else {
                     const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
 
-                    // const taskLikes = await Likes.findOne({ id: taskId })
-                    // likeCounter = taskLikes.likes.length
                     like = taskLikes.likes.find(x => x.toString() === decoded.userId) ? true : false
                     follow = followers.followers.find(x => x.toString() === decoded.userId) ? true : false
 
@@ -49,7 +47,6 @@ const getTaskSingleDetailsResolver = {
                     const commentsData = await Promise.all(
                         findComments.map(async (x) => {
                             const user = await UserDetail.findOne({ "id": x.createdById });
-
                             return {
                                 timePast: `${timeTimeDifference(x.createdAt)} ago ${x?.updatedAt ? '(edited)' : ''}`,
                                 username: x.username,
