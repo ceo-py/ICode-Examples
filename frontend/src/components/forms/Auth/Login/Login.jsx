@@ -18,7 +18,6 @@ export default function Login({ setSelected }) {
       });
       if (data.login.code === 200) {
         const iconUrl = data.login.iconUrl;
-        // const usernameLogin = data.login.username;
         dispatch({ type: "LOGIN", payload: { username, iconUrl } });
       }
     } catch (error) {

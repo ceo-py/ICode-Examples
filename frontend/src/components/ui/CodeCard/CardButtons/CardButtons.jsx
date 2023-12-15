@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { CardButtonsDropDownMenu } from "./CardButtonsDropDownMenu/CardButtonsDropDownMenu";
 import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
 import { LIKE_TASK_MUTATION } from "../../../../graphql/mutations/likeTask";
 import { useMutation } from "@apollo/client";
 import { FOLLOW_USER_MUTATION } from "../../../../graphql/mutations/followUser";
+import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const buttons = [
   {
@@ -40,6 +42,7 @@ function CardButtons({
   like,
   taskId,
   userToFollowId,
+  userToFollowUsername,
   likeCounter,
   refetch,
 }) {
@@ -47,11 +50,21 @@ function CardButtons({
     Follow: follow,
     Like: like,
   });
+  const { state } = useAuth();
+  const navigate = useNavigate();
 
   const [likeTask] = useMutation(LIKE_TASK_MUTATION);
   const [followUser] = useMutation(FOLLOW_USER_MUTATION);
 
+  const canFollow = (logUsername, userToFollowUsername) => {
+    return logUsername === userToFollowUsername;
+  };
+
   const handleLikeTask = async (id) => {
+    if (!state.isAuthenticated) {
+      navigate("/login");
+      return;
+    }
     try {
       const { data } = await likeTask({
         variables: { input: { id } },
@@ -69,6 +82,10 @@ function CardButtons({
   };
 
   const handleFollowUser = async (id) => {
+    if (!state.isAuthenticated) {
+      navigate("/login");
+      return;
+    }
     try {
       const { data } = await followUser({
         variables: { input: { id } },
@@ -85,7 +102,7 @@ function CardButtons({
       console.error("Follow Error:", error.message);
     }
   };
-
+  console.log(state);
   return (
     <>
       <div className="sm:hidden">
@@ -111,6 +128,11 @@ function CardButtons({
               radius="full"
               size="sm"
               variant="bordered"
+              isDisabled={
+                x.btnText === "Follow"
+                  ? canFollow(state.username, userToFollowUsername)
+                  : false
+              }
               onPress={
                 [0, 1].includes(i)
                   ? () => {

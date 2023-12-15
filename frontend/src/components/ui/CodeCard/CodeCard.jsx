@@ -36,6 +36,10 @@ export function CodeCard() {
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
   }, [data]);
 
+  useEffect(() => {
+    refetch();
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -73,6 +77,9 @@ export function CodeCard() {
               taskId={data.getTaskSingleDetails.taskId}
               userToFollowId={data.getTaskSingleDetails.userDetails.id}
               likeCounter={data.getTaskSingleDetails.likeCounter}
+              userToFollowUsername={
+                data.getTaskSingleDetails.userDetails.username
+              }
               refetch={refetch}
             />
           </CardHeader>
