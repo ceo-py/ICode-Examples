@@ -8,8 +8,17 @@ import {
   Button,
 } from "@nextui-org/react";
 
-export function CardButtonsDropDownMenu({onOpen}) {
-
+export function CardButtonsDropDownMenu({
+  onOpen,
+  follow,
+  like,
+  taskId,
+  userToFollowId,
+  likeCounter,
+  canFollow,
+  handleLikeTask,
+  handleFollowUser,
+}) {
   return (
     <Dropdown backdrop="blur">
       <DropdownTrigger>
@@ -26,12 +35,29 @@ export function CardButtonsDropDownMenu({onOpen}) {
           <DropdownItem
             textValue="choice"
             key={x.btnText}
-            startContent={<DropDownMenuIcon alt={x.btnText} src={x.src}/>}
-            onClick={
-              x.btnText !== "Report" ? x.onPress : onOpen
+            startContent={<DropDownMenuIcon alt={x.btnText} src={x.src} />}
+            endContent={
+              ((x.btnText === "Follow" && follow) ||
+                (like && x.btnText === "Like")) && (
+                <DropDownMenuIcon
+                  alt={x.btnText}
+                  src={"https://www.svgrepo.com/show/418145/check.svg"}
+                />
+              )
             }
+            onClick={() => {
+              if (x.btnText === "Follow" && !canFollow) {
+                handleFollowUser(userToFollowId);
+              } else if (x.btnText === "Like") {
+                handleLikeTask(taskId);
+              } else if (x.btnText === "Share") {
+                x.onPress();
+              } else if (x.btnText === "Report") {
+                onOpen();
+              }
+            }}
           >
-            {x.btnText}
+            {x.btnText === "Like" ? `${x.btnText} ${likeCounter}` : x.btnText}
           </DropdownItem>
         ))}
       </DropdownMenu>

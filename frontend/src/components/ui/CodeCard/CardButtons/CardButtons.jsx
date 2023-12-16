@@ -102,11 +102,21 @@ function CardButtons({
       console.error("Follow Error:", error.message);
     }
   };
-  
+
   return (
     <>
       <div className="sm:hidden">
-        <CardButtonsDropDownMenu onOpen={onOpen} />
+        <CardButtonsDropDownMenu
+          onOpen={onOpen}
+          follow={follow}
+          like={like}
+          taskId={taskId}
+          userToFollowId={userToFollowId}
+          likeCounter={likeCounter}
+          canFollow={canFollow(state.username, userToFollowUsername)}
+          handleLikeTask={handleLikeTask}
+          handleFollowUser={handleFollowUser}
+        />
       </div>
       <div className="hidden sm:flex gap-2">
         {buttons.map((x, i) => (
@@ -133,27 +143,22 @@ function CardButtons({
                   ? canFollow(state.username, userToFollowUsername)
                   : false
               }
-              onPress={
-                [0, 1].includes(i)
-                  ? () => {
-                      if (i === 1) {
-                        handleLikeTask(taskId);
-                      }
-                      if (i === 0) {
-                        handleFollowUser(userToFollowId);
-                      }
-                    }
-                  : i === 3
-                  ? onOpen
-                  : x.onPress
-              }
+              onPress={() => {
+                if (
+                  x.btnText === "Follow" &&
+                  !canFollow(state.username, userToFollowUsername)
+                ) {
+                  handleFollowUser(userToFollowId);
+                } else if (x.btnText === "Like") {
+                  handleLikeTask(taskId);
+                } else if (x.btnText === "Share") {
+                  x.onPress();
+                } else if (x.btnText === "Report") {
+                  onOpen();
+                }
+              }}
             >
-              {/* {x.btnText} */}
-              {![0, 1].includes(i)
-                ? x.btnText
-                : i === 0
-                ? x.btnText
-                : `${x.btnText} ${likeCounter}`}
+              {x.btnText === "Like" ? `${x.btnText} ${likeCounter}` : x.btnText}
               <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange} />
             </Button>
           </Tooltip>
