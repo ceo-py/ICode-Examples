@@ -43,19 +43,14 @@ export function UserProfile() {
           input: updateFields(userData),
         },
       });
-      setUpdateMessage(
-        data.updateUser.code == 200
-          ? "User update successful"
-          : "User update unsuccessful"
-      );
+      setUpdateMessage(data.updateUser.message);
       refetch();
       dispatch({
         type: "LOGIN",
         payload: { username: user.username, iconUrl: user.icon },
       });
     } catch (error) {
-      setUpdateMessage("User update unsuccessful");
-      serverError()
+      serverError();
     }
     setTimeout(() => {
       setUpdateMessage("");

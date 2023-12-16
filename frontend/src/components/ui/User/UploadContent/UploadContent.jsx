@@ -99,14 +99,10 @@ export function UploadContent() {
           },
         },
       });
-      setUpdateMessage(
-        data.uploadTask.code == 200
-          ? "Task upload successful"
-          : "Task upload unsuccessful"
-      );
+      setUpdateMessage(data.uploadTask.message);
       setInputFields({ video: "", task: "", github: "" });
     } catch (error) {
-      serverError()
+      serverError();
       setUpdateMessage("Task upload unsuccessful");
     }
     resetMessage();

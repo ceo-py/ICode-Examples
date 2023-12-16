@@ -7,7 +7,7 @@ const taskSolution = new mongoose.Schema({
     course: { type: String, require: true },
     module: { type: String, require: true },
     videoLink: { type: String, default: '' },
-    githubLink: { type: String, require: true },
+    githubLink: { type: String, require: true, unique: true },
 });
 
 const TaskSolution = mongoose.model('TaskSolution', taskSolution, 'TaskSolutions');
