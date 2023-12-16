@@ -1,6 +1,7 @@
 const { Octokit } = require("@octokit/rest");
 const dotenv = require('dotenv');
 const path = require('path');
+const syntaxHighlight = require("../syntaxHighlight/syntaxHighlight");
 
 
 const pathToEnvFile = path.resolve(__dirname, '../../../.env');
@@ -19,7 +20,8 @@ const getCodeContent = async (url) => {
     try {
         const response = await octokit.request(`GET ${generateUrl(url)}`)
         const decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
-        return decodedContent
+        const fileExtension = url.split("/").slice(-1)[0].split(".")[1]
+        return syntaxHighlight(decodedContent, fileExtension)
     } catch (e) { return e }
 }
 

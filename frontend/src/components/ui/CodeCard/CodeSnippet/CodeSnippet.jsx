@@ -1,7 +1,10 @@
 import React from "react";
 import { Snippet } from "@nextui-org/react";
+import DOMPurify from "dompurify";
 
 export function CodeSnippet({ code }) {
+  const cleanCode = DOMPurify.sanitize(code);
+
   return (
     <>
       <Snippet
@@ -19,7 +22,9 @@ export function CodeSnippet({ code }) {
           closeDelay: 0,
         }}
       >
-        <pre>{code}</pre>
+        <pre>
+          <div dangerouslySetInnerHTML={{ __html: cleanCode }} />
+        </pre>
       </Snippet>
     </>
   );
