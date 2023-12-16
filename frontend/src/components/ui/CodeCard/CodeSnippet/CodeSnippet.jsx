@@ -23,7 +23,7 @@ export function CodeSnippet({ code }) {
         }}
       >
         <pre>
-          <div dangerouslySetInnerHTML={{ __html: cleanCode }} />
+          <code dangerouslySetInnerHTML={{ __html: cleanCode }} />
         </pre>
       </Snippet>
     </>

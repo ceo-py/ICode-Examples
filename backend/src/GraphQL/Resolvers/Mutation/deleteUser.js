@@ -21,16 +21,24 @@ const deleteUserResolver = {
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
                 const id = decoded.userId
+
                 await UserDetail.deleteOne({ id });
                 await User.deleteOne({ _id: id });
-                await Followers.deleteOne({ id });
-                await TaskSolution.deleteMany({ id })
-                await Comments.deleteMany({ createdById: id })
 
+                await Followers.deleteOne({ id });
                 await Followers.updateMany(
                     { followers: id },
                     { $pull: { followers: id } }
                 );
+
+                const deletedTaskSolutions = await TaskSolution.find({ id });
+                await Promise.all(deletedTaskSolutions.map(async (x) => {
+                    await Likes.deleteOne({ id: x._id });
+                }));
+                await TaskSolution.deleteMany({ id })
+
+                await Comments.deleteMany({ createdById: id })
+
                 await Likes.updateMany(
                     { likes: id },
                     { $pull: { likes: id } }

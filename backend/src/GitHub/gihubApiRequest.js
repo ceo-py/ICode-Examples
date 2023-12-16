@@ -1,7 +1,7 @@
 const { Octokit } = require("@octokit/rest");
 const dotenv = require('dotenv');
 const path = require('path');
-const syntaxHighlight = require("../syntaxHighlight/syntaxHighlight");
+const syntaxHighlight = require("../utils/syntaxHighlight");
 
 
 const pathToEnvFile = path.resolve(__dirname, '../../../.env');
