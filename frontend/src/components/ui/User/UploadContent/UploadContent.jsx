@@ -16,6 +16,7 @@ import { areAllValuesFilled } from "../../../utils/areAllValuesFilled/areAllValu
 import { useMutation } from "@apollo/client";
 import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreateMutation";
 import { checkValidGithubAddress } from "../../../utils/isValidGitHubUrl";
+import serverError from "../../../utils/serverError/serverError";
 
 const uploadFields = [
   {
@@ -105,6 +106,7 @@ export function UploadContent() {
       );
       setInputFields({ video: "", task: "", github: "" });
     } catch (error) {
+      serverError()
       setUpdateMessage("Task upload unsuccessful");
     }
     resetMessage();

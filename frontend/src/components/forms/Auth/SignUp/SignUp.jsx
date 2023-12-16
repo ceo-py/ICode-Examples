@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { SIGNUP_MUTATION } from "../../../../graphql/mutations/signUpMutation";
 import { useAuth } from "../../../../AuthContext/AuthContext";
+import serverError from "../../../utils/serverError/serverError";
 
 export default function SignUp({ setSelected }) {
   const [username, setUsername] = useState("");
@@ -28,7 +29,7 @@ export default function SignUp({ setSelected }) {
       }
 
     } catch (error) {
-      console.error("SignUp Error:", error.message);
+      serverError
     }
   };
   return (

@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../../../graphql/mutations/loginMutation";
 import { useState } from "react";
 import { useAuth } from "../../../../AuthContext/AuthContext";
+import serverError from "../../../utils/serverError/serverError";
 
 export default function Login({ setSelected }) {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ export default function Login({ setSelected }) {
         dispatch({ type: "LOGIN", payload: { username, iconUrl } });
       }
     } catch (error) {
-      console.error("Login Error:", error.message);
+      serverError()
     }
   };
 

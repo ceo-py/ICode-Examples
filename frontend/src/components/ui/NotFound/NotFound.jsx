@@ -7,11 +7,6 @@ export function NotFound() {
           alt="404 error picture"
         />
       </div>
-      {/* <h2>404 - Not Found</h2>
-      <p>
-        This page is lost in cyberspace. If you find it, let it know we're
-        looking.
-      </p> */}
     </div>
   );
 }

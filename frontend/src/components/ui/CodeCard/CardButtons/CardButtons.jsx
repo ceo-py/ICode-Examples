@@ -7,6 +7,7 @@ import { useMutation } from "@apollo/client";
 import { FOLLOW_USER_MUTATION } from "../../../../graphql/mutations/followUser";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import serverError from "../../../utils/serverError/serverError";
 
 const buttons = [
   {
@@ -77,7 +78,7 @@ function CardButtons({
         refetch();
       }
     } catch (error) {
-      console.error("Like Error:", error.message);
+      serverError()
     }
   };
 
@@ -99,7 +100,7 @@ function CardButtons({
         refetch();
       }
     } catch (error) {
-      console.error("Follow Error:", error.message);
+      serverError()
     }
   };
 

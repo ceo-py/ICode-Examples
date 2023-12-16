@@ -4,6 +4,7 @@ import { CREATE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentCr
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import serverError from "../../../utils/serverError/serverError";
 
 export function CreateComment({ taskId, refetch }) {
   const { state } = useAuth();
@@ -20,7 +21,7 @@ export function CreateComment({ taskId, refetch }) {
         refetch()
       }
     } catch (error) {
-      console.error("Comment Error:", error.message);
+      serverError()
     }
   };
 

@@ -10,12 +10,19 @@ import {
 import { signal } from "@preact/signals-react";
 import { CREATE_REPORT_MUTATION } from "../../../../../graphql/mutations/reportCreate";
 import { useMutation } from "@apollo/client";
+import serverError from "../../../../utils/serverError/serverError";
 
-export function CardReportBtnModal({ isOpen, onOpenChange, typeReport, idReportType }) {
+export function CardReportBtnModal({
+  isOpen,
+  onOpenChange,
+  typeReport,
+  idReportType,
+}) {
   const textSize = signal("");
   const [reportCreate] = useMutation(CREATE_REPORT_MUTATION);
 
   const handleReportCreate = async (reportData) => {
+    serverError();
     try {
       const { data } = await reportCreate({
         variables: {
@@ -24,16 +31,9 @@ export function CardReportBtnModal({ isOpen, onOpenChange, typeReport, idReportT
           },
         },
       });
-      // setUpdateMessage(
-      //   data.uploadTask.code == 200
-      //     ? "Task upload successful"
-      //     : "Task upload unsuccessful"
-      // );
     } catch (error) {
-      console.log("error");
-      // setUpdateMessage("Task upload unsuccessful");
+      serverError();
     }
-    // resetMessage();
   };
 
   return (

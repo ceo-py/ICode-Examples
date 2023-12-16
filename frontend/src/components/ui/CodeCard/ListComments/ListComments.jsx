@@ -17,6 +17,7 @@ import { useAuth } from "../../../../AuthContext/AuthContext";
 import { EDIT_COMMENT_MUTATION } from "../../../../graphql/mutations/commentEditMutation";
 import { useMutation } from "@apollo/client";
 import { DELETE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentDeleteMutation";
+import serverError from "../../../utils/serverError/serverError";
 
 const dropDownBtnSettings = [
   {
@@ -68,7 +69,7 @@ export function ListComments({
         refetch();
       }
     } catch (error) {
-      console.error("Comment Error:", error.message);
+      serverError()
     }
   };
 

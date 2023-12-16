@@ -10,6 +10,7 @@ import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
+import serverError from "../../../utils/serverError/serverError";
 
 export function UserMenu() {
   const { state, dispatch } = useAuth();
@@ -25,7 +26,7 @@ export function UserMenu() {
         }
       })
       .catch((error) => {
-        console.error("Logout Error:", error.message);
+        serverError
       });
   };
 

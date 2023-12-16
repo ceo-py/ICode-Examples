@@ -10,6 +10,7 @@ import { USER_DELETE_MUTATION } from "../../../../graphql/mutations/userDeleteMu
 import { useMutation } from "@apollo/client";
 import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
 import { useAuth } from "../../../../AuthContext/AuthContext";
+import serverError from "../../../utils/serverError/serverError";
 
 export default function UserProfileDeleteModal({ isOpen, onOpenChange }) {
   const [userDelete] = useMutation(USER_DELETE_MUTATION);
@@ -24,7 +25,7 @@ export default function UserProfileDeleteModal({ isOpen, onOpenChange }) {
         }
       })
       .catch((error) => {
-        console.error("Logout Error:", error.message);
+        serverError()
       });
   };
 
@@ -33,7 +34,7 @@ export default function UserProfileDeleteModal({ isOpen, onOpenChange }) {
       await userDelete();
       handleLogout();
     } catch (error) {
-      console.error("User Delete Error:", error.message);
+      serverError()
     }
   };
 

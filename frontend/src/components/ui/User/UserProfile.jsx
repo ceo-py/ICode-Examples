@@ -18,6 +18,7 @@ import { USER_UPDATE_MUTATION } from "../../../graphql/mutations/userUpdateDetai
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import UserProfileDeleteModal from "./UserProfileDeleteModal/UserProfileDeleteModal";
 import { useAuth } from "../../../AuthContext/AuthContext";
+import serverError from "../../utils/serverError/serverError";
 
 export function UserProfile() {
   const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
@@ -54,7 +55,7 @@ export function UserProfile() {
       });
     } catch (error) {
       setUpdateMessage("User update unsuccessful");
-      console.error("User Update Error:", error.message);
+      serverError()
     }
     setTimeout(() => {
       setUpdateMessage("");

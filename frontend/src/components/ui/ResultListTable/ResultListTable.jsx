@@ -9,7 +9,6 @@ import {
   Pagination,
   getKeyValue,
 } from "@nextui-org/react";
-// import { VerticalDotsIcon } from "./VerticalDotsIcon";
 import { useLazyQuery } from "@apollo/client";
 import { TASK_SEARCH_QUERY } from "../../../graphql/queries/taskFindQuery";
 import { useNavigate, useSearchParams } from "react-router-dom";
