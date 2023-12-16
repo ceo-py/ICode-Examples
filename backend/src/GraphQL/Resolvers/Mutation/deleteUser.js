@@ -1,6 +1,7 @@
 const Comments = require("../../../DataBase/Models/comments");
 const Followers = require("../../../DataBase/Models/followers");
 const Likes = require("../../../DataBase/Models/likes");
+const Reports = require("../../../DataBase/Models/reports");
 const TaskSolution = require("../../../DataBase/Models/taskSolutions");
 const UserDetail = require("../../../DataBase/Models/userDetails");
 const User = require("../../../DataBase/Models/users");
@@ -43,6 +44,8 @@ const deleteUserResolver = {
                     { likes: id },
                     { $pull: { likes: id } }
                 );
+
+                await Reports.deleteMany({ userIdReport: id })
 
                 return {
                     message: 'User Successfully Deleted',

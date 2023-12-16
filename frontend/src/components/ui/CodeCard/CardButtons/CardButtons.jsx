@@ -159,7 +159,12 @@ function CardButtons({
               }}
             >
               {x.btnText === "Like" ? `${x.btnText} ${likeCounter}` : x.btnText}
-              <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange} />
+              <CardReportBtnModal
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                typeReport={"TaskSolution"}
+                idReportType={taskId}
+              />
             </Button>
           </Tooltip>
         ))}

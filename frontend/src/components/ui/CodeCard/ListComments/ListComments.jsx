@@ -118,7 +118,9 @@ export function ListComments({
             label={
               <div className="flex gap-2">
                 <div className="font-bold">@{commentData.username}</div>
-                <div>{commentData.timePast.replace("undefined", "1 second")}</div>
+                <div>
+                  {commentData.timePast.replace("undefined", "1 second")}
+                </div>
               </div>
             }
             labelPlacement="outside"
@@ -197,7 +199,12 @@ export function ListComments({
           </Button>
         </div>
       )}
-      <CardReportBtnModal isOpen={isOpen} onOpenChange={onOpenChange} />
+      <CardReportBtnModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        typeReport={"Comment"}
+        idReportType={commentData.commentId}
+      />
     </Card>
   );
 }
