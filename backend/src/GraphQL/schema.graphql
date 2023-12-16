@@ -101,6 +101,13 @@ type IndexTop20 {
   status: Status!
 }
 
+input createReportInput {
+  idReportType: String!
+  typeReport: String!
+  userIdReport: String!
+  reportContent: String!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -122,4 +129,5 @@ type Mutation {
   deleteComment(input: TaskSingleId!): Status!
   likeTask(input: TaskSingleId!): Status!
   followUser(input: TaskSingleId!): Status!
+  createReport(input: createReportInput!): Status!
 }
