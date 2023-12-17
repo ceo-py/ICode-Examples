@@ -2,7 +2,12 @@ import { Chip, Tab, Tabs } from "@nextui-org/react";
 import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { languageIcons } from "../../utils/languageIcons/languageIcons";
 
-export default function TabLanguages({ language, setLanguage, languageCount }) {
+export default function TabLanguages({
+  language,
+  setLanguage,
+  languageCount,
+  setFilterValue,
+}) {
   return (
     <Tabs
       key="Options"
@@ -11,7 +16,10 @@ export default function TabLanguages({ language, setLanguage, languageCount }) {
       color="success"
       variant="underlined"
       defaultSelectedKey={language}
-      onSelectionChange={(e) => setLanguage(e)}
+      onSelectionChange={(e) => {
+        setLanguage(e);
+        setFilterValue ? setFilterValue("") : null;
+      }}
     >
       <Tab
         key="python"

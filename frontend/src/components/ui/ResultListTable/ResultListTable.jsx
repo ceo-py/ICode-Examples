@@ -18,7 +18,13 @@ import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { linkIcons } from "../../utils/Icons/linkIcons";
 import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 
-export function ResultListTable({ outsideData, searchMenu, showDropDownMenu }) {
+export function ResultListTable({
+  outsideData,
+  searchMenu,
+  showDropDownMenu,
+  filterValue,
+  setFilterValue,
+}) {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState([]);
@@ -121,6 +127,8 @@ export function ResultListTable({ outsideData, searchMenu, showDropDownMenu }) {
                 results={results}
                 setSearchResults={setSearchResults}
                 showDropDownMenu={showDropDownMenu}
+                filterValue={filterValue}
+                setFilterValue={setFilterValue}
               />
             )
           }

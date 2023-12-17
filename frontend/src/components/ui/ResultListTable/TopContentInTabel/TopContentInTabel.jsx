@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Dropdown,
   DropdownItem,
@@ -9,6 +8,7 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import { ScrollDown } from "../ScrollDown/ScrollDown";
+import { SearchIcon } from "../../../utils/Icons/SearchIcon";
 
 const languageOptions = [
   "Python",
@@ -27,27 +27,37 @@ export function TopContentInTable({
   results,
   setSearchResults,
   showDropDownMenu,
+  filterValue,
+  setFilterValue,
 }) {
-  const [filterValue, setFilterValue] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [selectedType, setSelectedType] = useState([]);
+
+  const filterFromSearchBar = (filter) => {
+    return results.filter((x) =>
+      x.taskName.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between gap-3 items-end">
         <Input
-          isClearable
-          className="w-full sm:max-w-[44%]"
+          isClearable={false}
+          classNames={{
+            base: "max-w-full sm:max-w-[20rem] h-10",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper:
+              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
           placeholder="Search by task name..."
-          //   startContent={<SearchIcon />}
+          startContent={<SearchIcon />}
+          type="search"
           value={filterValue}
           onValueChange={(v) => {
             setFilterValue(v);
-            setSearchResults(
-              results.filter((x) =>
-                x.taskName.toLowerCase().includes(v.toLowerCase())
-              )
-            );
+            setSearchResults(filterFromSearchBar(v));
           }}
         />
         {!showDropDownMenu && (

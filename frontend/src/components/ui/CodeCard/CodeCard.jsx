@@ -36,10 +36,6 @@ export function CodeCard() {
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
   }, [data]);
 
-  useEffect(() => {
-    refetch();
-  }, []);
-
   return (
     <>
       {loading ? (

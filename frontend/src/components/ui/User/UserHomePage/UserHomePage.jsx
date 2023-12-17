@@ -1,7 +1,7 @@
 import { useLazyQuery } from "@apollo/client";
 import { GET_USER_HOME_DETAILS } from "../../../../graphql/queries/userHomeQuery";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import serverError from "../../../utils/serverError/serverError";
 import { LoadingCircle } from "../../LoadingCIrcle/LoadingCircle";
 import { NotFound } from "../../NotFound/NotFound";
@@ -14,8 +14,11 @@ import { ResultListTable } from "../../ResultListTable/ResultListTable";
 
 export function UserHomePage() {
   const [userDetails, { data, loading }] = useLazyQuery(GET_USER_HOME_DETAILS);
+  const [filterValue, setFilterValue] = useState('');
   const [searchParams] = useSearchParams();
   const [language, setLanguage] = LanguageLocalStorage();
+
+
   useEffect(() => {
     if (!searchParams.get("name")) return;
     try {
@@ -31,7 +34,6 @@ export function UserHomePage() {
     }
   }, [searchParams]);
 
-  console.log(data);
   // TODO: Fetch every time page is one!!!!!!!!!
   return (
     <>
@@ -81,11 +83,14 @@ export function UserHomePage() {
                 cSharp: JSON.parse(data?.getUserHome?.languages?.csharp).length,
                 java: JSON.parse(data?.getUserHome?.languages?.java).length,
               }}
+              setFilterValue={setFilterValue}
             />
           </CardHeader>
           <ResultListTable
             outsideData={data.getUserHome.languages[language]}
             showDropDownMenu={true}
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
           />
         </Card>
       )}
