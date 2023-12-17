@@ -32,7 +32,7 @@ export function UserHomePage() {
   }, [searchParams]);
 
   console.log(data);
-
+  // TODO: Fetch every time page is one!!!!!!!!!
   return (
     <>
       {loading ? (
@@ -66,7 +66,10 @@ export function UserHomePage() {
               youtube={data.getUserHome.details.youtube}
               github={data.getUserHome.details.github}
               linkedin={data.getUserHome.details.linkedin}
-              about={data.getUserHome.details.about}
+              username={data.getUserHome.details.username}
+              userId={data.getUserHome.userId}
+              follower={data.getUserHome.follower}
+              userDetails={userDetails}
             />
             <TabLanguages
               language={language}
@@ -80,7 +83,10 @@ export function UserHomePage() {
               }}
             />
           </CardHeader>
-          <ResultListTable outsideData={data.getUserHome.languages[language]} showDropDownMenu={true}/>
+          <ResultListTable
+            outsideData={data.getUserHome.languages[language]}
+            showDropDownMenu={true}
+          />
         </Card>
       )}
     </>

@@ -24,6 +24,8 @@ export const GET_USER_HOME_DETAILS = gql`
                 about
             }
             totalSolutions
+            follower
+            userId
         }
     }
 `;

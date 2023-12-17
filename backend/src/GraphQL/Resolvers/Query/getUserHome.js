@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const UserDetail = require('../../../DataBase/Models/userDetails');
 const User = require('../../../DataBase/Models/users');
 const Followers = require('../../../DataBase/Models/followers');
@@ -6,7 +7,7 @@ const TaskSolution = require('../../../DataBase/Models/taskSolutions');
 
 const getUserHomeResolver = {
     Query: {
-        getUserHome: async (_, { input }) => {
+        getUserHome: async (_, { input }, { req }) => {
 
             const filterByLanguage = (taskSolutions, language) => {
                 return JSON.stringify(taskSolutions.filter(x => x.language === language))
@@ -47,7 +48,16 @@ const getUserHomeResolver = {
                         },
                     };
                 }
+                const cookieToken = req?.cookies?.token;
+                let [follower, userId] = [false, '']
+                if (cookieToken) {
+                    const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
+                    userId = followers.id
+                    follower = followers.followers.includes(id)
+                }
                 return {
+                    userId,
+                    follower,
                     totalSolutions: taskSolutions.length,
                     languages: {
                         python: filterByLanguage(taskSolutions, 'Python'),
@@ -62,7 +72,7 @@ const getUserHomeResolver = {
                     details: { ...userDetail.toObject(), username: user.username, followers: followers.followers.length },
                 };
             } catch (error) {
-                // console.error('Error fetching user details:', error);
+                console.error('Error fetching user details:', error);
                 return {
                     languages: {
                         python: '0',

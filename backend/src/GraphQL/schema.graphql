@@ -115,6 +115,8 @@ type getUserHomeDetails {
   details: UserDetails
   totalSolutions: Int
   languages: IndexTop20!
+  follower: Boolean
+  userId: String
 }
 
 type Query {

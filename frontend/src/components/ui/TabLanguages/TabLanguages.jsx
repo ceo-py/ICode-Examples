@@ -3,7 +3,6 @@ import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { languageIcons } from "../../utils/languageIcons/languageIcons";
 
 export default function TabLanguages({ language, setLanguage, languageCount }) {
-  console.log(languageCount)
   return (
     <Tabs
       key="Options"

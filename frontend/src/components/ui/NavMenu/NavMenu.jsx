@@ -16,7 +16,7 @@ export function NavMenu() {
       </NavbarContent>
       <NavbarContent>
         <SearchInput />
-        <CodeVideoButtons />
+        {/* <CodeVideoButtons /> */}
       </NavbarContent>
       <NavbarContent data-justify="between">
         {!state.isAuthenticated ? <LogIn /> : <UserMenu />}
