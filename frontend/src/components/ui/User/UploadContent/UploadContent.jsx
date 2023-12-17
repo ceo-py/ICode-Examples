@@ -15,8 +15,8 @@ import { useState } from "react";
 import { areAllValuesFilled } from "../../../utils/areAllValuesFilled/areAllValuesFilled";
 import { useMutation } from "@apollo/client";
 import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreateMutation";
-import { checkValidGithubAddress } from "../../../utils/isValidGitHubUrl";
 import serverError from "../../../utils/serverError/serverError";
+import { checkValidGithubAddress } from "../../../utils/URLInputValidation/isValidGitHubUrl";
 
 const uploadFields = [
   {

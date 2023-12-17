@@ -19,6 +19,8 @@ import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import UserProfileDeleteModal from "./UserProfileDeleteModal/UserProfileDeleteModal";
 import { useAuth } from "../../../AuthContext/AuthContext";
 import serverError from "../../utils/serverError/serverError";
+import { isValidUrl } from "../../utils/URLInputValidation/isValidUrl";
+import { isValidEmail } from "../../utils/emailValidation/isValidEmail";
 
 export function UserProfile() {
   const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
@@ -27,31 +29,64 @@ export function UserProfile() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [userUpdate] = useMutation(USER_UPDATE_MUTATION);
-  const { dispatch } = useAuth();
+  const { state, dispatch } = useAuth();
+  const [correctURLS, setCorrectURLS] = useState({
+    icon: false,
+    email: false,
+    youtube: false,
+    github: false,
+    linkedin: false,
+    about: false,
+  });
+
+  const isInputFieldsValid = () => {
+    return {
+      email: user.email.trim() ? !isValidEmail(user.email) : false,
+      youtube: user.youtube.trim()
+        ? !isValidUrl("youtube", user.youtube)
+        : false,
+      github: user.github.trim() ? !isValidUrl("github", user.github) : false,
+      linkedin: user.linkedin.trim()
+        ? !isValidUrl("linkedin", user.linkedin)
+        : false,
+    };
+  };
 
   const handleUserUpdate = async (userData) => {
-    const updateFields = (userData) => {
-      const [, , , ...remainingKeys] = Object.keys(userData);
-      const remainingObject = Object.fromEntries(
-        Object.entries(userData).filter(([key]) => remainingKeys.includes(key))
-      );
-      return remainingObject;
-    };
-    try {
-      const { data } = await userUpdate({
-        variables: {
-          input: updateFields(userData),
-        },
-      });
-      setUpdateMessage(data.updateUser.message);
-      refetch();
-      dispatch({
-        type: "LOGIN",
-        payload: { username: user.username, iconUrl: user.icon },
-      });
-    } catch (error) {
-      serverError();
+    const validateFields = isInputFieldsValid();
+    console.log(validateFields)
+    setCorrectURLS({ ...correctURLS, ...validateFields });
+    if (Object.values(validateFields).every((x) => x === false)) {
+      const updateFields = (userData) => {
+        const [, , , ...remainingKeys] = Object.keys(userData);
+        const remainingObject = Object.fromEntries(
+          Object.entries(userData).filter(([key]) =>
+            remainingKeys.includes(key)
+          )
+        );
+        return remainingObject;
+      };
+      try {
+        const { data } = await userUpdate({
+          variables: {
+            input: updateFields(userData),
+          },
+        });
+        setUpdateMessage(data.updateUser.message);
+        refetch();
+        if (userData.icon !== state.iconUrl) {
+          dispatch({
+            type: "LOGIN",
+            payload: { username: user.username, iconUrl: user.icon },
+          });
+        }
+      } catch (error) {
+        serverError();
+      }
+    } else {
+      setUpdateMessage("Incorrect fields");
     }
+
     setTimeout(() => {
       setUpdateMessage("");
     }, 5000);
@@ -112,6 +147,7 @@ export function UserProfile() {
                       <Input
                         key={key}
                         type={key}
+                        isInvalid={correctURLS[key]}
                         label={`Change ${capitalizeWord(key)}`}
                         labelPlacement="outside"
                         value={user[key]}
