@@ -1,9 +1,20 @@
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Accordion, AccordionItem, Avatar } from "@nextui-org/react";
 
 export function About({ about }) {
   return (
-    <Accordion>
-      <AccordionItem key="about user" aria-label="about user" title="About">
+    <Accordion hideIndicator={true}>
+      <AccordionItem
+        key="about user"
+        aria-label="about user"
+        title={
+          <Avatar
+            classNames={{
+              base: "bg- cursor-pointer",
+            }}
+            src=""
+          />
+        }
+      >
         {about}
       </AccordionItem>
     </Accordion>

@@ -17,7 +17,10 @@ export default function Index() {
       {loading ? (
         <LoadingCircle />
       ) : data?.getIndexTop20?.status?.code === 200 ? (
-        <ResultListTable outsideData={data?.getIndexTop20[language]} />
+        <ResultListTable
+          outsideData={data?.getIndexTop20[language]}
+          searchMenu={true}
+        />
       ) : (
         <NoResultFound />
       )}

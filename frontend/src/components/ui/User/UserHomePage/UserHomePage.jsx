@@ -8,7 +8,6 @@ import { NotFound } from "../../NotFound/NotFound";
 import { Avatar, Card, CardHeader } from "@nextui-org/react";
 import { numbersFormat } from "../../../utils/numberFormat/numberFormat";
 import { SocialMediaLinks } from "./SocialMediaLinks/SocialMediaLinks";
-import { About } from "./About/About";
 import TabLanguages from "../../TabLanguages/TabLanguages";
 import { LanguageLocalStorage } from "../../../utils/LanguageLocalStorage/LanguageLocalStorage";
 import { ResultListTable } from "../../ResultListTable/ResultListTable";
@@ -42,15 +41,17 @@ export function UserHomePage() {
         <NotFound />
       ) : (
         <Card className="grow">
-          <CardHeader className="flex flex-col gap-5">
-            <Avatar
-              isBordered
-              radius="full"
-              className="w-20 h-20 text-large"
-              showFallback
-              src={data.getUserHome.details.icon}
-            />
-            <div className="flex flex-col gap-1 items-start justify-center">
+          <CardHeader className="flex flex-wrap items-start gap-10">
+            <div className="flex flex-col">
+              <Avatar
+                isBordered
+                radius="full"
+                className="w-20 h-20 text-large"
+                showFallback
+                src={data.getUserHome.details.icon}
+              />
+            </div>
+            <div className="flex flex-col">
               <p className="text-small font-semibold leading-none text-default-600">
                 {numbersFormat(data.getUserHome.details.followers)} followers
               </p>
@@ -60,25 +61,26 @@ export function UserHomePage() {
               <h5 className="text-small tracking-tight text-default-400">
                 @{data.getUserHome.details.username}
               </h5>
-              <SocialMediaLinks
-                youtube={data.getUserHome.details.youtube}
-                github={data.getUserHome.details.github}
-                linkedin={data.getUserHome.details.linkedin}
-              />
             </div>
-            <About about={data.getUserHome.details.about} />
+            <SocialMediaLinks
+              youtube={data.getUserHome.details.youtube}
+              github={data.getUserHome.details.github}
+              linkedin={data.getUserHome.details.linkedin}
+              about={data.getUserHome.details.about}
+            />
             <TabLanguages
               language={language}
               setLanguage={setLanguage}
               languageCount={{
                 python: JSON.parse(data?.getUserHome?.languages?.python).length,
-                javaScript: JSON.parse(data?.getUserHome?.languages?.python).length,
-                cSharp: JSON.parse(data?.getUserHome?.languages?.python).length,
-                java: JSON.parse(data?.getUserHome?.languages?.python).length,
+                javaScript: JSON.parse(data?.getUserHome?.languages?.javascript)
+                  .length,
+                cSharp: JSON.parse(data?.getUserHome?.languages?.csharp).length,
+                java: JSON.parse(data?.getUserHome?.languages?.java).length,
               }}
             />
           </CardHeader>
-          <ResultListTable outsideData={data.getUserHome.languages[language]} />
+          <ResultListTable outsideData={data.getUserHome.languages[language]} showDropDownMenu={true}/>
         </Card>
       )}
     </>

@@ -26,6 +26,7 @@ export function TopContentInTable({
   setResultsPerPage,
   results,
   setSearchResults,
+  showDropDownMenu,
 }) {
   const [filterValue, setFilterValue] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
@@ -49,62 +50,64 @@ export function TopContentInTable({
             );
           }}
         />
-        <div className="flex gap-3">
-          <Dropdown>
-            <DropdownTrigger className="hidden sm:flex">
-              <Button variant="flat" endContent={<ScrollDown />}>
-                Languages
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              disallowEmptySelection
-              aria-label="Table Languages"
-              closeOnSelect={false}
-              selectedKeys={selectedLanguages}
-              selectionMode="multiple"
-              onSelectionChange={(v) => {
-                const pickedLanguages = Array.from(v);
-                setSelectedLanguages(pickedLanguages);
-                setSearchResults(
-                  results.filter((x) => pickedLanguages.includes(x.language))
-                );
-              }}
-            >
-              {languageOptions.map((x) => (
-                <DropdownItem key={x} className="capitalize">
-                  {x}
-                </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-          <Dropdown>
-            <DropdownTrigger className="hidden sm:flex">
-              <Button endContent={<ScrollDown />} variant="flat">
-                Type
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              disallowEmptySelection
-              aria-label="Table Columns"
-              closeOnSelect={false}
-              selectedKeys={selectedType}
-              selectionMode="multiple"
-              onSelectionChange={(v) => {
-                const selectedTypes = Array.from(v);
-                setSelectedType(selectedTypes);
-                setSearchResults(
-                  results.filter((x) => selectedTypes.includes(x.language))
-                );
-              }}
-            >
-              {types.map((x) => (
-                <DropdownItem key={x} className="capitalize">
-                  {x}
-                </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-        </div>
+        {!showDropDownMenu && (
+          <div className="flex gap-3">
+            <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button variant="flat" endContent={<ScrollDown />}>
+                  Languages
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection
+                aria-label="Table Languages"
+                closeOnSelect={false}
+                selectedKeys={selectedLanguages}
+                selectionMode="multiple"
+                onSelectionChange={(v) => {
+                  const pickedLanguages = Array.from(v);
+                  setSelectedLanguages(pickedLanguages);
+                  setSearchResults(
+                    results.filter((x) => pickedLanguages.includes(x.language))
+                  );
+                }}
+              >
+                {languageOptions.map((x) => (
+                  <DropdownItem key={x} className="capitalize">
+                    {x}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button endContent={<ScrollDown />} variant="flat">
+                  Type
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection
+                aria-label="Table Columns"
+                closeOnSelect={false}
+                selectedKeys={selectedType}
+                selectionMode="multiple"
+                onSelectionChange={(v) => {
+                  const selectedTypes = Array.from(v);
+                  setSelectedType(selectedTypes);
+                  setSearchResults(
+                    results.filter((x) => selectedTypes.includes(x.language))
+                  );
+                }}
+              >
+                {types.map((x) => (
+                  <DropdownItem key={x} className="capitalize">
+                    {x}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        )}
       </div>
       <div className="flex justify-between items-center">
         <span className="text-default-400 text-small">
