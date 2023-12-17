@@ -18,6 +18,8 @@ import { EDIT_COMMENT_MUTATION } from "../../../../graphql/mutations/commentEdit
 import { useMutation } from "@apollo/client";
 import { DELETE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentDeleteMutation";
 import serverError from "../../../utils/serverError/serverError";
+import { zoomAndClick } from "../../../utils/css/zoomAndClick";
+import { useNavigate } from "react-router-dom";
 
 const dropDownBtnSettings = [
   {
@@ -58,6 +60,7 @@ export function ListComments({
   const { state } = useAuth();
   const [commentEdit] = useMutation(EDIT_COMMENT_MUTATION);
   const [commentDelete] = useMutation(DELETE_COMMENT_MUTATION);
+  const navigate = useNavigate();
 
   const handleEditComment = async (id, text) => {
     try {
@@ -69,7 +72,7 @@ export function ListComments({
         refetch();
       }
     } catch (error) {
-      serverError()
+      serverError();
     }
   };
 
@@ -89,6 +92,10 @@ export function ListComments({
     }
   };
 
+  const navigateUser = (username) => {
+    navigate(`/user?name=${username}`);
+  };
+
   return (
     <Card
       className="max-w-full shadow-none"
@@ -98,6 +105,7 @@ export function ListComments({
       <CardHeader className="flex items-start gap-6">
         <div className="flex gap-5">
           <Avatar
+            className={zoomAndClick()}
             isBordered
             radius="full"
             size="md"
@@ -106,6 +114,7 @@ export function ListComments({
                 ? commentData.icon
                 : "https://www.svgrepo.com/show/418032/user.svg"
             }
+            onClick={() => navigateUser(commentData.username)}
           />
         </div>
         <div className="w-full flex gap-2">

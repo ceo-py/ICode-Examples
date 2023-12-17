@@ -5,8 +5,9 @@ import { useAuth } from "../../../../AuthContext/AuthContext";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import serverError from "../../../utils/serverError/serverError";
+import { zoomAndClick } from "../../../utils/css/zoomAndClick";
 
-export function CreateComment({ taskId, refetch }) {
+export function CreateComment({ taskId, refetch, userDetails }) {
   const { state } = useAuth();
   const [focus, comment] = [useSignal(false), useSignal("")];
   const [commentCreate] = useMutation(CREATE_COMMENT_MUTATION);
@@ -18,10 +19,10 @@ export function CreateComment({ taskId, refetch }) {
         variables: { input: { id, text } },
       });
       if (data?.createComment?.status?.code === 200) {
-        refetch()
+        refetch();
       }
     } catch (error) {
-      serverError()
+      serverError();
     }
   };
 
@@ -33,12 +34,12 @@ export function CreateComment({ taskId, refetch }) {
   const handleLogin = () => {
     navigate(`/login`);
   };
-
   return (
     <>
       <CardHeader className="flex items-start gap-6">
         <div className="flex gap-5">
           <Avatar
+            className={zoomAndClick()}
             isBordered
             radius="full"
             size="md"
@@ -48,6 +49,7 @@ export function CreateComment({ taskId, refetch }) {
                 ? state.iconUrl
                 : "https://www.svgrepo.com/show/418032/user.svg"
             }
+            onClick={() => navigate(`/user?name=${userDetails.username}`)}
           />
         </div>
         <div className="w-full flex gap-2">

@@ -21,6 +21,7 @@ import { useAuth } from "../../../AuthContext/AuthContext";
 import serverError from "../../utils/serverError/serverError";
 import { isValidUrl } from "../../utils/URLInputValidation/isValidUrl";
 import { isValidEmail } from "../../utils/emailValidation/isValidEmail";
+import { zoomAndClick } from "../../utils/css/zoomAndClick";
 
 export function UserProfile() {
   const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
@@ -101,7 +102,6 @@ export function UserProfile() {
     setUser({});
     refetch();
   }, []);
-
   return (
     <>
       {Object.keys(user).length == 0 ? (
@@ -113,9 +113,10 @@ export function UserProfile() {
               <Avatar
                 isBordered
                 radius="full"
-                className="w-20 h-20 text-large"
+                className={`w-20 h-20 text-large ${zoomAndClick()}`}
                 showFallback
                 src={user.icon}
+                onClick={() => navigate(`/user?name=${data.getUser.userDetails.username}`)}
               />
               <div className="flex flex-col gap-1 items-start justify-center">
                 <p className="text-small font-semibold leading-none text-default-600">

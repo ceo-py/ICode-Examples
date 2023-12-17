@@ -11,7 +11,7 @@ import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
 import { CardButtons } from "./CardButtons/CardButtons";
 import { TASK_DETAILS_QUERY } from "../../../graphql/queries/taskDetailsQuery";
 import { useQuery } from "@apollo/client";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { CreateComment } from "./CreateComment/CreateComment";
 import { ListComments } from "./ListComments/ListComments";
@@ -21,6 +21,7 @@ import { numbersFormat } from "../../utils/numberFormat/numberFormat";
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { loading, data, refetch } = useQuery(TASK_DETAILS_QUERY, {
     variables: {
       input: {
@@ -30,6 +31,10 @@ export function CodeCard() {
   });
 
   const [commentsList, setCommentsList] = useState([]);
+
+  const navigateUser = (username) => {
+    navigate(`/user?name=${username}`);
+  };
 
   useEffect(() => {
     if (!data?.getTaskSingleDetails?.comments) return;
@@ -45,21 +50,30 @@ export function CodeCard() {
           <CardHeader className="justify-between">
             <div className="flex gap-5">
               <Avatar
+                className="cursor-pointer transition-transform transform duration-300 ease-in-out hover:scale-110"
                 isBordered
                 radius="full"
                 size="md"
                 showFallback
                 src={data.getTaskSingleDetails.icon}
+                onClick={() =>
+                  navigateUser(data.getTaskSingleDetails.userDetails.username)
+                }
               />
               <div className="flex flex-col gap-1 items-start justify-center">
                 <h4 className="text-small font-semibold leading-none text-default-600">
                   {data.getTaskSingleDetails.taskName}
                 </h4>
                 <h4 className="text-small tracking-tight text-default-400">
-                {numbersFormat(data.getTaskSingleDetails.followCounter)} followers
-                  
+                  {numbersFormat(data.getTaskSingleDetails.followCounter)}{" "}
+                  followers
                 </h4>
-                <h5 className="text-small tracking-tight text-default-400">
+                <h5
+                  className="text-small tracking-tight text-default-400 cursor-pointer"
+                  onClick={() =>
+                    navigateUser(data.getTaskSingleDetails.userDetails.username)
+                  }
+                >
                   @{data.getTaskSingleDetails.userDetails.username}
                 </h5>
               </div>
@@ -106,6 +120,7 @@ export function CodeCard() {
                   setCommentsList={setCommentsList}
                   commentsList={commentsList}
                   refetch={refetch}
+                  navigateUser={navigateUser}
                 />
               ))}
           </Card>
