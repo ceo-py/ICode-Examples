@@ -1,49 +1,78 @@
-const jwt = require('jsonwebtoken');
+const UserDetail = require('../../../DataBase/Models/userDetails');
+const User = require('../../../DataBase/Models/users');
+const Followers = require('../../../DataBase/Models/followers');
+const TaskSolution = require('../../../DataBase/Models/taskSolutions');
 
 
 const getUserHomeResolver = {
     Query: {
-        getUserHome: async (_, __, { req }) => {
-            const cookieToken = req?.cookies?.token;
+        getUserHome: async (_, { input }) => {
 
-            if (!cookieToken) {
-                return {
-                    status: {
-                        message: 'JWT must be provided',
-                        code: 400,
-                    },
-                };
+            const filterByLanguage = (taskSolutions, language) => {
+                return JSON.stringify(taskSolutions.filter(x => x.language === language))
             }
-            try {
-                const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
 
-                const [userDetail, user, followers] = await Promise.all([
-                    UserDetail.findOne({ id }),
-                    User.findOne({ _id: id }),
-                    Followers.findOne({ id }),
+            try {
+                const user = await User.findOne({ username: input.username })
+
+                if (!user) {
+                    return {
+                        languages: {
+                            python: '0',
+                            java: '0',
+                            csharp: '0',
+                            javascript: '0',
+                            status: {
+                                message: 'User not found',
+                                code: 401,
+                            }
+                        },
+                    };
+                }
+
+
+                const [userDetail, followers, taskSolutions] = await Promise.all([
+                    UserDetail.findOne({ id: user._id.toString() }),
+                    Followers.findOne({ id: user._id.toString() }),
+                    TaskSolution.find({ id: user._id.toString() }),
                 ]);
 
-                if (!userDetail || !user || !followers) {
+                if (!userDetail || !user || !followers || !taskSolutions) {
                     return {
-                        status: {
-                            message: 'Error fetching user details',
-                            code: 400,
+                        languages: {
+                            status: {
+                                message: 'Error fetching user details',
+                                code: 400,
+                            }
                         },
                     };
                 }
                 return {
-                    status: {
-                        message: 'User details fetched successfully',
-                        code: 200,
+                    totalSolutions: taskSolutions.length,
+                    languages: {
+                        python: filterByLanguage(taskSolutions, 'Python'),
+                        java: filterByLanguage(taskSolutions, 'Java'),
+                        csharp: filterByLanguage(taskSolutions, 'C#'),
+                        javascript: filterByLanguage(taskSolutions, 'JavaScript'),
+                        status: {
+                            message: 'User details fetched successfully',
+                            code: 200,
+                        }
                     },
-                    userDetails: { ...userDetail.toObject(), username: user.username, followers: followers.followers.length },
+                    details: { ...userDetail.toObject(), username: user.username, followers: followers.followers.length },
                 };
             } catch (error) {
-                console.error('Error fetching user details:', error);
+                // console.error('Error fetching user details:', error);
                 return {
-                    status: {
-                        message: 'Error fetching user details',
-                        code: 500,
+                    languages: {
+                        python: '0',
+                        java: '0',
+                        csharp: '0',
+                        javascript: '0',
+                        status: {
+                            message: 'Error fetching user details',
+                            code: 500,
+                        }
                     },
                 };
             }

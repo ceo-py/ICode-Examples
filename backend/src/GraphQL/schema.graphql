@@ -107,10 +107,13 @@ input CreateReportInput {
   reportContent: String!
 }
 
+input getUserHomeUsername {
+  username: String!
+}
+
 type getUserHomeDetails {
-  details: UserDetails!
-  followers: Int!
-  totalSolutions: Int!
+  details: UserDetails
+  totalSolutions: Int
   languages: IndexTop20!
 }
 
@@ -120,7 +123,7 @@ type Query {
   getTaskGlobal(input: TaskDetailGlobal!): TasksDetailGlobal!
   getTaskSingleDetails(input: TaskSingleId): TaskSingleDetails!
   getIndexTop20: IndexTop20!
-  getUserHome: getUserHomeDetails!
+  getUserHome(input: getUserHomeUsername!): getUserHomeDetails!
 }
 
 
