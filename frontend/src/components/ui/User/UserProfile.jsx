@@ -121,12 +121,6 @@ export function UserProfile() {
                 <p className="text-small font-semibold leading-none text-default-600">
                   {numbersFormat(user.followers)} followers
                 </p>
-                <p className="text-small font-semibold leading-none text-default-600">
-                  1K code solutions
-                </p>
-                <p className="text-small font-semibold leading-none text-default-600">
-                  1K video tutorials
-                </p>
                 <h5 className="text-small tracking-tight text-default-400">
                   @{user.username}
                 </h5>
@@ -150,7 +144,18 @@ export function UserProfile() {
                         label={`Change ${capitalizeWord(key)}`}
                         labelPlacement="outside"
                         value={user[key]}
-                        onValueChange={(v) => setUser({ ...user, [key]: v })}
+                        onValueChange={(v) =>
+                          key !== "about"
+                            ? setUser({ ...user, [key]: v })
+                            : v.length <= 100
+                            ? setUser({ ...user, [key]: v })
+                            : null
+                        }
+                        description={
+                          key === "about"
+                            ? `${100 - user[key].length} characters remaining`
+                            : ""
+                        }
                       />
                     ))}
                 </div>
