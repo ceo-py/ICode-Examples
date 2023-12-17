@@ -29,7 +29,7 @@ export default function SignUp({ setSelected }) {
       }
 
     } catch (error) {
-      serverError
+      serverError()
     }
   };
   return (

@@ -54,7 +54,6 @@ export function UserProfile() {
 
   const handleUserUpdate = async (userData) => {
     const validateFields = isInputFieldsValid();
-    console.log(validateFields)
     setCorrectURLS({ ...correctURLS, ...validateFields });
     if (Object.values(validateFields).every((x) => x === false)) {
       const updateFields = (userData) => {

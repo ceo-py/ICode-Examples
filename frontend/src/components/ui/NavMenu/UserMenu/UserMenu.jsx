@@ -26,7 +26,7 @@ export function UserMenu() {
         }
       })
       .catch((error) => {
-        serverError
+        serverError()
       });
   };
 
@@ -49,7 +49,9 @@ export function UserMenu() {
         </DropdownItem>
         <DropdownItem
           key="home"
-          onPress={() => console.log("home press")}
+          onPress={() => {
+            navigate("/user");
+          }}
           startContent={
             <DropDownMenuIcon
               alt={"home"}

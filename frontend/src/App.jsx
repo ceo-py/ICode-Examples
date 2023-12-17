@@ -12,6 +12,7 @@ import { Navigate } from "react-router-dom";
 import { NotFound } from "./components/ui/NotFound/NotFound";
 import { UploadContent } from "./components/ui/User/UploadContent/UploadContent";
 import Index from "./components/ui/Index/Index";
+import { UserHomePage } from "./components/ui/User/UserHomePage/UserHomePage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Index/>} />
             <Route path="/result" element={<ResultListTable />} />
             <Route path="/solution" element={<CodeCard />} />
+            <Route path="/user" element={<UserHomePage />} />
             <Route
               path="/login"
               element={
