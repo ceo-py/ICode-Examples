@@ -1,11 +1,9 @@
 const jwt = require('jsonwebtoken');
-const UserDetail = require('../../../DataBase/Models/userDetails');
-const User = require('../../../DataBase/Models/users');
-const Followers = require('../../../DataBase/Models/followers');
 
-const userResolver = {
+
+const getUserHomeResolver = {
     Query: {
-        getUser: async (_, __, { req }) => {
+        getUserHome: async (_, __, { req }) => {
             const cookieToken = req?.cookies?.token;
 
             if (!cookieToken) {
@@ -53,4 +51,4 @@ const userResolver = {
     },
 };
 
-module.exports = userResolver;
+module.exports = getUserHomeResolver;

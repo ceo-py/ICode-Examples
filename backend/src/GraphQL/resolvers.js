@@ -15,6 +15,7 @@ const getTaskGlobalResolver = require('./Resolvers/Query/getTaskGlobal');
 const getTaskSingleDetailsResolver = require('./Resolvers/Query/getTaskSIngle');
 const tokenResolver = require('./Resolvers/Query/getToken');
 const userResolver = require('./Resolvers/Query/getUser');
+const getUserHomeResolver = require('./Resolvers/Query/getUserHome');
 
 
 
@@ -24,7 +25,7 @@ const resolvers = [
     userResolver, updateUserResolver, deleteUserResolver, uploadTaskResolver,
     getTaskGlobalResolver, getTaskSingleDetailsResolver, createCommentResolver,
     editCommentResolver, deleteCommentResolver, indexTop20Resolver, likeTaskResolver,
-    followUserResolver, createReportResolver
+    followUserResolver, createReportResolver, getUserHomeResolver
 ];
 
 module.exports = resolvers;
