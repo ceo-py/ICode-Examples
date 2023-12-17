@@ -76,6 +76,7 @@ export function ResultListTable({ outsideData }) {
         },
       });
     } catch (error) {
+      // TODO: handle error show alert!
       console.error("Error fetching search results:", error);
     }
   }, [searchParams]);

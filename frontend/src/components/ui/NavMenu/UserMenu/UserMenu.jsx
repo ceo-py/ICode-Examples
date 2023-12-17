@@ -50,7 +50,7 @@ export function UserMenu() {
         <DropdownItem
           key="home"
           onPress={() => {
-            navigate("/user");
+            navigate(`/user?name=${state.username}`);
           }}
           startContent={
             <DropDownMenuIcon
