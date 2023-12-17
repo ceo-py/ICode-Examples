@@ -16,11 +16,15 @@ import { languageIcons } from "../../utils/languageIcons/languageIcons";
 import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { linkIcons } from "../../utils/Icons/linkIcons";
+import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 
 export function ResultListTable({ outsideData }) {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState([]);
+  const [results, setResults] = useState([]);
+  const [resultsPerPage, setResultsPerPage] = useState(20);
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
   const genTaskDesc = (taskId) => {
@@ -78,22 +82,23 @@ export function ResultListTable({ outsideData }) {
 
   useEffect(() => {
     if (!data?.getTaskGlobal?.result) return;
-    setSearchResults(JSON.parse(data?.getTaskGlobal?.result));
+    const dataParse = JSON.parse(data?.getTaskGlobal?.result);
+    setSearchResults(dataParse);
+    setResults(dataParse);
   }, [data]);
 
   useEffect(() => {
     if (!outsideData) return;
-    setSearchResults(JSON.parse(outsideData));
+    const dataParse = JSON.parse(outsideData);
+    setSearchResults(dataParse);
+    setResults(dataParse);
   }, [outsideData]);
 
-  const [page, setPage] = useState(1);
-  const rowsPerPage = 20;
-
-  const pages = Math.ceil(searchResults.length / rowsPerPage);
+  const pages = Math.ceil(searchResults.length / resultsPerPage);
 
   const items = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
+    const start = (page - 1) * resultsPerPage;
+    const end = start + resultsPerPage;
 
     return searchResults.slice(start, end);
   }, [page, searchResults]);
@@ -107,6 +112,16 @@ export function ResultListTable({ outsideData }) {
           aria-label="table with client side pagination"
           onRowAction={(e) => taskDetails(e)}
           selectionMode="single"
+          topContent={
+            outsideData ? null : (
+              <TopContentInTable
+                totalTasks={searchResults.length}
+                setResultsPerPage={setResultsPerPage}
+                results={results}
+                setSearchResults={setSearchResults}
+              />
+            )
+          }
           bottomContent={
             <div className="flex w-full justify-center">
               <Pagination
@@ -121,7 +136,7 @@ export function ResultListTable({ outsideData }) {
             </div>
           }
           classNames={{
-            wrapper: "min-h-[calc(100vh-15rem)]",
+            wrapper: "justify-start",
           }}
         >
           <TableHeader>

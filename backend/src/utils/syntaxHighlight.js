@@ -9,7 +9,6 @@ languages = {
     java: "java",
     sql: "sql",
     scss: "scss",
-    html: "vbscript-html"
 }
 
 function syntaxHighlight(code, fileExtension) {
