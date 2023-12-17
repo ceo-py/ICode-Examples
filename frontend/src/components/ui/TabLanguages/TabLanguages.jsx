@@ -10,6 +10,9 @@ export default function TabLanguages({
 }) {
   return (
     <Tabs
+      classNames={{
+        tabList: "flex-wrap sm:flex-nowrap",
+      }}
       key="Options"
       size="lg"
       aria-label="Options"

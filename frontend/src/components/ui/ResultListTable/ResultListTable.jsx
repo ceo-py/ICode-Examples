@@ -152,7 +152,9 @@ export function ResultListTable({
           <TableHeader>
             <TableColumn key="taskName">TASK NAME</TableColumn>
             <TableColumn key="language">LANGUAGE</TableColumn>
-            <TableColumn key="codeAndVIdeo">CODE & VIDEO</TableColumn>
+            <TableColumn key="codeAndVIdeo">
+              CODE & VIDEO
+            </TableColumn>
           </TableHeader>
           <TableBody items={items} emptyContent={"No task solutions found"}>
             {(item) => (

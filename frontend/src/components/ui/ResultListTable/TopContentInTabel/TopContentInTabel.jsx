@@ -41,7 +41,7 @@ export function TopContentInTable({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between gap-3 items-end">
+      <div className="flex flex-wrap justify-between gap-3 items-end">
         <Input
           isClearable={false}
           classNames={{
@@ -62,8 +62,8 @@ export function TopContentInTable({
         />
         {!showDropDownMenu && (
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
+            <Dropdown >
+              <DropdownTrigger>
                 <Button variant="flat" endContent={<ScrollDown />}>
                   Languages
                 </Button>
@@ -90,7 +90,7 @@ export function TopContentInTable({
               </DropdownMenu>
             </Dropdown>
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
+              <DropdownTrigger >
                 <Button endContent={<ScrollDown />} variant="flat">
                   Type
                 </Button>
