@@ -17,6 +17,7 @@ import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { linkIcons } from "../../utils/Icons/linkIcons";
 import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
+import serverError from "../../utils/serverError/serverError";
 
 export function ResultListTable({
   outsideData,
@@ -32,7 +33,6 @@ export function ResultListTable({
   const [resultsPerPage, setResultsPerPage] = useState(20);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
-
 
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
@@ -83,8 +83,7 @@ export function ResultListTable({
         },
       });
     } catch (error) {
-      // TODO: handle error show alert!
-      console.error("Error fetching search results:", error);
+      serverError();
     }
   }, [searchParams]);
 
@@ -109,7 +108,7 @@ export function ResultListTable({
     const end = start + resultsPerPage;
 
     return searchResults.slice(start, end);
-  }, [page, searchResults]);
+  }, [page, pages, searchResults]);
 
   return (
     <>
