@@ -40,7 +40,7 @@ export default function SignUp({ setSelected }) {
       if (data.register.code === 200) {
         const iconUrl = data.register.iconUrl;
         dispatch({ type: "LOGIN", payload: { iconUrl, username } });
-      } else if (data.register.code === 409) {
+      } else if (data?.register?.code) {
         setUsernameMsg(data.register.message);
       }
     } catch (error) {
