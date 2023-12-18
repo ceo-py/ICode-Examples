@@ -29,15 +29,10 @@ export function ResultListTable({
   const [searchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState([]);
   const [results, setResults] = useState([]);
-  const [filterValueLocal, setFilterValueLocal] = useState("");
   const [resultsPerPage, setResultsPerPage] = useState(20);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
-  const filter = {
-    filterValue: filterValue ? filterValue : filterValueLocal,
-    setFilterValue: setFilterValue ? setFilterValue : setFilterValueLocal,
-  };
 
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
@@ -134,9 +129,8 @@ export function ResultListTable({
                 setSearchResults={setSearchResults}
                 searchResults={searchResults}
                 showDropDownMenu={showDropDownMenu}
-                filter={filter}
-                // filterValue={filterValue}
-                // setFilterValue={setFilterValue}
+                filterValue={filterValue}
+                setFilterValue={setFilterValue}
               />
             )
           }

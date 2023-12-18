@@ -30,17 +30,16 @@ export function TopContentInTable({
   setResultsPerPage,
   results,
   setSearchResults,
-  searchResults,
   showDropDownMenu,
-  // filterValue,
-  // setFilterValue,
-  filter
+  filterValue,
+  setFilterValue,
 }) {
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [selectedType, setSelectedType] = useState([]);
+  const [filterValueLocal, setFilterValueLocal] = useState("");
 
   const filterFromSearchBar = (filter) => {
-    return searchResults.filter((x) =>
+    return results.filter((x) =>
       x.taskName.toLowerCase().includes(filter.toLowerCase())
     );
   };
@@ -51,6 +50,38 @@ export function TopContentInTable({
 
   const languageSearch = (pickedLanguages) => {
     return results.filter((x) => pickedLanguages.includes(x.language));
+  };
+  if (!filterValue && !filterValueLocal) setSearchResults(results);
+
+  const dynamicFilterAllChoices = ({
+    inputField,
+    pickedLanguages,
+    selectedTypes,
+  }) => {
+    const searchBarFilter = inputField
+      ? filterFromSearchBar(inputField)
+      : filterValue
+      ? filterFromSearchBar(filterValue)
+      : filterValueLocal
+      ? filterFromSearchBar(filterValueLocal)
+      : results;
+
+    pickedLanguages = pickedLanguages ? pickedLanguages : selectedLanguages;
+    selectedTypes = selectedTypes ? selectedTypes : selectedType;
+
+    const searchFilterLanguage =
+      pickedLanguages.length > 0 && searchBarFilter.length > 0
+        ? searchBarFilter.filter((x) => pickedLanguages.includes(x.language))
+        : searchBarFilter;
+
+    const searchFilterType =
+      searchFilterLanguage.length > 0 && selectedTypes.length > 0
+        ? searchFilterLanguage.filter((x) =>
+            selectedTypes.some((k) => x[checkTypes[k]])
+          )
+        : searchFilterLanguage;
+
+    return searchFilterType;
   };
 
   return (
@@ -68,10 +99,14 @@ export function TopContentInTable({
           placeholder="Search by task name..."
           startContent={<SearchIcon />}
           type="search"
-          value={filter.filterValue}
+          value={filterValue ? filterValue : filterValueLocal}
           onValueChange={(v) => {
-            filter.setFilterValue(v);
-            setSearchResults(filterFromSearchBar(v));
+            setFilterValue ? setFilterValue(v) : setFilterValueLocal(v);
+            setSearchResults(
+              filterValue
+                ? filterFromSearchBar(v)
+                : dynamicFilterAllChoices({ inputField: v })
+            );
           }}
         />
         {!showDropDownMenu && (
@@ -91,7 +126,9 @@ export function TopContentInTable({
                 onSelectionChange={(v) => {
                   const pickedLanguages = Array.from(v);
                   setSelectedLanguages(pickedLanguages);
-                  setSearchResults(languageSearch(pickedLanguages));
+                  setSearchResults(
+                    dynamicFilterAllChoices({ pickedLanguages })
+                  );
                 }}
               >
                 {languageOptions.map((x) => (
@@ -116,7 +153,7 @@ export function TopContentInTable({
                 onSelectionChange={(v) => {
                   const selectedTypes = Array.from(v);
                   setSelectedType(selectedTypes);
-                  setSearchResults(typeSearch(selectedTypes));
+                  setSearchResults(dynamicFilterAllChoices({ selectedTypes }));
                 }}
               >
                 {types.map((x) => (
