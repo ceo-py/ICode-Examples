@@ -177,7 +177,7 @@ export function UploadContent() {
               aria-label="Loading..."
               size="sm"
               value={progressBarValue}
-              color="success"
+              color={updateMessage.includes("invalid") ? "danger" : "success"}
               className="flex"
             />
           </div>

@@ -44,15 +44,6 @@ export function TopContentInTable({
     );
   };
 
-  const typeSearch = (selectedTypes) => {
-    return results.filter((x) => selectedTypes.some((k) => x[checkTypes[k]]));
-  };
-
-  const languageSearch = (pickedLanguages) => {
-    return results.filter((x) => pickedLanguages.includes(x.language));
-  };
-  if (!filterValue && !filterValueLocal) setSearchResults(results);
-
   const dynamicFilterAllChoices = ({
     inputField,
     pickedLanguages,
@@ -98,7 +89,6 @@ export function TopContentInTable({
           }}
           placeholder="Search by task name..."
           startContent={<SearchIcon />}
-          type="search"
           value={filterValue ? filterValue : filterValueLocal}
           onValueChange={(v) => {
             setFilterValue ? setFilterValue(v) : setFilterValueLocal(v);
