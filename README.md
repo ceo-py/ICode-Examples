@@ -1,34 +1,55 @@
-# ICode Example
+# ICode Example Repository
 
-## Overview
+Welcome to ICode Example, a platform dedicated to sharing and collaborating on code solutions from SoftUni. Explore the latest solutions, connect with fellow learners, and enhance your programming skills together.
 
-This project is currently in the development phase and aims to deliver a comprehensive web application using React with Vite for the frontend and Node.js with Express for the backend. The project will involve the integration of multiple data storage solutions, including Redis and MongoDB, to support various features and functionalities. Additionally, we are using Tailwind CSS for styling and NextUI for enhanced React applications.
 
-## Project Details
+Check out the live version of ICode Example at `[https://icode-example.ceo-py.eu/](https://icode-example.ceo-py.eu/)`.
 
-### Frontend
 
-- **Technology Stack**: React with Vite, Tailwind CSS, and NextUI.
-- **Description**: The frontend of this project is built using React, leveraging Vite for a fast development environment. Tailwind CSS is used for efficient styling, and NextUI is employed for creating powerful, production-ready React applications.
+## Features
 
-### Backend
+### 1. Homepage
 
-- **Technology Stack**: Node.js with Express
-- **Description**: The backend of the application is developed using Node.js and the Express framework. It will be responsible for handling server-side logic, API endpoints, and database interactions.
+- Browse the latest 20 solutions for the four major programming languages.
 
-### Databases
+### 2. Profile Page
 
-- **Redis**: Redis will be used to implement caching mechanisms, enhancing the application's performance by reducing the load on the main server.
+- Customize your profile by editing your profile icon and adding social media links.
 
-- **MongoDB**: MongoDB, a NoSQL database, will store and manage structured data for the application, offering flexibility and scalability.
+### 3. Upload Solutions
 
-## Project Status
+- Share your coding solutions with the community. Receive feedback and comments from other users.
 
-The project is currently in the working stage, with ongoing development and implementation of various features. 
+### 4. Task Detail Page
 
-## Next Steps
+- Dive into the details of each task, examining the provided code solutions.
 
-- Continue development of frontend and backend components.
-- Implement database integration with Redis and MongoDB.
-- Refine and optimize the application's performance.
-- Conduct testing, debugging, and quality assurance.
+### 5. Social Interaction
+
+- Follow other users to stay updated on their contributions.
+- Like tasks to show appreciation.
+- Report problems in code or comment on solutions for collaborative improvement.
+
+### 6. Advanced Comment System
+
+- Add, delete, and edit comments for effective communication.
+
+### 7. Filtering
+
+- Filter results by user name or language, making it easy to find specific solutions.
+
+## Technologies Used
+
+- **Frontend:**
+  - React
+  - Vite
+  - Tailwind CSS
+  - Next UI
+
+- **Backend:**
+  - Node.js
+  - Express
+  - GitHub API
+  - GraphQL Apollo
+  - MongoDB
+
