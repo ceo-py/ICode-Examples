@@ -4,7 +4,7 @@ export function LanguageLocalStorage() {
   const key = "Icode-Example-Index-Select";
   const [value, setValue] = useState(() => {
     const localValue = localStorage.getItem(key);
-    return localValue ? JSON.parse(localValue) : initialValue;
+    return localValue ? JSON.parse(localValue) : "python";
   });
 
   useEffect(() => {
