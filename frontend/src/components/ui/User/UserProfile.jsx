@@ -7,6 +7,7 @@ import {
   Button,
   useDisclosure,
   Avatar,
+  Progress,
 } from "@nextui-org/react";
 import { GET_USER_DETAILS } from "../../../graphql/queries/userQuery";
 import { useMutation, useQuery } from "@apollo/client";
@@ -39,6 +40,11 @@ export function UserProfile() {
     linkedin: false,
     about: false,
   });
+  const [progressBarValue, setProgressBarValue] = useState(0);
+
+  const updateCount = () => {
+    setProgressBarValue((v) => v + 20);
+  };
 
   const isInputFieldsValid = () => {
     return {
@@ -87,7 +93,10 @@ export function UserProfile() {
       setUpdateMessage("Incorrect fields");
     }
 
+    setProgressBarValue(20);
+    const intervalId = setInterval(updateCount, 1000);
     setTimeout(() => {
+      clearInterval(intervalId);
       setUpdateMessage("");
     }, 5000);
   };
@@ -116,7 +125,9 @@ export function UserProfile() {
                 className={`w-20 h-20 text-large ${zoomAndClick()}`}
                 showFallback
                 src={user.icon}
-                onClick={() => navigate(`/user?name=${data.getUser.userDetails.username}`)}
+                onClick={() =>
+                  navigate(`/user?name=${data.getUser.userDetails.username}`)
+                }
               />
               <div className="flex flex-col gap-1 items-start justify-center">
                 <p className="text-small font-semibold leading-none text-default-600">
@@ -164,7 +175,20 @@ export function UserProfile() {
             </div>
           </CardBody>
           {updateMessage && (
-            <p className="m-2 flex justify-center font-bold">{updateMessage}</p>
+            <div className="flex flex-col">
+              <p className="m-2 flex justify-center font-bold">
+                {updateMessage}
+              </p>{" "}
+              <Progress
+                aria-label="Loading..."
+                size="sm"
+                value={progressBarValue}
+                color={
+                  updateMessage.includes("Incorrect") ? "danger" : "success"
+                }
+                className="flex"
+              />
+            </div>
           )}
           <CardFooter className="gap-10 flex justify-center">
             <Button

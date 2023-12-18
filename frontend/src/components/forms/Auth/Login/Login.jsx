@@ -34,6 +34,7 @@ export default function Login({ setSelected }) {
     <form className="flex flex-col gap-4">
       <Input
         isRequired
+        isInvalid={credentialMsg ? true : false}
         label="Username"
         value={username}
         onValueChange={(v) => setUsername(v)}

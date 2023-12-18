@@ -5,6 +5,7 @@ import {
   CardFooter,
   CardHeader,
   Input,
+  Progress,
 } from "@nextui-org/react";
 import { selectedCourseSignal } from "../../SelectMenu/SelectLanguage/selectMenuSignal";
 import { SelectMenu } from "../../SelectMenu/SelectMenu";
@@ -51,6 +52,7 @@ export function UploadContent() {
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
   const [taskCreate] = useMutation(TASK_CREATE_MUTATION);
+  const [progressBarValue, setProgressBarValue] = useState(0);
 
   const canUpload = () => {
     return (
@@ -63,8 +65,15 @@ export function UploadContent() {
     );
   };
 
+  const updateCount = () => {
+    setProgressBarValue((v) => v + 20);
+  };
+
   const resetMessage = () => {
+    setProgressBarValue(20);
+    const intervalId = setInterval(updateCount, 1000);
     setTimeout(() => {
+      clearInterval(intervalId);
       setUpdateMessage("");
     }, 5000);
   };
@@ -162,7 +171,16 @@ export function UploadContent() {
           </div>
         </CardBody>
         {updateMessage && (
-          <p className="m-2 flex justify-center font-bold">{updateMessage}</p>
+          <div className="flex flex-col">
+            <p className="m-2 flex justify-center font-bold">{updateMessage}</p>{" "}
+            <Progress
+              aria-label="Loading..."
+              size="sm"
+              value={progressBarValue}
+              color="success"
+              className="flex"
+            />
+          </div>
         )}
         <CardFooter className="gap-10 flex justify-center">
           <Button
