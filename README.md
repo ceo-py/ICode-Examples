@@ -3,7 +3,7 @@
 Welcome to ICode Example, a platform dedicated to sharing and collaborating on code solutions from SoftUni. Explore the latest solutions, connect with fellow learners, and enhance your programming skills together.
 
 
-Check out the live version of ICode Example at `[https://icode-example.ceo-py.eu/](https://icode-example.ceo-py.eu/)`.
+Check out the live version of ICode Example at [https://icode-example.ceo-py.eu/](https://icode-example.ceo-py.eu/).
 
 
 ## Features
