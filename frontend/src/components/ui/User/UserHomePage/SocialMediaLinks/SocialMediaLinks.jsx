@@ -70,7 +70,7 @@ export function SocialMediaLinks({
             onClick={() => openWebsite(github)}
           />
         )}
-        {github && (
+        {linkedin && (
           <Avatar
             classNames={{
               base: "bg- cursor-pointer",
