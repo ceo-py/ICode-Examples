@@ -102,6 +102,9 @@ export function ResultListTable({
   }, [outsideData]);
 
   const pages = Math.ceil(searchResults.length / resultsPerPage);
+  if (page > pages && page > 1) {
+    setPage(pages);
+  }
 
   const items = useMemo(() => {
     const start = (page - 1) * resultsPerPage;
