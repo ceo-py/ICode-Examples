@@ -61,7 +61,7 @@ export function CodeCard() {
                 }
               />
               <div className="flex flex-col gap-1 items-start justify-center">
-                <h4 className="text-small font-semibold leading-none text-default-600">
+                <h4 className="text-small font-semibold leading-none overflow-hidden overflow-ellipsis max-w-[200px] sm:max-w-[350px]">
                   {data.getTaskSingleDetails.taskName}
                 </h4>
                 <h4 className="text-small tracking-tight text-default-400">
@@ -77,6 +77,23 @@ export function CodeCard() {
                   @{data.getTaskSingleDetails.userDetails.username}
                 </h5>
               </div>
+              {/* <div className="flex flex-col gap-1 items-start justify-center">
+                <h4 className="text-small font-semibold leading-none">
+                  {data.getTaskSingleDetails.taskName}
+                </h4>
+                <h4 className="text-small tracking-tight text-default-400">
+                  {numbersFormat(data.getTaskSingleDetails.followCounter)}{" "}
+                  followers
+                </h4>
+                <h5
+                  className="text-small tracking-tight text-default-400 cursor-pointer"
+                  onClick={() =>
+                    navigateUser(data.getTaskSingleDetails.userDetails.username)
+                  }
+                >
+                  @{data.getTaskSingleDetails.userDetails.username}
+                </h5>
+              </div> */}
             </div>
             <CardButtons
               isOpen={isOpen}
