@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/client";
 import { INDEX_TOP_20_QUERY } from "../../../graphql/queries/indexTop20Query";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
-import { useEffect, useState } from "react";
 import TabLanguages from "../TabLanguages/TabLanguages";
 import { LanguageLocalStorage } from "../../utils/LanguageLocalStorage/LanguageLocalStorage";
 

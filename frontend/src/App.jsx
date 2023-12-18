@@ -13,15 +13,16 @@ import { NotFound } from "./components/ui/NotFound/NotFound";
 import { UploadContent } from "./components/ui/User/UploadContent/UploadContent";
 import Index from "./components/ui/Index/Index";
 import { UserHomePage } from "./components/ui/User/UserHomePage/UserHomePage";
+import { Footer } from "./components/ui/Footer/Footer";
 
 function App() {
   return (
-    <>
+    <div className="relative min-h-screen">
       <NavMenu />
       <div className="flex mt-6 flex-col w-full h-auto items-center justify-center">
-        <div className="flex px-6 mt-6 w-full flex-row flex-nowrap items-center justify-between max-w-[1536px]">
+        <div className="flex mb-12 w-full flex-row flex-wrap items-center justify-between max-w-[1536px]">
           <Routes>
-            <Route path="/" element={<Index/>} />
+            <Route path="/" element={<Index />} />
             <Route path="/result" element={<ResultListTable />} />
             <Route path="/solution" element={<CodeCard />} />
             <Route path="/user" element={<UserHomePage />} />
@@ -56,7 +57,8 @@ function App() {
           </Routes>
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }
 
