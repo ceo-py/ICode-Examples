@@ -17,6 +17,7 @@ import { CreateComment } from "./CreateComment/CreateComment";
 import { ListComments } from "./ListComments/ListComments";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
 import { numbersFormat } from "../../utils/numberFormat/numberFormat";
+import { linkIcons } from "../../utils/Icons/linkIcons";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -76,6 +77,15 @@ export function CodeCard() {
                 >
                   @{data.getTaskSingleDetails.userDetails.username}
                 </h5>
+                <Avatar
+                  className="bg- cursor-pointer transition-transform transform duration-300 ease-in-out hover:scale-110"
+                  // isBordered
+                  // radius="full"
+                  size="sm"
+                  showFallback
+                  src={linkIcons("video")}
+                  onClick={() => window.open(data.getTaskSingleDetails.video, "_blank")}
+                />
               </div>
             </div>
             <CardButtons

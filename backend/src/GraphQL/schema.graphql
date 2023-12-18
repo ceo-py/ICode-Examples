@@ -80,6 +80,7 @@ type TaskSingleDetails {
   follow: Boolean
   followCounter: Int
   comments: String
+  video: String
   status: Status!
 }
 

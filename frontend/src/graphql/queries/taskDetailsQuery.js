@@ -12,6 +12,7 @@ export const TASK_DETAILS_QUERY = gql`
         taskId
         icon
         comments
+        video
         userDetails {
             id
             username

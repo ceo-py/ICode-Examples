@@ -75,6 +75,7 @@ const getTaskSingleDetailsResolver = {
                     }
                 }
                 return {
+                    video: result.videoLink,
                     follow,
                     followCounter,
                     like,
