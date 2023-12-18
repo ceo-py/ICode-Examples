@@ -6,6 +6,7 @@ import {
   CardFooter,
   Avatar,
   useDisclosure,
+  Tooltip,
 } from "@nextui-org/react";
 import { CodeSnippet } from "./CodeSnippet/CodeSnippet";
 import { CardButtons } from "./CardButtons/CardButtons";
@@ -77,15 +78,23 @@ export function CodeCard() {
                 >
                   @{data.getTaskSingleDetails.userDetails.username}
                 </h5>
-                <Avatar
-                  className="bg- cursor-pointer transition-transform transform duration-300 ease-in-out hover:scale-110"
-                  // isBordered
-                  // radius="full"
-                  size="sm"
-                  showFallback
-                  src={linkIcons("video")}
-                  onClick={() => window.open(data.getTaskSingleDetails.video, "_blank")}
-                />
+                <Tooltip
+                  showArrow={true}
+                  placement="bottom"
+                  key={"Video Tutorial"}
+                  content={"Video Tutorial"}
+                  color="primary"
+                >
+                  <Avatar
+                    className="bg- cursor-pointer transition-transform transform duration-300 ease-in-out hover:scale-110"
+                    size="sm"
+                    showFallback
+                    src={linkIcons("video")}
+                    onClick={() =>
+                      window.open(data.getTaskSingleDetails.video, "_blank")
+                    }
+                  />
+                </Tooltip>
               </div>
             </div>
             <CardButtons
