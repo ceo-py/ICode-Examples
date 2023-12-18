@@ -20,23 +20,37 @@ const languageOptions = [
 ];
 
 const types = ["Code", "Video"];
+const checkTypes = {
+  Code: "githubLink",
+  Video: "videoLink",
+};
 
 export function TopContentInTable({
   totalTasks,
   setResultsPerPage,
   results,
   setSearchResults,
+  searchResults,
   showDropDownMenu,
-  filterValue,
-  setFilterValue,
+  // filterValue,
+  // setFilterValue,
+  filter
 }) {
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [selectedType, setSelectedType] = useState([]);
 
   const filterFromSearchBar = (filter) => {
-    return results.filter((x) =>
+    return searchResults.filter((x) =>
       x.taskName.toLowerCase().includes(filter.toLowerCase())
     );
+  };
+
+  const typeSearch = (selectedTypes) => {
+    return results.filter((x) => selectedTypes.some((k) => x[checkTypes[k]]));
+  };
+
+  const languageSearch = (pickedLanguages) => {
+    return results.filter((x) => pickedLanguages.includes(x.language));
   };
 
   return (
@@ -54,15 +68,15 @@ export function TopContentInTable({
           placeholder="Search by task name..."
           startContent={<SearchIcon />}
           type="search"
-          value={filterValue}
+          value={filter.filterValue}
           onValueChange={(v) => {
-            setFilterValue(v);
+            filter.setFilterValue(v);
             setSearchResults(filterFromSearchBar(v));
           }}
         />
         {!showDropDownMenu && (
           <div className="flex gap-3">
-            <Dropdown >
+            <Dropdown>
               <DropdownTrigger>
                 <Button variant="flat" endContent={<ScrollDown />}>
                   Languages
@@ -77,9 +91,7 @@ export function TopContentInTable({
                 onSelectionChange={(v) => {
                   const pickedLanguages = Array.from(v);
                   setSelectedLanguages(pickedLanguages);
-                  setSearchResults(
-                    results.filter((x) => pickedLanguages.includes(x.language))
-                  );
+                  setSearchResults(languageSearch(pickedLanguages));
                 }}
               >
                 {languageOptions.map((x) => (
@@ -90,7 +102,7 @@ export function TopContentInTable({
               </DropdownMenu>
             </Dropdown>
             <Dropdown>
-              <DropdownTrigger >
+              <DropdownTrigger>
                 <Button endContent={<ScrollDown />} variant="flat">
                   Type
                 </Button>
@@ -104,9 +116,7 @@ export function TopContentInTable({
                 onSelectionChange={(v) => {
                   const selectedTypes = Array.from(v);
                   setSelectedType(selectedTypes);
-                  setSearchResults(
-                    results.filter((x) => selectedTypes.includes(x.language))
-                  );
+                  setSearchResults(typeSearch(selectedTypes));
                 }}
               >
                 {types.map((x) => (

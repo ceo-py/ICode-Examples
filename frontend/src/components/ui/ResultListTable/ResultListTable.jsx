@@ -29,9 +29,15 @@ export function ResultListTable({
   const [searchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState([]);
   const [results, setResults] = useState([]);
+  const [filterValueLocal, setFilterValueLocal] = useState("");
   const [resultsPerPage, setResultsPerPage] = useState(20);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
+
+  const filter = {
+    filterValue: filterValue ? filterValue : filterValueLocal,
+    setFilterValue: setFilterValue ? setFilterValue : setFilterValueLocal,
+  };
 
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
@@ -126,9 +132,11 @@ export function ResultListTable({
                 setResultsPerPage={setResultsPerPage}
                 results={results}
                 setSearchResults={setSearchResults}
+                searchResults={searchResults}
                 showDropDownMenu={showDropDownMenu}
-                filterValue={filterValue}
-                setFilterValue={setFilterValue}
+                filter={filter}
+                // filterValue={filterValue}
+                // setFilterValue={setFilterValue}
               />
             )
           }
@@ -152,9 +160,7 @@ export function ResultListTable({
           <TableHeader>
             <TableColumn key="taskName">TASK NAME</TableColumn>
             <TableColumn key="language">LANGUAGE</TableColumn>
-            <TableColumn key="codeAndVIdeo">
-              CODE & VIDEO
-            </TableColumn>
+            <TableColumn key="codeAndVIdeo">CODE & VIDEO</TableColumn>
           </TableHeader>
           <TableBody items={items} emptyContent={"No task solutions found"}>
             {(item) => (
