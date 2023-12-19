@@ -22,7 +22,6 @@ export function CardReportBtnModal({
   const [reportCreate] = useMutation(CREATE_REPORT_MUTATION);
 
   const handleReportCreate = async (reportData) => {
-    serverError();
     try {
       const { data } = await reportCreate({
         variables: {

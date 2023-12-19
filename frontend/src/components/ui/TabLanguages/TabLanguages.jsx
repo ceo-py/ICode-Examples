@@ -11,7 +11,9 @@ export default function TabLanguages({
   return (
     <Tabs
       classNames={{
-        tabList: "flex-wrap sm:flex-nowrap",
+        // tabList: "flex-wrap sm:flex-nowrap",
+        tabList: "grid-flow-dense flex-col sm:flex-row",
+        // tab:"flex flex-col w-auto"
       }}
       key="Options"
       size="lg"
