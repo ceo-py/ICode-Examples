@@ -4,12 +4,14 @@ import { LOGIN_MUTATION } from "../../../../graphql/mutations/loginMutation";
 import { useState } from "react";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import serverError from "../../../utils/serverError/serverError";
+import { useNavigate } from "react-router-dom";
 
 export default function Login({ setSelected }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [credentialMsg, setCredentialMsg] = useState("");
   const { dispatch } = useAuth();
+  const navigate = useNavigate();
 
   const [login] = useMutation(LOGIN_MUTATION);
 
@@ -22,6 +24,8 @@ export default function Login({ setSelected }) {
       if (data.login.code === 200) {
         const iconUrl = data.login.iconUrl;
         dispatch({ type: "LOGIN", payload: { username, iconUrl } });
+
+        navigate(-1);
       } else if (data?.login?.code) {
         setCredentialMsg(data.login.message);
       }

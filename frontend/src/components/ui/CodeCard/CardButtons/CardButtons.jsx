@@ -78,7 +78,7 @@ function CardButtons({
         refetch();
       }
     } catch (error) {
-      serverError()
+      serverError();
     }
   };
 
@@ -100,7 +100,7 @@ function CardButtons({
         refetch();
       }
     } catch (error) {
-      serverError()
+      serverError();
     }
   };
 

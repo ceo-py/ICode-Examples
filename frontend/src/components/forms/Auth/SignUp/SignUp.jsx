@@ -7,6 +7,7 @@ import { useAuth } from "../../../../AuthContext/AuthContext";
 import serverError from "../../../utils/serverError/serverError";
 import { passwordValidation } from "../../../utils/passwordValidation/passwordValidation";
 import { usernameValidation } from "../../../utils/usernameValidation/usernameValidation";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp({ setSelected }) {
   const [username, setUsername] = useState("");
@@ -14,10 +15,10 @@ export default function SignUp({ setSelected }) {
   const [passwordMsg, setPasswordMsg] = useState("");
   const [usernameMsg, setUsernameMsg] = useState("");
   const { dispatch } = useAuth();
+  const navigate = useNavigate();
 
   const [signUp] = useMutation(SIGNUP_MUTATION);
 
-  console.log("reload");
   const handleSignUP = async () => {
     const isPasswordValid = passwordValidation(password);
     const isUsernameValid = usernameValidation(username);
@@ -40,6 +41,7 @@ export default function SignUp({ setSelected }) {
       if (data.register.code === 200) {
         const iconUrl = data.register.iconUrl;
         dispatch({ type: "LOGIN", payload: { iconUrl, username } });
+        navigate(-1);
       } else if (data?.register?.code) {
         setUsernameMsg(data.register.message);
       }
