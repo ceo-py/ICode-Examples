@@ -50,7 +50,7 @@ export default function Login({ setSelected }) {
         placeholder="Enter your password"
         type="password"
         autoComplete="new-password"
-        description={credentialMsg}
+        errorMessage={credentialMsg}
       />
       <p className="text-center text-small">
         Need to create an account?{" "}

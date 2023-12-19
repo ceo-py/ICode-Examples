@@ -50,6 +50,9 @@ export default function SignUp({ setSelected }) {
   return (
     <form className="flex flex-col gap-4 h-[300px]">
       <Input
+        classNames={{
+          helperWrapper: "relative",
+        }}
         isRequired
         isInvalid={usernameMsg ? true : false}
         label="Username"
@@ -57,9 +60,12 @@ export default function SignUp({ setSelected }) {
         value={username}
         onValueChange={(v) => setUsername(v)}
         type="username"
-        description={usernameMsg}
+        errorMessage={usernameMsg}
       />
       <Input
+        classNames={{
+          helperWrapper: "relative",
+        }}
         isRequired
         isInvalid={passwordMsg ? true : false}
         label="Password"
@@ -68,7 +74,7 @@ export default function SignUp({ setSelected }) {
         onValueChange={(v) => setPassword(v)}
         type="password"
         autoComplete="new-password"
-        description={passwordMsg}
+        errorMessage={passwordMsg}
       />
       <p className="text-center text-small">
         Already have an account?{" "}
