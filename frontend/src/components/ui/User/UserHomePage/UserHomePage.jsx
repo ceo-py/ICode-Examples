@@ -43,7 +43,7 @@ export function UserHomePage() {
         <NotFound />
       ) : (
         <Card className="grow">
-          <CardHeader className="flex flex-wrap items-start gap-10">
+          <CardHeader className="flex flex-wrap justify-center gap-10">
             <div className="flex flex-col">
               <Avatar
                 isBordered
