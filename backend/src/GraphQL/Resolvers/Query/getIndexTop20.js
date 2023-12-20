@@ -7,10 +7,9 @@ const indexTop20Resolver = {
                 try {
                     const result = await TaskSolution.aggregate([
                         { $match: { language } },
-                        { $sort: { createdAt: -1 } },
+                        { $sort: { _id: -1 } },
                         { $limit: limit }
                     ]);
-
                     return JSON.stringify(result);
                 } catch (error) {
                     console.error('Error fetching index top 20 task result:', error);
