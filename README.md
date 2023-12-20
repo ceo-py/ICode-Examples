@@ -36,20 +36,42 @@ Check out the live version of ICode Example at [https://icode-example.ceo-py.eu/
 
 ### 7. Filtering
 
-- Filter results by user name or language, making it easy to find specific solutions.
+- Filter results by name, language, code and video, making it easy to find specific solutions.
 
-## Technologies Used
+# Technologies Used
 
-- **Frontend:**
-  - React
-  - Vite
-  - Tailwind CSS
-  - Next UI
+This project leverages a robust stack of technologies to deliver a seamless and performant user experience.
 
-- **Backend:**
-  - Node.js
-  - Express
-  - GitHub API
-  - GraphQL Apollo
-  - MongoDB
+## Deployment
+
+### Infrastructure
+
+- **VPS (Virtual Private Server):** The hosting platform providing a scalable and dedicated environment.
+- **Ubuntu Operating System:** Ensures stable and reliable operation for the entire system.
+- **Apache2 HTTP Server:** Efficiently handles routing and manages incoming requests.
+- **Certbot:** Secures the website with SSL/TLS certificates, enhancing data protection.
+- **Cloudflare:** Provides additional security features, optimizes performance, and serves as a content delivery network (CDN).
+- **Google Console and Bing Webmaster Tools:** Used for site indexing and search engine optimization (SEO).
+
+## Frontend
+
+- **React:** A popular JavaScript library for building user interfaces with a declarative and component-based approach.
+- **Vite:** A rapid development environment (IDE) for React applications, enabling fast building and hot reloading.
+- **Tailwind CSS:** A utility-first CSS framework for rapid styling and responsive design.
+- **Next UI:** A collection of pre-built React components for essential UI elements, reducing development time.
+- **DOMPurify:** A DOM-based content security policy (CSP) library for sanitizing and securing user-submitted HTML, MathML, and SVG content.
+- **preact/signals-react:** A library for utilizing signals to manage component state and trigger updates.
+
+## Backend
+
+- **Node.js:** The leading runtime environment for JavaScript applications, providing efficient server-side processing.
+- **Express:** A popular Node.js framework for building web APIs and handling HTTP requests.
+- **Octokit:** A Node.js library for interacting with the GitHub API, enabling seamless integration with GitHub features.
+- **GraphQL:** A data query language and API development tool for fetching and managing data efficiently.
+- **MongoDB:** A NoSQL database for storing and retrieving dynamic data collections.
+- **Mongoose Cloud:** A cloud-based version of Mongoose, providing serverless database management.
+- **JSON Web Token (JWT):** A secure authentication method for verifying user identities and access permissions.
+- **bcrypt:** A password-hashing library for protecting user passwords against unauthorized access.
+
+
 
