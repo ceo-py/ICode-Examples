@@ -15,28 +15,28 @@ import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 import { useState } from "react";
 import { areAllValuesFilled } from "../../../utils/areAllValuesFilled/areAllValuesFilled";
 import { useMutation } from "@apollo/client";
-import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreateMutation";
 import serverError from "../../../utils/serverError/serverError";
 import { checkValidGithubAddress } from "../../../utils/URLInputValidation/isValidGitHubUrl";
+import { TASK_UPDATE_MUTATION } from "../../../../graphql/mutations/taskUpdateMutation";
 
 const uploadFields = [
   {
     source: "task",
-    description: "*Task name for the solution",
+    description: "*Update Task name",
     iconUrl: "https://www.svgrepo.com/show/418007/edit-1.svg",
     urlStart: "",
     required: true,
   },
   {
     source: "video",
-    description: "*Bring your solution to life with a video explanation link",
+    description: "*Update your video link",
     urlStart: "",
     iconUrl: "https://www.svgrepo.com/show/418154/video.svg",
     required: false,
   },
   {
     source: "github",
-    description: "*Show your code with a GitHub link",
+    description: "*Update your GitHub link",
     urlStart: "https://github.com/",
     iconUrl: "https://www.svgrepo.com/show/475654/github-color.svg",
     required: true,
@@ -51,10 +51,10 @@ export function EditTask() {
   });
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
-  const [taskCreate] = useMutation(TASK_CREATE_MUTATION);
+  const [taskUpdate] = useMutation(TASK_UPDATE_MUTATION);
   const [progressBarValue, setProgressBarValue] = useState(0);
 
-  const canUpload = () => {
+  const canEdit = () => {
     return (
       !selectedCourseSignal.value?.selectedModule ||
       !areAllValuesFilled(
@@ -96,7 +96,7 @@ export function EditTask() {
       return;
     }
     try {
-      const { data } = await taskCreate({
+      const { data } = await taskUpdate({
         variables: {
           input: {
             taskName: userData.task,
@@ -188,11 +188,11 @@ export function EditTask() {
             radius="full"
             size="sm"
             variant="bordered"
-            color={canUpload() ? "" : "success"}
+            color={canEdit() ? "" : "success"}
             onPress={() => {
               handleUserUpdate(inputFields);
             }}
-            isDisabled={canUpload()}
+            isDisabled={canEdit()}
           >
             Edit
           </Button>

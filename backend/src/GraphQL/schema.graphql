@@ -55,6 +55,16 @@ input TaskDetails {
   taskId: String
 }
 
+type TaskDetailsForUpdate {
+  taskName: String
+  language: String
+  course: String
+  module: String
+  videoLink: String
+  githubLink: String
+  status: Status!
+}
+
 input TaskDetailGlobal {
   taskName: String!
 }
@@ -126,6 +136,7 @@ type Query {
   getToken: AuthResult!
   getTaskGlobal(input: TaskDetailGlobal!): TasksDetailGlobal!
   getTaskSingleDetails(input: TaskSingleId): TaskSingleDetails!
+  getTaskDetailsForUpdate(input: TaskSingleId): TaskDetailsForUpdate!
   getIndexTop20: IndexTop20!
   getUserHome(input: getUserHomeUsername!): getUserHomeDetails!
 }
