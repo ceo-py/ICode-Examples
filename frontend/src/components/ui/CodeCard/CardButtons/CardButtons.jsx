@@ -7,6 +7,7 @@ import { useMutation } from "@apollo/client";
 import { FOLLOW_USER_MUTATION } from "../../../../graphql/mutations/followUser";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { EditTask } from "./EditTask/EditTask";
 import serverError from "../../../utils/serverError/serverError";
 
 const buttons = [
@@ -120,55 +121,52 @@ function CardButtons({
         />
       </div>
       <div className="hidden sm:flex gap-2">
-        {buttons.map((x, i) => (
-          <Tooltip
-            showArrow={true}
-            placement="bottom"
-            key={x.btnText}
-            content={x.hoverDesc}
-            color="primary"
-            isDisabled={buttonData[x.btnText]}
-          >
-            <Button
-              className={`${
-                buttonData[x.btnText]
-                  ? "text-foreground"
-                  : "bg-transparent text-foreground border-default-200"
-              } `}
-              color="success"
-              radius="full"
-              size="sm"
-              variant="bordered"
-              isDisabled={
-                x.btnText === "Follow"
-                  ? canFollow(state.username, userToFollowUsername)
-                  : false
-              }
-              onPress={() => {
-                if (
-                  x.btnText === "Follow" &&
-                  !canFollow(state.username, userToFollowUsername)
-                ) {
-                  handleFollowUser(userToFollowId);
-                } else if (x.btnText === "Like") {
-                  handleLikeTask(taskId);
-                } else if (x.btnText === "Share") {
-                  x.onPress();
-                } else if (x.btnText === "Report") {
-                  onOpen();
-                }
-              }}
+        {canFollow(state.username, userToFollowUsername) && <EditTask />}
+        {buttons
+          .slice(!canFollow(state.username, userToFollowUsername) ? 0 : 1)
+          .map((x, i) => (
+            <Tooltip
+              showArrow={true}
+              placement="bottom"
+              key={x.btnText}
+              content={x.hoverDesc}
+              color="primary"
+              isDisabled={buttonData[x.btnText]}
             >
-              {x.btnText === "Like" ? `${x.btnText} ${likeCounter}` : x.btnText}
-              <CardReportBtnModal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                typeReport={"TaskSolution"}
-                idReportType={taskId}
-              />
-            </Button>
-          </Tooltip>
-        ))}
+              <Button
+                className={`${
+                  buttonData[x.btnText]
+                    ? "text-foreground"
+                    : "bg-transparent text-foreground border-default-200"
+                } `}
+                color="success"
+                radius="full"
+                size="sm"
+                variant="bordered"
+                onPress={() => {
+                  if (x.btnText === "Follow") {
+                    handleFollowUser(userToFollowId);
+                  } else if (x.btnText === "Like") {
+                    handleLikeTask(taskId);
+                  } else if (x.btnText === "Share") {
+                    x.onPress();
+                  } else if (x.btnText === "Report") {
+                    onOpen();
+                  }
+                }}
+              >
+                {x.btnText === "Like"
+                  ? `${x.btnText} ${likeCounter}`
+                  : x.btnText}
+                <CardReportBtnModal
+                  isOpen={isOpen}
+                  onOpenChange={onOpenChange}
+                  typeReport={"TaskSolution"}
+                  idReportType={taskId}
+                />
+              </Button>
+            </Tooltip>
+          ))}
       </div>
     </>
   );

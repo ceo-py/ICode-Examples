@@ -40,8 +40,12 @@ export function Notifications() {
                 src={linkIcons("notification")}
               />
             </DropdownTrigger>
-            <DropdownMenu aria-label="notifications" variant="flat">
-              <DropdownSection showDivider>
+            <DropdownMenu
+              aria-label="notifications"
+              variant="flat"
+              hideSelectedIcon={false}
+            >
+              {/* <DropdownSection title="New Tasks" showDivider>
                 <DropdownItem
                   key="Notifications"
                   endContent={
@@ -53,8 +57,8 @@ export function Notifications() {
                 >
                   Notifications
                 </DropdownItem>
-              </DropdownSection>
-              <DropdownSection title="New Tasks" showDivider>
+              </DropdownSection> */}
+              {/* <DropdownSection title="New Tasks" showDivider>
                 <DropdownItem
                   key="task id..."
                   className="h-14 gap-2"
@@ -62,16 +66,27 @@ export function Notifications() {
                 >
                   Някакъв лист с задачите
                 </DropdownItem>
-              </DropdownSection>
-              <DropdownSection title="Comments">
-                <DropdownItem
-                  key="comment id ..."
-                  className="h-14 gap-2"
-                  //   textValue="Details"
-                >
-                  Някакъв лист с задачите
-                </DropdownItem>
-              </DropdownSection>
+              </DropdownSection> */}
+              {/* <DropdownSection title="Comments" aria-label="notifications" hideSelectedIcon={false}> */}
+              <DropdownItem
+                key="notifications"
+                textValue="notifications"
+                className="h-14 gap-2"
+                hideSelectedIcon={false}
+                //   textValue="Details"
+              >
+                Notifications
+              </DropdownItem>
+              <DropdownItem
+                key="comment id ..."
+                textValue="notifications"
+                className="h-14 gap-2"
+                hideSelectedIcon={false}
+                //   textValue="Details"
+              >
+                Някакъв лист с задачите
+              </DropdownItem>
+              {/* </DropdownSection> */}
             </DropdownMenu>
           </Dropdown>
         </Badge>

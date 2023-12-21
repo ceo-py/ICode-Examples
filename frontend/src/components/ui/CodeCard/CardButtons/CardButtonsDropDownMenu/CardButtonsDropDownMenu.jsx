@@ -1,6 +1,7 @@
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 import { buttons } from "../CardButtons";
+import { EditTask } from "../EditTask/EditTask";
 import {
   Dropdown,
   DropdownTrigger,
@@ -32,18 +33,29 @@ export function CardButtonsDropDownMenu({
         </Button>
       </DropdownTrigger>
       <DropdownMenu variant="faded" aria-label="Static Actions">
-        {buttons.map((x) => (
+        {canFollow && (
           <DropdownItem
-            textValue="choice"
+            textValue={"task edit"}
+            key={"task edit"}
+            startContent={
+              <DropDownMenuIcon alt={"task edit"} src={linkIcons("edit")} />
+            }
+            onClick={() => {
+              console.log("clikam si na edit");
+            }}
+          >
+            Task edit
+          </DropdownItem>
+        )}
+        {buttons.slice(!canFollow ? 0 : 1).map((x) => (
+          <DropdownItem
+            textValue={x.btnText}
             key={x.btnText}
             startContent={<DropDownMenuIcon alt={x.btnText} src={x.src} />}
             endContent={
               ((x.btnText === "Follow" && follow) ||
                 (like && x.btnText === "Like")) && (
-                <DropDownMenuIcon
-                  alt={x.btnText}
-                  src={linkIcons('settings')}
-                />
+                <DropDownMenuIcon alt={x.btnText} src={linkIcons("check")} />
               )
             }
             onClick={() => {
