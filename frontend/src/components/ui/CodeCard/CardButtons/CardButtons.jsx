@@ -7,7 +7,7 @@ import { useMutation } from "@apollo/client";
 import { FOLLOW_USER_MUTATION } from "../../../../graphql/mutations/followUser";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { EditTask } from "./EditTask/EditTask";
+import { EditTaskBtn } from "./EditTaskBtn/EditTaskBtn";
 import serverError from "../../../utils/serverError/serverError";
 
 const buttons = [
@@ -121,7 +121,7 @@ function CardButtons({
         />
       </div>
       <div className="hidden sm:flex gap-2">
-        {canFollow(state.username, userToFollowUsername) && <EditTask />}
+        {canFollow(state.username, userToFollowUsername) && <EditTaskBtn />}
         {buttons
           .slice(!canFollow(state.username, userToFollowUsername) ? 0 : 1)
           .map((x, i) => (

@@ -1,8 +1,5 @@
-import { selectedCourseSignal } from "./components/ui/SelectMenu/SelectLanguage/selectMenuSignal";
-import { SelectMenu } from "./components/ui/SelectMenu/SelectMenu";
 import { NavMenu } from "./components/ui/NavMenu/NavMenu";
 import { CodeCard } from "./components/ui/CodeCard/CodeCard";
-import { SearchInput } from "./components/ui/NavMenu/SearchInput/SearchInput";
 import { ResultListTable } from "./components/ui/ResultListTable/ResultListTable";
 import Auth from "./components/forms/Auth/Auth";
 import { Routes, Route } from "react-router-dom";
@@ -14,6 +11,8 @@ import { UploadContent } from "./components/ui/User/UploadContent/UploadContent"
 import Index from "./components/ui/Index/Index";
 import { UserHomePage } from "./components/ui/User/UserHomePage/UserHomePage";
 import { Footer } from "./components/ui/Footer/Footer";
+import { EditTask } from "./components/ui/User/EditTask/EditTask";
+
 
 function App() {
   return (
@@ -49,6 +48,15 @@ function App() {
               element={
                 <ProtectedRoute
                   authenticatedElement={<UploadContent />}
+                  unauthenticatedElement={<Navigate to="/" replace />}
+                />
+              }
+            />
+            <Route
+              path="/edit"
+              element={
+                <ProtectedRoute
+                  authenticatedElement={<EditTask />}
                   unauthenticatedElement={<Navigate to="/" replace />}
                 />
               }

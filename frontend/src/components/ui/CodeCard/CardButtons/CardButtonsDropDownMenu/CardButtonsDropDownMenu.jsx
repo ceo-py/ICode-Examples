@@ -1,7 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 import { buttons } from "../CardButtons";
-import { EditTask } from "../EditTask/EditTask";
 import {
   Dropdown,
   DropdownTrigger,
@@ -21,6 +21,7 @@ export function CardButtonsDropDownMenu({
   handleLikeTask,
   handleFollowUser,
 }) {
+  const navigate = useNavigate();
   return (
     <Dropdown backdrop="blur">
       <DropdownTrigger>
@@ -35,16 +36,16 @@ export function CardButtonsDropDownMenu({
       <DropdownMenu variant="faded" aria-label="Static Actions">
         {canFollow && (
           <DropdownItem
-            textValue={"task edit"}
-            key={"task edit"}
+            textValue={"Edit task"}
+            key={"Edit task"}
             startContent={
-              <DropDownMenuIcon alt={"task edit"} src={linkIcons("edit")} />
+              <DropDownMenuIcon alt={"Edit task"} src={linkIcons("edit")} />
             }
             onClick={() => {
-              console.log("clikam si na edit");
+              navigate("/edit");
             }}
           >
-            Task edit
+            Edit task
           </DropdownItem>
         )}
         {buttons.slice(!canFollow ? 0 : 1).map((x) => (
