@@ -2,15 +2,26 @@ import {
   Avatar,
   Badge,
   Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownSection,
   DropdownTrigger,
   Tooltip,
 } from "@nextui-org/react";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
+import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 
 export function Notifications() {
   return (
-    <Dropdown placement="bottom-end">
-      <DropdownTrigger>
+    <Tooltip
+      showArrow={true}
+      placement="bottom"
+      key="notifications"
+      content="Notifications"
+      color="primary"
+      closeDelay="0"
+    >
+      <div className="cursor-pointer flex relative justify-center items-center">
         <Badge
           content="1"
           aria-label="more than 10 notifications"
@@ -19,23 +30,52 @@ export function Notifications() {
           placement="top-right"
           size="md"
         >
-          <Tooltip
-            showArrow={true}
-            placement="bottom"
-            key="notifications"
-            content="Notifications"
-            color="primary"
-          >
-            <Avatar
-              className="ring-default bg-"
-              as="button"
-              size="sm"
-              showFallback
-              src={linkIcons("notification")}
-            />
-          </Tooltip>
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              <Avatar
+                className="ring-default bg-"
+                as="button"
+                size="sm"
+                showFallback
+                src={linkIcons("notification")}
+              />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="notifications" variant="flat">
+              <DropdownSection showDivider>
+                <DropdownItem
+                  key="Notifications"
+                  endContent={
+                    <DropDownMenuIcon
+                      alt="Notifications"
+                      src={linkIcons("settings")}
+                    />
+                  }
+                >
+                  Notifications
+                </DropdownItem>
+              </DropdownSection>
+              <DropdownSection title="New Tasks" showDivider>
+                <DropdownItem
+                  key="task id..."
+                  className="h-14 gap-2"
+                  //   textValue="Details"
+                >
+                  Някакъв лист с задачите
+                </DropdownItem>
+              </DropdownSection>
+              <DropdownSection title="Comments">
+                <DropdownItem
+                  key="comment id ..."
+                  className="h-14 gap-2"
+                  //   textValue="Details"
+                >
+                  Някакъв лист с задачите
+                </DropdownItem>
+              </DropdownSection>
+            </DropdownMenu>
+          </Dropdown>
         </Badge>
-      </DropdownTrigger>
-    </Dropdown>
+      </div>
+    </Tooltip>
   );
 }

@@ -1,3 +1,4 @@
+import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 import { buttons } from "../CardButtons";
 import {
@@ -41,7 +42,7 @@ export function CardButtonsDropDownMenu({
                 (like && x.btnText === "Like")) && (
                 <DropDownMenuIcon
                   alt={x.btnText}
-                  src={"https://www.svgrepo.com/show/418145/check.svg"}
+                  src={linkIcons('settings')}
                 />
               )
             }

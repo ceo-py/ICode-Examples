@@ -5,7 +5,8 @@ export function linkIcons(name) {
     code: "https://www.svgrepo.com/show/525814/code.svg",
     linkedIn: "https://www.svgrepo.com/show/452047/linkedin-1.svg",
     video: "https://www.svgrepo.com/show/418154/video.svg",
-    notification: "https://www.svgrepo.com/show/418061/notification-3.svg"
+    notification: "https://www.svgrepo.com/show/418061/notification-3.svg",
+    settings: "https://www.svgrepo.com/show/418153/setting-2.svg"
   };
   return linkIconsFull[name];
 }
