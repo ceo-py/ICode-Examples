@@ -52,6 +52,7 @@ input TaskDetails {
   module: String!
   videoLink: String
   githubLink: String!
+  taskId: String
 }
 
 input TaskDetailGlobal {
@@ -137,6 +138,7 @@ type Mutation {
   updateUser(input: updateUserDetails!): Status!
   deleteUser: Status!
   uploadTask(input: TaskDetails!): Status!
+  updateTask(input: TaskDetails!): Status!
   createComment(input: CommentDetails!): CreateCommentDetails!
   editComment(input: CommentDetails!): Status!
   deleteComment(input: TaskSingleId!): Status!

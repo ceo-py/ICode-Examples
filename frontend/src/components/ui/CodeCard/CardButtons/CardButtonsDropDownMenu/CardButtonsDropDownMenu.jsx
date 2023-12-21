@@ -20,6 +20,7 @@ export function CardButtonsDropDownMenu({
   canFollow,
   handleLikeTask,
   handleFollowUser,
+  navigateEditTask,
 }) {
   const navigate = useNavigate();
   return (
@@ -41,9 +42,7 @@ export function CardButtonsDropDownMenu({
             startContent={
               <DropDownMenuIcon alt={"Edit task"} src={linkIcons("edit")} />
             }
-            onClick={() => {
-              navigate("/edit");
-            }}
+            onClick={() => navigateEditTask()}
           >
             Edit task
           </DropdownItem>

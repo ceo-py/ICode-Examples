@@ -1,8 +1,8 @@
 import { Button, Tooltip } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 
-export function EditTaskBtn() {
-  const navigate = useNavigate()
+export function EditTaskBtn({ navigateEditTask }) {
+  const navigate = useNavigate();
   return (
     <Tooltip
       showArrow={true}
@@ -16,7 +16,7 @@ export function EditTaskBtn() {
         radius="full"
         size="sm"
         variant="bordered"
-        onPress={() => navigate("/edit")}
+        onPress={() => navigateEditTask()}
       >
         Edit task
       </Button>

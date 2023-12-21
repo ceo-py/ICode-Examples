@@ -47,6 +47,7 @@ function CardButtons({
   userToFollowUsername,
   likeCounter,
   refetch,
+  navigateEditTask,
 }) {
   const [buttonData, setButtonData] = useState({
     Follow: follow,
@@ -118,10 +119,13 @@ function CardButtons({
           canFollow={canFollow(state.username, userToFollowUsername)}
           handleLikeTask={handleLikeTask}
           handleFollowUser={handleFollowUser}
+          navigateEditTask={navigateEditTask}
         />
       </div>
       <div className="hidden sm:flex gap-2">
-        {canFollow(state.username, userToFollowUsername) && <EditTaskBtn />}
+        {canFollow(state.username, userToFollowUsername) && (
+          <EditTaskBtn navigateEditTask={navigateEditTask} />
+        )}
         {buttons
           .slice(!canFollow(state.username, userToFollowUsername) ? 0 : 1)
           .map((x, i) => (

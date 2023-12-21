@@ -38,6 +38,10 @@ export function CodeCard() {
     navigate(`/user?name=${username}`);
   };
 
+  const navigateEditTask = () => {
+    navigate(`/edit?&id=${data?.getTaskSingleDetails?.taskId}`);
+  };
+
   useEffect(() => {
     if (!data?.getTaskSingleDetails?.comments) return;
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
@@ -112,6 +116,7 @@ export function CodeCard() {
                 data.getTaskSingleDetails.userDetails.username
               }
               refetch={refetch}
+              navigateEditTask={navigateEditTask}
             />
           </CardHeader>
           <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
