@@ -162,7 +162,7 @@ export function ResultListTable({
             {(item) => (
               <TableRow key={item._id}>
                 {(columnKey) => (
-                  <TableCell>{tableValues(columnKey, item)}</TableCell>
+                  <TableCell className="cursor-pointer">{tableValues(columnKey, item)}</TableCell>
                 )}
               </TableRow>
             )}
