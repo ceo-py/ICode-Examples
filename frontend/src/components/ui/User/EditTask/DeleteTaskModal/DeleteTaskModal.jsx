@@ -20,14 +20,7 @@ export default function DeleteTaskModal({ isOpen, onOpenChange }) {
       const { data } = await taskDelete({
         variables: { input: { id: searchParams.get("id") } },
       });
-      console.log(data);
-      if (data?.followUser?.code === 200) {
-        setButtonData({
-          ...buttonData,
-          Follow: !buttonData.Follow,
-        });
-        refetch();
-      }
+      location.reload();
     } catch (error) {
       serverError();
     }
