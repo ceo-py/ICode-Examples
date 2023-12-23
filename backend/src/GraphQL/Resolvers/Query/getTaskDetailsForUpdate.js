@@ -30,9 +30,9 @@ const getTaskDetailsForUpdateResolver = {
                     }
                     return {
                         taskName: findTask.taskName,
-                        language: "String",
-                        course: "String",
-                        module: "String",
+                        language: findTask.language,
+                        course: findTask.course,
+                        module: findTask.module,
                         videoLink: findTask.videoLink,
                         githubLink: findTask.githubLink,
                         status: {

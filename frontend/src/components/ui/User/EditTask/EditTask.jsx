@@ -21,6 +21,7 @@ import { TASK_UPDATE_MUTATION } from "../../../../graphql/mutations/taskUpdateMu
 import { TASK_DETAILS_FOR_UPDATE_QUERY } from "../../../../graphql/queries/getTaskDetailsForUpdate";
 import { LoadingCircle } from "../../LoadingCIrcle/LoadingCircle";
 import { NotFound } from "../../NotFound/NotFound";
+import { languages } from "../../SelectMenu/SelectLanguage/data";
 
 const uploadFields = [
   {
@@ -59,6 +60,7 @@ export function EditTask() {
   const [taskDetails, { loading, data, refetch }] = useLazyQuery(
     TASK_DETAILS_FOR_UPDATE_QUERY
   );
+  const [selectMenu, setSelectMenu] = useState({});
   const [searchParams] = useSearchParams();
 
   const canEdit = () => {
@@ -97,7 +99,7 @@ export function EditTask() {
 
   const handleUserUpdate = async (userData) => {
     const isValid = await checkValidGithubAddress(userData.github);
-    setUpdateMessage("Task details updated successfully")
+    setUpdateMessage("Task details updated successfully");
     if (!isValid) {
       setUpdateMessage("Error provided GitHub URL seems to be invalid.");
       resetMessage();
@@ -113,7 +115,7 @@ export function EditTask() {
             module: selectedCourseSignal.value?.selectedModule,
             videoLink: userData.video,
             githubLink: userData.github.replace("https://github.com/", ""),
-            taskId: searchParams.get("id")
+            taskId: searchParams.get("id"),
           },
         },
       });
@@ -123,6 +125,23 @@ export function EditTask() {
     }
     resetMessage();
   };
+
+  const getTaskLangModuleCourse = (language, module, course) => {
+    const languageData = Object.values(languages).find(
+      (y) => y?.name?.language === language
+    );
+    setSelectMenu({
+      ...languageData,
+      ...{ module: languageData.modules[course] },
+      ...{ selectedCourse: course },
+      ...{ selectedModule: module },
+    });
+
+  };
+
+  useEffect(() => {
+    selectedCourseSignal.value = selectMenu;
+  }, [selectMenu]);
 
   useEffect(() => {
     if (!searchParams.get("id")) return;
@@ -141,13 +160,18 @@ export function EditTask() {
 
   useEffect(() => {
     if (data?.getTaskDetailsForUpdate?.status?.code === 200) {
+      getTaskLangModuleCourse(
+        data.getTaskDetailsForUpdate.language,
+        data.getTaskDetailsForUpdate.module,
+        data.getTaskDetailsForUpdate.course
+      );
       setInputFields({
         video: data.getTaskDetailsForUpdate.videoLink,
         github: data.getTaskDetailsForUpdate.githubLink,
         task: data.getTaskDetailsForUpdate.taskName,
       });
     }
-  }, [data]);
+  }, [data?.getTaskDetailsForUpdate]);
 
   useEffect(() => {
     refetch();
@@ -162,7 +186,7 @@ export function EditTask() {
       ) : (
         <Card className="grow">
           <CardHeader className="justify-between">
-            <SelectMenu menu={selectedCourseSignal} />
+            {selectedCourseSignal.value?.selectedCourse && <SelectMenu menu={selectedCourseSignal} />}
           </CardHeader>
           <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
             <div className="flex flex-col gap-4">
