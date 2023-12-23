@@ -6,6 +6,7 @@ import {
   CardHeader,
   Input,
   Progress,
+  useDisclosure,
 } from "@nextui-org/react";
 import { selectedCourseSignal } from "../../SelectMenu/SelectLanguage/selectMenuSignal";
 import { SelectMenu } from "../../SelectMenu/SelectMenu";
@@ -22,6 +23,7 @@ import { TASK_DETAILS_FOR_UPDATE_QUERY } from "../../../../graphql/queries/getTa
 import { LoadingCircle } from "../../LoadingCIrcle/LoadingCircle";
 import { NotFound } from "../../NotFound/NotFound";
 import { languages } from "../../SelectMenu/SelectLanguage/data";
+import DeleteTaskModal from "./DeleteTaskModal/DeleteTaskModal";
 
 const uploadFields = [
   {
@@ -62,6 +64,7 @@ export function EditTask() {
   );
   const [selectMenu, setSelectMenu] = useState({});
   const [searchParams] = useSearchParams();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const canEdit = () => {
     return (
@@ -136,7 +139,6 @@ export function EditTask() {
       ...{ selectedCourse: course },
       ...{ selectedModule: module },
     });
-
   };
 
   useEffect(() => {
@@ -176,6 +178,7 @@ export function EditTask() {
   useEffect(() => {
     refetch();
   }, []);
+
   return (
     <>
       {loading ? (
@@ -185,7 +188,10 @@ export function EditTask() {
       ) : (
         <Card className="grow">
           <CardHeader className="justify-between">
-            {(selectedCourseSignal.value?.name || !selectedCourseSignal.value) && <SelectMenu menu={selectedCourseSignal} />}
+            {(selectedCourseSignal.value?.name ||
+              !selectedCourseSignal.value) && (
+              <SelectMenu menu={selectedCourseSignal} />
+            )}
           </CardHeader>
           <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
             <div className="flex flex-col gap-4">
@@ -271,12 +277,11 @@ export function EditTask() {
               size="sm"
               variant="bordered"
               color={"danger"}
-              onPress={() => {
-                handleUserUpdate(inputFields);
-              }}
+              onPress={onOpen}
             >
               Delete task
             </Button>
+            <DeleteTaskModal isOpen={isOpen} onOpenChange={onOpenChange} />
           </CardFooter>
         </Card>
       )}
