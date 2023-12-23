@@ -154,6 +154,7 @@ type Mutation {
   editComment(input: CommentDetails!): Status!
   deleteComment(input: TaskSingleId!): Status!
   likeTask(input: TaskSingleId!): Status!
+  DeleteTask(input: TaskSingleId!): Status!
   followUser(input: TaskSingleId!): Status!
   createReport(input: CreateReportInput!): Status!
 }
