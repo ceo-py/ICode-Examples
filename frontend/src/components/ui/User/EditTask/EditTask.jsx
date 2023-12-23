@@ -97,8 +97,9 @@ export function EditTask() {
 
   const handleUserUpdate = async (userData) => {
     const isValid = await checkValidGithubAddress(userData.github);
+    setUpdateMessage("Task details updated successfully")
     if (!isValid) {
-      setUpdateMessage("Provided GitHub URL seems to be invalid.");
+      setUpdateMessage("Error provided GitHub URL seems to be invalid.");
       resetMessage();
       return;
     }
@@ -112,13 +113,13 @@ export function EditTask() {
             module: selectedCourseSignal.value?.selectedModule,
             videoLink: userData.video,
             githubLink: userData.github.replace("https://github.com/", ""),
+            taskId: searchParams.get("id")
           },
         },
       });
-      setUpdateMessage(data.uploadTask.message);
     } catch (error) {
       serverError();
-      setUpdateMessage("Task edit unsuccessful");
+      setUpdateMessage("Error task edit unsuccessful");
     }
     resetMessage();
   };
@@ -216,7 +217,7 @@ export function EditTask() {
                 aria-label="Loading..."
                 size="sm"
                 value={progressBarValue}
-                color={updateMessage.includes("invalid") ? "danger" : "success"}
+                color={updateMessage.includes("Error") ? "danger" : "success"}
                 className="flex"
               />
             </div>

@@ -20,8 +20,6 @@ const getTaskDetailsForUpdateResolver = {
                 } else {
                     const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
                     const findTask = await TaskSolution.findOne({ _id: taskId })
-                    console.log('token User Id: ',decoded.userId)
-                    console.log('find task id: ',String(findTask.id))
                     if (String(findTask.id) !== decoded.userId) {
                         return {
                             status: {

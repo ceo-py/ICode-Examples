@@ -9,14 +9,13 @@ const updateTaskResolver = {
 
             if (!cookieToken) {
                 return {
-                    message: 'JWT must be provided',
+                    message: 'Error JWT must be provided',
                     code: 400,
                 };
             }
             try {
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
-
-                const updatedTask = await TaskSolution.findOneAndUpdate({ id }, { $set: input }, { new: true });
+                const updatedTask = await TaskSolution.findOneAndUpdate({ _id: input.taskId, id }, { $set: input }, { new: true });
 
                 if (!updatedTask) {
                     return {
