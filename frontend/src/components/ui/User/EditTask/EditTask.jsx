@@ -176,7 +176,6 @@ export function EditTask() {
   useEffect(() => {
     refetch();
   }, []);
-
   return (
     <>
       {loading ? (
@@ -186,7 +185,7 @@ export function EditTask() {
       ) : (
         <Card className="grow">
           <CardHeader className="justify-between">
-            {selectedCourseSignal.value?.selectedCourse && <SelectMenu menu={selectedCourseSignal} />}
+            {(selectedCourseSignal.value?.name || !selectedCourseSignal.value) && <SelectMenu menu={selectedCourseSignal} />}
           </CardHeader>
           <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
             <div className="flex flex-col gap-4">
