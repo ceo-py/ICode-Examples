@@ -253,6 +253,7 @@ export function EditTask() {
           )}
           <CardFooter className="gap-10 flex justify-center">
             <Button
+              className="hover:bg-default/40"
               radius="full"
               size="sm"
               variant="bordered"
@@ -261,6 +262,7 @@ export function EditTask() {
               Cancel
             </Button>
             <Button
+              className="hover:bg-default/40"
               radius="full"
               size="sm"
               variant="bordered"
@@ -273,6 +275,7 @@ export function EditTask() {
               Edit
             </Button>
             <Button
+              className="hover:bg-default/40"
               radius="full"
               size="sm"
               variant="bordered"

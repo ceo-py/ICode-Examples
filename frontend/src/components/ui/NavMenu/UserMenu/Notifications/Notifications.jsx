@@ -21,7 +21,7 @@ export function Notifications() {
       color="primary"
       closeDelay="0"
     >
-      <div className="cursor-pointer flex relative justify-center items-center">
+      <div className="cursor-pointer flex relative rounded-full justify-center items-center hover:bg-default/40">
         <Badge
           content="1"
           aria-label="more than 10 notifications"

@@ -192,6 +192,7 @@ export function UserProfile() {
           )}
           <CardFooter className="gap-10 flex justify-center">
             <Button
+              className="hover:bg-default/40"
               radius="full"
               size="sm"
               variant="bordered"
@@ -200,6 +201,7 @@ export function UserProfile() {
               Cancel
             </Button>
             <Button
+              className="hover:bg-default/40"
               radius="full"
               size="sm"
               variant="bordered"
@@ -210,6 +212,7 @@ export function UserProfile() {
               Update
             </Button>
             <Button
+              className="hover:bg-default/40"
               radius="full"
               color="danger"
               size="sm"
