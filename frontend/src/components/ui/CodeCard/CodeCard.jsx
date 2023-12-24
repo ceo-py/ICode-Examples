@@ -91,7 +91,7 @@ export function CodeCard() {
                     color="primary"
                   >
                     <Avatar
-                      className="bg- cursor-pointer transition-transform transform duration-300 ease-in-out hover:scale-110"
+                      className="bg- cursor-pointer transition-transform transform duration-300 ease-in-out hover:scale-110 "
                       size="sm"
                       showFallback
                       src={linkIcons("video")}

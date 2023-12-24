@@ -141,7 +141,7 @@ function CardButtons({
                 className={`${
                   buttonData[x.btnText]
                     ? "text-foreground"
-                    : "bg-transparent text-foreground border-default-200"
+                    : "bg-transparent text-foreground border-default-200 hover:bg-default/40"
                 } `}
                 color="success"
                 radius="full"

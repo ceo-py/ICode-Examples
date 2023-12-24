@@ -12,6 +12,7 @@ export function EditTaskBtn({ navigateEditTask }) {
       color="primary"
     >
       <Button
+        className="hover:bg-default/40"
         color="primary"
         radius="full"
         size="sm"

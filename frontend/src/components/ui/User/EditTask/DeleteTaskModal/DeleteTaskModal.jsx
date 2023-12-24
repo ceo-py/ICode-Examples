@@ -7,17 +7,17 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { TASK_DELETE_MUTATION } from "../../../../../graphql/mutations/taskDeleteMutation";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 export default function DeleteTaskModal({ isOpen, onOpenChange }) {
   const [taskDelete] = useMutation(TASK_DELETE_MUTATION);
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+
 
   const handleDeleteTask = async () => {
     try {
-      const { data } = await taskDelete({
+      await taskDelete({
         variables: { input: { id: searchParams.get("id") } },
       });
       location.reload();
