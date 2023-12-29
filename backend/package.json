@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@getbrevo/brevo": "^2.0.0-beta.4",
     "@octokit/rest": "^20.0.2",
     "apollo-server-express": "^3.13.0",
     "bcrypt": "^5.1.1",
