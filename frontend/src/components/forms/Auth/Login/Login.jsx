@@ -66,6 +66,15 @@ export default function Login({ setSelected }) {
           Sign up
         </Link>
       </p>
+      <p className="text-center text-small">
+        <Link
+          className="cursor-pointer"
+          size="sm"
+          onPress={() => navigate('/recover-account')}
+        >
+          Forgot password
+        </Link>
+      </p>
       <div className="flex gap-2 justify-end">
         <Button
           fullWidth

@@ -14,10 +14,10 @@ apiKey.apiKey = process.env.EMAIL_API_KEY;
 
 let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); 
 
-sendSmtpEmail.subject = "My TEST";
+sendSmtpEmail.subject = "[ICode Example]: Reset your password";
 
 sendSmtpEmail.htmlContent = resetTemplate('This is test userName');
-sendSmtpEmail.sender = {"name":"ICode-Example","email":"icode.example@ceo-py.eu"};
+sendSmtpEmail.sender = {"name":"ICode Example","email":"icode.example@ceo-py.eu"};
 sendSmtpEmail.to = [{"email":"istrationr@gmail.com","name":"Jane Doe"}];
 // sendSmtpEmail.cc = [{"email":"example2@example2.com","name":"Janice Doe"}];
 // sendSmtpEmail.bcc = [{"name":"John Doe","email":"example@example.com"}];
