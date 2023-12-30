@@ -12,6 +12,7 @@ import Index from "./components/ui/Index/Index";
 import { UserHomePage } from "./components/ui/User/UserHomePage/UserHomePage";
 import { Footer } from "./components/ui/Footer/Footer";
 import { EditTask } from "./components/ui/User/EditTask/EditTask";
+import Account from "./components/forms/Recover/Account/Account";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/result" element={<ResultListTable />} />
             <Route path="/solution" element={<CodeCard />} />
             <Route path="/user" element={<UserHomePage />} />
+            <Route path="/recover" element={<Account />} />
             <Route
               path="/login"
               element={
