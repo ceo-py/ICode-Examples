@@ -1,6 +1,7 @@
 const SibApiV3Sdk = require('@getbrevo/brevo');
 const path = require('path');
 const dotenv = require('dotenv');
+const resetTemplate = require('./passwordResetTemplate');
 
 const pathToEnvFile = path.resolve(__dirname, '../../../.env');
 dotenv.config({ path: pathToEnvFile });
@@ -14,8 +15,9 @@ apiKey.apiKey = process.env.EMAIL_API_KEY;
 let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); 
 
 sendSmtpEmail.subject = "My TEST";
-sendSmtpEmail.htmlContent = "<html><body><h1>This is my first transactional email test</h1></body></html>";
-sendSmtpEmail.sender = {"name":"ICode-Example","email":"icode.example@gmail.com"};
+
+sendSmtpEmail.htmlContent = resetTemplate('This is test userName');
+sendSmtpEmail.sender = {"name":"ICode-Example","email":"icode.example@ceo-py.eu"};
 sendSmtpEmail.to = [{"email":"istrationr@gmail.com","name":"Jane Doe"}];
 // sendSmtpEmail.cc = [{"email":"example2@example2.com","name":"Janice Doe"}];
 // sendSmtpEmail.bcc = [{"name":"John Doe","email":"example@example.com"}];
