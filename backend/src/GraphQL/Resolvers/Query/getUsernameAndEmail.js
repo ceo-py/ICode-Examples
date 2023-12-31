@@ -1,11 +1,12 @@
 const UserDetail = require('../../../DataBase/Models/userDetails');
 const User = require('../../../DataBase/Models/users');
+const sendEmail = require('../../../Email/emailServer');
 
 const getUsernameAndEmailResolver = {
     Query: {
         getUsernameAndEmail: async (_, { input }, { req }) => {
-            const username = input.username
-            const email = input.email
+            const { username, email } = input
+
             try {
                 const user = await User.findOne({ username })
                 if (!user) {
@@ -27,11 +28,7 @@ const getUsernameAndEmailResolver = {
                         code: 400,
                     }
                 }
-                const maskedEmail = `${email.substring(0, 3)}${'*'.repeat(email.indexOf('@') - 3)}@${email.substring(email.indexOf('@') + 1)}`;
-                return {
-                    message: `We've successfully received your password reset request. You'll receive an email at ${maskedEmail} with instructions on how to reset your password. Please check your inbox for further details.`,
-                    code: 200,
-                }
+                return await sendEmail(username, email)
 
             } catch (error) {
                 console.error('Error getUsernameAndEmail:', error);
