@@ -1,6 +1,5 @@
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
 import { useState } from "react";
-import { passwordValidation } from "../../../utils/passwordValidation/passwordValidation";
 
 export default function Account() {
   const [username, setUsername] = useState("");

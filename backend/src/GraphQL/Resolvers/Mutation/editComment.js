@@ -32,6 +32,7 @@ const editCommentResolver = {
                 };
 
             } catch (e) {
+                console.error('Edit Comment', e)
                 return {
                     code: 401,
                     message: 'Edit comment unsuccessfully'

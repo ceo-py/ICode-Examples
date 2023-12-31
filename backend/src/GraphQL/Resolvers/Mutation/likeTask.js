@@ -31,7 +31,7 @@ const likeTaskResolver = {
                 };
 
             } catch (e) {
-                console.log('Like tasks error:\n', e)
+                console.error('Like tasks error:\n', e)
                 return {
                     code: 500,
                     message: 'Like request unsuccessful'

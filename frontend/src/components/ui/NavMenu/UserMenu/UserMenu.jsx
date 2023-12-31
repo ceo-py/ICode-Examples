@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Badge,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -8,7 +7,7 @@ import {
 } from "@nextui-org/react";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 import serverError from "../../../utils/serverError/serverError";

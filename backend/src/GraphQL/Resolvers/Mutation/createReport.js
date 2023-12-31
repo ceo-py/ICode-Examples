@@ -29,7 +29,7 @@ const createReportResolver = {
                 };
 
             } catch (e) {
-                console.log('Create report error:\n', e)
+                console.error('Create report error:\n', e)
                 return {
                     code: 401,
                     message: 'Create report unsuccessfully'

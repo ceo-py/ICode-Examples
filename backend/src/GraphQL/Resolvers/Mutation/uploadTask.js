@@ -31,6 +31,7 @@ const uploadTaskResolver = {
                     code: 200,
                 };
             } catch (error) {
+                console.error('Upload task', error)
                 if (error.code === 11000) {
                     return {
                         message: 'Error creating task duplicate GitHub URL',
