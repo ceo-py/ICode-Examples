@@ -14,7 +14,7 @@ const registerResolver = {
 
         if (existingUser) {
           return {
-            message: 'User already exists',
+            message: 'That username is taken. Try another.',
             code: 409
           };
         }
