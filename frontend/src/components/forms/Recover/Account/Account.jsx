@@ -1,18 +1,41 @@
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { RESET_PASSWORD } from "../../../../graphql/queries/resetPassword";
+import { useLazyQuery } from "@apollo/client";
 
 export default function Account() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [credentialMsg, setCredentialMsg] = useState();
+  const [resetPassword, { loading, data }] = useLazyQuery(RESET_PASSWORD);
 
   const handleResetPassword = () => {
-
-    console.log(email)
-    console.log(username)
-
+    if (username.trim() === "" || email.trim() === "") return;
+    try {
+      resetPassword({
+        variables: {
+          input: {
+            username,
+            email,
+          },
+        },
+      });
+    } catch (error) {
+      serverError();
+    }
     setCredentialMsg("");
   };
+
+  useEffect(() => {
+    if (loading && !data) return;
+    console.log(data);
+    if (data?.getUsernameAndEmail?.code !== 200) {
+      setCredentialMsg(data?.getUsernameAndEmail?.message);
+    } else if (data?.getUsernameAndEmail?.code === 200) {
+      setUsername("");
+      setEmail("");
+    }
+  }, [loading, data]);
 
   return (
     <div className="flex flex-wrap items-center justify-center w-full">
@@ -29,7 +52,9 @@ export default function Account() {
               value={username}
               onValueChange={(v) => setUsername(v)}
               placeholder="Enter your Username"
-              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
+              onKeyDown={(e) =>
+                e.key === "Enter" ? handleResetPassword() : null
+              }
             />
             <Input
               classNames={{
@@ -42,11 +67,19 @@ export default function Account() {
               onValueChange={(v) => setEmail(v)}
               placeholder="Enter your Email Address"
               errorMessage={credentialMsg}
-              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
+              onKeyDown={(e) =>
+                e.key === "Enter" ? handleResetPassword() : null
+              }
             />
+            {data?.getUsernameAndEmail?.code === 200 && (
+              <p className="flex flex-col items-start justify-start mb-2 text-tiny text-green-500">
+                {data?.getUsernameAndEmail?.message}
+              </p>
+            )}
             <div className="flex gap-2 justify-end">
               <Button
                 fullWidth
+                isLoading={loading}
                 color="primary"
                 onPress={() => {
                   handleResetPassword();
