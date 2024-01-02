@@ -35,6 +35,7 @@ export default function Password() {
               onValueChange={(v) => setPassword(v)}
               placeholder="New Password"
               type="Password"
+              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
             />
             <Input
               classNames={{
@@ -49,6 +50,7 @@ export default function Password() {
               type="Password"
               autoComplete="confirm-Password"
               errorMessage={credentialMsg}
+              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
             />
             <div className="flex gap-2 justify-end">
               <Button

@@ -63,6 +63,7 @@ export default function SignUp({ setSelected }) {
         onValueChange={(v) => setUsername(v)}
         type="username"
         errorMessage={usernameMsg}
+        onKeyDown={(e) => e.key === "Enter"? handleSignUP(): null}
       />
       <Input
         classNames={{
@@ -77,6 +78,7 @@ export default function SignUp({ setSelected }) {
         type="password"
         autoComplete="new-password"
         errorMessage={passwordMsg}
+        onKeyDown={(e) => e.key === "Enter"? handleSignUP(): null}
       />
       <p className="text-center text-small">
         Already have an account?{" "}

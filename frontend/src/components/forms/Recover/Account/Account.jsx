@@ -29,6 +29,7 @@ export default function Account() {
               value={username}
               onValueChange={(v) => setUsername(v)}
               placeholder="Enter your Username"
+              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
             />
             <Input
               classNames={{
@@ -41,6 +42,7 @@ export default function Account() {
               onValueChange={(v) => setEmail(v)}
               placeholder="Enter your Email Address"
               errorMessage={credentialMsg}
+              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
             />
             <div className="flex gap-2 justify-end">
               <Button

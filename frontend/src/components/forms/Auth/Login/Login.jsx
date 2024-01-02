@@ -44,6 +44,7 @@ export default function Login({ setSelected }) {
         onValueChange={(v) => setUsername(v)}
         placeholder="Enter your username"
         type="username"
+        onKeyDown={(e) => e.key === "Enter"? handleLogin(): null}
       />
       <Input
         isRequired
@@ -55,6 +56,7 @@ export default function Login({ setSelected }) {
         type="password"
         autoComplete="new-password"
         errorMessage={credentialMsg}
+        onKeyDown={(e) => e.key === "Enter"? handleLogin(): null}
       />
       <p className="text-center text-small">
         Need to create an account?{" "}
