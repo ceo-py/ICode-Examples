@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 import { buttons } from "../CardButtons";
@@ -11,7 +10,7 @@ import {
 } from "@nextui-org/react";
 
 export function CardButtonsDropDownMenu({
-  onOpen,
+  handleReportUser,
   follow,
   like,
   taskId,
@@ -22,7 +21,6 @@ export function CardButtonsDropDownMenu({
   handleFollowUser,
   navigateEditTask,
 }) {
-  const navigate = useNavigate();
   return (
     <Dropdown backdrop="blur">
       <DropdownTrigger>
@@ -66,7 +64,7 @@ export function CardButtonsDropDownMenu({
               } else if (x.btnText === "Share") {
                 x.onPress();
               } else if (x.btnText === "Report") {
-                onOpen();
+                handleReportUser();
               }
             }}
           >

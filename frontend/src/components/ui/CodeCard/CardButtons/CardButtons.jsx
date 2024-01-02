@@ -106,11 +106,19 @@ function CardButtons({
     }
   };
 
+  const handleReportUser = () => {
+    if (!state.isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    onOpen();
+  };
+
   return (
     <>
       <div className="sm:hidden">
         <CardButtonsDropDownMenu
-          onOpen={onOpen}
+          handleReportUser={handleReportUser}
           follow={follow}
           like={like}
           taskId={taskId}
@@ -155,7 +163,7 @@ function CardButtons({
                   } else if (x.btnText === "Share") {
                     x.onPress();
                   } else if (x.btnText === "Report") {
-                    onOpen();
+                    handleReportUser();
                   }
                 }}
               >
