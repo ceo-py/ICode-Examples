@@ -56,8 +56,9 @@ function CardButtons({
   const { state } = useAuth();
   const navigate = useNavigate();
 
-  const [likeTask] = useMutation(LIKE_TASK_MUTATION);
-  const [followUser] = useMutation(FOLLOW_USER_MUTATION);
+  const [likeTask, { loading: loadingLike }] = useMutation(LIKE_TASK_MUTATION);
+  const [followUser, { loading: loadingFollow }] =
+    useMutation(FOLLOW_USER_MUTATION);
 
   const canFollow = (logUsername, userToFollowUsername) => {
     return logUsername === userToFollowUsername;
@@ -155,6 +156,13 @@ function CardButtons({
                 radius="full"
                 size="sm"
                 variant="bordered"
+                isLoading={
+                  x.btnText === "Follow"
+                    ? loadingFollow
+                    : x.btnText === "Like"
+                    ? loadingLike
+                    : false
+                }
                 onPress={() => {
                   if (x.btnText === "Follow") {
                     handleFollowUser(userToFollowId);

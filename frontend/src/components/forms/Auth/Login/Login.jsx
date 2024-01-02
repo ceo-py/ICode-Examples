@@ -13,7 +13,7 @@ export default function Login({ setSelected }) {
   const { dispatch } = useAuth();
   const navigate = useNavigate();
 
-  const [login] = useMutation(LOGIN_MUTATION);
+  const [login, {loading}] = useMutation(LOGIN_MUTATION);
 
   const handleLogin = async () => {
     setCredentialMsg("");
@@ -81,6 +81,7 @@ export default function Login({ setSelected }) {
         <Button
           fullWidth
           color="primary"
+          isLoading={loading}
           onPress={() => {
             handleLogin();
           }}

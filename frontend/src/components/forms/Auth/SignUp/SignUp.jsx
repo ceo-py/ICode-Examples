@@ -17,7 +17,7 @@ export default function SignUp({ setSelected }) {
   const { dispatch } = useAuth();
   const navigate = useNavigate();
 
-  const [signUp] = useMutation(SIGNUP_MUTATION);
+  const [signUp, {loading}] = useMutation(SIGNUP_MUTATION);
 
   const handleSignUP = async () => {
     const isPasswordValid = passwordValidation(password);
@@ -94,6 +94,7 @@ export default function SignUp({ setSelected }) {
         <Button
           fullWidth
           color="primary"
+          isLoading={loading}
           onClick={() => {
             handleSignUP();
           }}

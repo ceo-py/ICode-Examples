@@ -57,7 +57,8 @@ export function EditTask() {
   });
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
-  const [taskUpdate] = useMutation(TASK_UPDATE_MUTATION);
+  const [taskUpdate, { loading: taskUpdateLoading }] =
+    useMutation(TASK_UPDATE_MUTATION);
   const [progressBarValue, setProgressBarValue] = useState(0);
   const [taskDetails, { loading, data, refetch }] = useLazyQuery(
     TASK_DETAILS_FOR_UPDATE_QUERY
@@ -266,6 +267,7 @@ export function EditTask() {
               radius="full"
               size="sm"
               variant="bordered"
+              isLoading={taskUpdateLoading}
               color={canEdit() ? "" : "success"}
               onPress={() => {
                 handleUserUpdate(inputFields);

@@ -51,7 +51,7 @@ export function UploadContent() {
   });
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
-  const [taskCreate] = useMutation(TASK_CREATE_MUTATION);
+  const [taskCreate, {loading}] = useMutation(TASK_CREATE_MUTATION);
   const [progressBarValue, setProgressBarValue] = useState(0);
 
   const canUpload = () => {
@@ -198,6 +198,7 @@ export function UploadContent() {
             size="sm"
             variant="bordered"
             color={canUpload() ? "" : "success"}
+            isLoading={loading}
             onPress={() => {
               handleUserUpdate(inputFields);
             }}

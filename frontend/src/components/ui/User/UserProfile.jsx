@@ -30,7 +30,7 @@ export function UserProfile() {
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [userUpdate] = useMutation(USER_UPDATE_MUTATION);
+  const [userUpdate, {loading:userUpdateLoading}] = useMutation(USER_UPDATE_MUTATION);
   const { state, dispatch } = useAuth();
   const [correctURLS, setCorrectURLS] = useState({
     icon: false,
@@ -205,6 +205,7 @@ export function UserProfile() {
               radius="full"
               size="sm"
               variant="bordered"
+              isLoading={userUpdateLoading}
               onPress={() => {
                 handleUserUpdate(user);
               }}
