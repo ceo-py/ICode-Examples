@@ -36,7 +36,7 @@ const getUsernameAndEmailResolver = {
                     process.env.SECRET_KEY,
                     { expiresIn: '24h' }
                 );
-                // const createdAt = new Date();
+                
                 const resetToken = new PasswordResetToken({ token });
                 await resetToken.save();
 
