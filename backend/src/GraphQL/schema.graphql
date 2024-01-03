@@ -136,6 +136,11 @@ input UsernameAndEmail {
   email: String!
 }
 
+input resetPasswordInput {
+  token: String!
+  password: String!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -163,4 +168,5 @@ type Mutation {
   deleteTask(input: TaskSingleId!): Status!
   followUser(input: TaskSingleId!): Status!
   createReport(input: CreateReportInput!): Status!
+  resetPassword(input: resetPasswordInput!): Status!
 }
