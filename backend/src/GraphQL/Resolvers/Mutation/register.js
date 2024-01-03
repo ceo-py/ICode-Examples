@@ -10,7 +10,8 @@ const registerResolver = {
       try {
         const { username, password } = input;
 
-        const existingUser = await User.findOne({ username: { $regex: new RegExp(username, 'i') } });
+        const existingUser = await User.findOne({ username: { $regex: new RegExp(`^${username}$`, 'i') } });
+
 
         if (existingUser) {
           return {

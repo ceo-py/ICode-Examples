@@ -1,6 +1,8 @@
+const PasswordResetToken = require('../../../DataBase/Models/loginToken');
 const UserDetail = require('../../../DataBase/Models/userDetails');
 const User = require('../../../DataBase/Models/users');
 const sendEmail = require('../../../Email/emailServer');
+const jwt = require('jsonwebtoken');
 
 const getUsernameAndEmailResolver = {
     Query: {
@@ -28,6 +30,16 @@ const getUsernameAndEmailResolver = {
                         code: 400,
                     }
                 }
+
+                const token = jwt.sign(
+                    { username, email },
+                    process.env.SECRET_KEY,
+                    { expiresIn: '24h' }
+                );
+                // const createdAt = new Date();
+                const resetToken = new PasswordResetToken({ token });
+                await resetToken.save();
+
                 return await sendEmail(username, email)
 
             } catch (error) {
