@@ -9,10 +9,15 @@ export default function Password() {
 
   const handleResetPassword = () => {
     const isPasswordValid = passwordValidation(password);
-    const isPasswordTheSame = password === confirmPassword ? "" : "Enter the same password in both fields. ";
+    const isPasswordTheSame =
+      password === confirmPassword
+        ? ""
+        : "Enter the same password in both fields. ";
 
-    if (isPasswordValid) {
-      setCredentialMsg(`${isPasswordTheSame}${isPasswordValid}`);
+    if (isPasswordValid || isPasswordTheSame) {
+      setCredentialMsg(
+        `${isPasswordTheSame}${isPasswordValid ? isPasswordValid : ""}`
+      );
       return;
     }
 
@@ -30,12 +35,14 @@ export default function Password() {
             <Input
               isRequired
               isInvalid={credentialMsg ? true : false}
-              label="Password"
+              label="New Password"
               value={password}
               onValueChange={(v) => setPassword(v)}
               placeholder="New Password"
               type="Password"
-              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
+              onKeyDown={(e) =>
+                e.key === "Enter" ? handleResetPassword() : null
+              }
             />
             <Input
               classNames={{
@@ -50,7 +57,9 @@ export default function Password() {
               type="Password"
               autoComplete="confirm-Password"
               errorMessage={credentialMsg}
-              onKeyDown={(e) => e.key === "Enter"? handleResetPassword(): null}
+              onKeyDown={(e) =>
+                e.key === "Enter" ? handleResetPassword() : null
+              }
             />
             <div className="flex gap-2 justify-end">
               <Button

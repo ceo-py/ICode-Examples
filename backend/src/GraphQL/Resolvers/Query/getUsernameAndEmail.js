@@ -36,11 +36,11 @@ const getUsernameAndEmailResolver = {
                     process.env.SECRET_KEY,
                     { expiresIn: '24h' }
                 );
-                
+
                 const resetToken = new PasswordResetToken({ token });
                 await resetToken.save();
 
-                return await sendEmail(username, email)
+                return await sendEmail(username, email, token)
 
             } catch (error) {
                 console.error('Error getUsernameAndEmail:', error);

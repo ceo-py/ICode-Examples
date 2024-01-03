@@ -22,7 +22,7 @@ const email = () => {
 
 }
 
-const sendEmail = async (username, emailAddress) => {
+const sendEmail = async (username, emailAddress, token) => {
   const [sendSmtpEmail, apiInstance] = email()
   if (!sendSmtpEmail) return {
     message: 'We are currently experiencing technical difficulties that are preventing us from sending emails. Please try again later.',
@@ -31,7 +31,7 @@ const sendEmail = async (username, emailAddress) => {
 
   sendSmtpEmail.subject = "[ICode Example]: Reset your password";
 
-  sendSmtpEmail.htmlContent = resetTemplate(username);
+  sendSmtpEmail.htmlContent = resetTemplate(username, token);
   sendSmtpEmail.sender = { "name": "ICode Example", "email": "icode.example@ceo-py.eu" };
   sendSmtpEmail.to = [{ "email": emailAddress, "name": username }];
 
