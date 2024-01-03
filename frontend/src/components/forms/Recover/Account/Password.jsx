@@ -1,13 +1,22 @@
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { passwordValidation } from "../../../utils/passwordValidation/passwordValidation";
+import { RESET_PASSWORD_MUTATION } from "../../../../graphql/mutations/resetPassword";
+import { useMutation } from "@apollo/client";
+import { useSearchParams } from "react-router-dom";
 
 export default function Password() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [credentialMsg, setCredentialMsg] = useState();
+  const [searchParams] = useSearchParams();
+  const [resetPassword, { loading, data }] = useMutation(
+    RESET_PASSWORD_MUTATION
+  );
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
+    const token = searchParams.get("account");
+    if (!token) return;
     const isPasswordValid = passwordValidation(password);
     const isPasswordTheSame =
       password === confirmPassword
@@ -21,8 +30,30 @@ export default function Password() {
       return;
     }
 
+    try {
+      await resetPassword({
+        variables: {
+          input: {
+            token,
+            password,
+          },
+        },
+      });
+    } catch (error) {
+      serverError();
+    }
     setCredentialMsg("");
   };
+
+  useEffect(() => {
+    if (loading && !data) return;
+    if (data?.resetPassword?.code !== 200) {
+      setCredentialMsg(data?.resetPassword?.message);
+    } else if (data?.resetPassword?.code === 200) {
+      setPassword("");
+      setConfirmPassword("");
+    }
+  }, [loading, data]);
 
   return (
     <div className="flex flex-wrap items-center justify-center w-full">
@@ -61,10 +92,16 @@ export default function Password() {
                 e.key === "Enter" ? handleResetPassword() : null
               }
             />
+            {data?.resetPassword?.code === 200 && (
+              <p className="flex flex-col items-start justify-start mb-2 text-tiny text-green-500">
+                {data?.resetPassword?.message}
+              </p>
+            )}
             <div className="flex gap-2 justify-end">
               <Button
                 fullWidth
                 color="primary"
+                isLoading={loading}
                 onPress={() => {
                   handleResetPassword();
                 }}

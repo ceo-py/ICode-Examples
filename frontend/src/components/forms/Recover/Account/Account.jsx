@@ -28,7 +28,6 @@ export default function Account() {
 
   useEffect(() => {
     if (loading && !data) return;
-    console.log(data);
     if (data?.getUsernameAndEmail?.code !== 200) {
       setCredentialMsg(data?.getUsernameAndEmail?.message);
     } else if (data?.getUsernameAndEmail?.code === 200) {

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../../DataBase/Models/users');
-const UserDetail = require('../../../DataBase/Models/userDetails');
+const PasswordResetToken = require('../../../DataBase/Models/loginToken');
 
 const ResetPasswordResolver = {
     Mutation: {
@@ -9,29 +9,27 @@ const ResetPasswordResolver = {
 
             try {
 
-                const { username } = await PasswordReset.findOne({ token: input.token });
+                const foundToken = await PasswordResetToken.findOne({ token: input.token });
+
+                if (!foundToken) {
+                    return {
+                        message: 'Error incorrect token',
+                        code: 400,
+                    };
+                }
+                const { username } = jwt.verify(foundToken.token, process.env.SECRET_KEY);
 
                 const password = await bcrypt.hash(input.password, 10);
+                const user = await User.findOneAndUpdate({ username }, { $set: { password } }, { new: true });
 
-                const user = await User.findOneAndUpdate({ username }, { $set: password }, { new: true });
-
-                const userDetail = await UserDetail.find({ id: user._id.toString() });
-
-                if (!user || userDetail) {
+                if (!user) {
                     return {
-                        message: 'Error changing password',
+                        message: 'Error user not found',
                         code: 400,
                     };
                 }
 
-                const token = jwt.sign(
-                    { userId: user._id, username, icon: userDetail.icon },
-                    process.env.SECRET_KEY,
-                    { expiresIn: '30d' }
-                );
-
-                res.cookie('token', token, { httpOnly: true, sameSite: 'None', secure: true });
-
+                await PasswordResetToken.deleteOne({ _id: foundToken._id });
                 return {
                     message: 'User password updated successfully',
                     code: 200,
