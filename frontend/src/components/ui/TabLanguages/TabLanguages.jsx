@@ -30,7 +30,7 @@ export default function TabLanguages({
         key="python"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="python" src={languageIcons("Python")} />
+            <DropDownMenuIcon alt="python language icon" src={languageIcons("Python")} />
             <span>Python</span>
             {languageCount && (
               <Chip size="sm" variant="faded">
@@ -45,7 +45,7 @@ export default function TabLanguages({
         title={
           <div className="flex items-center space-x-2">
             <DropDownMenuIcon
-              alt="javascript"
+              alt="javascript language icon"
               src={languageIcons("JavaScript")}
             />
             <span>JavaScript</span>
@@ -61,7 +61,7 @@ export default function TabLanguages({
         key="csharp"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="csharp" src={languageIcons("C#")} />
+            <DropDownMenuIcon alt="csharp language icon" src={languageIcons("C#")} />
             <span>C#</span>
             {languageCount && (
               <Chip size="sm" variant="faded">
@@ -75,7 +75,7 @@ export default function TabLanguages({
         key="java"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="java" src={languageIcons("Java")} />
+            <DropDownMenuIcon alt="java language icon" src={languageIcons("Java")} />
             <span>Java</span>
             {languageCount && (
               <Chip size="sm" variant="faded">
@@ -89,7 +89,7 @@ export default function TabLanguages({
         key="cpp"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="cpp" src={languageIcons("C++")} />
+            <DropDownMenuIcon alt="cpp language icon" src={languageIcons("C++")} />
             <span>C++</span>
             {languageCount && (
               <Chip size="sm" variant="faded">

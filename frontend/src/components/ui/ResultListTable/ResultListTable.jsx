@@ -63,9 +63,9 @@ export function ResultListTable({
     if (column === "codeAndVIdeo") {
       return (
         <div className="flex gap-3">
-          <DropDownMenuIcon alt="code" src={linkIcons("code")} />
+          <DropDownMenuIcon alt="code icon" src={linkIcons("code")} />
           {item.videoLink && (
-            <DropDownMenuIcon alt="video" src={linkIcons("youTube")} />
+            <DropDownMenuIcon alt="video icon" src={linkIcons("youTube")} />
           )}
         </div>
       );
@@ -139,6 +139,11 @@ export function ResultListTable({
           bottomContent={
             <div className="flex w-full justify-center">
               <Pagination
+              classNames={{
+                prev:"TEXTHUGEEEEEEEEEE",
+                next:"TEXTHUGEEEEEEEEEE",
+                item:"TEXTHUGEEEEEEEEEE",
+              }}
                 isCompact
                 showControls
                 showShadow
@@ -154,9 +159,9 @@ export function ResultListTable({
           }}
         >
           <TableHeader>
-            <TableColumn key="taskName">TASK NAME</TableColumn>
-            <TableColumn key="language">LANGUAGE</TableColumn>
-            <TableColumn key="codeAndVIdeo">CODE & VIDEO</TableColumn>
+            <TableColumn  scope="col" key="taskName" role="task name">TASK NAME</TableColumn>
+            <TableColumn  scope="col" key="language" role="task language">LANGUAGE</TableColumn>
+            <TableColumn  scope="col" key="codeAndVIdeo" role="task code and/or video">CODE & VIDEO</TableColumn>
           </TableHeader>
           <TableBody items={items} emptyContent={"No task solutions found"}>
             {(item) => (

@@ -6,7 +6,7 @@ export function Footer() {
       <div className="flex max-w-[1534]">
         <ul className="flex list-none gap-2 items-center">
           <li>
-          <LogoText size={"h-6"} hideDescription={true}/>
+            <LogoText size={"h-6"} hideDescription={true} />
           </li>
           <li>&copy; 2024 Copyright ICode Example</li>
         </ul>
