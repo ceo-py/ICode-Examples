@@ -13,10 +13,11 @@ import { SearchIcon } from "../../../utils/Icons/SearchIcon";
 const languageOptions = [
   "Python",
   "JavaScript",
+  "C#",
+  "Java",
+  "C++",
   "MS SQL",
   "HTML & CSS",
-  "Java",
-  "C#",
 ];
 
 const types = ["Code", "Video"];

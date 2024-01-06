@@ -9,6 +9,7 @@ languages = {
     java: "java",
     sql: "sql",
     scss: "scss",
+    cpp: "cpp",
 }
 
 function syntaxHighlight(code, fileExtension) {
