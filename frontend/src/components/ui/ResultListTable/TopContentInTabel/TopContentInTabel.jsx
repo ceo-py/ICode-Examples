@@ -50,6 +50,7 @@ export function TopContentInTable({
     pickedLanguages,
     selectedTypes,
   }) => {
+    
     const searchBarFilter = inputField
       ? filterFromSearchBar(inputField)
       : filterValue
@@ -94,7 +95,7 @@ export function TopContentInTable({
           onValueChange={(v) => {
             setFilterValue ? setFilterValue(v) : setFilterValueLocal(v);
             setSearchResults(
-              filterValue
+              filterValue || filterValueLocal
                 ? filterFromSearchBar(v)
                 : dynamicFilterAllChoices({ inputField: v })
             );
