@@ -110,6 +110,7 @@ type IndexTop20 {
   javascript: String!
   csharp: String!
   java: String!
+  cpp: String!
   status: Status!
 }
 

@@ -7,6 +7,7 @@ export const INDEX_TOP_20_QUERY = gql`
             javascript
             csharp
             java
+            cpp
             status {
                 message
                 code

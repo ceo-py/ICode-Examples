@@ -489,7 +489,7 @@ function resetTemplate(username, token) {
                                                                    cellpadding="0" role="presentation">
                                                                 <tr>
                                                                     <td align="center">
-                                                                        <a href="http://localhost:5173/recover?account=${token}"
+                                                                        <a href="https://icode-example.ceo-py.eu/recover?account=${token}"
                                                                            class="f-fallback button button--green"
                                                                            target="_blank">Reset your password</a>
                                                                     </td>

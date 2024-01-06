@@ -12,6 +12,7 @@ export const GET_USER_HOME_DETAILS = gql`
                 javascript
                 csharp
                 java
+                cpp
             }
             details {
                 followers

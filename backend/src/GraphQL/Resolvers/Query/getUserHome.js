@@ -23,6 +23,7 @@ const getUserHomeResolver = {
                             java: '0',
                             csharp: '0',
                             javascript: '0',
+                            cpp: '0',
                             status: {
                                 message: 'User not found',
                                 code: 401,
@@ -64,6 +65,7 @@ const getUserHomeResolver = {
                         java: filterByLanguage(taskSolutions, 'Java'),
                         csharp: filterByLanguage(taskSolutions, 'C#'),
                         javascript: filterByLanguage(taskSolutions, 'JavaScript'),
+                        cpp: filterByLanguage(taskSolutions, 'C++'),
                         status: {
                             message: 'User details fetched successfully',
                             code: 200,

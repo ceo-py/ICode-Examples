@@ -34,7 +34,7 @@ const uploadTaskResolver = {
                 console.error('Upload task', error)
                 if (error.code === 11000) {
                     return {
-                        message: 'Error creating task duplicate GitHub URL',
+                        message: 'Error invalid creating task duplicate GitHub URL',
                         code: 400 ,
                     };
                 }

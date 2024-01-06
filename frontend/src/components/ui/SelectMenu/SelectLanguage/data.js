@@ -581,6 +581,49 @@ export const languages = {
             },
         },
     },
+    cpp: {
+        name: {
+            language: 'C++',
+            db: 'cpp',
+            url: 'https://www.svgrepo.com/show/333518/c-plus-plus.svg'
+        },
+        modules: {
+            Basics: {
+                'First Steps in Coding - Lab': '',
+                'First Steps in Coding - Exercise': '',
+                'First Steps in Coding - More Exercises': '',
+                'Conditional Statements - Lab': '',
+                'Conditional Statements - Exercise': '',
+                'Conditional Statements - More Exercises': '',
+                'Conditional Statements Advanced - Lab': '',
+                'Conditional Statements Advanced - Exercise': '',
+                'Conditional Statements Advanced - More Exercises': '',
+                'For Loop - Lab': '',
+                'For Loop - Exercise': '',
+                'For-Loop - More Exercises': '',
+                'While Loop - Lab': '',
+                'While Loop - Exercise': '',
+                'While-Loop - More Exercises': '',
+                'Nested Loops - Lab': '',
+                'Nested Loops - Exercise': '',
+                'Nested Loops - More Exercises': '',
+                'Drawing Figures with Loops - More Exercises': ''
+            },
+            'Basics Exams': {
+                'Programming Basics Online Exam - 18 and 19 July 2020': '',
+                'Programming Basics Online Exam - 28 and 29 March 2020': '',
+                'Programming Basics Online Exam - 6 and 7 July 2019': '',
+                'Programming Basics Online Exam - 15 and 16 June 2019': '',
+                'Programming Basics Online Retake Exam - 2 and 3 May 2019': '',
+                'Programming Basics Online Exam - 20 and 21 April 2019': '',
+                'Programming Basics Online Exam - 6 and 7 April 2019': '',
+                'Programming Basics Online Exam - 9 and 10 March 2019': '',
+            },
+            others: {
+                others: ''
+            },
+        },
+    },
     html: {
         name: {
             language: 'HTML & CSS',

@@ -82,6 +82,7 @@ export function UserHomePage() {
                   .length,
                 cSharp: JSON.parse(data?.getUserHome?.languages?.csharp).length,
                 java: JSON.parse(data?.getUserHome?.languages?.java).length,
+                cpp: JSON.parse(data?.getUserHome?.languages?.cpp).length,
               }}
               setFilterValue={setFilterValue}
             />

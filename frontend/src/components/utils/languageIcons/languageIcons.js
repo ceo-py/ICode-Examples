@@ -7,6 +7,7 @@ export function languageIcons(name) {
         Java: "https://www.svgrepo.com/show/452234/java.svg",
         "HTML & CSS": "https://www.svgrepo.com/show/452228/html-5.svg",
         "MS SQL": "https://www.svgrepo.com/show/331760/sql-database-generic.svg",
+        "C++": "https://www.svgrepo.com/show/333518/c-plus-plus.svg",
     }
     return languagesIcons[name]
 }

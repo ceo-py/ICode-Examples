@@ -85,6 +85,20 @@ export default function TabLanguages({
           </div>
         }
       />
+      <Tab
+        key="cpp"
+        title={
+          <div className="flex items-center space-x-2">
+            <DropDownMenuIcon alt="cpp" src={languageIcons("C++")} />
+            <span>C++</span>
+            {languageCount && (
+              <Chip size="sm" variant="faded">
+                {languageCount.cpp}
+              </Chip>
+            )}
+          </div>
+        }
+      />
     </Tabs>
   );
 }

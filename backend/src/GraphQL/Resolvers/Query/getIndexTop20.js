@@ -26,12 +26,14 @@ const indexTop20Resolver = {
                 const javascript = await getLatestTasksByLanguage("JavaScript");
                 const csharp = await getLatestTasksByLanguage("C#");
                 const java = await getLatestTasksByLanguage("Java");
+                const cpp = await getLatestTasksByLanguage("C++");
 
                 return {
                     python,
                     javascript,
                     csharp,
                     java,
+                    cpp,
                     status: {
                         message: 'Tasks results fetched successfully',
                         code: 200,

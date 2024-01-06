@@ -75,9 +75,9 @@ export function Notifications() {
                 hideSelectedIcon={false}
                 //   textValue="Details"
               >
-                Notifications
+                We are working on it
               </DropdownItem>
-              <DropdownItem
+              {/* <DropdownItem
                 key="comment id ..."
                 textValue="notifications"
                 className="h-14 gap-2"
@@ -85,7 +85,7 @@ export function Notifications() {
                 //   textValue="Details"
               >
                 Някакъв лист с задачите
-              </DropdownItem>
+              </DropdownItem> */}
               {/* </DropdownSection> */}
             </DropdownMenu>
           </Dropdown>
