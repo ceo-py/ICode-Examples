@@ -14,6 +14,7 @@ const uploadTaskResolver = {
                 };
             }
             try {
+                input.taskName = input.taskName.length > 50 ? input.taskName.slice(0, 50) + "..." : input.taskName
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
                 const task = new TaskSolution({ id, ...input });
                 await task.save();
@@ -35,7 +36,7 @@ const uploadTaskResolver = {
                 if (error.code === 11000) {
                     return {
                         message: 'Error invalid creating task duplicate GitHub URL',
-                        code: 400 ,
+                        code: 400,
                     };
                 }
                 return {

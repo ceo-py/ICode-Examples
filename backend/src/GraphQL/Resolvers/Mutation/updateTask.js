@@ -14,6 +14,7 @@ const updateTaskResolver = {
                 };
             }
             try {
+                input.taskName = input.taskName.length > 50 ? input.taskName.slice(0, 50) + "..." : input.taskName
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
                 const updatedTask = await TaskSolution.findOneAndUpdate({ _id: input.taskId, id }, { $set: input }, { new: true });
 
