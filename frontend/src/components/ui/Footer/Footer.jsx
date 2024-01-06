@@ -8,7 +8,7 @@ export function Footer() {
           <li>
           <LogoText size={"h-6"} hideDescription={true}/>
           </li>
-          <li>&copy; 2023 Copyright ICode Example</li>
+          <li>&copy; 2024 Copyright ICode Example</li>
         </ul>
       </div>
     </footer>

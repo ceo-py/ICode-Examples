@@ -75,7 +75,7 @@ export function Notifications() {
                 hideSelectedIcon={false}
                 //   textValue="Details"
               >
-                We are working on it
+                Under Construction
               </DropdownItem>
               {/* <DropdownItem
                 key="comment id ..."
