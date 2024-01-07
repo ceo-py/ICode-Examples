@@ -6,12 +6,21 @@ import { LogoText } from "./LogoText/LogoText";
 import { useAuth } from "../../../AuthContext/AuthContext";
 import { LogIn } from "./LogoText/LogIn";
 import { MenuSwitch } from "./MenuSwitch.jsx/MenuSwitch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MenuModule } from "./MenuSwitch.jsx/MenuModule";
+import { useLocation } from "react-router-dom";
 
 export function NavMenu() {
   const { state } = useAuth();
   const [selected, setSelected] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const allowedPath = "/menu";
+
+    setSelected(location.pathname === allowedPath);
+  }, [location.pathname]);
 
   return (
     <>

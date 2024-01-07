@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export function MenuModule() {
   const navigate = useNavigate();
-
+  
   const test = () => {
     if (
       !selectedCourseSignal?.value?.name?.language ||
