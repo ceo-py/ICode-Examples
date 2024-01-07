@@ -111,6 +111,7 @@ type IndexTop20 {
   csharp: String!
   java: String!
   cpp: String!
+  totalSolutions: String!
   status: Status!
 }
 

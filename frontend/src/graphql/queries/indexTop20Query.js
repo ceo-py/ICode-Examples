@@ -8,6 +8,7 @@ export const INDEX_TOP_20_QUERY = gql`
             csharp
             java
             cpp
+            totalSolutions
             status {
                 message
                 code

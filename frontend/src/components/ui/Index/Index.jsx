@@ -12,7 +12,16 @@ export default function Index() {
 
   return (
     <div className="flex items-center w-full flex-col">
-      <TabLanguages language={language} setLanguage={setLanguage} />
+      {!loading && (
+        <>
+          <h3 className="flex items-center justify-center font-semibold">
+            Latest 100 task additions. Total solutions{" "}
+            {data.getIndexTop20.totalSolutions}.
+          </h3>
+          <TabLanguages language={language} setLanguage={setLanguage} />
+        </>
+      )}
+
       {loading ? (
         <LoadingCircle />
       ) : data?.getIndexTop20?.status?.code === 200 ? (

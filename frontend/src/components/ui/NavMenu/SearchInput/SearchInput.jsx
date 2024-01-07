@@ -8,7 +8,7 @@ export function SearchInput() {
   const navigate = useNavigate();
 
   const taskSearch = (e) => {
-    if (e.key === "Enter" && value.trim() != "") {
+    if (value.trim() != "" && (e.key === "Enter" || e.type == "click")) {
       const encodedQuery = encodeURIComponent(value.trim());
       navigate(`/result?query=${encodedQuery}`);
     }
@@ -26,7 +26,11 @@ export function SearchInput() {
       isClearable={false}
       placeholder={"Search for Task"}
       size="sm"
-      startContent={<SearchIcon />}
+      startContent={
+        <div className="cursor-pointer" onClick={(e) => taskSearch(e)}>
+          <SearchIcon />
+        </div>
+      }
       value={value}
       onValueChange={setValue}
       type="search"

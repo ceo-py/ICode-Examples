@@ -136,14 +136,9 @@ export function ResultListTable({
               />
             )
           }
-          bottomContent={
+          bottomContent={ !outsideData &&
             <div className="flex w-full justify-center">
               <Pagination
-              classNames={{
-                prev:"TEXTHUGEEEEEEEEEE",
-                next:"TEXTHUGEEEEEEEEEE",
-                item:"TEXTHUGEEEEEEEEEE",
-              }}
                 isCompact
                 showControls
                 showShadow

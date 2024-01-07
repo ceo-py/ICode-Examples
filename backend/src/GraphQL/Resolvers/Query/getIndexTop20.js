@@ -27,6 +27,7 @@ const indexTop20Resolver = {
                 const csharp = await getLatestTasksByLanguage("C#");
                 const java = await getLatestTasksByLanguage("Java");
                 const cpp = await getLatestTasksByLanguage("C++");
+                const totalSolutions = await TaskSolution.countDocuments({ "taskName": { "$regex": "." } });
 
                 return {
                     python,
@@ -34,6 +35,7 @@ const indexTop20Resolver = {
                     csharp,
                     java,
                     cpp,
+                    totalSolutions,
                     status: {
                         message: 'Tasks results fetched successfully',
                         code: 200,
