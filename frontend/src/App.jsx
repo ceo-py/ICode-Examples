@@ -14,6 +14,7 @@ import { Footer } from "./components/ui/Footer/Footer";
 import { EditTask } from "./components/ui/User/EditTask/EditTask";
 import Password from "./components/forms/Recover/Account/Password";
 import Account from "./components/forms/Recover/Account/Account";
+import { MenuModuleResult } from "./components/ui/MenuModuleResult/MenuModuleResult";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/result" element={<ResultListTable />} />
+            <Route path="/menu" element={<MenuModuleResult />} />
             <Route path="/solution" element={<CodeCard />} />
             <Route path="/user" element={<UserHomePage />} />
             <Route

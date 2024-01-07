@@ -113,6 +113,7 @@ export function ResultListTable({
     return searchResults.slice(start, end);
   }, [page, pages, searchResults]);
 
+
   return (
     <>
       {loading ? (
@@ -136,33 +137,47 @@ export function ResultListTable({
               />
             )
           }
-          bottomContent={ !outsideData &&
-            <div className="flex w-full justify-center">
-              <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="default"
-                page={page}
-                total={pages}
-                onChange={(page) => setPage(page)}
-              />
-            </div>
+          bottomContent={
+            !outsideData && (
+              <div className="flex w-full justify-center">
+                <Pagination
+                  isCompact
+                  showControls
+                  showShadow
+                  color="default"
+                  page={page}
+                  total={pages}
+                  onChange={(page) => setPage(page)}
+                />
+              </div>
+            )
           }
           classNames={{
             wrapper: "justify-start",
           }}
         >
           <TableHeader>
-            <TableColumn  scope="col" key="taskName" role="task name">TASK NAME</TableColumn>
-            <TableColumn  scope="col" key="language" role="task language">LANGUAGE</TableColumn>
-            <TableColumn  scope="col" key="codeAndVIdeo" role="task code and/or video">CODE & VIDEO</TableColumn>
+            <TableColumn scope="col" key="taskName" role="task name">
+              TASK NAME
+            </TableColumn>
+            <TableColumn scope="col" key="language" role="task language">
+              LANGUAGE
+            </TableColumn>
+            <TableColumn
+              scope="col"
+              key="codeAndVIdeo"
+              role="task code and/or video"
+            >
+              CODE & VIDEO
+            </TableColumn>
           </TableHeader>
           <TableBody items={items} emptyContent={"No task solutions found"}>
             {(item) => (
               <TableRow key={item._id}>
                 {(columnKey) => (
-                  <TableCell className="cursor-pointer">{tableValues(columnKey, item)}</TableCell>
+                  <TableCell className="cursor-pointer">
+                    {tableValues(columnKey, item)}
+                  </TableCell>
                 )}
               </TableRow>
             )}

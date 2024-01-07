@@ -148,6 +148,12 @@ input getModuleExamplesInput {
   module: String!
 }
 
+type getModuleExamplesType {
+  status: Status!
+  result: String!
+}
+
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -157,7 +163,7 @@ type Query {
   getIndexTop20: IndexTop20!
   getUserHome(input: getUserHomeUsername!): getUserHomeDetails!
   getUsernameAndEmail(input: UsernameAndEmail!): Status!
-  getModuleExamples(input: getModuleExamplesInput!): Status!
+  getModuleExamples(input: getModuleExamplesInput!): getModuleExamplesType!
 }
 
 type Mutation {

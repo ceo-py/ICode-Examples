@@ -5,7 +5,6 @@ const getModuleExamplesResolver = {
     Query: {
         getModuleExamples: async (_, { input }) => {
 
-            
             try {
                 const result = await TaskSolution.find({
                     $and: [
