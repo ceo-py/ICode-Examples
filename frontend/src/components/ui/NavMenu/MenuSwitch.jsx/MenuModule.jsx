@@ -7,6 +7,8 @@ export function MenuModule() {
   const navigate = useNavigate();
 
   const handleMenu = () => {
+    if (!selectedCourseSignal?.value?.name?.language)
+      navigate(`/menu?language=$null&course=null&module=null`);
     if (
       !selectedCourseSignal?.value?.name?.language ||
       !selectedCourseSignal?.value?.selectedCourse ||
