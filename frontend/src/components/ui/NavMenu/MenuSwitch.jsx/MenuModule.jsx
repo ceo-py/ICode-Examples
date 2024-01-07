@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 export function MenuModule() {
   const navigate = useNavigate();
-  
-  const test = () => {
+
+  const handleMenu = () => {
     if (
       !selectedCourseSignal?.value?.name?.language ||
       !selectedCourseSignal?.value?.selectedCourse ||
@@ -26,12 +26,12 @@ export function MenuModule() {
   };
 
   useEffect(() => {
-    test();
+    handleMenu();
   }, [selectedCourseSignal?.value?.selectedModule]);
 
   return (
     <div className="flex mt-6 flex-col w-full h-auto items-center justify-center">
-      <div className="flex mb-12 w-full flex-row flex-wrap items-center justify-between max-w-[1536px]">
+      <div className="flex p-3 mb-12 w-full flex-row flex-wrap items-center justify-between max-w-[1536px]">
         <SelectMenu menu={selectedCourseSignal} />
       </div>
     </div>

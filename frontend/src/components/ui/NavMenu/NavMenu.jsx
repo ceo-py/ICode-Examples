@@ -1,4 +1,3 @@
-import { CodeVideoButtons } from "./CodeVideoButtons/CodeVideoButtons";
 import { Navbar, NavbarContent } from "@nextui-org/react";
 import { SearchInput } from "./SearchInput/SearchInput";
 import { UserMenu } from "./UserMenu/UserMenu";

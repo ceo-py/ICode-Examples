@@ -11,6 +11,7 @@ const getModuleExamplesResolver = {
                         { "language": input.language  },
                         { "course": input.course  },
                         { "module": input.module  },
+                        { "id": "658090b1f47209a6efc3299c" },
                     ]
                 });
                 return {
