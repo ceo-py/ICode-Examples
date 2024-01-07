@@ -14,7 +14,7 @@ export default function Index() {
     <div className="flex items-center w-full flex-col">
       {!loading && (
         <>
-          <h3 className="flex items-center justify-center font-semibold">
+          <h3 className="flex items-center justify-center font-semibold text-center">
             Latest 100 task additions. Total solutions{" "}
             {data.getIndexTop20.totalSolutions}.
           </h3>
