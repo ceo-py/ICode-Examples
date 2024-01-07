@@ -74,7 +74,6 @@ type TasksDetailGlobal {
   status: Status
 }
 
-
 input TaskSingleId {
   id: String!
   toFollowId: String
@@ -143,6 +142,12 @@ input resetPasswordInput {
   password: String!
 }
 
+input getModuleExamplesInput {
+  language: String!
+  course: String!
+  module: String!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -152,8 +157,8 @@ type Query {
   getIndexTop20: IndexTop20!
   getUserHome(input: getUserHomeUsername!): getUserHomeDetails!
   getUsernameAndEmail(input: UsernameAndEmail!): Status!
+  getModuleExamples(input: getModuleExamplesInput!): Status!
 }
-
 
 type Mutation {
   register(input: AuthDetailInput!): AuthResult!
