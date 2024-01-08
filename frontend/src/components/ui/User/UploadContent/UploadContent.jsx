@@ -18,6 +18,7 @@ import { useMutation } from "@apollo/client";
 import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreateMutation";
 import serverError from "../../../utils/serverError/serverError";
 import { checkValidGithubAddress } from "../../../utils/URLInputValidation/isValidGitHubUrl";
+import DOMPurify from "dompurify";
 
 const uploadFields = [
   {
@@ -160,7 +161,7 @@ export function UploadContent() {
                     endContent={
                       <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
                     }
-                    value={inputFields[o.source]}
+                    value={DOMPurify.sanitize(inputFields[o.source])}
                     onValueChange={(v) =>
                       setInputFields({ ...inputFields, [o.source]: v })
                     }

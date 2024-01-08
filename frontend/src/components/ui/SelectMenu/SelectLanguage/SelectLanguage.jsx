@@ -1,5 +1,6 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import { languages } from "./data";
+import DOMPurify from "dompurify";
 
 export function SelectLanguage({ menu }) {
   return (
@@ -37,7 +38,7 @@ export function SelectLanguage({ menu }) {
               />
             }
           >
-            {x.name.language}
+            {DOMPurify.sanitize(x.name.language)}
           </AutocompleteItem>
         ))}
       </Autocomplete>

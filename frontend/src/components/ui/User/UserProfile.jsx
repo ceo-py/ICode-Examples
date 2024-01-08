@@ -23,6 +23,7 @@ import serverError from "../../utils/serverError/serverError";
 import { isValidUrl } from "../../utils/URLInputValidation/isValidUrl";
 import { isValidEmail } from "../../utils/emailValidation/isValidEmail";
 import { zoomAndClick } from "../../utils/css/zoomAndClick";
+import DOMPurify from "dompurify";
 
 export function UserProfile() {
   const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
@@ -134,7 +135,7 @@ export function UserProfile() {
                   {numbersFormat(user.followers)} followers
                 </p>
                 <h5 className="text-small tracking-tight text-default-400">
-                  @{user.username}
+                  @{DOMPurify.sanitize(user.username)}
                 </h5>
               </div>
             </div>
@@ -155,7 +156,7 @@ export function UserProfile() {
                         isInvalid={correctURLS[key]}
                         label={`Change ${capitalizeWord(key)}`}
                         labelPlacement="outside"
-                        value={user[key]}
+                        value={DOMPurify.sanitize(user[key])}
                         onValueChange={(v) =>
                           key !== "about"
                             ? setUser({ ...user, [key]: v })

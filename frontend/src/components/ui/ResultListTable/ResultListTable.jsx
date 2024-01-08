@@ -18,6 +18,7 @@ import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { linkIcons } from "../../utils/Icons/linkIcons";
 import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 import serverError from "../../utils/serverError/serverError";
+import DOMPurify from "dompurify";
 
 export function ResultListTable({
   outsideData,
@@ -114,7 +115,6 @@ export function ResultListTable({
     return searchResults.slice(start, end);
   }, [page, pages, searchResults]);
 
-
   return (
     <>
       {loading ? (
@@ -177,7 +177,9 @@ export function ResultListTable({
               <TableRow key={item._id}>
                 {(columnKey) => (
                   <TableCell className="cursor-pointer">
-                    {tableValues(columnKey, item)}
+                    {columnKey === "taskName"
+                      ? DOMPurify.sanitize(tableValues(columnKey, item))
+                      : tableValues(columnKey, item)}
                   </TableCell>
                 )}
               </TableRow>

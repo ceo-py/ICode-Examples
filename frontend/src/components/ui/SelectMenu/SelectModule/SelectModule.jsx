@@ -1,4 +1,5 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
+import DOMPurify from "dompurify";
 
 
 export function SelectModule({menu}) {
@@ -22,7 +23,7 @@ export function SelectModule({menu}) {
     >
       {menu?.value?.module
         ? Object.keys(menu.value.module).map((x) => (
-            <AutocompleteItem key={x}>{x}</AutocompleteItem>
+            <AutocompleteItem key={x}>{DOMPurify.sanitize(x)}</AutocompleteItem>
           ))
         : null}
     </Autocomplete>

@@ -20,6 +20,7 @@ import { DELETE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentDe
 import serverError from "../../../utils/serverError/serverError";
 import { zoomAndClick } from "../../../utils/css/zoomAndClick";
 import { useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 const dropDownBtnSettings = [
   {
@@ -172,7 +173,7 @@ export function ListComments({
                         <DropDownMenuIcon alt={x.textValue} src={x.iconSrc} />
                       }
                     >
-                      {x.textValue}
+                      {DOMPurify.sanitize(x.textValue)}
                     </DropdownItem>
                   ))}
               </DropdownMenu>

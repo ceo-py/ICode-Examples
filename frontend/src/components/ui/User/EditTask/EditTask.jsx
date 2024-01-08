@@ -24,6 +24,7 @@ import { LoadingCircle } from "../../LoadingCIrcle/LoadingCircle";
 import { NotFound } from "../../NotFound/NotFound";
 import { languages } from "../../SelectMenu/SelectLanguage/data";
 import DeleteTaskModal from "./DeleteTaskModal/DeleteTaskModal";
+import DOMPurify from "dompurify";
 
 const uploadFields = [
   {
@@ -228,7 +229,7 @@ export function EditTask() {
                       endContent={
                         <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
                       }
-                      value={inputFields[o.source]}
+                      value={DOMPurify.sanitize(inputFields[o.source])}
                       onValueChange={(v) =>
                         setInputFields({ ...inputFields, [o.source]: v })
                       }
