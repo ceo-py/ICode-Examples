@@ -21,6 +21,9 @@ app.use(
     secret: process.env.SECRET_KEY,
     resave: true,
     saveUninitialized: false,
+    cookie: {
+      secure: true, 
+    },
   })
 );
 app.use(cors({
@@ -30,8 +33,6 @@ app.use(cors({
 
 
 mongoose.connect(process.env.MONGO_URI, { writeConcern: { w: 'majority' } }).catch(error => console.error('Connection ERROR:\n', error));
-
-
 
 
 const typeDefsPath = path.join(__dirname, '/GraphQL/schema.graphql');
