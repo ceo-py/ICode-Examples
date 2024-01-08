@@ -19,6 +19,7 @@ test.py
 
 # Editor directories and files
 .vscode/*
+settingsWeb/*
 !.vscode/extensions.json
 .idea
 .DS_Store

@@ -31,6 +31,7 @@ export function MenuModuleResult() {
         <ResultListTable
           outsideData={data?.getModuleExamples?.result}
           showDropDownMenu={true}
+          hidePagination={true}
           filterValue={filterValue}
           setFilterValue={setFilterValue}
         />

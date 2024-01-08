@@ -28,6 +28,7 @@ export default function Index() {
         <ResultListTable
           outsideData={data?.getIndexTop20[language]}
           searchMenu={true}
+          hidePagination={true}
         />
       ) : (
         <NoResultFound />

@@ -10,7 +10,7 @@ export function MenuSwitch({ selected, setSelected }) {
         isSelected={selected}
         onChange={() => setSelected(!selected)}
       >
-        Advance Search
+        Smart Search Mode
       </Switch>
     </div>
   );

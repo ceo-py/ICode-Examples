@@ -22,6 +22,7 @@ import serverError from "../../utils/serverError/serverError";
 export function ResultListTable({
   outsideData,
   searchMenu,
+  hidePagination,
   showDropDownMenu,
   filterValue,
   setFilterValue,
@@ -138,7 +139,7 @@ export function ResultListTable({
             )
           }
           bottomContent={
-            !outsideData && (
+            !hidePagination && (
               <div className="flex w-full justify-center">
                 <Pagination
                   isCompact
