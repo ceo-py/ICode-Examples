@@ -8,11 +8,13 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const pathToEnvFile = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: pathToEnvFile });
 
 const app = express();
+app.use(helmet());
 app.use(cookieParser());
 app.use(
   session({
