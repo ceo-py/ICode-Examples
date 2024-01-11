@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 export function MenuModule() {
   const navigate = useNavigate();
+  location
 
   const handleMenu = () => {
-    if (!selectedCourseSignal?.value?.name?.language)
-      navigate(`/menu?language=$null&course=null&module=null`);
+    if (!selectedCourseSignal?.value?.name?.language) return
+    
     if (
       !selectedCourseSignal?.value?.name?.language ||
       !selectedCourseSignal?.value?.selectedCourse ||

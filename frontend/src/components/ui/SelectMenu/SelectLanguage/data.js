@@ -86,7 +86,7 @@ export const languages = {
                 'Multidimensional Arrays - Exercise': '',
                 'Sets and Dictionaries Advanced - Lab': '',
                 'Sets and Dictionaries Advanced - Exercise': '',
-                'Streams, Files and Directories - Lab	': '',
+                'Streams, Files and Directories - Lab': '',
                 'Streams, Files and Directories - Exercises': '',
                 'Functional Programming - Lab': '',
                 'Functional Programming - Exercise': '',
@@ -504,7 +504,7 @@ export const languages = {
                 'JS Applications Retake Exam - 13 December 2022': '',
                 'JS Applications Regular Exam - 3 December 2022': '',
                 'JS Applications Retake Exam - 15 August 2022': '',
-                'JS Applications Regular Exam - 06 August 2022	': '',
+                'JS Applications Regular Exam - 06 August 2022': '',
             },
             'Front-End - Exercise': {
                 'JS Syntax Fundamentals - Lab': '',
@@ -529,7 +529,7 @@ export const languages = {
             },
             'Front-End - Exams': {
                 'JS Front-End Regular Exam - 16 Dec 2023': '',
-                'JS Front-End Retake Exam -22 December 2023	': '',
+                'JS Front-End Retake Exam -22 December 2023': '',
                 'JS Front-End Retake Exam - 17 August 2023': '',
                 'JS Front-End Regular Exam - 5 Aug 2023': '',
                 'JS Front-End Retake Exam - 20 Apr 2023': '',

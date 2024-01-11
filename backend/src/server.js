@@ -35,6 +35,8 @@ app.use(cors({
 mongoose.connect(process.env.MONGO_URI, { writeConcern: { w: 'majority' } }).catch(error => console.error('Connection ERROR:\n', error));
 
 
+
+
 const typeDefsPath = path.join(__dirname, '/GraphQL/schema.graphql');
 
 async function startApolloServer() {
