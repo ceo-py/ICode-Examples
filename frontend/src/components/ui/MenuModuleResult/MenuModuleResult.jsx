@@ -24,7 +24,6 @@ export function MenuModuleResult() {
       serverError();
     }
   }, [searchParams]);
-
   return (
     <>
       {!loading && (

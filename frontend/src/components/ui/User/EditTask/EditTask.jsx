@@ -22,9 +22,9 @@ import { TASK_UPDATE_MUTATION } from "../../../../graphql/mutations/taskUpdateMu
 import { TASK_DETAILS_FOR_UPDATE_QUERY } from "../../../../graphql/queries/getTaskDetailsForUpdate";
 import { LoadingCircle } from "../../LoadingCIrcle/LoadingCircle";
 import { NotFound } from "../../NotFound/NotFound";
-import { languages } from "../../SelectMenu/SelectLanguage/data";
 import DeleteTaskModal from "./DeleteTaskModal/DeleteTaskModal";
 import DOMPurify from "dompurify";
+import { menuSetUp } from "../../../utils/selectMenuSetUp/selectMenuSetUp";
 
 const uploadFields = [
   {
@@ -131,18 +131,6 @@ export function EditTask() {
     resetMessage();
   };
 
-  const getTaskLangModuleCourse = (language, module, course) => {
-    const languageData = Object.values(languages).find(
-      (y) => y?.name?.language === language
-    );
-    setSelectMenu({
-      ...languageData,
-      ...{ module: languageData.modules[course] },
-      ...{ selectedCourse: course },
-      ...{ selectedModule: module },
-    });
-  };
-
   useEffect(() => {
     selectedCourseSignal.value = selectMenu;
   }, [selectMenu]);
@@ -164,10 +152,12 @@ export function EditTask() {
 
   useEffect(() => {
     if (data?.getTaskDetailsForUpdate?.status?.code === 200) {
-      getTaskLangModuleCourse(
-        data.getTaskDetailsForUpdate.language,
-        data.getTaskDetailsForUpdate.module,
-        data.getTaskDetailsForUpdate.course
+      setSelectMenu(
+        menuSetUp(
+          data.getTaskDetailsForUpdate.language,
+          data.getTaskDetailsForUpdate.module,
+          data.getTaskDetailsForUpdate.course
+        )
       );
       setInputFields({
         video: data.getTaskDetailsForUpdate.videoLink,
