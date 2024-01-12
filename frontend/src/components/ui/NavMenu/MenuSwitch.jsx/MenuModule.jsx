@@ -1,28 +1,20 @@
+import { useShare } from "../../../../MenuContext/MenuContext";
 import { selectedCourseSignal } from "../../SelectMenu/SelectLanguage/selectMenuSignal";
 import { SelectMenu } from "../../SelectMenu/SelectMenu";
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function MenuModule() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const { share } = useShare();
 
   const handleMenu = () => {
-    
-    // if (!selectedCourseSignal?.value?.name?.language) {
-    //   navigate(`/menu?language=null&course=null&module=null`);
-    //   return;
-    // }
+    if (share) return;
+    if (!selectedCourseSignal?.value?.name?.language)
+      navigate(`/menu?language=$null&course=null&module=null`);
 
-    if (
-      !selectedCourseSignal?.value?.name?.language ||
-      !selectedCourseSignal?.value?.selectedCourse ||
-      !selectedCourseSignal?.value?.selectedModule 
-      // selectedCourseSignal?.value?.selectedModule !== searchParams.get("module") ||
-      // selectedCourseSignal?.value?.name?.language !== searchParams.get("language") ||
-      // selectedCourseSignal?.value?.selectedCourse !== searchParams.get("course") 
-    )
-      return;
+    if (!selectedCourseSignal?.value?.selectedModule) return;
+
     const language = encodeURIComponent(
       selectedCourseSignal.value.name.language.trim()
     );

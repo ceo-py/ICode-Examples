@@ -3,6 +3,7 @@ import { GET_MODEL_QUERY } from "../../../graphql/queries/getModule";
 import { ResultListTable } from "../ResultListTable/ResultListTable";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import serverError from "../../utils/serverError/serverError";
 
 export function MenuModuleResult() {
   const [searchModule, { loading, data }] = useLazyQuery(GET_MODEL_QUERY);
@@ -24,6 +25,7 @@ export function MenuModuleResult() {
       serverError();
     }
   }, [searchParams]);
+
   return (
     <>
       {!loading && (

@@ -7,6 +7,7 @@ import { ApolloProvider } from "@apollo/client";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { AuthProvider } from "./AuthContext/AuthContext";
 import { BrowserRouter } from "react-router-dom";
+import { ShareProvider } from "./MenuContext/MenuContext.jsx";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
@@ -18,11 +19,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ApolloProvider client={client}>
       <AuthProvider>
-        <React.StrictMode>
-          <NextUIProvider>
-            <App />
-          </NextUIProvider>
-        </React.StrictMode>
+        <ShareProvider>
+          <React.StrictMode>
+            <NextUIProvider>
+              <App />
+            </NextUIProvider>
+          </React.StrictMode>
+        </ShareProvider>
       </AuthProvider>
     </ApolloProvider>
   </BrowserRouter>
