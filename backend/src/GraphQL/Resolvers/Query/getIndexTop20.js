@@ -28,6 +28,7 @@ const indexTop20Resolver = {
                 const java = await getLatestTasksByLanguage("Java");
                 const cpp = await getLatestTasksByLanguage("C++");
                 const totalSolutions = await TaskSolution.countDocuments({ "taskName": { "$regex": "." } });
+                const totalVIdeoTutorial = await TaskSolution.countDocuments({ "videoLink": { "$regex": "." } });
 
                 return {
                     python,
@@ -36,6 +37,7 @@ const indexTop20Resolver = {
                     java,
                     cpp,
                     totalSolutions,
+                    totalVIdeoTutorial,
                     status: {
                         message: 'Tasks results fetched successfully',
                         code: 200,

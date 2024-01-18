@@ -9,6 +9,7 @@ export const INDEX_TOP_20_QUERY = gql`
             java
             cpp
             totalSolutions
+            totalVIdeoTutorial
             status {
                 message
                 code

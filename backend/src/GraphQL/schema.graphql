@@ -111,6 +111,7 @@ type IndexTop20 {
   java: String!
   cpp: String!
   totalSolutions: String!
+  totalVIdeoTutorial: String!
   status: Status!
 }
 

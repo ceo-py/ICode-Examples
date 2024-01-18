@@ -15,8 +15,9 @@ export default function Index() {
       {!loading && (
         <>
           <h3 className="flex items-center justify-center font-semibold text-center">
-            Discover our latest 100 task additions, contributing to a total of{" "}
-            {data.getIndexTop20.totalSolutions} solutions.
+            Discover our latest 100 task additions, now totaling{" "}
+            {data.getIndexTop20.totalSolutions} solutions and{" "}
+            {data.getIndexTop20.totalVIdeoTutorial} Video Tutorials.
           </h3>
           <TabLanguages language={language} setLanguage={setLanguage} />
         </>
