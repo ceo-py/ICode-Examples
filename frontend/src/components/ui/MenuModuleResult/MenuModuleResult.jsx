@@ -4,6 +4,7 @@ import { ResultListTable } from "../ResultListTable/ResultListTable";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import serverError from "../../utils/serverError/serverError";
+import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 
 export function MenuModuleResult() {
   const [searchModule, { loading, data }] = useLazyQuery(GET_MODEL_QUERY);
@@ -28,7 +29,9 @@ export function MenuModuleResult() {
 
   return (
     <>
-      {!loading && (
+      {loading ? (
+        <LoadingCircle />
+      ) : (
         <ResultListTable
           outsideData={data?.getModuleExamples?.result}
           showDropDownMenu={true}

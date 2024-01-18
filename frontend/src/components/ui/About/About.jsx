@@ -18,7 +18,7 @@ export default function About() {
             <Image
               width={200}
               alt="ICode Example Picture"
-              src="src/assets/MetaPic.png"
+              src="assets/MetaPic.png"
             />
           }
         >
