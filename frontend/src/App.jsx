@@ -15,6 +15,7 @@ import { EditTask } from "./components/ui/User/EditTask/EditTask";
 import Password from "./components/forms/Recover/Account/Password";
 import Account from "./components/forms/Recover/Account/Account";
 import { MenuModuleResult } from "./components/ui/MenuModuleResult/MenuModuleResult";
+import About from "./components/ui/About/About";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <div className="flex mb-12 w-full flex-row flex-wrap items-center justify-between max-w-[1536px]">
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
             <Route path="/result" element={<ResultListTable />} />
             <Route path="/menu" element={<MenuModuleResult />} />
             <Route path="/solution" element={<CodeCard />} />
