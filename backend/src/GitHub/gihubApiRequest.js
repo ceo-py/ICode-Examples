@@ -2,6 +2,7 @@ const { Octokit } = require("@octokit/rest");
 const dotenv = require('dotenv');
 const path = require('path');
 const syntaxHighlight = require("../utils/syntaxHighlight");
+const reorderKeyToEnd = require("../utils/objectKeyMoveToLastPos");
 
 
 const pathToEnvFile = path.resolve(__dirname, '../../../.env');
@@ -39,16 +40,16 @@ const generateMultiFileDirectoryProject = async (url, data) => {
         for (const x of response.data) {
             if (x.type === 'dir') {
                 data[x.name] = await generateMultiFileDirectoryProject(
-                    x.html_url.replace('https://github.com/', ''),
+                    x.html_url.replace(process.env.URL_ADDRESS, ''),
                     {}
                 );
             } else if (x.type === 'file' && correctFileTypes().includes(x.name.split('.')[1])) {
                 if (!data?.files) data.files = [];
-                data.files.push({ fileName: x.name, filePath: x.html_url.replace('https://github.com/')});
+                data.files.push({ fileName: x.name, filePath: x.html_url.replace(process.env.URL_ADDRESS, '')});
             }
         }
 
-        return JSON.stringify(data);
+        return JSON.stringify(reorderKeyToEnd(data, 'files'));
     } catch (e) {
         console.error('generateMultiFileDirectoryProject Error:\n', e.message);
         return e;

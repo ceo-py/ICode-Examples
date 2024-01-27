@@ -7,7 +7,7 @@ function reorderKeyToEnd(obj, keyToMove) {
             }
         }
         if (keyToMove in obj) {
-            newObj.files = obj.files;
+            newObj[keyToMove] = obj[keyToMove];
         }
         return newObj;
     }
