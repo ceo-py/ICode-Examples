@@ -22,8 +22,38 @@ const getCodeContent = async (url) => {
         const decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
         const fileExtension = url.split("/").slice(-1)[0].split(".")[1]
         return syntaxHighlight(decodedContent, fileExtension)
-    } catch (e) { return e }
+    } catch (e) { 
+        console.error('getCodeContent Error:\n', e.message);
+        return e 
+    }
 }
+
+const correctFileTypes = () => {
+    return ['py', 'cpp', 'css', 'html', 'js', 'jsx', 'cs', 'java']
+}
+
+const generateMultiFileDirectoryProject = async (url, data) => {
+    try {
+        const response = await octokit.request(`GET ${generateUrl(url)}`);
+
+        for (const x of response.data) {
+            if (x.type === 'dir') {
+                data[x.name] = await generateMultiFileDirectoryProject(
+                    x.html_url.replace('https://github.com/', ''),
+                    {}
+                );
+            } else if (x.type === 'file' && correctFileTypes().includes(x.name.split('.')[1])) {
+                if (!data?.files) data.files = [];
+                data.files.push({ fileName: x.name, filePath: x.html_url.replace('https://github.com/')});
+            }
+        }
+
+        return JSON.stringify(data);
+    } catch (e) {
+        console.error('generateMultiFileDirectoryProject Error:\n', e.message);
+        return e;
+    }
+};
 
 module.exports = { getCodeContent };
 

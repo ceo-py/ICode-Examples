@@ -30,3 +30,4 @@ settingsWeb/*
 *.sw?
 frontend.zip
 backend.zip
+result.json
