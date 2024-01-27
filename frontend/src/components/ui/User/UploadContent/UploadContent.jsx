@@ -4,8 +4,10 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Checkbox,
   Input,
   Progress,
+  Tooltip,
 } from "@nextui-org/react";
 import { selectedCourseSignal } from "../../SelectMenu/SelectLanguage/selectMenuSignal";
 import { SelectMenu } from "../../SelectMenu/SelectMenu";
@@ -50,9 +52,10 @@ export function UploadContent() {
     task: "",
     github: "",
   });
+  const [isProject, setIsProject] = useState();
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
-  const [taskCreate, {loading}] = useMutation(TASK_CREATE_MUTATION);
+  const [taskCreate, { loading }] = useMutation(TASK_CREATE_MUTATION);
   const [progressBarValue, setProgressBarValue] = useState(0);
 
   const canUpload = () => {
@@ -106,6 +109,7 @@ export function UploadContent() {
             module: selectedCourseSignal.value?.selectedModule,
             videoLink: userData.video,
             githubLink: userData.github.replace("https://github.com/", ""),
+            project: isProject,
           },
         },
       });
@@ -117,6 +121,7 @@ export function UploadContent() {
     }
     resetMessage();
   };
+
   return (
     <>
       <Card className="grow">
@@ -144,28 +149,30 @@ export function UploadContent() {
               </p>
               <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
                 {uploadFields.map((o) => (
-                  <Input
-                    key={o.source}
-                    type={o.source}
-                    label={`${capitalizeWord(o.source)}`}
-                    labelPlacement="outside"
-                    description={o.description}
-                    isRequired={o.required}
-                    startContent={
-                      <div className="pointer-events-none flex items-center">
-                        <span className="text-default-400 text-small">
-                          {o?.urlStart}
-                        </span>
-                      </div>
-                    }
-                    endContent={
-                      <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
-                    }
-                    value={DOMPurify.sanitize(inputFields[o.source])}
-                    onValueChange={(v) =>
-                      setInputFields({ ...inputFields, [o.source]: v })
-                    }
-                  />
+                  <>
+                    <Input
+                      key={o.source}
+                      type={o.source}
+                      label={`${capitalizeWord(o.source)}`}
+                      labelPlacement="outside"
+                      description={o.description}
+                      isRequired={o.required}
+                      startContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">
+                            {o?.urlStart}
+                          </span>
+                        </div>
+                      }
+                      endContent={
+                        <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
+                      }
+                      value={DOMPurify.sanitize(inputFields[o.source])}
+                      onValueChange={(v) =>
+                        setInputFields({ ...inputFields, [o.source]: v })
+                      }
+                    />
+                  </>
                 ))}
               </div>
             </div>
@@ -200,13 +207,28 @@ export function UploadContent() {
             variant="bordered"
             color={canUpload() ? "" : "success"}
             isLoading={loading}
-            onPress={() => {
-              handleUserUpdate(inputFields);
-            }}
+            onPress={() => handleUserUpdate(inputFields)}
             isDisabled={canUpload()}
           >
             Upload
           </Button>
+          <Tooltip
+            showArrow={true}
+            placement="bottom"
+            key="FullProject"
+            content="Uploads a solution for a single task, comprising multiple files and directories. [URL to Main Folder]*"
+            color="primary"
+          >
+            <div>
+              <Checkbox
+                radius="full"
+                size="sm"
+                onValueChange={(e) => setIsProject(e)}
+              >
+                Full Project*
+              </Checkbox>
+            </div>
+          </Tooltip>
         </CardFooter>
       </Card>
     </>
