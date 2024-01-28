@@ -8,6 +8,7 @@ const taskSolution = new mongoose.Schema({
     module: { type: String, require: true },
     videoLink: { type: String, default: '' },
     githubLink: { type: String, require: true, unique: true },
+    project: { type: String, require: false, unique: true },
 });
 
 const TaskSolution = mongoose.model('TaskSolution', taskSolution, 'TaskSolutions');

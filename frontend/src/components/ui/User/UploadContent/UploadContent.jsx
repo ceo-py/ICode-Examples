@@ -93,12 +93,15 @@ export function UploadContent() {
   };
 
   const handleUserUpdate = async (userData) => {
-    const isValid = await checkValidGithubAddress(userData.github);
-    if (!isValid) {
-      setUpdateMessage("Provided GitHub URL seems to be invalid.");
-      resetMessage();
-      return;
+    if (!isProject) {
+      const isValid = await checkValidGithubAddress(userData.github);
+      if (!isValid) {
+        setUpdateMessage("Provided GitHub URL seems to be invalid.");
+        resetMessage();
+        return;
+      }
     }
+
     try {
       const { data } = await taskCreate({
         variables: {
@@ -185,7 +188,7 @@ export function UploadContent() {
               aria-label="Loading..."
               size="sm"
               value={progressBarValue}
-              color={updateMessage.includes("invalid") ? "danger" : "success"}
+              color={updateMessage.includes("invalid") || updateMessage.includes("Error")? "danger" : "success"}
               className="flex"
             />
           </div>

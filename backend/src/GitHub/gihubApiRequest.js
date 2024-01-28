@@ -34,7 +34,7 @@ const correctFileTypes = () => {
     return CORRECT_FILE_TYPES;
 }
 
-const generateMultiFileDirectoryProject = async (url, data) => {
+const generateMultiFileDirectoryProject = async (url, data = {}) => {
     try {
         const response = await octokit.request(`GET ${generateUrl(url)}`);
 
@@ -57,4 +57,4 @@ const generateMultiFileDirectoryProject = async (url, data) => {
     }
 };
 
-module.exports = { getCodeContent };
+module.exports = { getCodeContent, generateMultiFileDirectoryProject };

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const TaskSolution = require('../../../DataBase/Models/taskSolutions');
 const Likes = require('../../../DataBase/Models/likes');
+const { generateMultiFileDirectoryProject } = require('../../../GitHub/gihubApiRequest');
 
 const uploadTaskResolver = {
     Mutation: {
@@ -16,6 +17,17 @@ const uploadTaskResolver = {
             try {
                 const project = input.project
                 delete input.project
+                if (project) {
+                    const projectTreeGen = await generateMultiFileDirectoryProject(input.githubLink)
+                    if (!(projectTreeGen instanceof Error)) {
+                        input.project = projectTreeGen;
+                    } else {
+                        return {
+                            message: 'Project upload failed. Provide main directory path.',
+                            code: 400,
+                        };
+                    }
+                }
                 input.taskName = input.taskName.length > 50 ? input.taskName.slice(0, 50) + "..." : input.taskName
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
                 const task = new TaskSolution({ id, ...input });
