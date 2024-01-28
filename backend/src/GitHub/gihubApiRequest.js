@@ -7,6 +7,7 @@ const reorderKeyToEnd = require("../utils/objectKeyMoveToLastPos");
 
 const pathToEnvFile = path.resolve(__dirname, '../../../.env');
 dotenv.config({ path: pathToEnvFile });
+const CORRECT_FILE_TYPES = ['py', 'cpp', 'css', 'html', 'js', 'jsx', 'cs', 'java'];
 
 const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
@@ -23,14 +24,14 @@ const getCodeContent = async (url) => {
         const decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
         const fileExtension = url.split("/").slice(-1)[0].split(".")[1]
         return syntaxHighlight(decodedContent, fileExtension)
-    } catch (e) { 
+    } catch (e) {
         console.error('getCodeContent Error:\n', e.message);
-        return e 
+        return e
     }
 }
 
 const correctFileTypes = () => {
-    return ['py', 'cpp', 'css', 'html', 'js', 'jsx', 'cs', 'java']
+    return CORRECT_FILE_TYPES;
 }
 
 const generateMultiFileDirectoryProject = async (url, data) => {
@@ -45,7 +46,7 @@ const generateMultiFileDirectoryProject = async (url, data) => {
                 );
             } else if (x.type === 'file' && correctFileTypes().includes(x.name.split('.')[1])) {
                 if (!data?.files) data.files = [];
-                data.files.push({ fileName: x.name, filePath: x.html_url.replace(process.env.URL_ADDRESS, '')});
+                data.files.push({ fileName: x.name, filePath: x.html_url.replace(process.env.URL_ADDRESS, '') });
             }
         }
 
@@ -57,4 +58,3 @@ const generateMultiFileDirectoryProject = async (url, data) => {
 };
 
 module.exports = { getCodeContent };
-

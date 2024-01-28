@@ -52,6 +52,7 @@ input TaskDetails {
   module: String!
   videoLink: String
   githubLink: String!
+  project: Boolean
   taskId: String
 }
 

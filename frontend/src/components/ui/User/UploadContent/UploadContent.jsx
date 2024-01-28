@@ -52,7 +52,7 @@ export function UploadContent() {
     task: "",
     github: "",
   });
-  const [isProject, setIsProject] = useState();
+  const [isProject, setIsProject] = useState(false);
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
   const [taskCreate, { loading }] = useMutation(TASK_CREATE_MUTATION);
@@ -214,7 +214,7 @@ export function UploadContent() {
           </Button>
           <Tooltip
             showArrow={true}
-            placement="bottom"
+            placement="top"
             key="FullProject"
             content="Uploads a solution for a single task, comprising multiple files and directories. [URL to Main Folder]*"
             color="primary"

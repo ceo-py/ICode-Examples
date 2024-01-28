@@ -14,6 +14,8 @@ const uploadTaskResolver = {
                 };
             }
             try {
+                const project = input.project
+                delete input.project
                 input.taskName = input.taskName.length > 50 ? input.taskName.slice(0, 50) + "..." : input.taskName
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
                 const task = new TaskSolution({ id, ...input });
