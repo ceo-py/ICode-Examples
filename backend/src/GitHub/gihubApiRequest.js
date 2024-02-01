@@ -21,7 +21,10 @@ const generateUrl = (url) => {
 const getCodeContent = async (url) => {
     try {
         const response = await octokit.request(`GET ${generateUrl(url)}`)
-        const decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
+        let decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
+        if (decodedContent.includes('using System')) {
+            decodedContent = decodedContent.slice(decodedContent.indexOf('using System'))
+        }
         const fileExtension = url.split("/").slice(-1)[0].split(".")[1]
         return syntaxHighlight(decodedContent, fileExtension)
     } catch (e) {

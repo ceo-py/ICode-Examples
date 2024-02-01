@@ -28,7 +28,7 @@ export function ResultListTable({
   showDropDownMenu,
   filterValue,
   setFilterValue,
-  isHelmet
+  isHelmet,
 }) {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
@@ -123,15 +123,16 @@ export function ResultListTable({
         <LoadingCircle />
       ) : (
         <>
-          <Helmet>
-            {!isHelmet && (
+          {!isHelmet && (
+            <Helmet>
               <title>{`${
                 searchParams.get("query")
                   ? searchParams.get("query") + " -"
                   : ""
               } iCode Example`}</title>
-            )}
-          </Helmet>
+            </Helmet>
+          )}
+
           <Table
             aria-label="table with client side pagination"
             onRowAction={(e) => taskDetails(e)}
