@@ -19,6 +19,7 @@ import { linkIcons } from "../../utils/Icons/linkIcons";
 import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 import serverError from "../../utils/serverError/serverError";
 import DOMPurify from "dompurify";
+import { Helmet } from "react-helmet";
 
 export function ResultListTable({
   outsideData,
@@ -27,6 +28,7 @@ export function ResultListTable({
   showDropDownMenu,
   filterValue,
   setFilterValue,
+  isHelmet
 }) {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
@@ -120,72 +122,83 @@ export function ResultListTable({
       {loading ? (
         <LoadingCircle />
       ) : (
-        <Table
-          aria-label="table with client side pagination"
-          onRowAction={(e) => taskDetails(e)}
-          selectionMode="single"
-          topContent={
-            searchMenu ? null : (
-              <TopContentInTable
-                totalTasks={searchResults.length}
-                setResultsPerPage={setResultsPerPage}
-                results={results}
-                setSearchResults={setSearchResults}
-                searchResults={searchResults}
-                showDropDownMenu={showDropDownMenu}
-                filterValue={filterValue}
-                setFilterValue={setFilterValue}
-              />
-            )
-          }
-          bottomContent={
-            !hidePagination && (
-              <div className="flex w-full justify-center">
-                <Pagination
-                  isCompact
-                  showControls
-                  showShadow
-                  color="default"
-                  page={page}
-                  total={pages}
-                  onChange={(page) => setPage(page)}
-                />
-              </div>
-            )
-          }
-          classNames={{
-            wrapper: "justify-start",
-          }}
-        >
-          <TableHeader>
-            <TableColumn scope="col" key="taskName" role="task name">
-              TASK NAME
-            </TableColumn>
-            <TableColumn scope="col" key="language" role="task language">
-              LANGUAGE
-            </TableColumn>
-            <TableColumn
-              scope="col"
-              key="codeAndVIdeo"
-              role="task code and/or video"
-            >
-              CODE & VIDEO
-            </TableColumn>
-          </TableHeader>
-          <TableBody items={items} emptyContent={"No task solutions found"}>
-            {(item) => (
-              <TableRow key={item._id}>
-                {(columnKey) => (
-                  <TableCell className="cursor-pointer">
-                    {columnKey === "taskName"
-                      ? DOMPurify.sanitize(tableValues(columnKey, item))
-                      : tableValues(columnKey, item)}
-                  </TableCell>
-                )}
-              </TableRow>
+        <>
+          <Helmet>
+            {!isHelmet && (
+              <title>{`${
+                searchParams.get("query")
+                  ? searchParams.get("query") + " -"
+                  : ""
+              } iCode Example`}</title>
             )}
-          </TableBody>
-        </Table>
+          </Helmet>
+          <Table
+            aria-label="table with client side pagination"
+            onRowAction={(e) => taskDetails(e)}
+            selectionMode="single"
+            topContent={
+              searchMenu ? null : (
+                <TopContentInTable
+                  totalTasks={searchResults.length}
+                  setResultsPerPage={setResultsPerPage}
+                  results={results}
+                  setSearchResults={setSearchResults}
+                  searchResults={searchResults}
+                  showDropDownMenu={showDropDownMenu}
+                  filterValue={filterValue}
+                  setFilterValue={setFilterValue}
+                />
+              )
+            }
+            bottomContent={
+              !hidePagination && (
+                <div className="flex w-full justify-center">
+                  <Pagination
+                    isCompact
+                    showControls
+                    showShadow
+                    color="default"
+                    page={page}
+                    total={pages}
+                    onChange={(page) => setPage(page)}
+                  />
+                </div>
+              )
+            }
+            classNames={{
+              wrapper: "justify-start",
+            }}
+          >
+            <TableHeader>
+              <TableColumn scope="col" key="taskName" role="task name">
+                TASK NAME
+              </TableColumn>
+              <TableColumn scope="col" key="language" role="task language">
+                LANGUAGE
+              </TableColumn>
+              <TableColumn
+                scope="col"
+                key="codeAndVIdeo"
+                role="task code and/or video"
+              >
+                CODE & VIDEO
+              </TableColumn>
+            </TableHeader>
+            <TableBody items={items} emptyContent={"No task solutions found"}>
+              {(item) => (
+                <TableRow key={item._id}>
+                  {(columnKey) => (
+                    <TableCell className="cursor-pointer">
+                      {columnKey === "taskName"
+                        ? DOMPurify.sanitize(tableValues(columnKey, item))
+                        : tableValues(columnKey, item)}
+                    </TableCell>
+                  )}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </>
       )}
     </>
   );

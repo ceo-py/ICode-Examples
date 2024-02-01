@@ -53,7 +53,7 @@ export function CodeCard() {
       {loading ? (
         <LoadingCircle />
       ) : data?.getTaskSingleDetails?.status?.code === 200 ? (
-        <div>
+        <>
           <Helmet>
             <title>{`${data.getTaskSingleDetails.taskName} - iCode Example`}</title>
           </Helmet>
@@ -160,7 +160,7 @@ export function CodeCard() {
                 ))}
             </Card>
           </Card>
-        </div>
+        </>
       ) : (
         <NoResultFound />
       )}

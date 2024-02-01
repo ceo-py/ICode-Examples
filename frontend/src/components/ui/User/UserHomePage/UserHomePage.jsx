@@ -11,13 +11,13 @@ import { SocialMediaLinks } from "./SocialMediaLinks/SocialMediaLinks";
 import TabLanguages from "../../TabLanguages/TabLanguages";
 import { LanguageLocalStorage } from "../../../utils/LanguageLocalStorage/LanguageLocalStorage";
 import { ResultListTable } from "../../ResultListTable/ResultListTable";
+import { Helmet } from "react-helmet";
 
 export function UserHomePage() {
   const [userDetails, { data, loading }] = useLazyQuery(GET_USER_HOME_DETAILS);
-  const [filterValue, setFilterValue] = useState('');
+  const [filterValue, setFilterValue] = useState("");
   const [searchParams] = useSearchParams();
   const [language, setLanguage] = LanguageLocalStorage();
-
 
   useEffect(() => {
     if (!searchParams.get("name")) return;
@@ -42,58 +42,67 @@ export function UserHomePage() {
       ) : data?.getUserHome?.languages?.status?.code !== 200 ? (
         <NotFound />
       ) : (
-        <Card className="grow">
-          <CardHeader className="flex flex-wrap justify-center gap-10">
-            <div className="flex flex-col">
-              <Avatar
-                isBordered
-                radius="full"
-                className="w-20 h-20 text-large"
-                showFallback
-                src={data.getUserHome.details.icon}
+        <>
+          <Helmet>
+            <title>{`${data.getUserHome.details.username} - iCode Example`}</title>
+          </Helmet>
+          <Card className="grow">
+            <CardHeader className="flex flex-wrap justify-center gap-10">
+              <div className="flex flex-col">
+                <Avatar
+                  isBordered
+                  radius="full"
+                  className="w-20 h-20 text-large"
+                  showFallback
+                  src={data.getUserHome.details.icon}
+                />
+              </div>
+              <div className="flex flex-col">
+                <p className="text-small font-semibold leading-none text-default-600">
+                  {numbersFormat(data.getUserHome.details.followers)} followers
+                </p>
+                <p className="text-small font-semibold leading-none text-default-600">
+                  {numbersFormat(data.getUserHome.totalSolutions)} solutions
+                </p>
+                <h5 className="text-small tracking-tight text-default-400">
+                  @{data.getUserHome.details.username}
+                </h5>
+              </div>
+              <SocialMediaLinks
+                youtube={data.getUserHome.details.youtube}
+                github={data.getUserHome.details.github}
+                linkedin={data.getUserHome.details.linkedin}
+                username={data.getUserHome.details.username}
+                userId={data.getUserHome.userId}
+                follower={data.getUserHome.follower}
+                userDetails={userDetails}
               />
-            </div>
-            <div className="flex flex-col">
-              <p className="text-small font-semibold leading-none text-default-600">
-                {numbersFormat(data.getUserHome.details.followers)} followers
-              </p>
-              <p className="text-small font-semibold leading-none text-default-600">
-                {numbersFormat(data.getUserHome.totalSolutions)} solutions
-              </p>
-              <h5 className="text-small tracking-tight text-default-400">
-                @{data.getUserHome.details.username}
-              </h5>
-            </div>
-            <SocialMediaLinks
-              youtube={data.getUserHome.details.youtube}
-              github={data.getUserHome.details.github}
-              linkedin={data.getUserHome.details.linkedin}
-              username={data.getUserHome.details.username}
-              userId={data.getUserHome.userId}
-              follower={data.getUserHome.follower}
-              userDetails={userDetails}
-            />
-            <TabLanguages
-              language={language}
-              setLanguage={setLanguage}
-              languageCount={{
-                python: JSON.parse(data?.getUserHome?.languages?.python).length,
-                javaScript: JSON.parse(data?.getUserHome?.languages?.javascript)
-                  .length,
-                cSharp: JSON.parse(data?.getUserHome?.languages?.csharp).length,
-                java: JSON.parse(data?.getUserHome?.languages?.java).length,
-                cpp: JSON.parse(data?.getUserHome?.languages?.cpp).length,
-              }}
+              <TabLanguages
+                language={language}
+                setLanguage={setLanguage}
+                languageCount={{
+                  python: JSON.parse(data?.getUserHome?.languages?.python)
+                    .length,
+                  javaScript: JSON.parse(
+                    data?.getUserHome?.languages?.javascript
+                  ).length,
+                  cSharp: JSON.parse(data?.getUserHome?.languages?.csharp)
+                    .length,
+                  java: JSON.parse(data?.getUserHome?.languages?.java).length,
+                  cpp: JSON.parse(data?.getUserHome?.languages?.cpp).length,
+                }}
+                setFilterValue={setFilterValue}
+              />
+            </CardHeader>
+            <ResultListTable
+              outsideData={data.getUserHome.languages[language]}
+              showDropDownMenu={true}
+              filterValue={filterValue}
               setFilterValue={setFilterValue}
+              isHelmet={true}
             />
-          </CardHeader>
-          <ResultListTable
-            outsideData={data.getUserHome.languages[language]}
-            showDropDownMenu={true}
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-          />
-        </Card>
+          </Card>
+        </>
       )}
     </>
   );

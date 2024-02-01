@@ -25,6 +25,7 @@ import { NotFound } from "../../NotFound/NotFound";
 import DeleteTaskModal from "./DeleteTaskModal/DeleteTaskModal";
 import DOMPurify from "dompurify";
 import { menuSetUp } from "../../../utils/selectMenuSetUp/selectMenuSetUp";
+import { Helmet } from "react-helmet";
 
 const uploadFields = [
   {
@@ -178,108 +179,113 @@ export function EditTask() {
       ) : data?.getTaskDetailsForUpdate?.status?.code !== 200 ? (
         <NotFound />
       ) : (
-        <Card className="grow">
-          <CardHeader className="justify-between">
-            {(selectedCourseSignal.value?.name ||
-              !selectedCourseSignal.value) && (
-              <SelectMenu menu={selectedCourseSignal} />
-            )}
-          </CardHeader>
-          <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2 items-center">
-                <p className="flex text-default-500 text-large justify-center">
-                  Easily edit your task.
-                </p>
-                <p
-                  className={
-                    getFilledReqFields() === 5
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }
-                >
-                  {`**To edit your task solution, kindly complete 5 / ${getFilledReqFields()} required fields as indicated.`}
-                </p>
-                <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
-                  {uploadFields.map((o) => (
-                    <Input
-                      key={o.source}
-                      type={o.source}
-                      label={`${capitalizeWord(o.source)}`}
-                      labelPlacement="outside"
-                      description={o.description}
-                      isRequired={o.required}
-                      startContent={
-                        <div className="pointer-events-none flex items-center">
-                          <span className="text-default-400 text-small">
-                            {o?.urlStart}
-                          </span>
-                        </div>
-                      }
-                      endContent={
-                        <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
-                      }
-                      value={DOMPurify.sanitize(inputFields[o.source])}
-                      onValueChange={(v) =>
-                        setInputFields({ ...inputFields, [o.source]: v })
-                      }
-                    />
-                  ))}
+        <>
+          <Helmet>
+            <title>{`${data.getTaskDetailsForUpdate.taskName} Edit Solution - iCode Example`}</title>
+          </Helmet>
+          <Card className="grow">
+            <CardHeader className="justify-between">
+              {(selectedCourseSignal.value?.name ||
+                !selectedCourseSignal.value) && (
+                <SelectMenu menu={selectedCourseSignal} />
+              )}
+            </CardHeader>
+            <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2 items-center">
+                  <p className="flex text-default-500 text-large justify-center">
+                    Easily edit your task.
+                  </p>
+                  <p
+                    className={
+                      getFilledReqFields() === 5
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }
+                  >
+                    {`**To edit your task solution, kindly complete 5 / ${getFilledReqFields()} required fields as indicated.`}
+                  </p>
+                  <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
+                    {uploadFields.map((o) => (
+                      <Input
+                        key={o.source}
+                        type={o.source}
+                        label={`${capitalizeWord(o.source)}`}
+                        labelPlacement="outside"
+                        description={o.description}
+                        isRequired={o.required}
+                        startContent={
+                          <div className="pointer-events-none flex items-center">
+                            <span className="text-default-400 text-small">
+                              {o?.urlStart}
+                            </span>
+                          </div>
+                        }
+                        endContent={
+                          <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
+                        }
+                        value={DOMPurify.sanitize(inputFields[o.source])}
+                        onValueChange={(v) =>
+                          setInputFields({ ...inputFields, [o.source]: v })
+                        }
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          </CardBody>
-          {updateMessage && (
-            <div className="flex flex-col">
-              <p className="m-2 flex justify-center font-bold">
-                {updateMessage}
-              </p>{" "}
-              <Progress
-                aria-label="Loading..."
+            </CardBody>
+            {updateMessage && (
+              <div className="flex flex-col">
+                <p className="m-2 flex justify-center font-bold">
+                  {updateMessage}
+                </p>{" "}
+                <Progress
+                  aria-label="Loading..."
+                  size="sm"
+                  value={progressBarValue}
+                  color={updateMessage.includes("Error") ? "danger" : "success"}
+                  className="flex"
+                />
+              </div>
+            )}
+            <CardFooter className="gap-10 flex justify-center">
+              <Button
+                className="hover:bg-default/40"
+                radius="full"
                 size="sm"
-                value={progressBarValue}
-                color={updateMessage.includes("Error") ? "danger" : "success"}
-                className="flex"
-              />
-            </div>
-          )}
-          <CardFooter className="gap-10 flex justify-center">
-            <Button
-              className="hover:bg-default/40"
-              radius="full"
-              size="sm"
-              variant="bordered"
-              onPress={() => navigate("/")}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="hover:bg-default/40"
-              radius="full"
-              size="sm"
-              variant="bordered"
-              isLoading={taskUpdateLoading}
-              color={canEdit() ? "" : "success"}
-              onPress={() => {
-                handleUserUpdate(inputFields);
-              }}
-              isDisabled={canEdit()}
-            >
-              Edit
-            </Button>
-            <Button
-              className="hover:bg-default/40"
-              radius="full"
-              size="sm"
-              variant="bordered"
-              color={"danger"}
-              onPress={onOpen}
-            >
-              Delete task
-            </Button>
-            <DeleteTaskModal isOpen={isOpen} onOpenChange={onOpenChange} />
-          </CardFooter>
-        </Card>
+                variant="bordered"
+                onPress={() => navigate("/")}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="hover:bg-default/40"
+                radius="full"
+                size="sm"
+                variant="bordered"
+                isLoading={taskUpdateLoading}
+                color={canEdit() ? "" : "success"}
+                onPress={() => {
+                  handleUserUpdate(inputFields);
+                }}
+                isDisabled={canEdit()}
+              >
+                Edit
+              </Button>
+              <Button
+                className="hover:bg-default/40"
+                radius="full"
+                size="sm"
+                variant="bordered"
+                color={"danger"}
+                onPress={onOpen}
+              >
+                Delete task
+              </Button>
+              <DeleteTaskModal isOpen={isOpen} onOpenChange={onOpenChange} />
+            </CardFooter>
+          </Card>
+        </>
       )}
     </>
   );

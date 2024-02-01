@@ -24,6 +24,7 @@ import { isValidUrl } from "../../utils/URLInputValidation/isValidUrl";
 import { isValidEmail } from "../../utils/emailValidation/isValidEmail";
 import { zoomAndClick } from "../../utils/css/zoomAndClick";
 import DOMPurify from "dompurify";
+import { Helmet } from "react-helmet";
 
 export function UserProfile() {
   const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
@@ -31,7 +32,8 @@ export function UserProfile() {
   const [updateMessage, setUpdateMessage] = useState("");
   const navigate = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [userUpdate, {loading:userUpdateLoading}] = useMutation(USER_UPDATE_MUTATION);
+  const [userUpdate, { loading: userUpdateLoading }] =
+    useMutation(USER_UPDATE_MUTATION);
   const { state, dispatch } = useAuth();
   const [correctURLS, setCorrectURLS] = useState({
     icon: false,
@@ -117,115 +119,120 @@ export function UserProfile() {
       {Object.keys(user).length == 0 ? (
         <LoadingCircle />
       ) : (
-        <Card className="grow">
-          <CardHeader className="justify-between">
-            <div className="flex gap-5">
-              <Avatar
-                isBordered
-                radius="full"
-                className={`w-20 h-20 text-large ${zoomAndClick()}`}
-                showFallback
-                src={user.icon}
-                onClick={() =>
-                  navigate(`/user?name=${data.getUser.userDetails.username}`)
-                }
-              />
-              <div className="flex flex-col gap-1 items-start justify-center">
-                <p className="text-small font-semibold leading-none text-default-600">
-                  {numbersFormat(user.followers)} followers
-                </p>
-                <h5 className="text-small tracking-tight text-default-400">
-                  @{DOMPurify.sanitize(user.username)}
-                </h5>
-              </div>
-            </div>
-          </CardHeader>
-          <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2 items-center">
-                <p className="flex text-default-500 text-large justify-center">
-                  User Profile Update
-                </p>
-                <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-4">
-                  {Object.keys(user)
-                    .slice(3)
-                    .map((key) => (
-                      <Input
-                        key={key}
-                        type={key}
-                        isInvalid={correctURLS[key]}
-                        label={`Change ${capitalizeWord(key)}`}
-                        labelPlacement="outside"
-                        value={DOMPurify.sanitize(user[key])}
-                        onValueChange={(v) =>
-                          key !== "about"
-                            ? setUser({ ...user, [key]: v })
-                            : v.length <= 100
-                            ? setUser({ ...user, [key]: v })
-                            : null
-                        }
-                        description={
-                          key === "about"
-                            ? `${100 - user[key].length} characters remaining`
-                            : ""
-                        }
-                      />
-                    ))}
+        <>
+          <Helmet>
+            <title>{`${data.getUser.userDetails.username} Profile Update - iCode Example`}</title>
+          </Helmet>
+          <Card className="grow">
+            <CardHeader className="justify-between">
+              <div className="flex gap-5">
+                <Avatar
+                  isBordered
+                  radius="full"
+                  className={`w-20 h-20 text-large ${zoomAndClick()}`}
+                  showFallback
+                  src={user.icon}
+                  onClick={() =>
+                    navigate(`/user?name=${data.getUser.userDetails.username}`)
+                  }
+                />
+                <div className="flex flex-col gap-1 items-start justify-center">
+                  <p className="text-small font-semibold leading-none text-default-600">
+                    {numbersFormat(user.followers)} followers
+                  </p>
+                  <h5 className="text-small tracking-tight text-default-400">
+                    @{DOMPurify.sanitize(user.username)}
+                  </h5>
                 </div>
               </div>
-            </div>
-          </CardBody>
-          {updateMessage && (
-            <div className="flex flex-col">
-              <p className="m-2 flex justify-center font-bold">
-                {updateMessage}
-              </p>{" "}
-              <Progress
-                aria-label="Loading..."
+            </CardHeader>
+            <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2 items-center">
+                  <p className="flex text-default-500 text-large justify-center">
+                    User Profile Update
+                  </p>
+                  <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-4">
+                    {Object.keys(user)
+                      .slice(3)
+                      .map((key) => (
+                        <Input
+                          key={key}
+                          type={key}
+                          isInvalid={correctURLS[key]}
+                          label={`Change ${capitalizeWord(key)}`}
+                          labelPlacement="outside"
+                          value={DOMPurify.sanitize(user[key])}
+                          onValueChange={(v) =>
+                            key !== "about"
+                              ? setUser({ ...user, [key]: v })
+                              : v.length <= 100
+                              ? setUser({ ...user, [key]: v })
+                              : null
+                          }
+                          description={
+                            key === "about"
+                              ? `${100 - user[key].length} characters remaining`
+                              : ""
+                          }
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </CardBody>
+            {updateMessage && (
+              <div className="flex flex-col">
+                <p className="m-2 flex justify-center font-bold">
+                  {updateMessage}
+                </p>{" "}
+                <Progress
+                  aria-label="Loading..."
+                  size="sm"
+                  value={progressBarValue}
+                  color={
+                    updateMessage.includes("Incorrect") ? "danger" : "success"
+                  }
+                  className="flex"
+                />
+              </div>
+            )}
+            <CardFooter className="gap-10 flex justify-center">
+              <Button
+                className="hover:bg-default/40"
+                radius="full"
                 size="sm"
-                value={progressBarValue}
-                color={
-                  updateMessage.includes("Incorrect") ? "danger" : "success"
-                }
-                className="flex"
-              />
-            </div>
-          )}
-          <CardFooter className="gap-10 flex justify-center">
-            <Button
-              className="hover:bg-default/40"
-              radius="full"
-              size="sm"
-              variant="bordered"
-              onPress={() => navigate("/")}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="hover:bg-default/40"
-              radius="full"
-              size="sm"
-              variant="bordered"
-              isLoading={userUpdateLoading}
-              onPress={() => {
-                handleUserUpdate(user);
-              }}
-            >
-              Update
-            </Button>
-            <Button
-              className="hover:bg-default/40"
-              radius="full"
-              color="danger"
-              size="sm"
-              variant="bordered"
-              onPress={onOpen}
-            >
-              Delete User
-            </Button>
-            <UserProfileDeleteModal {...{ isOpen, onOpenChange }} />
-          </CardFooter>
-        </Card>
+                variant="bordered"
+                onPress={() => navigate("/")}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="hover:bg-default/40"
+                radius="full"
+                size="sm"
+                variant="bordered"
+                isLoading={userUpdateLoading}
+                onPress={() => {
+                  handleUserUpdate(user);
+                }}
+              >
+                Update
+              </Button>
+              <Button
+                className="hover:bg-default/40"
+                radius="full"
+                color="danger"
+                size="sm"
+                variant="bordered"
+                onPress={onOpen}
+              >
+                Delete User
+              </Button>
+              <UserProfileDeleteModal {...{ isOpen, onOpenChange }} />
+            </CardFooter>
+          </Card>
+        </>
       )}
     </>
   );

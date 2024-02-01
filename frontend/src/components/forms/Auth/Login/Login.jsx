@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import serverError from "../../../utils/serverError/serverError";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Login({ setSelected }) {
   const [username, setUsername] = useState("");
@@ -13,7 +14,7 @@ export default function Login({ setSelected }) {
   const { dispatch } = useAuth();
   const navigate = useNavigate();
 
-  const [login, {loading}] = useMutation(LOGIN_MUTATION);
+  const [login, { loading }] = useMutation(LOGIN_MUTATION);
 
   const handleLogin = async () => {
     setCredentialMsg("");
@@ -35,60 +36,65 @@ export default function Login({ setSelected }) {
   };
 
   return (
-    <form className="flex flex-col gap-4">
-      <Input
-        isRequired
-        isInvalid={credentialMsg ? true : false}
-        label="Username"
-        value={username}
-        onValueChange={(v) => setUsername(v)}
-        placeholder="Enter your username"
-        type="username"
-        onKeyDown={(e) => e.key === "Enter"? handleLogin(): null}
-      />
-      <Input
-        isRequired
-        label="Password"
-        isInvalid={credentialMsg ? true : false}
-        value={password}
-        onValueChange={(v) => setPassword(v)}
-        placeholder="Enter your password"
-        type="password"
-        autoComplete="new-password"
-        errorMessage={credentialMsg}
-        onKeyDown={(e) => e.key === "Enter"? handleLogin(): null}
-      />
-      <p className="text-center text-small">
-        Need to create an account?{" "}
-        <Link
-          className="cursor-pointer"
-          size="sm"
-          onPress={() => setSelected("sign-up")}
-        >
-          Sign up
-        </Link>
-      </p>
-      <p className="text-center text-small">
-        <Link
-          className="cursor-pointer"
-          size="sm"
-          onPress={() => navigate('/recover-account')}
-        >
-          Forgot password
-        </Link>
-      </p>
-      <div className="flex gap-2 justify-end">
-        <Button
-          fullWidth
-          color="primary"
-          isLoading={loading}
-          onPress={() => {
-            handleLogin();
-          }}
-        >
-          Login
-        </Button>
-      </div>
-    </form>
+    <>
+      <Helmet>
+        <title>{`Log in to iCode Example - iCode Example`}</title>
+      </Helmet>
+      <form className="flex flex-col gap-4">
+        <Input
+          isRequired
+          isInvalid={credentialMsg ? true : false}
+          label="Username"
+          value={username}
+          onValueChange={(v) => setUsername(v)}
+          placeholder="Enter your username"
+          type="username"
+          onKeyDown={(e) => (e.key === "Enter" ? handleLogin() : null)}
+        />
+        <Input
+          isRequired
+          label="Password"
+          isInvalid={credentialMsg ? true : false}
+          value={password}
+          onValueChange={(v) => setPassword(v)}
+          placeholder="Enter your password"
+          type="password"
+          autoComplete="new-password"
+          errorMessage={credentialMsg}
+          onKeyDown={(e) => (e.key === "Enter" ? handleLogin() : null)}
+        />
+        <p className="text-center text-small">
+          Need to create an account?{" "}
+          <Link
+            className="cursor-pointer"
+            size="sm"
+            onPress={() => setSelected("sign-up")}
+          >
+            Sign up
+          </Link>
+        </p>
+        <p className="text-center text-small">
+          <Link
+            className="cursor-pointer"
+            size="sm"
+            onPress={() => navigate("/recover-account")}
+          >
+            Forgot password
+          </Link>
+        </p>
+        <div className="flex gap-2 justify-end">
+          <Button
+            fullWidth
+            color="primary"
+            isLoading={loading}
+            onPress={() => {
+              handleLogin();
+            }}
+          >
+            Login
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }

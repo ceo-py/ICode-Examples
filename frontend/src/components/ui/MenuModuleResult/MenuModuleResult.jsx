@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import serverError from "../../utils/serverError/serverError";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
+import { Helmet } from "react-helmet";
 
 export function MenuModuleResult() {
   const [searchModule, { loading, data }] = useLazyQuery(GET_MODEL_QUERY);
@@ -32,13 +33,19 @@ export function MenuModuleResult() {
       {loading ? (
         <LoadingCircle />
       ) : (
-        <ResultListTable
-          outsideData={data?.getModuleExamples?.result}
-          showDropDownMenu={true}
-          hidePagination={true}
-          filterValue={filterValue}
-          setFilterValue={setFilterValue}
-        />
+        <>
+          <Helmet>
+            <title>{`${searchParams.get("module")}, ${searchParams.get("course")}, ${searchParams.get("language")} - iCode Example`}</title>
+          </Helmet>
+          <ResultListTable
+            outsideData={data?.getModuleExamples?.result}
+            showDropDownMenu={true}
+            hidePagination={true}
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+            isHelmet={true}
+          />
+        </>
       )}
     </>
   );

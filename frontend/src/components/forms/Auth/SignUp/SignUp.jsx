@@ -8,6 +8,7 @@ import serverError from "../../../utils/serverError/serverError";
 import { passwordValidation } from "../../../utils/passwordValidation/passwordValidation";
 import { usernameValidation } from "../../../utils/usernameValidation/usernameValidation";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function SignUp({ setSelected }) {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ export default function SignUp({ setSelected }) {
   const { dispatch } = useAuth();
   const navigate = useNavigate();
 
-  const [signUp, {loading}] = useMutation(SIGNUP_MUTATION);
+  const [signUp, { loading }] = useMutation(SIGNUP_MUTATION);
 
   const handleSignUP = async () => {
     const isPasswordValid = passwordValidation(password);
@@ -50,58 +51,64 @@ export default function SignUp({ setSelected }) {
     }
   };
   return (
-    <form className="flex flex-col gap-4 h-[300px]">
-      <Input
-        classNames={{
-          helperWrapper: "relative",
-        }}
-        isRequired
-        isInvalid={usernameMsg ? true : false}
-        label="Username"
-        placeholder="Enter your username"
-        value={username}
-        onValueChange={(v) => setUsername(v)}
-        type="username"
-        errorMessage={usernameMsg}
-        onKeyDown={(e) => e.key === "Enter"? handleSignUP(): null}
-      />
-      <Input
-        classNames={{
-          helperWrapper: "relative",
-        }}
-        isRequired
-        isInvalid={passwordMsg ? true : false}
-        label="Password"
-        placeholder="Enter your password"
-        value={password}
-        onValueChange={(v) => setPassword(v)}
-        type="password"
-        autoComplete="new-password"
-        errorMessage={passwordMsg}
-        onKeyDown={(e) => e.key === "Enter"? handleSignUP(): null}
-      />
-      <p className="text-center text-small">
-        Already have an account?{" "}
-        <Link
-          className="cursor-pointer"
-          size="sm"
-          onPress={() => setSelected("login")}
-        >
-          Login
-        </Link>
-      </p>
-      <div className="flex gap-2 justify-end">
-        <Button
-          fullWidth
-          color="primary"
-          isLoading={loading}
-          onClick={() => {
-            handleSignUP();
+    <>
+      {" "}
+      <Helmet>
+        <title>{`Sing up to iCode Example - iCode Example`}</title>
+      </Helmet>
+      <form className="flex flex-col gap-4 h-[300px]">
+        <Input
+          classNames={{
+            helperWrapper: "relative",
           }}
-        >
-          Sign up
-        </Button>
-      </div>
-    </form>
+          isRequired
+          isInvalid={usernameMsg ? true : false}
+          label="Username"
+          placeholder="Enter your username"
+          value={username}
+          onValueChange={(v) => setUsername(v)}
+          type="username"
+          errorMessage={usernameMsg}
+          onKeyDown={(e) => (e.key === "Enter" ? handleSignUP() : null)}
+        />
+        <Input
+          classNames={{
+            helperWrapper: "relative",
+          }}
+          isRequired
+          isInvalid={passwordMsg ? true : false}
+          label="Password"
+          placeholder="Enter your password"
+          value={password}
+          onValueChange={(v) => setPassword(v)}
+          type="password"
+          autoComplete="new-password"
+          errorMessage={passwordMsg}
+          onKeyDown={(e) => (e.key === "Enter" ? handleSignUP() : null)}
+        />
+        <p className="text-center text-small">
+          Already have an account?{" "}
+          <Link
+            className="cursor-pointer"
+            size="sm"
+            onPress={() => setSelected("login")}
+          >
+            Login
+          </Link>
+        </p>
+        <div className="flex gap-2 justify-end">
+          <Button
+            fullWidth
+            color="primary"
+            isLoading={loading}
+            onClick={() => {
+              handleSignUP();
+            }}
+          >
+            Sign up
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }
