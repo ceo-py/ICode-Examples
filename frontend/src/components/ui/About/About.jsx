@@ -1,4 +1,5 @@
 import { Accordion, AccordionItem, Image, Link } from "@nextui-org/react";
+import { Helmet } from "react-helmet";
 
 export default function About() {
   const discordBotLink = (
@@ -9,6 +10,9 @@ export default function About() {
 
   return (
     <>
+      <Helmet>
+        <title>About - iCode Example</title>
+      </Helmet>
       <Accordion variant="bordered">
         <AccordionItem
           key="1"

@@ -21,6 +21,7 @@ import { TASK_CREATE_MUTATION } from "../../../../graphql/mutations/taskCreateMu
 import serverError from "../../../utils/serverError/serverError";
 import { checkValidGithubAddress } from "../../../utils/URLInputValidation/isValidGitHubUrl";
 import DOMPurify from "dompurify";
+import { Helmet } from "react-helmet";
 
 const uploadFields = [
   {
@@ -127,6 +128,9 @@ export function UploadContent() {
 
   return (
     <>
+      <Helmet>
+        <title>Upload Solution - iCode Example</title>
+      </Helmet>
       <Card className="grow">
         <CardHeader className="justify-between">
           <SelectMenu menu={selectedCourseSignal} />
@@ -188,7 +192,12 @@ export function UploadContent() {
               aria-label="Loading..."
               size="sm"
               value={progressBarValue}
-              color={updateMessage.includes("invalid") || updateMessage.includes("Error")? "danger" : "success"}
+              color={
+                updateMessage.includes("invalid") ||
+                updateMessage.includes("Error")
+                  ? "danger"
+                  : "success"
+              }
               className="flex"
             />
           </div>

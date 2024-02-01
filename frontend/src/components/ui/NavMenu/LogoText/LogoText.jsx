@@ -25,7 +25,7 @@ export function LogoText({ size, hideDescription }) {
           className="flex hidden sm:block font-bold text-inherit cursor-pointer"
           onClick={() => navigateTo()}
         >
-          ICode Example
+          iCode Example
         </p>
       ) : null}
     </>

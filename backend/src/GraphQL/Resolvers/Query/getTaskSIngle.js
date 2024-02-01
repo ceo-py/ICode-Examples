@@ -66,14 +66,14 @@ const getTaskSingleDetailsResolver = {
 
                 const codeContent = await getCodeContent(result.githubLink)
 
-                if (codeContent?.status) {
-                    return {
-                        status: {
-                            code: codeContent.status,
-                            message: codeContent.response.data.message
-                        }
-                    }
-                }
+                // if (projectTreeGen instanceof Error) {
+                //     return {
+                //         status: {
+                //             code: 500,
+                //             message: "Unsuccessful Fetch Task"
+                //         }
+                //     }
+                // }
                 return {
                     video: result.videoLink,
                     follow,
