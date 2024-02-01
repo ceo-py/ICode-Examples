@@ -22,10 +22,11 @@ const getCodeContent = async (url) => {
     try {
         const response = await octokit.request(`GET ${generateUrl(url)}`)
         let decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
-        if (decodedContent.includes('using System')) {
+        const fileExtension = url.split("/").slice(-1)[0].split(".")[1]
+        if (decodedContent.includes('using System') && fileExtension === 'cs') {
             decodedContent = decodedContent.slice(decodedContent.indexOf('using System'))
         }
-        const fileExtension = url.split("/").slice(-1)[0].split(".")[1]
+        
         return syntaxHighlight(decodedContent, fileExtension)
     } catch (e) {
         console.error('getCodeContent Error:\n', e.message);
