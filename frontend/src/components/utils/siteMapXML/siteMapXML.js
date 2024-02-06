@@ -37,7 +37,7 @@ function generateSitemap(urls) {
   languages.forEach(l => {
     urls.forEach(url => {
       xml += '  <url>\n';
-      xml += `    <loc>${url.replace('toChange', l)}</loc>\n`;
+      xml += `    <loc>${url.replace('toChange', l).replace(/&/g, '&amp;')}</loc>\n`;
       xml += '    <lastmod>' + new Date().toISOString().split('T')[0] + '</lastmod>\n';
       xml += '    <changefreq>monthly</changefreq>\n';
       xml += '    <priority>1</priority>\n';
