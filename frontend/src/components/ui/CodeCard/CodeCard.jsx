@@ -55,8 +55,8 @@ export function CodeCard() {
       ) : data?.getTaskSingleDetails?.status?.code === 200 ? (
         <>
           <MetaTags
-            title={`${data.getTaskSingleDetails.taskName} - ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")} ${searchParams.get("course")} ${searchParams.get("module")}`}
-            description={`Explore solution for the ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")}, ${searchParams.get("course")}, problem '${data.getTaskSingleDetails.taskName}' in the ${searchParams.get("module")} module at iCode Example. Dive into code snippets and detailed video explanations to master this challenging problem. Enhance your ${searchParams.get("language")} skills today!`}
+            title={`${data.getTaskSingleDetails.taskName} - ${data.getTaskSingleDetails.video? 'Video Solution ': ''}${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")} ${searchParams.get("course")} ${searchParams.get("module")}`}
+            description={`Explore solution for the ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")}, ${searchParams.get("course")}, problem '${data.getTaskSingleDetails.taskName}' in the ${searchParams.get("module")} module at SoftUni Judge. Dive into code snippets and detailed video explanations to master this challenging problem. Enhance your ${searchParams.get("language")} skills today${data.getTaskSingleDetails.video? ' with accompanying video explanations':''}!`}
             keywords={`${data.getTaskSingleDetails.taskName}, ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")}, ${searchParams.get("course")}, ${searchParams.get("module")}`}
           />
           <Card className="grow">

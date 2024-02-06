@@ -15,7 +15,7 @@ export function Footer() {
         <ul className="flex gap-6 list-none gap-2 items-center">
           <li className="flex">
             <LogoText size={"h-6"} hideDescription={true} />
-            <div>&copy; {year.getFullYear()} Copyright ICode Example</div>
+            <div>&copy; {year.getFullYear()} Copyright iCode Example</div>
           </li>
           <li>
             <Link
@@ -23,7 +23,7 @@ export function Footer() {
               href="https://www.ceo-py.eu/DiscordBot/"
               showAnchorIcon
             >
-              ITask Discord Bot
+              iTask Discord Bot
             </Link>
           </li>
           <li className="cursor-pointer" onClick={() => navigateTo()}>
