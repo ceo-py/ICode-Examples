@@ -38,7 +38,6 @@ export function ResultListTable({
 
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
-    ("https://example.com/solution?language=python&problem=list-manipulator");
     return `${taskDetail.language}&course=${taskDetail.course}&module=${taskDetail.module}&problem=${taskDetail.taskName}`
         .replace(/-./g, "")
         .replace(/ /g, "-")

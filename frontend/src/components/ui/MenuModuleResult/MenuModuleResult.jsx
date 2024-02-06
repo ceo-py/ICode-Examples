@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import serverError from "../../utils/serverError/serverError";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../MetaTags/MetaTags";
 
 export function MenuModuleResult() {
   const [searchModule, { loading, data }] = useLazyQuery(GET_MODEL_QUERY);
@@ -34,9 +34,11 @@ export function MenuModuleResult() {
         <LoadingCircle />
       ) : (
         <>
-          <Helmet>
-            <title>{`${searchParams.get("module")}, ${searchParams.get("course")}, ${searchParams.get("language")} - iCode Example`}</title>
-          </Helmet>
+          <MetaTags
+            title={`${searchParams.get("language")} : ${searchParams.get("module")} ${searchParams.get("course")} - iCode Example`}
+            description={`Explore the world of ${searchParams.get("language")} programming with our comprehensive collection of ${searchParams.get("module")} on iCode Example.`}
+            keywords={`${searchParams.get("language")}, ${searchParams.get("module")}, ${searchParams.get("course")}, SoftUni, judge, iCode Example Solutions`}
+          />
           <ResultListTable
             outsideData={data?.getModuleExamples?.result}
             showDropDownMenu={true}
