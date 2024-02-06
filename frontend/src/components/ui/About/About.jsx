@@ -23,12 +23,12 @@ export default function About() {
           startContent={
             <Image
               width={200}
-              alt="ICode Example Picture"
+              alt="iCode Example Picture"
               src="assets/MetaPic.png"
             />
           }
         >
-          Welcome to ICode Example, your go-to destination for comprehensive
+          Welcome to iCode Example, your go-to destination for comprehensive
           coding task solutions. Founded with a passion for sharing knowledge
           and fostering a collaborative coding community. We believe in the
           collective strength of shared knowledge and strive to make learning
@@ -41,7 +41,7 @@ export default function About() {
         >
           We understand that the coding landscape is vast and diverse. That's
           why ICode Example supports a wide range of programming languages,
-          including: Python, C#, C++, JavaScript (JS), Java, HTML & CSS, MSSQL.
+          including: Python, C#, C++, JavaScript (JS), Java, HTML, CSS and MSSQL.
         </AccordionItem>
         <AccordionItem key="3" aria-label="Content" title="Rich Content">
           Our solutions not only include the code itself but also offer video
@@ -54,7 +54,7 @@ export default function About() {
           aria-label="Content"
           title="Community-Driven Platform"
         >
-          ICode Example thrives on community engagement. Anyone can contribute
+          iCode Example thrives on community engagement. Anyone can contribute
           by uploading their solutions, sharing their code, and providing video
           explanations. This collaborative spirit is what makes our platform
           dynamic and valuable.
@@ -88,7 +88,7 @@ export default function About() {
           title="Join the Coding Community"
         >
           Whether you're a beginner looking for guidance or an experienced coder
-          eager to share your expertise, ICode Example welcomes you. Explore our
+          eager to share your expertise, iCode Example welcomes you. Explore our
           solutions, engage with the community, and enhance your coding skills
           with our diverse and comprehensive resources.
         </AccordionItem>
