@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet";
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -20,6 +19,7 @@ import { ListComments } from "./ListComments/ListComments";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
 import { numbersFormat } from "../../utils/numberFormat/numberFormat";
 import { linkIcons } from "../../utils/Icons/linkIcons";
+import { MetaTags } from "../MetaTags/MetaTags";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -54,9 +54,11 @@ export function CodeCard() {
         <LoadingCircle />
       ) : data?.getTaskSingleDetails?.status?.code === 200 ? (
         <>
-          <Helmet>
-            <title>{`${data.getTaskSingleDetails.taskName} - iCode Example`}</title>
-          </Helmet>
+          <MetaTags
+            title={`${data.getTaskSingleDetails.taskName} - ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")} ${searchParams.get("course")} ${searchParams.get("module")}`}
+            description={`Explore solution for the ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")}, ${searchParams.get("course")}, problem '${data.getTaskSingleDetails.taskName}' in the ${searchParams.get("module")} module at iCode Example. Dive into code snippets and detailed video explanations to master this challenging problem. Enhance your ${searchParams.get("language")} skills today!`}
+            keywords={`${data.getTaskSingleDetails.taskName}, ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")}, ${searchParams.get("course")}, ${searchParams.get("module")}`}
+          />
           <Card className="grow">
             <CardHeader className="justify-between">
               <div className="flex gap-5">

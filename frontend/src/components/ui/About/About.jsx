@@ -1,5 +1,5 @@
 import { Accordion, AccordionItem, Image, Link } from "@nextui-org/react";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../MetaTags/MetaTags";
 
 export default function About() {
   const discordBotLink = (
@@ -10,9 +10,11 @@ export default function About() {
 
   return (
     <>
-      <Helmet>
-        <title>About - iCode Example</title>
-      </Helmet>
+      <MetaTags
+        title="About"
+        description="Welcome to iCode Example, your go-to destination for comprehensive coding task solutions. Founded with a passion for sharing knowledge and fostering a collaborative coding community. We believe in the collective strength of shared knowledge and strive to make learning and understanding code accessible to everyone."
+        keywords="icode example, softuni, programing, exam, problem solutions"
+      />
       <Accordion variant="bordered">
         <AccordionItem
           key="1"

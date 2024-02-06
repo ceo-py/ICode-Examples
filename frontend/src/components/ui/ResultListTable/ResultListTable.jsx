@@ -19,7 +19,6 @@ import { linkIcons } from "../../utils/Icons/linkIcons";
 import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 import serverError from "../../utils/serverError/serverError";
 import DOMPurify from "dompurify";
-import { Helmet } from "react-helmet";
 
 export function ResultListTable({
   outsideData,
@@ -28,7 +27,6 @@ export function ResultListTable({
   showDropDownMenu,
   filterValue,
   setFilterValue,
-  isHelmet,
 }) {
   const [searchTask, { loading, data }] = useLazyQuery(TASK_SEARCH_QUERY);
   const [searchParams] = useSearchParams();
@@ -125,16 +123,6 @@ export function ResultListTable({
         <LoadingCircle />
       ) : (
         <>
-          {!isHelmet && (
-            <Helmet>
-              <title>{`${
-                searchParams.get("query")
-                  ? searchParams.get("query") + " -"
-                  : ""
-              } iCode Example`}</title>
-            </Helmet>
-          )}
-
           <Table
             aria-label="table with client side pagination"
             onRowAction={(e) => taskDetails(e)}

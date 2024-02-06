@@ -5,7 +5,7 @@ import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import { NoResultFound } from "../NoResultFound/NoResultFound";
 import TabLanguages from "../TabLanguages/TabLanguages";
 import { LanguageLocalStorage } from "../../utils/LanguageLocalStorage/LanguageLocalStorage";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../MetaTags/MetaTags";
 
 export default function Index() {
   const { loading, data } = useQuery(INDEX_TOP_20_QUERY);
@@ -13,9 +13,11 @@ export default function Index() {
 
   return (
     <>
-      <Helmet>
-        <title>iCode Example</title>
-      </Helmet>
+      <MetaTags 
+      title="iCode Example"
+      description="Coding Problem Solving Hub: Get Solutions Here!"
+      keywords="softuni c#, softuni python, softuni javascript, softuni c++, softuni java, softuni basic, softuni fundamentals"
+      />
       <div className="flex items-center w-full flex-col">
         {!loading && (
           <>
