@@ -40,16 +40,18 @@ export function ResultListTable({
 
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
+    'https://example.com/solution?language=python&problem=list-manipulator'
     const desc =
-      `${taskDetail.language} ${taskDetail.course} ${taskDetail.module} ${taskDetail.taskName}`
+      `${taskDetail.language}&course=${taskDetail.course}&module=${taskDetail.module}&problem=${taskDetail.taskName}`
         .replace(/-./g, "")
         .replace(/ /g, "-");
-    const encodedDesc = encodeURIComponent(desc);
-    return encodedDesc;
+    // const encodedDesc = encodeURIComponent(desc);
+
+    return desc;
   };
 
   const taskDetails = (taskId) => {
-    navigate(`/solution?desc=${genTaskDesc(taskId)}&id=${taskId}`);
+    navigate(`/solution?language=${genTaskDesc(taskId)}&id=${taskId}`);
   };
 
   const tableValues = (column, item) => {

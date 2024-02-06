@@ -28,7 +28,30 @@ const urlsBasic = [
   'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics&module=Nested%20Loops%20-%20Exercise',
   'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics&module=Nested%20Loops%20-%20More%20Exercises',
   'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics&module=Drawing%20Figures%20with%20Loops%20-%20More%20Exercises',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Exam%20-%2018%20and%2019%20July%202020',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Exam%20-%2028%20and%2029%20March%202020',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Exam%20-%206%20and%207%20July%202019',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Exam%20-%2015%20and%2016%20June%202019',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Retake%20Exam%20-%202%20and%203%20May%202019',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Exam%20-%2020%20and%2021%20April%202019',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Exam%20-%206%20and%207%20April%202019',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Basics%20Exams&module=Programming%20Basics%20Online%20Exam%20-%209%20and%2010%20March%202019',
 ];
+
+const urlsFundamentals = [
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=01.%20Programming%20Fundamentals%20Mid%20Exam%20Retake',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=01.%20Programming%20Fundamentals%20Final%20Exam%20Retake',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=02.%20Programming%20Fundamentals%20Mid%20Exam',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=02.%20Programming%20Fundamentals%20Final%20Exam',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=03.%20Programming%20Fundamentals%20Mid%20Exam%20Retake',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=03.%20Programming%20Fundamentals%20Final%20Exam%20Retake',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=04.%20Programming%20Fundamentals%20Mid%20Exam',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=04.%20Programming%20Fundamentals%20Final%20Exam',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=05.%20Programming%20Fundamentals%20Mid%20Exam',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=05.%20Programming%20Fundamentals%20Final%20Exam',
+  'https://icode-example.ceo-py.eu/menu?language=toChange&course=Fundamentals%20Exams&module=06.%20Programming%20Fundamentals%20Mid%20Exam%20Retake',
+
+]
 
 function generateSitemap(urls) {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
@@ -50,6 +73,6 @@ function generateSitemap(urls) {
   return xml;
 }
 
-const sitemap = generateSitemap(urlsBasic);
+const sitemap = generateSitemap([...urlsBasic, ...urlsFundamentals]);
 fs.writeFileSync('sitemap.xml', sitemap, 'utf-8');
 console.log(sitemap);
