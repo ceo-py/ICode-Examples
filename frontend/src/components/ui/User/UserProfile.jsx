@@ -24,7 +24,7 @@ import { isValidUrl } from "../../utils/URLInputValidation/isValidUrl";
 import { isValidEmail } from "../../utils/emailValidation/isValidEmail";
 import { zoomAndClick } from "../../utils/css/zoomAndClick";
 import DOMPurify from "dompurify";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../MetaTags/MetaTags";
 
 export function UserProfile() {
   const { loading, error, data, refetch } = useQuery(GET_USER_DETAILS);
@@ -120,9 +120,11 @@ export function UserProfile() {
         <LoadingCircle />
       ) : (
         <>
-          <Helmet>
-            <title>{`${data.getUser.userDetails.username} Profile Update - iCode Example`}</title>
-          </Helmet>
+          <MetaTags
+            title={`${data.getUser.userDetails.username} Profile Update`}
+            description="Update your profile information on iCode Example. Keep your profile up-to-date with our easy-to-use profile editing tools. Personalize your account settings, manage preferences, and enhance your user experience."
+            keywords="icode example, Update profile, Profile editing, Edit profile information, Modify profile, Manage account settings"
+          />
           <Card className="grow">
             <CardHeader className="justify-between">
               <div className="flex gap-5">

@@ -11,7 +11,7 @@ import { SocialMediaLinks } from "./SocialMediaLinks/SocialMediaLinks";
 import TabLanguages from "../../TabLanguages/TabLanguages";
 import { LanguageLocalStorage } from "../../../utils/LanguageLocalStorage/LanguageLocalStorage";
 import { ResultListTable } from "../../ResultListTable/ResultListTable";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../../MetaTags/MetaTags";
 
 export function UserHomePage() {
   const [userDetails, { data, loading }] = useLazyQuery(GET_USER_HOME_DETAILS);
@@ -43,9 +43,11 @@ export function UserHomePage() {
         <NotFound />
       ) : (
         <>
-          <Helmet>
-            <title>{`${data.getUserHome.details.username} - iCode Example`}</title>
-          </Helmet>
+          <MetaTags
+            title={`${data.getUserHome.details.username} Home Page`}
+            description={`Welcome to ${data.getUserHome.details.username} home page on iCode Example. Explore Test's contributions, solutions, and activity on our platform. Join our coding community and start your own coding journey today!`}
+            keywords="icode example"
+          />
           <Card className="grow">
             <CardHeader className="flex flex-wrap justify-center gap-10">
               <div className="flex flex-col">
@@ -99,7 +101,6 @@ export function UserHomePage() {
               showDropDownMenu={true}
               filterValue={filterValue}
               setFilterValue={setFilterValue}
-              isHelmet={true}
             />
           </Card>
         </>

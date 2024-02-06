@@ -2,7 +2,6 @@ import { Button, Card, CardBody, Input } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { RESET_PASSWORD } from "../../../../graphql/queries/resetPassword";
 import { useLazyQuery } from "@apollo/client";
-import { Helmet } from "react-helmet";
 import { MetaTags } from "../../../ui/MetaTags/MetaTags";
 
 export default function Account() {
@@ -45,9 +44,6 @@ export default function Account() {
         description="Forgot your password? Don't worry! Recover your password securely on iCode Example. Follow our simple steps to reset your password and regain access to your account."
         keywords={`icode example, Forgot password, Password recovery, Reset password, Recover account password, Password reset`}
       />
-      <Helmet>
-        <title>{`Forgot your password? - iCode Example`}</title>
-      </Helmet>
       <div className="flex flex-wrap items-center justify-center w-full">
         <Card className="max-w-full w-[340px] h-[320px]">
           <CardBody className="overflow-hidden">

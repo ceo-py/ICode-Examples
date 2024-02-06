@@ -25,7 +25,7 @@ import { NotFound } from "../../NotFound/NotFound";
 import DeleteTaskModal from "./DeleteTaskModal/DeleteTaskModal";
 import DOMPurify from "dompurify";
 import { menuSetUp } from "../../../utils/selectMenuSetUp/selectMenuSetUp";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../../MetaTags/MetaTags";
 
 const uploadFields = [
   {
@@ -180,9 +180,11 @@ export function EditTask() {
         <NotFound />
       ) : (
         <>
-          <Helmet>
-            <title>{`${data.getTaskDetailsForUpdate.taskName} Edit Solution - iCode Example`}</title>
-          </Helmet>
+          <MetaTags
+            title={`${data.getTaskDetailsForUpdate.taskName} Problem Edit Solution`}
+            description="Edit your problem solution on iCode Example. Update your existing solution, make revisions, and improve your code with our intuitive editing tools. Enhance your coding skills and contribute to our community by refining your solutions."
+            keywords="icode example, Edit problem solution, Update solution, Modify solution, Revise problem solution, Edit code"
+          />
           <Card className="grow">
             <CardHeader className="justify-between">
               {(selectedCourseSignal.value?.name ||
