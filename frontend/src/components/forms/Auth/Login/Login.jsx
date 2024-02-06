@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useAuth } from "../../../../AuthContext/AuthContext";
 import serverError from "../../../utils/serverError/serverError";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../../../ui/MetaTags/MetaTags";
 
 export default function Login({ setSelected }) {
   const [username, setUsername] = useState("");
@@ -37,9 +37,11 @@ export default function Login({ setSelected }) {
 
   return (
     <>
-      <Helmet>
-        <title>{`Log in to iCode Example - iCode Example`}</title>
-      </Helmet>
+      <MetaTags
+        title="Login"
+        description="Log in to access exclusive content, manage your account, and engage with our community. Sign in now to get started!"
+        keywords={`icode example, Login, Account access, User authentication, Secure login`}
+      />
       <form className="flex flex-col gap-4">
         <Input
           isRequired

@@ -19,6 +19,7 @@ import { linkIcons } from "../../utils/Icons/linkIcons";
 import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 import serverError from "../../utils/serverError/serverError";
 import DOMPurify from "dompurify";
+import { MetaTags } from "../MetaTags/MetaTags";
 
 export function ResultListTable({
   outsideData,
@@ -39,12 +40,11 @@ export function ResultListTable({
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
     return `${taskDetail.language}&course=${taskDetail.course}&module=${taskDetail.module}&problem=${taskDetail.taskName}`
-        .replace(/-./g, "")
-        .replace(/ /g, "-")
-        .replace("#", "Sharp")
-        .replace(/'/, "")
-        .replace(".", "");
-
+      .replace(/-./g, "")
+      .replace(/ /g, "-")
+      .replace("#", "Sharp")
+      .replace(/'/, "")
+      .replace(".", "");
   };
 
   const taskDetails = (taskId) => {
@@ -118,6 +118,15 @@ export function ResultListTable({
 
   return (
     <>
+      {!outsideData && (
+        <MetaTags
+          title={`${searchParams.get("query")} Task: Coding Solutions`}
+          description={`Find solutions to the '${searchParams.get(
+            "query"
+          )}' problem in our comprehensive collection of coding challenges from SoftUni judge on iCode Example. Dive into code examples and master this coding challenge.`}
+          keywords={`icode example, softuni, judge, ${searchParams.get("query")}`}
+        />
+      )}
       {loading ? (
         <LoadingCircle />
       ) : (

@@ -40,7 +40,7 @@ export default function About() {
           title="Extensive Language Support"
         >
           We understand that the coding landscape is vast and diverse. That's
-          why ICode Example supports a wide range of programming languages,
+          why iCode Example supports a wide range of programming languages,
           including: Python, C#, C++, JavaScript (JS), Java, HTML, CSS and MSSQL.
         </AccordionItem>
         <AccordionItem key="3" aria-label="Content" title="Rich Content">

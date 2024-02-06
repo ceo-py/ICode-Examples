@@ -8,7 +8,7 @@ import serverError from "../../../utils/serverError/serverError";
 import { passwordValidation } from "../../../utils/passwordValidation/passwordValidation";
 import { usernameValidation } from "../../../utils/usernameValidation/usernameValidation";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../../../ui/MetaTags/MetaTags";
 
 export default function SignUp({ setSelected }) {
   const [username, setUsername] = useState("");
@@ -52,10 +52,11 @@ export default function SignUp({ setSelected }) {
   };
   return (
     <>
-      {" "}
-      <Helmet>
-        <title>{`Sing up to iCode Example - iCode Example`}</title>
-      </Helmet>
+      <MetaTags
+        title="Sign Up"
+        description="Unlock the full potential of iCode Example by signing up. With your account, you can upload, edit, and delete problem solutions, and engage with others through comments. Join now and become part of our vibrant coding community!"
+        keywords={`icode example, Sign up, Register, Create account, New user registration`}
+      />
       <form className="flex flex-col gap-4 h-[300px]">
         <Input
           classNames={{

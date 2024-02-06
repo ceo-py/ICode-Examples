@@ -4,7 +4,7 @@ import { passwordValidation } from "../../../utils/passwordValidation/passwordVa
 import { RESET_PASSWORD_MUTATION } from "../../../../graphql/mutations/resetPassword";
 import { useMutation } from "@apollo/client";
 import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { MetaTags } from "../../../ui/MetaTags/MetaTags";
 
 export default function Password() {
   const [password, setPassword] = useState("");
@@ -58,10 +58,11 @@ export default function Password() {
 
   return (
     <>
-      {" "}
-      <Helmet>
-        <title>{`Change your password - iCode Example`}</title>
-      </Helmet>
+      <MetaTags
+        title="Change Your Password"
+        description="Change your password securely on iCode Example. Update your account's password to maintain security and protect your information. Follow our simple steps to change your password and keep your account safe."
+        keywords={`icode example, Change password, Update password, Password change, Secure password update`}
+      />
       <div className="flex flex-wrap items-center justify-center w-full">
         <Card className="max-w-full w-[340px] h-[320px]">
           <CardBody className="overflow-hidden">
