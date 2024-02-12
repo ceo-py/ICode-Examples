@@ -74,14 +74,14 @@ export function CodeCard() {
                   }
                 />
                 <div className="flex flex-col gap-1 items-start justify-center">
-                  <h4 className="text-small font-semibold leading-none overflow-hidden overflow-ellipsis max-w-[200px] sm:max-w-[350px]">
+                  <h1 className="text-small font-semibold leading-none overflow-hidden overflow-ellipsis max-w-[200px] sm:max-w-[350px]">
                     {data.getTaskSingleDetails.taskName}
-                  </h4>
+                  </h1>
                   <h4 className="text-small tracking-tight text-default-400">
                     {numbersFormat(data.getTaskSingleDetails.followCounter)}{" "}
                     followers
                   </h4>
-                  <h5
+                  <h2
                     className="text-small tracking-tight text-default-400 cursor-pointer"
                     onClick={() =>
                       navigateUser(
@@ -90,7 +90,7 @@ export function CodeCard() {
                     }
                   >
                     @{data.getTaskSingleDetails.userDetails.username}
-                  </h5>
+                  </h2>
                   {data.getTaskSingleDetails.video && (
                     <Tooltip
                       showArrow={true}
