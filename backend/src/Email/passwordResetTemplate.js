@@ -463,7 +463,7 @@ function resetTemplate(username, token) {
                         <tr>
                             <td class="email-masthead">
                                 <a href="https://icode-example.ceo-py.eu/" class="f-fallback email-masthead_name">
-                                   ICode-Example
+                                   iCode-Example
                                 </a>
                             </td>
                         </tr>
@@ -477,7 +477,7 @@ function resetTemplate(username, token) {
                                         <td class="content-cell">
                                             <div class="f-fallback">
                                                 <h1>Hi ${username},</h1>
-                                                <p>You recently requested to reset your password for your ICode-Example
+                                                <p>You recently requested to reset your password for your iCode-Example
                                                     account. Use the button below to reset it. <strong>This password
                                                         reset is only valid for the next 24 hours.</strong></p>
                                                 <!-- Action -->
@@ -501,7 +501,7 @@ function resetTemplate(username, token) {
                                                 <p>If you did not request a password reset, please ignore this
                                                     email.</p>
                                                 <p>Thanks,
-                                                    <br>The ICode-Example team</p>
+                                                    <br>The iCode-Example team</p>
                                             </div>
                                         </td>
                                     </tr>

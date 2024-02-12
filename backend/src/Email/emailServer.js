@@ -29,10 +29,10 @@ const sendEmail = async (username, emailAddress, token) => {
     code: 500,
   };
 
-  sendSmtpEmail.subject = "[ICode Example]: Reset your password";
+  sendSmtpEmail.subject = "iCode Example]: Reset your password";
 
   sendSmtpEmail.htmlContent = resetTemplate(username, token);
-  sendSmtpEmail.sender = { "name": "ICode Example", "email": "icode.example@ceo-py.eu" };
+  sendSmtpEmail.sender = { "name": "iCode Example", "email": "icode.example@ceo-py.eu" };
   sendSmtpEmail.to = [{ "email": emailAddress, "name": username }];
 
   try {
