@@ -34,6 +34,7 @@ export function CodeCard() {
   });
 
   const [commentsList, setCommentsList] = useState([]);
+  const [project, setProject] = useState();
 
   const navigateUser = (username) => {
     navigate(`/user?name=${username}`);
@@ -44,10 +45,13 @@ export function CodeCard() {
   };
 
   useEffect(() => {
+    if (data?.getTaskSingleDetails?.project) {
+      setProject(JSON.parse(data?.getTaskSingleDetails?.project));
+    }
     if (!data?.getTaskSingleDetails?.comments) return;
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
   }, [data]);
-
+  console.log(project);
   return (
     <>
       {loading ? (
@@ -55,9 +59,35 @@ export function CodeCard() {
       ) : data?.getTaskSingleDetails?.status?.code === 200 ? (
         <>
           <MetaTags
-            title={`${data.getTaskSingleDetails.taskName} - ${data.getTaskSingleDetails.video? 'Video Solution ': ''}${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")} ${searchParams.get("course")} ${searchParams.get("module")}`}
-            description={`Explore solution for the ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")}, ${searchParams.get("course")}, problem '${data.getTaskSingleDetails.taskName}' in the ${searchParams.get("module")} module from SoftUni judge on iCode Example. Dive into code snippets and detailed video explanations to master this challenging problem. Enhance your ${searchParams.get("language")} skills today${data.getTaskSingleDetails.video? ' with accompanying video explanations':''}!`}
-            keywords={`${data.getTaskSingleDetails.taskName}, ${searchParams.get("language") === 'C  '? 'C++': searchParams.get("language")}, ${searchParams.get("course")}, ${searchParams.get("module")}, SoftUni, judge, icode example`}
+            title={`${data.getTaskSingleDetails.taskName} - ${
+              data.getTaskSingleDetails.video ? "Video Solution " : ""
+            }${
+              searchParams.get("language") === "C  "
+                ? "C++"
+                : searchParams.get("language")
+            } ${searchParams.get("course")} ${searchParams.get("module")}`}
+            description={`Explore solution for the ${
+              searchParams.get("language") === "C  "
+                ? "C++"
+                : searchParams.get("language")
+            }, ${searchParams.get("course")}, problem '${
+              data.getTaskSingleDetails.taskName
+            }' in the ${searchParams.get(
+              "module"
+            )} module from SoftUni judge on iCode Example. Dive into code snippets and detailed video explanations to master this challenging problem. Enhance your ${searchParams.get(
+              "language"
+            )} skills today${
+              data.getTaskSingleDetails.video
+                ? " with accompanying video explanations"
+                : ""
+            }!`}
+            keywords={`${data.getTaskSingleDetails.taskName}, ${
+              searchParams.get("language") === "C  "
+                ? "C++"
+                : searchParams.get("language")
+            }, ${searchParams.get("course")}, ${searchParams.get(
+              "module"
+            )}, SoftUni, judge, icode example`}
           />
           <Card className="grow">
             <CardHeader className="justify-between">
@@ -129,7 +159,11 @@ export function CodeCard() {
               />
             </CardHeader>
             <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
-              <CodeSnippet code={data.getTaskSingleDetails.content} />
+              {project ? (
+                <CodeSnippet code={project} />
+              ) : (
+                <CodeSnippet code={data.getTaskSingleDetails.content} />
+              )}
             </CardBody>
             <CardFooter className="gap-3">
               <div className="flex gap-1">

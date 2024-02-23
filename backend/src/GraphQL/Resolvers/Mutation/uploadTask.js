@@ -23,7 +23,7 @@ const uploadTaskResolver = {
                         input.project = projectTreeGen;
                     } else {
                         return {
-                            message: 'Project upload failed. Provide main directory path.',
+                            message: 'Error Project upload failed. Provide main directory path.',
                             code: 400,
                         };
                     }

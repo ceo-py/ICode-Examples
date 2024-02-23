@@ -86,6 +86,7 @@ type TaskSingleDetails {
   taskId: String
   icon: String
   content: String
+  project: String
   like: Boolean
   likeCounter: Int
   follow: Boolean

@@ -8,6 +8,7 @@ export const TASK_DETAILS_QUERY = gql`
         follow
         followCounter
         content
+        project
         taskName
         taskId
         icon

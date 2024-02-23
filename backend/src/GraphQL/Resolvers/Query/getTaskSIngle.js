@@ -15,7 +15,7 @@ const getTaskSingleDetailsResolver = {
         getTaskSingleDetails: async (_, { input }, { res, req }) => {
             try {
                 const [taskId] = [input.id]
-                let [follow, like, comments, likeCounter, followCounter] = [true, true, [], 0, 0]
+                let [follow, like, comments, likeCounter, followCounter, codeOrProject] = [true, true, [], 0, 0, {}]
                 const taskLikes = await Likes.findOne({ id: taskId })
                 likeCounter = taskLikes.likes.length;
                 const cookieToken = req?.cookies?.token;
@@ -40,9 +40,6 @@ const getTaskSingleDetailsResolver = {
                 const userDetail = await UserDetail.findOne({ "id": result.id });
                 const findComments = await Comments.find({ "taskId": taskId }).sort({ createdAt: -1 });
 
-
-
-
                 if (findComments) {
                     const commentsData = await Promise.all(
                         findComments.map(async (x) => {
@@ -62,18 +59,8 @@ const getTaskSingleDetailsResolver = {
 
                 }
 
-
-
-                const codeContent = await getCodeContent(result.githubLink)
-
-                // if (projectTreeGen instanceof Error) {
-                //     return {
-                //         status: {
-                //             code: 500,
-                //             message: "Unsuccessful Fetch Task"
-                //         }
-                //     }
-                // }
+                result?.project ? codeOrProject.project = result.project : codeOrProject.content = await getCodeContent(result.githubLink)
+                
                 return {
                     video: result.videoLink,
                     follow,
@@ -81,7 +68,7 @@ const getTaskSingleDetailsResolver = {
                     like,
                     likeCounter,
                     userDetails: { id: user._id, username: user.username },
-                    content: codeContent,
+                    ...codeOrProject,
                     icon: userDetail.icon,
                     taskName: result.taskName,
                     taskId: taskId,
