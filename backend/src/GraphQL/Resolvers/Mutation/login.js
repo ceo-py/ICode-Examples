@@ -39,9 +39,9 @@ const loginResolver = {
         const token = jwt.sign(
           { userId: existingUser._id, username, icon: userDetail.icon },
           process.env.SECRET_KEY,
-          { expiresIn: '30d' }
+          { expiresIn: `${process.env.COOKIE_TOKEN_DAYS}d` }
         );
-        res.cookie('token', token, { expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), httpOnly: true, sameSite: 'None', secure: true });
+        res.cookie('token', token, { expires: new Date(Date.now() + Number(process.env.COOKIE_TOKEN_DAYS) * 24 * 60 * 60 * 1000), httpOnly: true, sameSite: 'None', secure: true });
 
         return {
           message: 'Login successful',
