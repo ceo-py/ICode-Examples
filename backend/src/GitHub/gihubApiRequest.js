@@ -54,7 +54,7 @@ const generateMultiFileDirectoryProject = async (url, data = {}) => {
             }
         }
 
-        return JSON.stringify(reorderKeyToEnd(data, 'files'));
+        return JSON.stringify(data);
     } catch (e) {
         console.error('generateMultiFileDirectoryProject Error:\n', e.message);
         return e;

@@ -20,6 +20,7 @@ import { NoResultFound } from "../NoResultFound/NoResultFound";
 import { numbersFormat } from "../../utils/numberFormat/numberFormat";
 import { linkIcons } from "../../utils/Icons/linkIcons";
 import { MetaTags } from "../MetaTags/MetaTags";
+import { parseNestedObjects } from "../../utils/jsonParseProject/jsonParseProject";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -46,7 +47,7 @@ export function CodeCard() {
 
   useEffect(() => {
     if (data?.getTaskSingleDetails?.project) {
-      setProject(JSON.parse(data?.getTaskSingleDetails?.project));
+      setProject(parseNestedObjects(JSON.parse(data?.getTaskSingleDetails?.project)));
     }
     if (!data?.getTaskSingleDetails?.comments) return;
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
