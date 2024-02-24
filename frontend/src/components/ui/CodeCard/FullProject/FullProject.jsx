@@ -9,11 +9,12 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { linkIcons } from "../../../utils/Icons/linkIcons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function FullProject({ project, setDirs, dirs }) {
   const [items, setItems] = useState([]);
   const [url, setUrl] = useState(null);
+  const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
@@ -22,8 +23,8 @@ export function FullProject({ project, setDirs, dirs }) {
   };
 
   const addCurrentDirToUrl = () => {
-    return dirs[0] ? `&dir=${dirs.join("-")}` : ""
-  }
+    return dirs[0] ? `&dir=${dirs.join("-")}` : "";
+  };
 
   const preViewsDir = () => {
     return {
@@ -66,7 +67,12 @@ export function FullProject({ project, setDirs, dirs }) {
   const showFileStructure = () => {
     let isDir = dirs[0];
     let current = isDir ? project : Object.keys(project);
-    dirs.forEach((key) => {
+    const directories = isDir
+      ? dirs
+      : searchParams.get("dir")
+      ? searchParams.get("dir").split("-")
+      : [];
+    directories.forEach((key) => {
       if (current && current.hasOwnProperty(key)) {
         current = current[key];
       }
@@ -109,8 +115,26 @@ export function FullProject({ project, setDirs, dirs }) {
   useEffect(() => {
     const { pathname, search } = window.location;
     const currentURL = pathname + search;
-    setUrl(currentURL);
+    const startingDir = "&dir=";
+    const startingFile = "&file=";
+    const urlDir = searchParams.get("dir");
+    const urlFile = searchParams.get("file");
+    setUrl(
+      currentURL
+        .replace(startingDir + urlDir, "")
+        .replace(startingFile + urlFile, "")
+    );
+    if (urlDir) setDirs(urlDir.split("-"));
   }, []);
+
+  useEffect(() => {
+    if (!searchParams.get("file")) return;
+    const directories = searchParams.get("dir")
+      ? searchParams.get("dir").split("-")
+      : [];
+    console.log(searchParams.get("file"));
+    console.log(directories);
+  }, [searchParams.get("file")]);
 
   return (
     <Table

@@ -2,7 +2,6 @@ const { Octokit } = require("@octokit/rest");
 const dotenv = require('dotenv');
 const path = require('path');
 const syntaxHighlight = require("../utils/syntaxHighlight");
-const reorderKeyToEnd = require("../utils/objectKeyMoveToLastPos");
 
 
 const pathToEnvFile = path.resolve(__dirname, '../../../.env');

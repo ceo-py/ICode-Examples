@@ -13,7 +13,7 @@ export function DividerDir({ dirs, setDirs }) {
                 : ""
             }`}
             onClick={() =>
-              i < dirs.length - 1 ? setDirs(dirs.slice(0, i)) : null
+              i < dirs.length - 1 ? setDirs(dirs.slice(0, i + 1)) : null
             }
           >
             {x}
