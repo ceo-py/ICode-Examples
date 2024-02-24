@@ -9,6 +9,8 @@ export function linkIcons(name) {
     settings: "https://www.svgrepo.com/show/418153/setting-2.svg",
     edit: "https://www.svgrepo.com/show/418007/edit-1.svg",
     check: "https://www.svgrepo.com/show/418145/check.svg",
+    folder: "https://www.svgrepo.com/show/418076/folder.svg",
+    file: "https://www.svgrepo.com/show/418014/programming.svg",
   };
   return linkIconsFull[name];
 }
