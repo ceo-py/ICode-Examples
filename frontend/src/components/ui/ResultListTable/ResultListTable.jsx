@@ -124,80 +124,80 @@ export function ResultListTable({
           description={`Find solutions to the '${searchParams.get(
             "query"
           )}' problem in our comprehensive collection of coding challenges from SoftUni judge on iCode Example. Dive into code examples and master this coding challenge.`}
-          keywords={`icode example, softuni, judge, ${searchParams.get("query")}`}
+          keywords={`icode example, softuni, judge, ${searchParams.get(
+            "query"
+          )}`}
         />
       )}
       {loading ? (
         <LoadingCircle />
       ) : (
-        <>
-          <Table
-            aria-label="table with client side pagination"
-            onRowAction={(e) => taskDetails(e)}
-            selectionMode="single"
-            topContent={
-              searchMenu ? null : (
-                <TopContentInTable
-                  totalTasks={searchResults.length}
-                  setResultsPerPage={setResultsPerPage}
-                  results={results}
-                  setSearchResults={setSearchResults}
-                  searchResults={searchResults}
-                  showDropDownMenu={showDropDownMenu}
-                  filterValue={filterValue}
-                  setFilterValue={setFilterValue}
+        <Table
+          aria-label="table with client side pagination"
+          onRowAction={(e) => taskDetails(e)}
+          selectionMode="single"
+          topContent={
+            searchMenu ? null : (
+              <TopContentInTable
+                totalTasks={searchResults.length}
+                setResultsPerPage={setResultsPerPage}
+                results={results}
+                setSearchResults={setSearchResults}
+                searchResults={searchResults}
+                showDropDownMenu={showDropDownMenu}
+                filterValue={filterValue}
+                setFilterValue={setFilterValue}
+              />
+            )
+          }
+          bottomContent={
+            !hidePagination && (
+              <div className="flex w-full justify-center">
+                <Pagination
+                  isCompact
+                  showControls
+                  showShadow
+                  color="default"
+                  page={page}
+                  total={pages}
+                  onChange={(page) => setPage(page)}
                 />
-              )
-            }
-            bottomContent={
-              !hidePagination && (
-                <div className="flex w-full justify-center">
-                  <Pagination
-                    isCompact
-                    showControls
-                    showShadow
-                    color="default"
-                    page={page}
-                    total={pages}
-                    onChange={(page) => setPage(page)}
-                  />
-                </div>
-              )
-            }
-            classNames={{
-              wrapper: "justify-start",
-            }}
-          >
-            <TableHeader>
-              <TableColumn scope="col" key="taskName" role="task name">
-                TASK NAME
-              </TableColumn>
-              <TableColumn scope="col" key="language" role="task language">
-                LANGUAGE
-              </TableColumn>
-              <TableColumn
-                scope="col"
-                key="codeAndVIdeo"
-                role="task code and/or video"
-              >
-                CODE & VIDEO
-              </TableColumn>
-            </TableHeader>
-            <TableBody items={items} emptyContent={"No task solutions found"}>
-              {(item) => (
-                <TableRow key={item._id}>
-                  {(columnKey) => (
-                    <TableCell className="cursor-pointer">
-                      {columnKey === "taskName"
-                        ? DOMPurify.sanitize(tableValues(columnKey, item))
-                        : tableValues(columnKey, item)}
-                    </TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </>
+              </div>
+            )
+          }
+          classNames={{
+            wrapper: "justify-start",
+          }}
+        >
+          <TableHeader>
+            <TableColumn scope="col" key="taskName" role="task name">
+              TASK NAME
+            </TableColumn>
+            <TableColumn scope="col" key="language" role="task language">
+              LANGUAGE
+            </TableColumn>
+            <TableColumn
+              scope="col"
+              key="codeAndVIdeo"
+              role="task code and/or video"
+            >
+              CODE & VIDEO
+            </TableColumn>
+          </TableHeader>
+          <TableBody items={items} emptyContent={"No task solutions found"}>
+            {(item) => (
+              <TableRow key={item._id}>
+                {(columnKey) => (
+                  <TableCell className="cursor-pointer">
+                    {columnKey === "taskName"
+                      ? DOMPurify.sanitize(tableValues(columnKey, item))
+                      : tableValues(columnKey, item)}
+                  </TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       )}
     </>
   );

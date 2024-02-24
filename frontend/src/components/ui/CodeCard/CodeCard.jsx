@@ -21,6 +21,8 @@ import { numbersFormat } from "../../utils/numberFormat/numberFormat";
 import { linkIcons } from "../../utils/Icons/linkIcons";
 import { MetaTags } from "../MetaTags/MetaTags";
 import { parseNestedObjects } from "../../utils/jsonParseProject/jsonParseProject";
+import { DividerDir } from "./FullProject/DividerDir/DividerDir";
+import { FullProject } from "./FullProject/FullProject";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -36,6 +38,7 @@ export function CodeCard() {
 
   const [commentsList, setCommentsList] = useState([]);
   const [project, setProject] = useState();
+  const [dirs, setDirs] = useState([]);
 
   const navigateUser = (username) => {
     navigate(`/user?name=${username}`);
@@ -47,12 +50,13 @@ export function CodeCard() {
 
   useEffect(() => {
     if (data?.getTaskSingleDetails?.project) {
-      setProject(parseNestedObjects(JSON.parse(data?.getTaskSingleDetails?.project)));
+      setProject(
+        parseNestedObjects(JSON.parse(data?.getTaskSingleDetails?.project))
+      );
     }
     if (!data?.getTaskSingleDetails?.comments) return;
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
   }, [data]);
-  console.log(project);
   return (
     <>
       {loading ? (
@@ -141,6 +145,7 @@ export function CodeCard() {
                       />
                     </Tooltip>
                   )}
+                  {project && <DividerDir dirs={dirs} />}
                 </div>
               </div>
               <CardButtons
@@ -159,13 +164,15 @@ export function CodeCard() {
                 navigateEditTask={navigateEditTask}
               />
             </CardHeader>
-            <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
-              {project ? (
-                <CodeSnippet code={project} />
-              ) : (
+
+            {project ? (
+              <FullProject project={project} setDirs={setDirs} dirs={dirs} />
+            ) : (
+              <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
                 <CodeSnippet code={data.getTaskSingleDetails.content} />
-              )}
-            </CardBody>
+              </CardBody>
+            )}
+
             <CardFooter className="gap-3">
               <div className="flex gap-1">
                 <p className="font-bold text-default-800 text-large">
