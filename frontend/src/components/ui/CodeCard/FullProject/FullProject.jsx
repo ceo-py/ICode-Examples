@@ -9,9 +9,21 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { linkIcons } from "../../../utils/Icons/linkIcons";
+import { useNavigate } from "react-router-dom";
 
 export function FullProject({ project, setDirs, dirs }) {
   const [items, setItems] = useState([]);
+  const [url, setUrl] = useState(null);
+
+  const navigate = useNavigate();
+
+  const taskDetails = (task) => {
+    navigate(`${url}${addCurrentDirToUrl()}&file=${task.name}`);
+  };
+
+  const addCurrentDirToUrl = () => {
+    return dirs[0] ? `&dir=${dirs.join("-")}` : ""
+  }
 
   const preViewsDir = () => {
     return {
@@ -25,7 +37,7 @@ export function FullProject({ project, setDirs, dirs }) {
     const keys = Object.keys(obj);
     let filesAndDir = [];
     if (obj?.files) {
-      const files = obj?.files || [];
+      const files = obj.files || [];
       const currentDirs = Object.keys(obj).filter((x) => x !== "files");
       obj = [...currentDirs, ...files];
     }
@@ -35,6 +47,7 @@ export function FullProject({ project, setDirs, dirs }) {
         ? obj.map((x) => ({
             name: x?.fileName ? x.fileName : x,
             key: crypto.randomUUID(),
+            url: x.filePath,
             type: x?.fileName ? "file" : "dir",
           }))
         : [];
@@ -69,18 +82,35 @@ export function FullProject({ project, setDirs, dirs }) {
     setItems(current.filter((x) => x.name !== "files"));
   };
 
+  const navigateFilesAndDirs = (x) => {
+    if (x.type === "file") {
+      taskDetails(x);
+      return;
+    }
+    navigate(url);
+    addDirectory(x);
+  };
+
   const addDirectory = (dir) => {
     if (dir.type !== "dir") return;
     if (dir.name === "..") {
       setDirs(dirs.slice(0, -1));
       return;
     }
-    setDirs([...dirs, dir.name]);
+    const currentDirPath = [...dirs, dir.name];
+    setDirs(currentDirPath);
   };
 
   useEffect(() => {
     showFileStructure();
+    if (url) navigate(url + addCurrentDirToUrl());
   }, [dirs]);
+
+  useEffect(() => {
+    const { pathname, search } = window.location;
+    const currentURL = pathname + search;
+    setUrl(currentURL);
+  }, []);
 
   return (
     <Table
@@ -99,7 +129,7 @@ export function FullProject({ project, setDirs, dirs }) {
         {(item) => (
           <TableRow key={crypto.randomUUID()} className="cursor-pointer">
             <TableCell
-              onClick={() => addDirectory(item)}
+              onClick={() => navigateFilesAndDirs(item)}
               className="flex gap-2 "
             >
               <Avatar
