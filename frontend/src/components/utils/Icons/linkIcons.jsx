@@ -10,7 +10,7 @@ export function linkIcons(name) {
     edit: "https://www.svgrepo.com/show/418007/edit-1.svg",
     check: "https://www.svgrepo.com/show/418145/check.svg",
     folder: "https://www.svgrepo.com/show/418076/folder.svg",
-    file: "https://www.svgrepo.com/show/418014/programming.svg",
+    file: "https://www.svgrepo.com/show/418047/arrow-right-1.svg",
   };
   return linkIconsFull[name];
 }
