@@ -24,69 +24,31 @@ export function FullProject({ project, setDirs, dirs }) {
   const showFiles = (obj) => {
     const keys = Object.keys(obj);
     let filesAndDir = [];
-    let modifiedObj = obj;
-  
     if (obj?.files) {
       const files = obj?.files || [];
       const currentDirs = Object.keys(obj).filter((x) => x !== "files");
-      modifiedObj = [...currentDirs, ...files];
+      obj = [...currentDirs, ...files];
     }
 
-    const determineItemType = (x) => {
-      if (x?.fileName) {
-        return "file";
-      } else {
-        return "dir";
-      }
-    };
-
-    if (Array.isArray(modifiedObj)) {
-      filesAndDir = modifiedObj.map((x, index) => ({
-        name: x?.fileName ? x.fileName : x,
-        key: index,
-        type: determineItemType(x),
-      }));
-    } else if (typeof modifiedObj === "object") {
-      filesAndDir = Object.keys(modifiedObj).map((x) => ({
+    try {
+      filesAndDir = keys[0]
+        ? obj.map((x) => ({
+            name: x?.fileName ? x.fileName : x,
+            key: crypto.randomUUID(),
+            type: x?.fileName ? "file" : "dir",
+          }))
+        : [];
+    } catch {
+      filesAndDir = Object.keys(obj).map((x) => ({
         name: x,
-        key: x,
+        key: crypto.randomUUID(),
         type: "dir",
       }));
     }
-
     const output = [];
-    dirs.length ? output.push(preViewsDir()) : null;
+    dirs[0] ? output.push(preViewsDir()) : null;
     return [...output, ...filesAndDir];
   };
-
-  // const showFiles = (obj) => {
-  //   const keys = Object.keys(obj);
-  //   let filesAndDir = [];
-  //   if (obj?.files) {
-  //     const files = obj?.files || [];
-  //     const currentDirs = Object.keys(obj).filter((x) => x !== "files");
-  //     obj = [...currentDirs, ...files];
-  //   }
-
-  //   try {
-  //     filesAndDir = keys[0]
-  //       ? obj.map((x) => ({
-  //           name: x?.fileName ? x.fileName : x,
-  //           key: crypto.randomUUID(),
-  //           type: x?.fileName ? "file" : "dir",
-  //         }))
-  //       : [];
-  //   } catch {
-  //     filesAndDir = Object.keys(obj).map((x) => ({
-  //       name: x,
-  //       key: crypto.randomUUID(),
-  //       type: "dir",
-  //     }));
-  //   }
-  //   const output = [];
-  //   dirs[0] ? output.push(preViewsDir()) : null;
-  //   return [...output, ...filesAndDir];
-  // };
 
   const showFileStructure = () => {
     let isDir = dirs[0];

@@ -50,15 +50,9 @@ export function CodeCard() {
 
   useEffect(() => {
     if (data?.getTaskSingleDetails?.project) {
-      let firstTry = parseNestedObjects(
-        JSON.parse(data.getTaskSingleDetails.project)
+      setProject(
+        parseNestedObjects(JSON.parse(data.getTaskSingleDetails.project))
       );
-      let previousTry;
-      do {
-        previousTry = firstTry;
-        firstTry = parseNestedObjects(firstTry);
-      } while (previousTry !== firstTry);
-      setProject(firstTry);
     }
     if (!data?.getTaskSingleDetails?.comments) return;
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
