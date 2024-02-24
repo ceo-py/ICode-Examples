@@ -7,8 +7,14 @@ export function DividerDir({ dirs, setDirs }) {
       {dirs.map((x, i) => (
         <React.Fragment key={crypto.randomUUID()}>
           <div
-            className={`${i < dirs.length - 1 ? "cursor-pointer hover:underline text-primary" : ""}`}
-            onClick={() => setDirs(dirs.slice(0, i))}
+            className={`${
+              i < dirs.length - 1
+                ? "cursor-pointer hover:underline text-primary"
+                : ""
+            }`}
+            onClick={() =>
+              i < dirs.length - 1 ? setDirs(dirs.slice(0, i)) : null
+            }
           >
             {x}
           </div>
