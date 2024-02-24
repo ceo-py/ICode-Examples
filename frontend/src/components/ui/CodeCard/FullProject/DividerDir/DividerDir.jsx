@@ -1,7 +1,7 @@
 import { Divider } from "@nextui-org/react";
 import React from "react";
 
-export function DividerDir({ dirs, setDirs }) {
+export function DividerDir({ dirs, setDirs, navigate }) {
   return (
     <div className="flex h-5 items-center space-x-2 text-small">
       {dirs.map((x, i) => (
@@ -12,9 +12,14 @@ export function DividerDir({ dirs, setDirs }) {
                 ? "cursor-pointer hover:underline text-primary"
                 : ""
             }`}
-            onClick={() =>
-              i < dirs.length - 1 ? setDirs(dirs.slice(0, i + 1)) : null
-            }
+            onClick={() => {
+              if (i < dirs.length - 1) {
+                const newDirs = dirs.slice(0, i + 1);
+                const urlWithoutFileParam = window.location.search.split("&file=")[0];
+                navigate(urlWithoutFileParam);
+                setDirs(newDirs);
+              }
+            }}
           >
             {x}
           </div>

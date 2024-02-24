@@ -9,17 +9,17 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { linkIcons } from "../../../utils/Icons/linkIcons";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-export function FullProject({ project, setDirs, dirs }) {
+export function FullProject({ project, setDirs, dirs, navigate }) {
   const [items, setItems] = useState([]);
   const [url, setUrl] = useState(null);
   const [searchParams] = useSearchParams();
 
-  const navigate = useNavigate();
 
   const taskDetails = (task) => {
     navigate(`${url}${addCurrentDirToUrl()}&file=${task.name}`);
+    setDirs((currentItems) => [...currentItems, task.name]);
   };
 
   const addCurrentDirToUrl = () => {
@@ -61,6 +61,11 @@ export function FullProject({ project, setDirs, dirs }) {
     }
     const output = [];
     dirs[0] ? output.push(preViewsDir()) : null;
+
+    const foundFile = filesAndDir.find(
+      (x) => x.name === searchParams.get("file")
+    );
+    console.log("on load data ", foundFile);
     return [...output, ...filesAndDir];
   };
 
@@ -109,32 +114,24 @@ export function FullProject({ project, setDirs, dirs }) {
 
   useEffect(() => {
     showFileStructure();
-    if (url) navigate(url + addCurrentDirToUrl());
+    const file = searchParams.get("file")
+      ? `&file=${searchParams.get("file")}`
+      : "";
+    if (url) navigate(url + addCurrentDirToUrl() + file);
   }, [dirs]);
 
   useEffect(() => {
-    const { pathname, search } = window.location;
-    const currentURL = pathname + search;
-    const startingDir = "&dir=";
-    const startingFile = "&file=";
+    const { search } = window.location;
+    const searchParams = new URLSearchParams(search);
     const urlDir = searchParams.get("dir");
     const urlFile = searchParams.get("file");
-    setUrl(
-      currentURL
-        .replace(startingDir + urlDir, "")
-        .replace(startingFile + urlFile, "")
-    );
-    if (urlDir) setDirs(urlDir.split("-"));
-  }, []);
+    const dirs = urlDir ? urlDir.split("-") : [];
 
-  useEffect(() => {
-    if (!searchParams.get("file")) return;
-    const directories = searchParams.get("dir")
-      ? searchParams.get("dir").split("-")
-      : [];
-    console.log(searchParams.get("file"));
-    console.log(directories);
-  }, [searchParams.get("file")]);
+    setUrl(
+      search.replace(`&dir=${urlDir}`, "").replace(`&file=${urlFile}`, "")
+    );
+    setDirs(dirs);
+  }, []);
 
   return (
     <Table
