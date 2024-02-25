@@ -22,7 +22,7 @@ export function CardButtonsDropDownMenu({
   navigateEditTask,
 }) {
   return (
-    <Dropdown backdrop="blur">
+    <Dropdown>
       <DropdownTrigger>
         <Button
           className="min-w-unit-10 h-unit-10 border-default-200 items-center"
