@@ -199,11 +199,11 @@ export function EditTask() {
                     Easily edit your task.
                   </p>
                   <p
-                    className={
+                    className={`${
                       getFilledReqFields() === 5
                         ? "text-green-500"
                         : "text-red-500"
-                    }
+                    } text-center`}
                   >
                     {`**To edit your task solution, kindly complete 5 / ${getFilledReqFields()} required fields as indicated.`}
                   </p>

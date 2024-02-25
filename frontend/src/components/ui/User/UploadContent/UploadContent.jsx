@@ -138,19 +138,19 @@ export function UploadContent() {
         <CardBody className="px-3 py-10 text-small text-default-400 border-t-1 border-b-1">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2 items-center">
-              <p className="flex text-default-500 text-large justify-center">
+              <p className="flex text-default-500 text-large justify-center text-center">
                 Easily upload your task by first selecting your language,
                 course, and module through our select menu above.
               </p>
-              <p>
+              <p className="text-center">
                 *Share your solution visually—include a video explanation and/or
                 upload the task code itself to offer a well-rounded perspective
                 of your work.
               </p>
               <p
-                className={
+                className={`${
                   getFilledReqFields() === 5 ? "text-green-500" : "text-red-500"
-                }
+                } text-center`}
               >
                 {`**To upload your task solution, kindly complete 5 / ${getFilledReqFields()} required fields as indicated.`}
               </p>
