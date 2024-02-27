@@ -31,7 +31,6 @@ export function NavMenu() {
         <NavbarContent>
           <SearchInput />
           <MenuSwitch selected={selected} setSelected={setSelected} />
-          {/* <CodeVideoButtons /> */}
         </NavbarContent>
         <NavbarContent data-justify="between">
           {!state.isAuthenticated ? <LogIn /> : <UserMenu />}

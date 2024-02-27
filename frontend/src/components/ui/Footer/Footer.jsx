@@ -19,7 +19,9 @@ export function Footer() {
       <div className="flex max-w-[1534]">
         <ul className="flex gap-6 list-none gap-2 items-center">
           <li className="flex">
-            <LogoText size={"h-6"} hideDescription={true} />
+            {selectedThemeSignal.value !== "dark" && (
+              <LogoText size={"h-6"} hideDescription={true} />
+            )}
             <div className="text-center">
               &copy; {year.getFullYear()} Copyright iCode Example
             </div>
