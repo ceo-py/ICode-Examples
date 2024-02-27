@@ -16,11 +16,15 @@ import Password from "./components/forms/Recover/Account/Password";
 import Account from "./components/forms/Recover/Account/Account";
 import { MenuModuleResult } from "./components/ui/MenuModuleResult/MenuModuleResult";
 import About from "./components/ui/About/About";
-
+import { selectedThemeSignal } from "./components/ui/NavMenu/ThemeSwitch/ThemeSignal";
 
 function App() {
   return (
-    <div className="relative min-h-screen">
+    <div
+      className={`${
+        selectedThemeSignal.value === "dark" ? "dark" : "light"
+      } theme-mode relative min-h-screen light text-foreground bg-background`}
+    >
       <NavMenu />
       <div className="flex mt-6 flex-col w-full h-auto items-center justify-center">
         <div className="flex mb-12 w-full flex-row flex-wrap items-center justify-between max-w-[1536px]">

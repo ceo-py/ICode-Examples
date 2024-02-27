@@ -22,9 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ShareProvider>
           <React.StrictMode>
             <NextUIProvider>
-              <main className="dark text-foreground bg-background">
-                <App />
-              </main>
+              <App />
             </NextUIProvider>
           </React.StrictMode>
         </ShareProvider>

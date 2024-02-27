@@ -1,6 +1,7 @@
 import { Link } from "@nextui-org/react";
 import { LogoText } from "../NavMenu/LogoText/LogoText";
 import { useNavigate } from "react-router-dom";
+import { selectedThemeSignal } from "../NavMenu/ThemeSwitch/ThemeSignal";
 
 export function Footer() {
   const navigate = useNavigate();
@@ -10,7 +11,11 @@ export function Footer() {
   };
   const year = new Date();
   return (
-    <footer className="hidden custom-sm:flex absolute bottom-0 h-6 gap-6 w-full h-auto items-center justify-center border-t border-divider backdrop-blur-lg backdrop-saturate-150 bg-white">
+    <footer
+      className={`${
+        selectedThemeSignal.value === "dark" ? "dark" : "light"
+      } hidden custom-sm:flex absolute bottom-0 h-6 gap-6 w-full h-auto items-center justify-center border-t border-divider backdrop-blur-lg backdrop-saturate-150`}
+    >
       <div className="flex max-w-[1534]">
         <ul className="flex gap-6 list-none gap-2 items-center">
           <li className="flex">
@@ -29,7 +34,10 @@ export function Footer() {
               iTask Discord Bot
             </Link>
           </li>
-          <li className="cursor-pointer text-center" onClick={() => navigateTo()}>
+          <li
+            className="cursor-pointer text-center"
+            onClick={() => navigateTo()}
+          >
             About
           </li>
         </ul>
