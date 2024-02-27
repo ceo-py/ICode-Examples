@@ -23,7 +23,7 @@ function App() {
     <div
       className={`${
         selectedThemeSignal.value === "dark" ? "dark" : "light"
-      } relative min-h-screen light text-foreground bg-background`}
+      } relative min-h-screen text-foreground bg-background`}
     >
       <NavMenu />
       <div className="flex mt-6 flex-col w-full h-auto items-center justify-center">

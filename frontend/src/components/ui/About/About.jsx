@@ -1,5 +1,6 @@
 import { Accordion, AccordionItem, Image, Link } from "@nextui-org/react";
 import { MetaTags } from "../MetaTags/MetaTags";
+import { selectedThemeSignal } from "../NavMenu/ThemeSwitch/ThemeSignal";
 
 export default function About() {
   const discordBotLink = (
@@ -21,11 +22,13 @@ export default function About() {
           aria-label="About"
           title="About"
           startContent={
-            <Image
-              width={200}
-              alt="iCode Example Picture"
-              src="assets/MetaPic.png"
-            />
+            selectedThemeSignal.value !== "dark" && (
+              <Image
+                width={200}
+                alt="iCode Example Picture"
+                src="assets/MetaPic.png"
+              />
+            )
           }
         >
           Welcome to iCode Example, your go-to destination for comprehensive
@@ -41,7 +44,8 @@ export default function About() {
         >
           We understand that the coding landscape is vast and diverse. That's
           why iCode Example supports a wide range of programming languages,
-          including: Python, C#, C++, JavaScript (JS), Java, HTML, CSS and MSSQL.
+          including: Python, C#, C++, JavaScript (JS), Java, HTML, CSS and
+          MSSQL.
         </AccordionItem>
         <AccordionItem key="3" aria-label="Content" title="Rich Content">
           Our solutions not only include the code itself but also offer video

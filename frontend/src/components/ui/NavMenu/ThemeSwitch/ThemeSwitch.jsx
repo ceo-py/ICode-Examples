@@ -5,6 +5,7 @@ import { selectedThemeSignal } from "./ThemeSignal";
 
 export default function ThemeSwitch() {
   const changeThemeMode = (mode) => {
+    document.documentElement.setAttribute("class", mode ? "dark" : "light");
     selectedThemeSignal.value = mode ? "dark" : "light";
   };
 
