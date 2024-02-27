@@ -104,9 +104,9 @@ export function EditTask() {
   };
 
   const handleUserUpdate = async (userData) => {
-    const isValid = await checkValidGithubAddress(userData.github);
     setUpdateMessage("Task details updated successfully");
-    if (!isValid) {
+    const isValid = await checkValidGithubAddress(userData.github);
+    if (!isValid && inputFields.github !== data.getTaskDetailsForUpdate.githubLink) {
       setUpdateMessage("Error provided GitHub URL seems to be invalid.");
       resetMessage();
       return;
