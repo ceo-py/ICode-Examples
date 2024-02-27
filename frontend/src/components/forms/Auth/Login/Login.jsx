@@ -2,7 +2,7 @@ import { Input, Link, Button } from "@nextui-org/react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../../../graphql/mutations/loginMutation";
 import { useState } from "react";
-import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useAuth } from "../../../../ContextGlobal/AuthContext";
 import serverError from "../../../utils/serverError/serverError";
 import { useNavigate } from "react-router-dom";
 import { MetaTags } from "../../../ui/MetaTags/MetaTags";

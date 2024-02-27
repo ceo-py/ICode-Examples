@@ -1,4 +1,4 @@
-import { useShare } from "../../../../MenuContext/MenuContext";
+import { useShare } from "../../../../ContextGlobal/MenuContext";
 import { selectedCourseSignal } from "../../SelectMenu/SelectLanguage/selectMenuSignal";
 import { SelectMenu } from "../../SelectMenu/SelectMenu";
 import { useEffect } from "react";

@@ -1,4 +1,4 @@
-import { useAuth } from "../AuthContext/AuthContext";
+import { useAuth } from "../ContextGlobal/AuthContext";
 
 const ProtectedRoute = ({ authenticatedElement, unauthenticatedElement }) => {
   const { state } = useAuth();

@@ -1,6 +1,6 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import DOMPurify from "dompurify";
-import { useShare } from "../../../../MenuContext/MenuContext";
+import { useShare } from "../../../../ContextGlobal/MenuContext";
 
 export function SelectModule({ menu }) {
   const { setShare } = useShare();

@@ -1,6 +1,6 @@
 import { Avatar, AvatarGroup } from "@nextui-org/react";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
-import { useAuth } from "../../../../../AuthContext/AuthContext";
+import { useAuth } from "../../../../../ContextGlobal/AuthContext";
 import { FOLLOW_USER_MUTATION } from "../../../../../graphql/mutations/followUser";
 import { useMutation } from "@apollo/client";
 import serverError from "../../../../utils/serverError/serverError";

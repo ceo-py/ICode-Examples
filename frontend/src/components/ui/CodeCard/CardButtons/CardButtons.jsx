@@ -5,7 +5,7 @@ import { CardReportBtnModal } from "./CardReportBtnModal/CardReportBtnModal";
 import { LIKE_TASK_MUTATION } from "../../../../graphql/mutations/likeTask";
 import { useMutation } from "@apollo/client";
 import { FOLLOW_USER_MUTATION } from "../../../../graphql/mutations/followUser";
-import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useAuth } from "../../../../ContextGlobal/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { EditTaskBtn } from "./EditTaskBtn/EditTaskBtn";
 import serverError from "../../../utils/serverError/serverError";

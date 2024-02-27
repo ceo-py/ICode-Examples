@@ -5,7 +5,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useAuth } from "../../../../ContextGlobal/AuthContext";
 import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";

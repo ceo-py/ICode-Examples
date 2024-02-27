@@ -1,7 +1,7 @@
 import { CardHeader, Avatar, Textarea, Button } from "@nextui-org/react";
 import { useSignal } from "@preact/signals-react";
 import { CREATE_COMMENT_MUTATION } from "../../../../graphql/mutations/commentCreateMutation";
-import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useAuth } from "../../../../ContextGlobal/AuthContext";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import serverError from "../../../utils/serverError/serverError";

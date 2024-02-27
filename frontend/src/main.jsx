@@ -5,9 +5,9 @@ import { NextUIProvider } from "@nextui-org/react";
 import "./index.css";
 import { ApolloProvider } from "@apollo/client";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { AuthProvider } from "./AuthContext/AuthContext";
+import { AuthProvider } from "./ContextGlobal/AuthContext.jsx";
 import { BrowserRouter } from "react-router-dom";
-import { ShareProvider } from "./MenuContext/MenuContext.jsx";
+import { ShareProvider } from "./ContextGlobal/MenuContext.jsx";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
@@ -22,7 +22,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ShareProvider>
           <React.StrictMode>
             <NextUIProvider>
-              <App />
+              <main className="dark text-foreground bg-background">
+                <App />
+              </main>
             </NextUIProvider>
           </React.StrictMode>
         </ShareProvider>

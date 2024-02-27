@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 
 import { useState } from "react";
 import { SIGNUP_MUTATION } from "../../../../graphql/mutations/signUpMutation";
-import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useAuth } from "../../../../ContextGlobal/AuthContext";
 import serverError from "../../../utils/serverError/serverError";
 import { passwordValidation } from "../../../utils/passwordValidation/passwordValidation";
 import { usernameValidation } from "../../../utils/usernameValidation/usernameValidation";

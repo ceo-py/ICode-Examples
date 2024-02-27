@@ -9,7 +9,7 @@ import {
 import { USER_DELETE_MUTATION } from "../../../../graphql/mutations/userDeleteMutaion";
 import { useMutation } from "@apollo/client";
 import { LOGOUT_MUTATION } from "../../../../graphql/mutations/logOutMutation";
-import { useAuth } from "../../../../AuthContext/AuthContext";
+import { useAuth } from "../../../../ContextGlobal/AuthContext";
 import serverError from "../../../utils/serverError/serverError";
 
 export default function UserProfileDeleteModal({ isOpen, onOpenChange }) {

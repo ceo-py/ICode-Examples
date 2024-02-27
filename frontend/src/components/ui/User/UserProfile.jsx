@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { USER_UPDATE_MUTATION } from "../../../graphql/mutations/userUpdateDetails";
 import { LoadingCircle } from "../LoadingCIrcle/LoadingCircle";
 import UserProfileDeleteModal from "./UserProfileDeleteModal/UserProfileDeleteModal";
-import { useAuth } from "../../../AuthContext/AuthContext";
+import { useAuth } from "../../../ContextGlobal/AuthContext";
 import serverError from "../../utils/serverError/serverError";
 import { isValidUrl } from "../../utils/URLInputValidation/isValidUrl";
 import { isValidEmail } from "../../utils/emailValidation/isValidEmail";
