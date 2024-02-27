@@ -10,12 +10,31 @@ import {
 import { useEffect, useState } from "react";
 import { linkIcons } from "../../../utils/Icons/linkIcons";
 import { useSearchParams } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
+import { PROJECT_FILE_QUERY } from "../../../../graphql/queries/getProjectFile";
+import serverError from "../../../utils/serverError/serverError";
 
 export function FullProject({ project, setDirs, dirs, navigate }) {
+  const [projectFile, { loading, data }] = useLazyQuery(PROJECT_FILE_QUERY);
   const [items, setItems] = useState([]);
+  const [fileUrl, setFileUrl] = useState(null);
   const [url, setUrl] = useState(null);
   const [searchParams] = useSearchParams();
 
+  useEffect(() => {
+    if (!fileUrl) return;
+    try {
+      projectFile({
+        variables: {
+          input: {
+            url: fileUrl,
+          },
+        },
+      });
+    } catch (error) {
+      serverError();
+    }
+  }, [fileUrl]);
 
   const taskDetails = (task) => {
     navigate(`${url}${addCurrentDirToUrl()}&file=${task.name}`);
@@ -65,7 +84,11 @@ export function FullProject({ project, setDirs, dirs, navigate }) {
     const foundFile = filesAndDir.find(
       (x) => x.name === searchParams.get("file")
     );
-    console.log("on load data ", foundFile);
+
+    if (foundFile) {
+      setFileUrl(foundFile.url);
+    }
+
     return [...output, ...filesAndDir];
   };
 
@@ -132,6 +155,8 @@ export function FullProject({ project, setDirs, dirs, navigate }) {
     );
     setDirs(dirs);
   }, []);
+
+  console.log(data);
 
   return (
     <Table
