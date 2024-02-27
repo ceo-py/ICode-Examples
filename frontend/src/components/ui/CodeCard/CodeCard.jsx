@@ -145,16 +145,9 @@ export function CodeCard() {
                       />
                     </Tooltip>
                   )}
-                  {project && (
-                    <DividerDir
-                      dirs={dirs}
-                      setDirs={setDirs}
-                      navigate={navigate}
-                      taskName={data.getTaskSingleDetails.taskName}
-                    />
-                  )}
                 </div>
               </div>
+
               <CardButtons
                 isOpen={isOpen}
                 onOpen={onOpen}
@@ -171,6 +164,16 @@ export function CodeCard() {
                 navigateEditTask={navigateEditTask}
               />
             </CardHeader>
+            {project && (
+              <CardHeader className="justify-between">
+                <DividerDir
+                  dirs={dirs}
+                  setDirs={setDirs}
+                  navigate={navigate}
+                  taskName={data.getTaskSingleDetails.taskName}
+                />
+              </CardHeader>
+            )}
 
             {project ? (
               <FullProject
