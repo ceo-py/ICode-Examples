@@ -156,30 +156,28 @@ export function UploadContent() {
               </p>
               <div className="flex flex-col max-w-[600px] w-full items-end m-6 md:mb-0 gap-6">
                 {uploadFields.map((o) => (
-                  <>
-                    <Input
-                      key={o.source}
-                      type={o.source}
-                      label={`${capitalizeWord(o.source)}`}
-                      labelPlacement="outside"
-                      description={o.description}
-                      isRequired={o.required}
-                      startContent={
-                        <div className="pointer-events-none flex items-center">
-                          <span className="text-default-400 text-small">
-                            {o?.urlStart}
-                          </span>
-                        </div>
-                      }
-                      endContent={
-                        <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
-                      }
-                      value={DOMPurify.sanitize(inputFields[o.source])}
-                      onValueChange={(v) =>
-                        setInputFields({ ...inputFields, [o.source]: v })
-                      }
-                    />
-                  </>
+                  <Input
+                    key={o.source}
+                    type={o.source}
+                    label={`${capitalizeWord(o.source)}`}
+                    labelPlacement="outside"
+                    description={o.description}
+                    isRequired={o.required}
+                    startContent={
+                      <div className="pointer-events-none flex items-center">
+                        <span className="text-default-400 text-small">
+                          {o?.urlStart}
+                        </span>
+                      </div>
+                    }
+                    endContent={
+                      <DropDownMenuIcon alt={o.source} src={o?.iconUrl} />
+                    }
+                    value={DOMPurify.sanitize(inputFields[o.source])}
+                    onValueChange={(v) =>
+                      setInputFields({ ...inputFields, [o.source]: v })
+                    }
+                  />
                 ))}
               </div>
             </div>
