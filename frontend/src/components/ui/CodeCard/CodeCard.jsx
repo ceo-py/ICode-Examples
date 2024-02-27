@@ -145,7 +145,14 @@ export function CodeCard() {
                       />
                     </Tooltip>
                   )}
-                  {project && <DividerDir dirs={dirs} setDirs={setDirs} navigate={navigate}/>}
+                  {project && (
+                    <DividerDir
+                      dirs={dirs}
+                      setDirs={setDirs}
+                      navigate={navigate}
+                      taskName={data.getTaskSingleDetails.taskName}
+                    />
+                  )}
                 </div>
               </div>
               <CardButtons
@@ -166,7 +173,12 @@ export function CodeCard() {
             </CardHeader>
 
             {project ? (
-              <FullProject project={project} setDirs={setDirs} dirs={dirs} navigate={navigate} />
+              <FullProject
+                project={project}
+                setDirs={setDirs}
+                dirs={dirs}
+                navigate={navigate}
+              />
             ) : (
               <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
                 <CodeSnippet code={data.getTaskSingleDetails.content} />

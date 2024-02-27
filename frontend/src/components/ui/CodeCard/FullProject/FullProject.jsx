@@ -24,20 +24,19 @@ export function FullProject({ project, setDirs, dirs, navigate }) {
   const [url, setUrl] = useState(null);
   const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    if (!fileUrl) return;
+  const loadProjectFile = (url) => {
     try {
       projectFile({
         variables: {
           input: {
-            url: fileUrl,
+            url,
           },
         },
       });
     } catch (error) {
       serverError();
     }
-  }, [fileUrl]);
+  };
 
   const taskDetails = (task) => {
     navigate(`${url}${addCurrentDirToUrl()}&file=${task.name}`);
@@ -89,6 +88,7 @@ export function FullProject({ project, setDirs, dirs, navigate }) {
     );
 
     if (foundFile) {
+      loadProjectFile(foundFile.url);
       setFileUrl(foundFile.url);
     }
 
@@ -162,14 +162,13 @@ export function FullProject({ project, setDirs, dirs, navigate }) {
     setDirs(dirs);
   }, []);
 
-  console.log(data?.getTaskProjectFile?.content);
-  console.log(fileUrl);
-
   return (
     <>
       {loading ? (
         <LoadingCircle />
-      ) : fileUrl && data?.getTaskProjectFile?.content ? (
+      ) : fileUrl &&
+        (data?.getTaskProjectFile?.content ||
+          data?.getTaskProjectFile?.content === "") ? (
         <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
           <CodeSnippet code={data.getTaskProjectFile.content} />
         </CardBody>
