@@ -1,6 +1,7 @@
 import { Chip, Tab, Tabs } from "@nextui-org/react";
 import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { languageIcons } from "../../utils/languageIcons/languageIcons";
+import { selectedThemeSignal } from "../NavMenu/ThemeSwitch/ThemeSignal";
 
 export default function TabLanguages({
   language,
@@ -11,14 +12,12 @@ export default function TabLanguages({
   return (
     <Tabs
       classNames={{
-        // tabList: "flex-wrap sm:flex-nowrap",
         tabList: "grid-flow-dense flex-col sm:flex-row",
-        // tab:"flex flex-col w-auto"
       }}
       key="Options"
       size="lg"
       aria-label="Options"
-      color="success"
+      color={`${selectedThemeSignal.value === "dark" ? "default" : "success"}`}
       variant="underlined"
       defaultSelectedKey={language}
       onSelectionChange={(e) => {
@@ -30,7 +29,10 @@ export default function TabLanguages({
         key="python"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="python language icon" src={languageIcons("Python")} />
+            <DropDownMenuIcon
+              alt="python language icon"
+              src={languageIcons("Python")}
+            />
             <span>Python</span>
             {languageCount && (
               <Chip size="sm" variant="faded">
@@ -61,7 +63,10 @@ export default function TabLanguages({
         key="csharp"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="csharp language icon" src={languageIcons("C#")} />
+            <DropDownMenuIcon
+              alt="csharp language icon"
+              src={languageIcons("C#")}
+            />
             <span>C#</span>
             {languageCount && (
               <Chip size="sm" variant="faded">
@@ -75,7 +80,10 @@ export default function TabLanguages({
         key="java"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="java language icon" src={languageIcons("Java")} />
+            <DropDownMenuIcon
+              alt="java language icon"
+              src={languageIcons("Java")}
+            />
             <span>Java</span>
             {languageCount && (
               <Chip size="sm" variant="faded">
@@ -89,7 +97,10 @@ export default function TabLanguages({
         key="cpp"
         title={
           <div className="flex items-center space-x-2">
-            <DropDownMenuIcon alt="cpp language icon" src={languageIcons("C++")} />
+            <DropDownMenuIcon
+              alt="cpp language icon"
+              src={languageIcons("C++")}
+            />
             <span>C++</span>
             {languageCount && (
               <Chip size="sm" variant="faded">
