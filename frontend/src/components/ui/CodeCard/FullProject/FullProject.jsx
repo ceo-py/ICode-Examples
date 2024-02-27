@@ -1,5 +1,6 @@
 import {
   Avatar,
+  CardBody,
   Table,
   TableBody,
   TableCell,
@@ -13,6 +14,8 @@ import { useSearchParams } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
 import { PROJECT_FILE_QUERY } from "../../../../graphql/queries/getProjectFile";
 import serverError from "../../../utils/serverError/serverError";
+import { CodeSnippet } from "../CodeSnippet/CodeSnippet";
+import { LoadingCircle } from "../../LoadingCIrcle/LoadingCircle";
 
 export function FullProject({ project, setDirs, dirs, navigate }) {
   const [projectFile, { loading, data }] = useLazyQuery(PROJECT_FILE_QUERY);
@@ -137,9 +140,12 @@ export function FullProject({ project, setDirs, dirs, navigate }) {
 
   useEffect(() => {
     showFileStructure();
-    const file = searchParams.get("file")
-      ? `&file=${searchParams.get("file")}`
-      : "";
+    let file = "";
+    if (searchParams.get("file")) {
+      file = `&file=${searchParams.get("file")}`;
+    } else {
+      setFileUrl(null);
+    }
     if (url) navigate(url + addCurrentDirToUrl() + file);
   }, [dirs]);
 
@@ -156,42 +162,55 @@ export function FullProject({ project, setDirs, dirs, navigate }) {
     setDirs(dirs);
   }, []);
 
-  console.log(data);
+  console.log(data?.getTaskProjectFile?.content);
+  console.log(fileUrl);
 
   return (
-    <Table
-      aria-label="table showing files and directories in the current directory"
-      selectionMode="single"
-      classNames={{
-        wrapper: "justify-start",
-      }}
-    >
-      <TableHeader>
-        <TableColumn scope="col" key="Name" role="files or directories">
-          Name
-        </TableColumn>
-      </TableHeader>
-      <TableBody items={items} emptyContent={"Empty folder"}>
-        {(item) => (
-          <TableRow key={crypto.randomUUID()} className="cursor-pointer">
-            <TableCell
-              onClick={() => navigateFilesAndDirs(item)}
-              className="flex gap-2 "
-            >
-              <Avatar
-                alt=""
-                className="w-8 h-7 bg-"
-                src={linkIcons(item.type === "dir" ? "folder" : "file")}
-              />
-              <span
-                className={`mt-auto ${item.name === ".." ? "text-2xl" : ""}`}
-              >
-                {item.name}
-              </span>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <>
+      {loading ? (
+        <LoadingCircle />
+      ) : fileUrl && data?.getTaskProjectFile?.content ? (
+        <CardBody className="px-3 py-0 text-small text-default-400 bg-default/40">
+          <CodeSnippet code={data.getTaskProjectFile.content} />
+        </CardBody>
+      ) : (
+        <Table
+          aria-label="table showing files and directories in the current directory"
+          selectionMode="single"
+          classNames={{
+            wrapper: "justify-start",
+          }}
+        >
+          <TableHeader>
+            <TableColumn scope="col" key="Name" role="files or directories">
+              Name
+            </TableColumn>
+          </TableHeader>
+          <TableBody items={items} emptyContent={"Empty folder"}>
+            {(item) => (
+              <TableRow key={crypto.randomUUID()} className="cursor-pointer">
+                <TableCell
+                  onClick={() => navigateFilesAndDirs(item)}
+                  className="flex gap-2 "
+                >
+                  <Avatar
+                    alt=""
+                    className="w-8 h-7 bg-"
+                    src={linkIcons(item.type === "dir" ? "folder" : "file")}
+                  />
+                  <span
+                    className={`mt-auto ${
+                      item.name === ".." ? "text-2xl" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
+    </>
   );
 }
