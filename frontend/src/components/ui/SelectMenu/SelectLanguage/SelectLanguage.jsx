@@ -7,7 +7,8 @@ export function SelectLanguage({ menu }) {
     <>
       <Autocomplete
         className="flex-grow w-"
-        label="Select Language"
+        label="Language"
+        placeholder="Select Language"
         isRequired={true}
         onSelectionChange={(x) => {
           menu.value = Object.values(languages).find(
