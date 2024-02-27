@@ -3,10 +3,10 @@ export const SunIcon = (props) => (
   <svg
     aria-hidden="true"
     focusable="false"
-    height="1em"
+    height="3em"
     role="presentation"
     viewBox="0 0 24 24"
-    width="1em"
+    width="3em"
     {...props}
   >
     <g fill="currentColor">
