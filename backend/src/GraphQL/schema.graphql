@@ -156,6 +156,15 @@ type getModuleExamplesType {
   result: String!
 }
 
+input getTaskProjectFileInput {
+  url: String!
+}
+
+type TaskProjectFile {
+  content: String!
+  status: Status!
+}
+
 
 type Query {
   getUser: UserDetail
@@ -167,6 +176,7 @@ type Query {
   getUserHome(input: getUserHomeUsername!): getUserHomeDetails!
   getUsernameAndEmail(input: UsernameAndEmail!): Status!
   getModuleExamples(input: getModuleExamplesInput!): getModuleExamplesType!
+  getTaskProjectFile(input: getTaskProjectFileInput!): TaskProjectFile!
 }
 
 type Mutation {
