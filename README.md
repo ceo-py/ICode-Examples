@@ -1,9 +1,9 @@
-# ICode Example Repository
+# iCode Example Repository
 
-Welcome to ICode Example, a platform dedicated to sharing and collaborating on code solutions from SoftUni. Explore the latest solutions, connect with fellow learners, and enhance your programming skills together.
+Welcome to iCode Example, a platform dedicated to sharing and collaborating on code solutions from SoftUni. Explore the latest solutions, connect with fellow learners, and enhance your programming skills together.
 
 
-Check out the live version of [ICode Example](https://icode-example.ceo-py.eu/).
+Check out the live version of [iCode Example](https://icode-example.ceo-py.eu/).
 
 
 ## Features
