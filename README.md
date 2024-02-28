@@ -3,14 +3,14 @@
 Welcome to ICode Example, a platform dedicated to sharing and collaborating on code solutions from SoftUni. Explore the latest solutions, connect with fellow learners, and enhance your programming skills together.
 
 
-Check out the live version of ICode Example at [https://icode-example.ceo-py.eu/](https://icode-example.ceo-py.eu/).
+Check out the live version of [ICode Example](https://icode-example.ceo-py.eu/).
 
 
 ## Features
 
 ### 1. Homepage
 
-- Browse the latest 20 solutions for the four major programming languages.
+- Browse the latest 20 solutions for the five major programming languages (Python, JavaScript, C#, Java, C++).
 
 ### 2. Profile Page
 
