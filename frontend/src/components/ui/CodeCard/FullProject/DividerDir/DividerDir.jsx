@@ -17,7 +17,7 @@ export function DividerDir({ dirs, setDirs, navigate, taskName }) {
         >
           {taskName}
         </div>
-        <Divider className="h-5" orientation="vertical" />
+        {dirs.length > 0 && <Divider className="h-5" orientation="vertical" />}
       </React.Fragment>
       {dirs.map((x, i) => (
         <React.Fragment key={crypto.randomUUID()}>
