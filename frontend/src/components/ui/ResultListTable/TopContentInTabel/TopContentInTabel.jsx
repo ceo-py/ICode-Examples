@@ -165,7 +165,7 @@ export function TopContentInTable({
         <label className="flex items-center text-default-400 text-small">
           Results per page:
           <select
-            className="cursor-pointer bg-transparent outline-none text-default-400 text-small"
+            className="bg-content1 cursor-pointer outline-none text-default-400 text-small"
             onChange={(v) => setResultsPerPage(Number(v.target.value))}
           >
             <option value="20">20</option>
