@@ -21,7 +21,7 @@ const getCodeContent = async (url) => {
     try {
         const response = await octokit.request(`GET ${generateUrl(url)}`)
         let decodedContent = Buffer.from(response.data.content, 'base64').toString('utf-8');
-        const fileExtension = url.split("/").slice(-1)[0].split(".")[1]
+        const fileExtension = url.split("/").slice(-1)[0].split(".").pop()
         if (decodedContent.includes('using System') && fileExtension === 'cs') {
             decodedContent = decodedContent.slice(decodedContent.indexOf('using System'))
         }
