@@ -42,9 +42,8 @@ export function ResultListTable({
     return `${taskDetail.language}&course=${taskDetail.course}&module=${taskDetail.module}&problem=${taskDetail.taskName}`
       .replace(/-./g, "")
       .replace(/ /g, "-")
-      .replace("#", "Sharp")
-      .replace(/'/, "")
-      .replace(".", "");
+      .replace(/#/g, "Sharp")
+      .replace(/'/g, "");
   };
 
   const taskDetails = (taskId) => {
