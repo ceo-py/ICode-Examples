@@ -3,3 +3,5 @@ function isBot(url) {
     return botRegex.test(url)
 }
 
+module.exports = isBot;
+

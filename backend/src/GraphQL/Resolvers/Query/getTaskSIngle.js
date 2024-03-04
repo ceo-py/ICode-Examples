@@ -7,6 +7,7 @@ const UserDetail = require("../../../DataBase/Models/userDetails");
 const User = require("../../../DataBase/Models/users");
 const { getCodeContent } = require("../../../GitHub/gihubApiRequest");
 const genFullURL = require("../../../utils/generateFullUrl");
+const isBot = require("../../../utils/getFullHtmlForBotsCrawlers");
 const timeTimeDifference = require("../../../utils/getTimeNow");
 const jwt = require('jsonwebtoken');
 
@@ -41,10 +42,12 @@ const getTaskSingleDetailsResolver = {
                 const user = await User.findOne({ "_id": result.id });
                 const userDetail = await UserDetail.findOne({ "id": result.id });
                 const findComments = await Comments.find({ "taskId": taskId }).sort({ createdAt: -1 });
-                
-                const html = await Prerender.findOne({URL: genFullURL(result)})
-                console.log(html.HTML);
 
+                
+                // if (isBot(req.headers['user-agent'])) {
+                //     const foundPrerender = await Prerender.findOne({URL: genFullURL(result)})
+                //     if (foundPrerender) return foundPrerender.HTML
+                // }
 
                 if (findComments) {
                     const commentsData = await Promise.all(
@@ -66,7 +69,7 @@ const getTaskSingleDetailsResolver = {
                 }
 
                 result?.project ? codeOrProject.project = result.project : codeOrProject.content = await getCodeContent(result.githubLink)
-                
+
                 return {
                     video: result.videoLink,
                     follow,

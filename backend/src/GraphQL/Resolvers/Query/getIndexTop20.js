@@ -1,8 +1,14 @@
+const Prerender = require("../../../DataBase/Models/prerender");
 const TaskSolution = require("../../../DataBase/Models/taskSolutions");
+const isBot = require("../../../utils/getFullHtmlForBotsCrawlers");
 
 const indexTop20Resolver = {
     Query: {
-        getIndexTop20: async (_, __) => {
+        getIndexTop20: async (_, { __ }, { ___, req }) => {
+            // if (isBot(req.headers['user-agent'])) {
+            //     const foundPrerender = await Prerender.findOne({ URL: 'https://icode-example.ceo-py.eu/' })
+            //     if (foundPrerender) return foundPrerender.HTML
+            // }
             const getLatestTasksByLanguage = async (language, limit = 20) => {
                 try {
                     const result = await TaskSolution.aggregate([
