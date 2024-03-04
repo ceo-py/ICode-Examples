@@ -1,10 +1,12 @@
 const Comments = require("../../../DataBase/Models/comments");
 const Followers = require("../../../DataBase/Models/followers");
 const Likes = require("../../../DataBase/Models/likes");
+const Prerender = require("../../../DataBase/Models/prerender");
 const TaskSolution = require("../../../DataBase/Models/taskSolutions");
 const UserDetail = require("../../../DataBase/Models/userDetails");
 const User = require("../../../DataBase/Models/users");
 const { getCodeContent } = require("../../../GitHub/gihubApiRequest");
+const genFullURL = require("../../../utils/generateFullUrl");
 const timeTimeDifference = require("../../../utils/getTimeNow");
 const jwt = require('jsonwebtoken');
 
@@ -39,6 +41,10 @@ const getTaskSingleDetailsResolver = {
                 const user = await User.findOne({ "_id": result.id });
                 const userDetail = await UserDetail.findOne({ "id": result.id });
                 const findComments = await Comments.find({ "taskId": taskId }).sort({ createdAt: -1 });
+                
+                const html = await Prerender.findOne({URL: genFullURL(result)})
+                console.log(html.HTML);
+
 
                 if (findComments) {
                     const commentsData = await Promise.all(
