@@ -22,6 +22,7 @@ export function Notifications() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const connectWebSocket = () => {
+    client = new WebSocket("ws://localhost:5001");
     if (!client) return;
     // client.onopen = () => {
     //   console.log("WebSocket Client Connected");
@@ -32,7 +33,7 @@ export function Notifications() {
     // };
 
     client.onclose = () => {
-      // console.log("WebSocket connection closed. Attempting to reconnect...");
+      console.log("WebSocket connection closed. Attempting to reconnect...");
       setTimeout(connectWebSocket, 5000);
     };
 
@@ -45,7 +46,6 @@ export function Notifications() {
   };
 
   useEffect(() => {
-    client = new WebSocket("ws://localhost:5001");
     connectWebSocket();
   }, []);
 

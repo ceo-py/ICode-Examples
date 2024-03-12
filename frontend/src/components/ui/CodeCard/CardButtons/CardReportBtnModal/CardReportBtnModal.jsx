@@ -70,6 +70,7 @@ export function CardReportBtnModal({
               <Button
                 color="primary"
                 variant="light"
+                size="sm"
                 onPress={() => {
                   handleReportCreate({
                     idReportType,
