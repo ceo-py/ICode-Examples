@@ -10,12 +10,15 @@ import {
 } from "@nextui-org/react";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
+import { useEffect, useState } from "react";
+
+let client;
 
 export function Notifications() {
-  let client;
-  const connectWebSocket = () => {
-    client = new WebSocket("ws://localhost:5001");
+  const [receivedMessage, setReceivedMessage] = useState("");
 
+  const connectWebSocket = () => {
+    if (!client) return;
     client.onopen = () => {
       console.log("WebSocket Client Connected");
     };
@@ -26,20 +29,27 @@ export function Notifications() {
 
     client.onclose = () => {
       console.log("WebSocket connection closed. Attempting to reconnect...");
-      setTimeout(connectWebSocket, 5000); // Attempt to reconnect after 5 seconds
+      setTimeout(connectWebSocket, 5000); 
     };
 
     client.onmessage = (message) => {
       const data = JSON.parse(message.data);
-      console.log(data);
+      console.log("Received message:", data);
+      setReceivedMessage(data.message); 
+    };
+    return () => {
+      client.close();
     };
   };
 
-  connectWebSocket();
+  useEffect(() => {
+    client = new WebSocket("ws://localhost:5001");
+    connectWebSocket();
+  }, []);
 
   const sendMessage = () => {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ "Message": "Hello from client" }));
+      client.send(JSON.stringify({ Message: "Hello from client" }));
     } else {
       console.log("WebSocket is not open. ReadyState:", client.readyState);
     }

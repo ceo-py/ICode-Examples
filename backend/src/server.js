@@ -9,7 +9,6 @@ const session = require('express-session');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const helmet = require('helmet');
-const { WebSocketServer } = require('ws');
 
 const pathToEnvFile = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: pathToEnvFile });
@@ -34,17 +33,6 @@ app.use(cors({
 
 
 mongoose.connect(process.env.MONGO_URI, { writeConcern: { w: 'majority' } }).catch(error => console.error('Connection ERROR:\n', error));
-
-const wss = new WebSocketServer({ "port": 5001 });
-wss.on('connection', (ws) => {
-
-  ws.send(JSON.stringify({"message": "Hello from server"}));
-  ws.on('message', (data) => {
-    console.log(JSON.parse(data.toString("utf8")));
-  });
-
-});
-
 
 
 const typeDefsPath = path.join(__dirname, '/GraphQL/schema.graphql');
