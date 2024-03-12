@@ -12,6 +12,39 @@ import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 
 export function Notifications() {
+  let client;
+  const connectWebSocket = () => {
+    client = new WebSocket("ws://localhost:5001");
+
+    client.onopen = () => {
+      console.log("WebSocket Client Connected");
+    };
+
+    client.onerror = (error) => {
+      console.error("WebSocket Error:", error);
+    };
+
+    client.onclose = () => {
+      console.log("WebSocket connection closed. Attempting to reconnect...");
+      setTimeout(connectWebSocket, 5000); // Attempt to reconnect after 5 seconds
+    };
+
+    client.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      console.log(data);
+    };
+  };
+
+  connectWebSocket();
+
+  const sendMessage = () => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ "Message": "Hello from client" }));
+    } else {
+      console.log("WebSocket is not open. ReadyState:", client.readyState);
+    }
+  };
+
   return (
     <Tooltip
       showArrow={true}
@@ -73,6 +106,7 @@ export function Notifications() {
                 textValue="notifications"
                 className="h-14 gap-2"
                 hideSelectedIcon={false}
+                onClick={() => sendMessage()}
                 //   textValue="Details"
               >
                 Under Construction
