@@ -8,10 +8,10 @@ const getModuleExamplesResolver = {
             try {
                 const result = await TaskSolution.find({
                     $and: [
-                        { "language": input.language  },
-                        { "course": input.course  },
-                        { "module": input.module  },
-                        { "id": "658090b1f47209a6efc3299c" },
+                        { "language": input.language },
+                        { "course": input.course },
+                        { "module": input.module },
+                        { "id": process.env.ADMIN_USER },
                     ]
                 });
                 return {

@@ -165,6 +165,10 @@ type TaskProjectFile {
   status: Status!
 }
 
+type reportDetails {
+  result: String
+  status: Status!
+}
 
 type Query {
   getUser: UserDetail
@@ -177,6 +181,7 @@ type Query {
   getUsernameAndEmail(input: UsernameAndEmail!): Status!
   getModuleExamples(input: getModuleExamplesInput!): getModuleExamplesType!
   getTaskProjectFile(input: getTaskProjectFileInput!): TaskProjectFile!
+  getReport: reportDetails!
 }
 
 type Mutation {

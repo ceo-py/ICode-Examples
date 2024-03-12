@@ -31,7 +31,8 @@ const createReportResolver = {
                 })
 
                 await notification.save()
-                userConnections.get(decoded.userId).send(JSON.stringify(input.reportContent.trim()));
+                const admin = userConnections.get(process.env.ADMIN_USER)
+                admin?.send(JSON.stringify(input.reportContent.trim()));
 
                 return {
                     code: 200,

@@ -34,10 +34,14 @@ wss.on('connection', (ws, req) => {
 
         ws.on('close', () => {
             console.log(`User ${userId} disconnected`);
-            userConnections.delete(userId); 
+            userConnections.delete(userId);
         });
     } catch (e) {
         console.log("WebSocketServer:\n", e)
+    }
+    return {
+        message: 'Internal server error',
+        code: 500
     }
 
 });
