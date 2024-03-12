@@ -14,6 +14,8 @@ const pathToEnvFile = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: pathToEnvFile });
 
 const app = express();
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 app.use(helmet());
 app.use(cookieParser());
 app.use(
@@ -57,5 +59,5 @@ async function startApolloServer() {
 
 startApolloServer();
 
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+
+module.exports = app;

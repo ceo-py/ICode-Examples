@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Reports = require('../../../DataBase/Models/reports');
-const wss = require('../../../websocketServer');
+const { wss, userConnections } = require('../../../websocketServer');
 const Notification = require('../../../DataBase/Models/notofications');
 
 
@@ -31,10 +31,7 @@ const createReportResolver = {
                 })
 
                 await notification.save()
-
-                wss.clients.forEach(client => {
-                    client.send(JSON.stringify(input.reportContent.trim()));
-                });
+                userConnections.get(decoded.userId).send(JSON.stringify(input.reportContent.trim()));
 
                 return {
                     code: 200,
