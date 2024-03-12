@@ -55,8 +55,18 @@ export function Notifications() {
   }, [data]);
 
   const openModal = (report) => {
-    setModal({ content: report.content, taskId: report.taskId, reportId: report.reportId });
+    setModal({
+      content: report.content,
+      taskId: report.taskId,
+      reportId: report.reportId,
+    });
     onOpen();
+  };
+
+  const sendMessage = (message) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(message));
+    }
   };
 
   return (
@@ -114,6 +124,7 @@ export function Notifications() {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         modal={modal}
+        sendMessageToBackEnd={sendMessage}
       />
     </>
   );

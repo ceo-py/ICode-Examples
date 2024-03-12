@@ -1,5 +1,6 @@
 const { WebSocketServer } = require('ws');
 const jwt = require('jsonwebtoken');
+const Reports = require('./DataBase/Models/reports');
 
 
 const wss = new WebSocketServer({ port: 5001 });
@@ -16,7 +17,18 @@ const getUserIdFromCookie = (rawCookie) => {
     return jwt.verify(matches[0], process.env.SECRET_KEY).userId;
 }
 
-wss.on('connection', (ws, req) => {
+const deleteReport = async (reportId) => {
+
+    try {
+        await Reports.deleteOne({ _id: reportId })
+
+    } catch (e) {
+        console.log('DeleteReport:\n', e);
+    }
+
+}
+
+wss.on('connection', async (ws, req) => {
 
     try {
         const userId = getUserIdFromCookie(req?.headers?.cookie);
@@ -29,7 +41,9 @@ wss.on('connection', (ws, req) => {
 
         userConnections.set(userId, ws);
         ws.on('message', (message) => {
-            console.log(`Received message from user ${userId}:`, message);
+            deleteReport(JSON.parse(message))
+            console.log(`Received message from user ${userId}:`, JSON.parse(message));
+            ws.send(JSON.stringify("Report Deleted"))
         });
 
         ws.on('close', () => {

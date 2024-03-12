@@ -8,7 +8,12 @@ import {
 } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 
-export function ModalNotifications({ isOpen, onOpenChange, modal }) {
+export function ModalNotifications({
+  isOpen,
+  onOpenChange,
+  modal,
+  sendMessageToBackEnd,
+}) {
   const navigate = useNavigate();
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
@@ -44,6 +49,9 @@ export function ModalNotifications({ isOpen, onOpenChange, modal }) {
                 onPress={onClose}
                 size="sm"
                 variant="light"
+                onClick={() => {
+                  sendMessageToBackEnd(modal.reportId);
+                }}
               >
                 Delete Report
               </Button>
