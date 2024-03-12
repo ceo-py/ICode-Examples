@@ -4,38 +4,36 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownSection,
   DropdownTrigger,
-  Tooltip,
 } from "@nextui-org/react";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
-import { DropDownMenuIcon } from "../../../DropDownMenuIcon/DropDownMenuIcon";
 import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { REPORT_QUERY } from "../../../../../graphql/queries/getReportsQuery";
 
 let client;
 
 export function Notifications() {
-  const [receivedMessage, setReceivedMessage] = useState("");
+  const { loading, error, data, refetch } = useQuery(REPORT_QUERY);
+  const [reports, setReports] = useState([]);
 
   const connectWebSocket = () => {
     if (!client) return;
-    client.onopen = () => {
-      console.log("WebSocket Client Connected");
-    };
+    // client.onopen = () => {
+    //   console.log("WebSocket Client Connected");
+    // };
 
-    client.onerror = (error) => {
-      console.error("WebSocket Error:", error);
-    };
+    // client.onerror = (error) => {
+    //   console.error("WebSocket Error:", error);
+    // };
 
     client.onclose = () => {
-      console.log("WebSocket connection closed. Attempting to reconnect...");
-      setTimeout(connectWebSocket, 5000); 
+      // console.log("WebSocket connection closed. Attempting to reconnect...");
+      setTimeout(connectWebSocket, 5000);
     };
 
-    client.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      console.log("Received message:", data);
-      setReceivedMessage(data.message); 
+    client.onmessage = () => {
+      refetch();
     };
     return () => {
       client.close();
@@ -47,94 +45,52 @@ export function Notifications() {
     connectWebSocket();
   }, []);
 
-  const sendMessage = () => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ Message: "Hello from client" }));
-    } else {
-      console.log("WebSocket is not open. ReadyState:", client.readyState);
-    }
-  };
+  useEffect(() => {
+    if (loading) return;
+    setReports(JSON.parse(data?.getReport?.result));
+  }, [data]);
 
   return (
-    <Tooltip
-      showArrow={true}
-      placement="bottom"
-      key="notifications"
-      content="Notifications"
-      color="primary"
-      closeDelay="0"
-    >
-      <div className="cursor-pointer flex relative rounded-full justify-center items-center hover:bg-default/40">
-        <Badge
-          content="1"
-          aria-label="more than 10 notifications"
-          color="danger"
-          shape="circle"
-          placement="top-right"
-          size="md"
-        >
-          <Dropdown placement="bottom-end">
-            <DropdownTrigger>
-              <Avatar
-                className="ring-default bg-"
-                as="button"
-                size="sm"
-                showFallback
-                src={linkIcons("notification")}
-              />
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label="notifications"
-              variant="flat"
-              hideSelectedIcon={false}
+    <Dropdown>
+      <DropdownTrigger>
+        <div className="flex relative rounded-full justify-center items-center hover:bg-default/40">
+          <Badge
+            content={reports?.filter(r => !r.isRead)?.length}
+            aria-label="Total Notifications"
+            color="danger"
+            shape="circle"
+            placement="top-right"
+            size="md"
+          >
+            <Avatar
+              className="ring-default bg-"
+              as="button"
+              size="md"
+              showFallback
+              src={linkIcons("notification")}
+            />
+          </Badge>
+        </div>
+      </DropdownTrigger>
+      <DropdownMenu
+        variant="faded"
+        aria-label="Notifications Items"
+        className="max-h-64 overflow-y-auto"
+      >
+        {reports &&
+          reports.map((report, i) => (
+            <DropdownItem
+              key={i}
+              shortcut={report.user.name}
+              startContent={!report.isRead &&<img className="max-h-5 max-w-5" src={linkIcons("send")}></img>}
+              description="Task Report"
             >
-              {/* <DropdownSection title="New Tasks" showDivider>
-                <DropdownItem
-                  key="Notifications"
-                  endContent={
-                    <DropDownMenuIcon
-                      alt="Notifications"
-                      src={linkIcons("settings")}
-                    />
-                  }
-                >
-                  Notifications
-                </DropdownItem>
-              </DropdownSection> */}
-              {/* <DropdownSection title="New Tasks" showDivider>
-                <DropdownItem
-                  key="task id..."
-                  className="h-14 gap-2"
-                  //   textValue="Details"
-                >
-                  Някакъв лист с задачите
-                </DropdownItem>
-              </DropdownSection> */}
-              {/* <DropdownSection title="Comments" aria-label="notifications" hideSelectedIcon={false}> */}
-              <DropdownItem
-                key="notifications"
-                textValue="notifications"
-                className="h-14 gap-2"
-                hideSelectedIcon={false}
-                onClick={() => sendMessage()}
-                //   textValue="Details"
-              >
-                Under Construction
-              </DropdownItem>
-              {/* <DropdownItem
-                key="comment id ..."
-                textValue="notifications"
-                className="h-14 gap-2"
-                hideSelectedIcon={false}
-                //   textValue="Details"
-              >
-                Някакъв лист с задачите
-              </DropdownItem> */}
-              {/* </DropdownSection> */}
-            </DropdownMenu>
-          </Dropdown>
-        </Badge>
-      </div>
-    </Tooltip>
+              {report.content.length > 27
+                ? report.content.slice(0, 24) + "..."
+                : report.content}
+            </DropdownItem>
+          ))}
+      </DropdownMenu>
+    </Dropdown>
   );
 }

@@ -1,28 +1,30 @@
 const Reports = require("../../../DataBase/Models/reports");
 const Users = require('../../../DataBase/Models/users')
+const jwt = require('jsonwebtoken');
 
 
 const getReportResolver = {
     Query: {
         getReport: async (_, { __ }, { req, ___ }) => {
             try {
-                // const cookieToken = req?.cookies?.token;
-
-                // if (!cookieToken) {
-                //     return {
-                //         message: 'JWT must be provided',
-                //         code: 400,
-                //     };
-                // }
-                // const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
-                // if (id !== process.env.ADMIN_USER) {
-                //     return {
-                //         status: {
-                //             code: 401,
-                //             message: "These credentials do not authorize access"
-                //         }
-                //     }
-                // }
+                const cookieToken = req?.cookies?.token;
+                if (!cookieToken) {
+                    return {
+                        status: {
+                            message: 'JWT must be provided',
+                            code: 400,
+                        }
+                    };
+                }
+                const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
+                if (id !== process.env.ADMIN_USER) {
+                    return {
+                        status: {
+                            code: 401,
+                            message: "These credentials do not authorize access"
+                        }
+                    }
+                }
                 const foundReports = await Reports.find({ typeReport: "TaskSolution" }).sort({ _id: -1 })
 
                 const results = [];

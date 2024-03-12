@@ -11,6 +11,7 @@ export function linkIcons(name) {
     check: "https://www.svgrepo.com/show/418145/check.svg",
     folder: "https://www.svgrepo.com/show/418076/folder.svg",
     file: "https://www.svgrepo.com/show/418047/arrow-right-1.svg",
+    send: "https://www.svgrepo.com/show/418110/send.svg",
   };
   return linkIconsFull[name];
 }

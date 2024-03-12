@@ -25,7 +25,7 @@ const createReportResolver = {
                 await report.save()
 
                 const admin = userConnections.get(process.env.ADMIN_USER)
-                admin?.send(JSON.stringify(input.reportContent.trim()));
+                admin?.send(JSON.stringify('Report created'));
 
                 return {
                     code: 200,
