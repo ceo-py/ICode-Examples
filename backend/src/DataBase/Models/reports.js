@@ -5,6 +5,7 @@ const ReportSchema = new mongoose.Schema({
     typeReport: { type: String, required: true },
     userIdReport: { type: String, required: true },
     reportContent: { type: String, required: true },
+    isRead: { type: Boolean, default: false },
 });
 
 const Reports = mongoose.model('Report', ReportSchema, 'Reports');

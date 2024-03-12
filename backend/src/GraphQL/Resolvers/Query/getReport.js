@@ -1,5 +1,5 @@
 const Reports = require("../../../DataBase/Models/reports");
-const TaskSolution = require("../../../DataBase/Models/taskSolutions");
+const Users = require('../../../DataBase/Models/users')
 
 
 const getReportResolver = {
@@ -23,10 +23,25 @@ const getReportResolver = {
                 //         }
                 //     }
                 // }
-                const result = await Reports.find({})
-                console.log(result);
+                const foundReports = await Reports.find({ typeReport: "TaskSolution" }).sort({ _id: -1 })
+
+                const results = [];
+
+                for (const report of foundReports) {
+                    const user = await Users.findOne({ _id: report.userIdReport })
+                    results.push({
+                        content: report.reportContent,
+                        isRead: report.isRead,
+                        taskId: report.idReportType,
+                        user: {
+                            id: user._id,
+                            name: user.username,
+                        }
+                    })
+                }
+
                 return {
-                    result: JSON.stringify(result),
+                    result: JSON.stringify(results),
                     status: {
                         code: 200,
                         message: "Successful Report"

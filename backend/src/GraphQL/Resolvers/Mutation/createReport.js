@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Reports = require('../../../DataBase/Models/reports');
-const { wss, userConnections } = require('../../../websocketServer');
-const Notification = require('../../../DataBase/Models/notofications');
+const { userConnections } = require('../../../websocketServer');
 
 
 const createReportResolver = {
@@ -25,12 +24,6 @@ const createReportResolver = {
                 })
                 await report.save()
 
-                const notification = new Notification({
-                    taskId: input.idReportType,
-                    type: "Report",
-                })
-
-                await notification.save()
                 const admin = userConnections.get(process.env.ADMIN_USER)
                 admin?.send(JSON.stringify(input.reportContent.trim()));
 
