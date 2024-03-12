@@ -35,8 +35,8 @@ const getReportResolver = {
                         content: report.reportContent,
                         isRead: report.isRead,
                         taskId: report.idReportType,
+                        reportId: report._id,
                         user: {
-                            id: user._id,
                             name: user.username,
                         }
                     })

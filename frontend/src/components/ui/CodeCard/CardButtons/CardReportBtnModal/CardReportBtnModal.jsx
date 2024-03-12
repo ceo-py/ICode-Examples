@@ -59,11 +59,17 @@ export function CardReportBtnModal({
               />
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button
+                color="danger"
+                size="sm"
+                variant="light"
+                onPress={onClose}
+              >
                 Close
               </Button>
               <Button
                 color="primary"
+                variant="light"
                 onPress={() => {
                   handleReportCreate({
                     idReportType,
