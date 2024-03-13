@@ -37,7 +37,8 @@ export function Notifications() {
       setTimeout(connectWebSocket, 5000);
     };
 
-    client.onmessage = () => {
+    client.onmessage = (m) => {
+      console.log(m);
       refetch();
     };
     return () => {
@@ -75,7 +76,6 @@ export function Notifications() {
   const getNotReadReports = () => {
     return reports?.filter((r) => !r.isRead);
   };
-  console.log(reports);
   return (
     <>
       <Dropdown>

@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 const Comments = require('../../../DataBase/Models/comments');
 const UserDetail = require('../../../DataBase/Models/userDetails');
+const { userConnections } = require('../../../websocketServer');
+const filterUnique = require('../../../utils/filterUnique');
+const Notification = require('../../../DataBase/Models/notifications');
+
 
 const createCommentResolver = {
     Mutation: {
@@ -16,7 +20,7 @@ const createCommentResolver = {
             }
             try {
                 const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
-                const user = await UserDetail.findOne({id: decoded.userId})
+                const user = await UserDetail.findOne({ id: decoded.userId })
                 const comment = new Comments({
                     taskId: input.id,
                     createdById: decoded.userId,
@@ -24,6 +28,22 @@ const createCommentResolver = {
                     text: input.text.trim(),
                 })
                 await comment.save()
+                console.log(user)
+                const notification = new Notification({
+                    commentId: comment._id,
+                    userId: user.id.toString(),
+                })
+
+                await notification.save()
+
+                const uniqueComments = filterUnique(await Comments.find({ taskId: input.id }).sort({ createdAt: 1 }))
+
+
+                uniqueComments.forEach(c => {
+                    const user = userConnections.get(c.createdById.toString())
+                    user?.send(JSON.stringify('Comment created'));
+                })
+
 
                 return {
                     status: {

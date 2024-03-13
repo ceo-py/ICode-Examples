@@ -16,7 +16,6 @@ export function ModalNotifications({
 }) {
   const navigate = useNavigate();
 
-  console.log(modal);
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
       <ModalContent>
