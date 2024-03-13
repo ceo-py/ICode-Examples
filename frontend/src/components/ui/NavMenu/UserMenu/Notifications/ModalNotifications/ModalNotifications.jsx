@@ -15,15 +15,18 @@ export function ModalNotifications({
   sendMessageToBackEnd,
 }) {
   const navigate = useNavigate();
+
+  console.log(modal);
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
       <ModalContent>
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Reported Task
+              Reported {modal.reportType}
             </ModalHeader>
             <ModalBody>
+              {modal?.comment && <p>{modal.comment.content}</p>}
               <p>{modal.content}</p>
             </ModalBody>
             <ModalFooter>
@@ -41,7 +44,11 @@ export function ModalNotifications({
                 size="sm"
                 variant="light"
                 onClick={() => {
-                  navigate(`/solution?id=${modal.taskId}`);
+                  navigate(
+                    `/solution?id=${
+                      modal?.comment ? modal.comment?.idTask : modal.taskId
+                    }`
+                  );
                   sendMessageToBackEnd(`makeRead ${modal.reportId}`);
                 }}
               >

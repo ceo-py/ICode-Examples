@@ -55,11 +55,14 @@ export function Notifications() {
   }, [data]);
 
   const openModal = (report) => {
-    setModal({
+    const modalRespond = {
       content: report.content,
       taskId: report.taskId,
       reportId: report.reportId,
-    });
+      reportType: report.reportType,
+    };
+    if (report?.comment) modalRespond.comment = report.comment;
+    setModal(modalRespond);
     onOpen();
   };
 
@@ -72,7 +75,7 @@ export function Notifications() {
   const getNotReadReports = () => {
     return reports?.filter((r) => !r.isRead);
   };
-
+  console.log(reports);
   return (
     <>
       <Dropdown>
@@ -104,6 +107,7 @@ export function Notifications() {
           variant="faded"
           aria-label="Notifications Items"
           className="max-h-64 overflow-y-auto"
+          emptyContent="No Notifications"
         >
           {reports &&
             reports.map((report, i) => (
@@ -118,7 +122,7 @@ export function Notifications() {
                     ></img>
                   )
                 }
-                description="Task Report"
+                description={`Report ${report.reportType}`}
                 onClick={() => openModal(report)}
               >
                 {report.content.length > 27

@@ -1,3 +1,4 @@
+const Comments = require("../../../DataBase/Models/comments");
 const Reports = require("../../../DataBase/Models/reports");
 const Users = require('../../../DataBase/Models/users')
 const jwt = require('jsonwebtoken');
@@ -25,21 +26,34 @@ const getReportResolver = {
                         }
                     }
                 }
-                const foundReports = await Reports.find({ typeReport: "TaskSolution" }).sort({ _id: -1 })
+                const foundReports = await Reports.find({
+                    typeReport: { $in: ["TaskSolution", "Comment"] }
+                }).sort({ _id: -1 });
 
                 const results = [];
 
                 for (const report of foundReports) {
                     const user = await Users.findOne({ _id: report.userIdReport })
-                    results.push({
+                    let comment = {}
+                    if (report.typeReport === "Comment") {
+                        const commentFound = await Comments.findOne({ _id: report.idReportType })
+                        comment = report.typeReport === "Comment" ? {
+                            idTask: commentFound.taskId, content: commentFound.text
+                        } : {}
+                    }
+                    
+                    let reportResult = {
                         content: report.reportContent,
                         isRead: report.isRead,
                         taskId: report.idReportType,
                         reportId: report._id,
+                        reportType: report.typeReport,
                         user: {
                             name: user.username,
                         }
-                    })
+                    }
+                    if (Object.values(comment).length !== 0) reportResult = { ...reportResult, comment }
+                    results.push(reportResult)
                 }
 
                 return {
