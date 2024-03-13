@@ -28,7 +28,7 @@ const createCommentResolver = {
                     text: input.text.trim(),
                 })
                 await comment.save()
-                console.log(user)
+                
                 const notification = new Notification({
                     commentId: comment._id,
                     userId: user.id.toString(),

@@ -170,6 +170,11 @@ type reportDetails {
   status: Status!
 }
 
+type commentNotificationDetails {
+  result: String
+  status: Status!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -182,6 +187,7 @@ type Query {
   getModuleExamples(input: getModuleExamplesInput!): getModuleExamplesType!
   getTaskProjectFile(input: getTaskProjectFileInput!): TaskProjectFile!
   getReport: reportDetails!
+  getCommentNotification: commentNotificationDetails!
 }
 
 type Mutation {

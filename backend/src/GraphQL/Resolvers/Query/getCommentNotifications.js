@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const getCommentNotificationResolver = {
     Query: {
-        getReport: async (_, { __ }, { req, ___ }) => {
+        getCommentNotification: async (_, { __ }, { req, ___ }) => {
             try {
                 const cookieToken = req?.cookies?.token;
                 if (!cookieToken) {
@@ -17,36 +17,19 @@ const getCommentNotificationResolver = {
                     };
                 }
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
-                if (id !== process.env.ADMIN_USER) {
-                    return {
-                        status: {
-                            code: 401,
-                            message: "These credentials do not authorize access"
-                        }
-                    }
-                }
                 const foundNotifications = await Notification.find({userId: id});
 
                 const results = [];
 
                 for (const notification of foundNotifications) {
-                    const user = await Comments.findOne({ _id: report.userIdReport })
-                    let comment = {}
-                    if (report.typeReport === "Comment") {
-                        const commentFound = await Comments.findOne({ _id: report.idReportType })
-                        comment = report.typeReport === "Comment" ? {
-                            idTask: commentFound.taskId, content: commentFound.text
-                        } : {}
-                    }
-
-
+                    const {username: userName, text: content, taskId: taskId} = await Comments.findOne({ _id: notification.commentId })
                     results.push({
-                        content: report.reportContent,
-                        isRead: report.isRead,
-                        taskId: report.idReportType,
-                        reportId: report._id,
+                        content: content,
+                        isRead: notification.isRead,
+                        taskId: taskId,
+                        notificationId: notification._id,
                         user: {
-                            name: user.username,
+                            name: userName,
                         }
                     })
                 }
