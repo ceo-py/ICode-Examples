@@ -17,16 +17,25 @@ const getUserIdFromCookie = (rawCookie) => {
     return jwt.verify(matches[0], process.env.SECRET_KEY).userId;
 }
 
-const deleteReport = async (reportId) => {
+const commands = {
+    deleteReport: async (reportId) => {
+        try {
+            await Reports.deleteOne({ _id: reportId })
 
-    try {
-        await Reports.deleteOne({ _id: reportId })
+        } catch (e) {
+            console.log('deleteReport:\n', e);
+        }
+    },
+    makeRead: async (reportId) => {
+        try {
+            await Reports.findByIdAndUpdate(reportId, { $set: { isRead: true } });
 
-    } catch (e) {
-        console.log('DeleteReport:\n', e);
-    }
-
+        } catch (e) {
+            console.log('makeRead:\n', e);
+        }
+    },
 }
+
 
 wss.on('connection', async (ws, req) => {
 
@@ -41,9 +50,11 @@ wss.on('connection', async (ws, req) => {
 
         userConnections.set(userId, ws);
         ws.on('message', (message) => {
-            deleteReport(JSON.parse(message))
+            const [command, userId] = JSON.parse(message).split(' ');
+            if (!commands.hasOwnProperty(command)) return
+            commands[command](userId);
             console.log(`Received message from user ${userId}:`, JSON.parse(message));
-            ws.send(JSON.stringify("Report Deleted"))
+            ws.send(JSON.stringify("Updated"))
         });
 
         ws.on('close', () => {

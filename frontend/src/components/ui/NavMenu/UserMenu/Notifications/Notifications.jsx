@@ -24,13 +24,13 @@ export function Notifications() {
   const connectWebSocket = () => {
     client = new WebSocket("ws://localhost:5001");
     if (!client) return;
-    // client.onopen = () => {
-    //   console.log("WebSocket Client Connected");
-    // };
+    client.onopen = () => {
+      console.log("WebSocket Client Connected");
+    };
 
-    // client.onerror = (error) => {
-    //   console.error("WebSocket Error:", error);
-    // };
+    client.onerror = (error) => {
+      console.error("WebSocket Error:", error);
+    };
 
     client.onclose = () => {
       console.log("WebSocket connection closed. Attempting to reconnect...");
@@ -69,13 +69,21 @@ export function Notifications() {
     }
   };
 
+  const getNotReadReports = () => {
+    return reports?.filter((r) => !r.isRead);
+  };
+
   return (
     <>
       <Dropdown>
         <DropdownTrigger>
           <div className="flex relative rounded-full justify-center items-center hover:bg-default/40">
             <Badge
-              content={reports?.filter((r) => !r.isRead)?.length}
+              content={
+                reports?.length > 0 &&
+                getNotReadReports()?.length > 0 &&
+                getNotReadReports()?.length
+              }
               aria-label="Total Notifications"
               color="danger"
               shape="circle"

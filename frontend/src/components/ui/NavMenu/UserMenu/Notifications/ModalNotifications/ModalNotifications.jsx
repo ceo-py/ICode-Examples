@@ -40,7 +40,10 @@ export function ModalNotifications({
                 onPress={onClose}
                 size="sm"
                 variant="light"
-                onClick={() => navigate(`/solution?id=${modal.taskId}`)}
+                onClick={() => {
+                  navigate(`/solution?id=${modal.taskId}`);
+                  sendMessageToBackEnd(`makeRead ${modal.reportId}`);
+                }}
               >
                 View Task
               </Button>
@@ -50,7 +53,7 @@ export function ModalNotifications({
                 size="sm"
                 variant="light"
                 onClick={() => {
-                  sendMessageToBackEnd(modal.reportId);
+                  sendMessageToBackEnd(`deleteReport ${modal.reportId}`);
                 }}
               >
                 Delete Report
