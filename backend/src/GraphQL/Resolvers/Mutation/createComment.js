@@ -36,7 +36,7 @@ const createCommentResolver = {
 
                 await notification.save()
 
-                const uniqueComments = filterUnique(await Comments.find({ taskId: input.id }).sort({ createdAt: 1 }))
+                const uniqueComments = filterUnique(await Comments.find({ taskId: input.id }))
 
 
                 uniqueComments.forEach(c => {

@@ -9,17 +9,26 @@ import {
 } from "@nextui-org/react";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { REPORT_QUERY } from "../../../../../graphql/queries/getReportsQuery";
 import { ModalNotifications } from "./ModalNotifications/ModalNotifications";
+import { COMMENT_NOTIFICATION_QUERY } from "../../../../../graphql/queries/getCommentNotificationQuery";
+import { useNavigate } from "react-router-dom";
 
 let client;
 
 export function Notifications() {
-  const { loading, error, data, refetch } = useQuery(REPORT_QUERY);
+  const { loading, data, refetch } = useQuery(REPORT_QUERY);
+  const {
+    loading: loadingComment,
+    data: dataComment,
+    refetch: refetchComment,
+  } = useQuery(COMMENT_NOTIFICATION_QUERY);
   const [reports, setReports] = useState([]);
+  const [comments, setComments] = useState([]);
   const [modal, setModal] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const navigate = useNavigate();
 
   const connectWebSocket = () => {
     client = new WebSocket("ws://localhost:5001");
@@ -38,8 +47,10 @@ export function Notifications() {
     };
 
     client.onmessage = (m) => {
-      console.log(m);
-      refetch();
+      const message = m.data;
+      console.log(message)
+      if (message.includes("Comment")) refetchComment();
+      if (message.includes("Report")) refetch();
     };
     return () => {
       client.close();
@@ -54,6 +65,11 @@ export function Notifications() {
     if (loading) return;
     setReports(JSON.parse(data?.getReport?.result));
   }, [data]);
+
+  useEffect(() => {
+    if (loadingComment) return;
+    setComments(JSON.parse(dataComment?.getCommentNotification?.result));
+  }, [dataComment]);
 
   const openModal = (report) => {
     const modalRespond = {
@@ -72,10 +88,11 @@ export function Notifications() {
       client.send(JSON.stringify(message));
     }
   };
-
-  const getNotReadReports = () => {
-    return reports?.filter((r) => !r.isRead);
+  const getNotReadNotification = (data) => {
+    return data?.filter((r) => !r.isRead);
   };
+
+  console.log(comments)
   return (
     <>
       <Dropdown>
@@ -84,8 +101,8 @@ export function Notifications() {
             <Badge
               content={
                 reports?.length > 0 &&
-                getNotReadReports()?.length > 0 &&
-                getNotReadReports()?.length
+                getNotReadNotification(reports)?.length > 0 &&
+                getNotReadNotification(reports)?.length
               }
               aria-label="Total Notifications"
               color="danger"
@@ -110,9 +127,9 @@ export function Notifications() {
           emptyContent="No Notifications"
         >
           {reports &&
-            reports.map((report, i) => (
+            reports.map((report) => (
               <DropdownItem
-                key={i}
+                key={crypto.randomUUID()}
                 shortcut={report.user.name}
                 startContent={
                   !report.isRead && (
@@ -130,6 +147,27 @@ export function Notifications() {
                   : report.content}
               </DropdownItem>
             ))}
+          {comments &&
+            comments.map((comment) => (
+              <DropdownItem
+                key={crypto.randomUUID()}
+                shortcut={comment.user.name}
+                startContent={
+                  !comment.isRead && (
+                    <img
+                      className="max-h-5 max-w-5"
+                      src={linkIcons("send")}
+                    ></img>
+                  )
+                }
+                description="Comment"
+                onClick={() => navigate(`/solution?id=${comment.taskId}`)}
+              >
+                {comment.content.length > 27
+                  ? comment.content.slice(0, 24) + "..."
+                  : comment.content}
+              </DropdownItem>
+            ))}
         </DropdownMenu>
       </Dropdown>
       <ModalNotifications
@@ -137,6 +175,7 @@ export function Notifications() {
         onOpenChange={onOpenChange}
         modal={modal}
         sendMessageToBackEnd={sendMessage}
+        navigate={navigate}
       />
     </>
   );

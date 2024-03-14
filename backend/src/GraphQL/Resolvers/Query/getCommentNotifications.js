@@ -17,11 +17,16 @@ const getCommentNotificationResolver = {
                     };
                 }
                 const { userId: id } = jwt.verify(cookieToken, process.env.SECRET_KEY);
-                const foundNotifications = await Notification.find({userId: id});
+                const foundNotifications = await Notification.find({userId: id}).sort({ _id: -1 });
+
+                const findComments = await Comments.find({ "taskId": taskId }).sort({ createdAt: -1 });
 
                 const results = [];
-
                 for (const notification of foundNotifications) {
+                    const {taskID} = await Comments.find({ "taskId": taskId }).sort({ createdAt: -1 });
+                    console.log('notifi', notification)
+                    const test = await Comments.findOne({ _id: notification.commentId })
+                    console.log('found result', test)
                     const {username: userName, text: content, taskId: taskId} = await Comments.findOne({ _id: notification.commentId })
                     results.push({
                         content: content,

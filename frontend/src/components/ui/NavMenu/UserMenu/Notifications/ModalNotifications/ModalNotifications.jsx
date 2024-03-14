@@ -13,8 +13,8 @@ export function ModalNotifications({
   onOpenChange,
   modal,
   sendMessageToBackEnd,
+  navigate
 }) {
-  const navigate = useNavigate();
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">

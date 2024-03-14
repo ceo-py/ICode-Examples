@@ -51,10 +51,10 @@ wss.on('connection', async (ws, req) => {
         userConnections.set(userId, ws);
         ws.on('message', (message) => {
             const [command, userId] = JSON.parse(message).split(' ');
-            if (!commands.hasOwnProperty(command)) return
-            commands[command](userId);
+            if (commands.hasOwnProperty(command)) commands[command](userId)
+            
             console.log(`Received message from user ${userId}:`, JSON.parse(message));
-            ws.send(JSON.stringify("Updated"))
+            ws.send(JSON.stringify(commands.hasOwnProperty(command)? "Report": "Comment"))
         });
 
         ws.on('close', () => {
