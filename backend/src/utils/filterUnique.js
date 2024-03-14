@@ -1,12 +1,12 @@
 function filterUnique(comments) {
     const uniqueComments = [];
-    let prevCreatedById = "";
+    let usernames = [];
 
     for (const comment of comments) {
-        if (comment.createdById.toString() !== prevCreatedById.toString()) {
+        if (!usernames.includes(comment.username)) {
             uniqueComments.push(comment);
         }
-        prevCreatedById = comment.createdById;
+        usernames.push(comment.username);
     }
     return uniqueComments
 

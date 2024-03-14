@@ -28,20 +28,26 @@ const createCommentResolver = {
                     text: input.text.trim(),
                 })
                 await comment.save()
-                
-                const notification = new Notification({
-                    commentId: comment._id,
-                    userId: user.id.toString(),
-                })
 
-                await notification.save()
+
+                const createNotification = async (commentId, userId) => {
+                    const notification = new Notification({
+                        commentId,
+                        userId
+                    })
+                    await notification.save()
+                }
 
                 const uniqueComments = filterUnique(await Comments.find({ taskId: input.id }))
 
-
                 uniqueComments.forEach(c => {
-                    const user = userConnections.get(c.createdById.toString())
-                    user?.send(JSON.stringify('Comment created'));
+
+                    const userIdNotification = c.createdById.toString()
+                    if (userIdNotification !== decoded.userId) {
+                        createNotification(comment._id, userIdNotification)
+                        const currentUser = userConnections.get(c.createdById.toString())
+                        currentUser?.send(JSON.stringify('Comment created'))
+                    };
                 })
 
 
