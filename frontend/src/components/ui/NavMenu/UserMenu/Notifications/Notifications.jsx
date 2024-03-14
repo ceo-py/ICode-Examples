@@ -9,11 +9,11 @@ import {
 } from "@nextui-org/react";
 import { linkIcons } from "../../../../utils/Icons/linkIcons";
 import { useEffect, useState } from "react";
-import { useLazyQuery, useQuery } from "@apollo/client";
 import { REPORT_QUERY } from "../../../../../graphql/queries/getReportsQuery";
 import { ModalNotifications } from "./ModalNotifications/ModalNotifications";
 import { COMMENT_NOTIFICATION_QUERY } from "../../../../../graphql/queries/getCommentNotificationQuery";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 
 let client;
 
@@ -33,13 +33,13 @@ export function Notifications() {
   const connectWebSocket = () => {
     client = new WebSocket("ws://localhost:5001");
     if (!client) return;
-    client.onopen = () => {
-      console.log("WebSocket Client Connected");
-    };
+    // client.onopen = () => {
+    //   console.log("WebSocket Client Connected");
+    // };
 
-    client.onerror = (error) => {
-      console.error("WebSocket Error:", error);
-    };
+    // client.onerror = (error) => {
+    //   console.error("WebSocket Error:", error);
+    // };
 
     client.onclose = () => {
       console.log("WebSocket connection closed. Attempting to reconnect...");
@@ -48,7 +48,6 @@ export function Notifications() {
 
     client.onmessage = (m) => {
       const message = m.data;
-      console.log(message)
       if (message.includes("Comment")) refetchComment();
       if (message.includes("Report")) refetch();
     };
@@ -88,22 +87,21 @@ export function Notifications() {
       client.send(JSON.stringify(message));
     }
   };
-  const getNotReadNotification = (data) => {
-    return data?.filter((r) => !r.isRead);
+  const getNotReadNotification = (totalReports, totalComments) => {
+    const reportsCounter = totalReports?.filter((r) => !r.isRead).length || 0;
+    const commentsCounter = totalComments?.filter((r) => !r.isRead).length || 0;
+    return reportsCounter + commentsCounter;
   };
-
-  console.log(comments)
   return (
     <>
       <Dropdown>
         <DropdownTrigger>
           <div className="flex relative rounded-full justify-center items-center hover:bg-default/40">
             <Badge
-              content={
-                reports?.length > 0 &&
-                getNotReadNotification(reports)?.length > 0 &&
-                getNotReadNotification(reports)?.length
-              }
+              className={`${
+                getNotReadNotification(reports, comments) === 0 ? "hidden" : ""
+              }`}
+              content={getNotReadNotification(reports, comments)}
               aria-label="Total Notifications"
               color="danger"
               shape="circle"
@@ -151,7 +149,19 @@ export function Notifications() {
             comments.map((comment) => (
               <DropdownItem
                 key={crypto.randomUUID()}
-                shortcut={comment.user.name}
+                shortcut={
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      sendMessage(`deleteComment ${comment.notificationId}`);
+                    }}
+                  >
+                    <img
+                      className="max-h-5 max-w-5"
+                      src={linkIcons("delete")}
+                    ></img>
+                  </span>
+                }
                 startContent={
                   !comment.isRead && (
                     <img
@@ -160,8 +170,11 @@ export function Notifications() {
                     ></img>
                   )
                 }
-                description="Comment"
-                onClick={() => navigate(`/solution?id=${comment.taskId}`)}
+                description={`${comment.user.name} Commented: `}
+                onClick={() => {
+                  sendMessage(`makeReadComment ${comment.notificationId}`);
+                  navigate(`/solution?id=${comment.taskId}`);
+                }}
               >
                 {comment.content.length > 27
                   ? comment.content.slice(0, 24) + "..."

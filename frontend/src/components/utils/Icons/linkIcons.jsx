@@ -12,6 +12,7 @@ export function linkIcons(name) {
     folder: "https://www.svgrepo.com/show/418076/folder.svg",
     file: "https://www.svgrepo.com/show/418047/arrow-right-1.svg",
     send: "https://www.svgrepo.com/show/418110/send.svg",
+    delete: "https://www.svgrepo.com/show/418071/note-delete.svg",
   };
   return linkIconsFull[name];
 }

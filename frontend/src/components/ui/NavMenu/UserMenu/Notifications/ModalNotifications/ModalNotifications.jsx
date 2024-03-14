@@ -6,7 +6,6 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { useNavigate } from "react-router-dom";
 
 export function ModalNotifications({
   isOpen,
@@ -48,7 +47,7 @@ export function ModalNotifications({
                       modal?.comment ? modal.comment?.idTask : modal.taskId
                     }`
                   );
-                  sendMessageToBackEnd(`makeRead ${modal.reportId}`);
+                  sendMessageToBackEnd(`makeReadReport ${modal.reportId}`);
                 }}
               >
                 View Task
