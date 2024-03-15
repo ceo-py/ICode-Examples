@@ -90,10 +90,6 @@ export function SocialMediaLinks({
             onClick={() => handleFollowUser(userId)}
           />
         )}
-
-        {/* {github && (
-          <About about={about} />
-        )} */}
       </AvatarGroup>
     </>
   );

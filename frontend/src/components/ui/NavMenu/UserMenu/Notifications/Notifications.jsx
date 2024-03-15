@@ -50,6 +50,7 @@ export function Notifications() {
       const message = m.data;
       if (message.includes("Comment")) refetchComment();
       if (message.includes("Report")) refetch();
+      if (message.includes("Follower")) console.log("Follower");
     };
     return () => {
       client.close();
