@@ -175,6 +175,11 @@ type commentNotificationDetails {
   status: Status!
 }
 
+type FollowNotification {
+  result: String
+  status: Status!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -188,6 +193,7 @@ type Query {
   getTaskProjectFile(input: getTaskProjectFileInput!): TaskProjectFile!
   getReport: reportDetails!
   getCommentNotification: commentNotificationDetails!
+  getFollowNotification: FollowNotification!
 }
 
 type Mutation {

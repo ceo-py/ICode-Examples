@@ -25,6 +25,7 @@ const tokenResolver = require('./Resolvers/Query/getToken');
 const userResolver = require('./Resolvers/Query/getUser');
 const getUserHomeResolver = require('./Resolvers/Query/getUserHome');
 const getUsernameAndEmailResolver = require('./Resolvers/Query/getUsernameAndEmail');
+const getFollowNotificationResolver = require('./Resolvers/Query/getFollowNotification');
 
 
 
@@ -37,7 +38,7 @@ const resolvers = [
     followUserResolver, createReportResolver, getUserHomeResolver, updateTaskResolver,
     getTaskDetailsForUpdateResolver, deleteTaskResolver, getUsernameAndEmailResolver,
     ResetPasswordResolver, getModuleExamplesResolver, getTaskProjectFileResolver, getReportResolver,
-    getCommentNotificationResolver
+    getCommentNotificationResolver, getFollowNotificationResolver
 ];
 
 module.exports = resolvers;
