@@ -145,6 +145,9 @@ export function CodeCard() {
                       />
                     </Tooltip>
                   )}
+                  <h4 className="text-small tracking-tight text-default-400">{`${searchParams.get(
+                    "course"
+                  )} / ${searchParams.get("module")}`}</h4>
                 </div>
               </div>
 
