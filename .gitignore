@@ -31,3 +31,4 @@ settingsWeb/*
 frontend.zip
 backend.zip
 result.json
+webSocketServerProd.js

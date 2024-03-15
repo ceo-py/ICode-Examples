@@ -2,6 +2,7 @@ const { WebSocketServer } = require('ws');
 const jwt = require('jsonwebtoken');
 const Reports = require('./DataBase/Models/reports');
 const Notification = require('./DataBase/Models/notifications');
+const { parse } = require('cookie');
 
 
 const wss = new WebSocketServer({ port: 5001 });
@@ -55,9 +56,8 @@ const commands = {
 
 
 wss.on('connection', async (ws, req) => {
-
     try {
-        const userId = getUserIdFromCookie(req?.headers?.cookie);
+        const userId = jwt.verify(parse(req?.headers?.cookie).token, process.env.SECRET_KEY).userId;
 
         if (!userId) {
             console.error('User ID not found in the cookie');
