@@ -4,6 +4,7 @@ const Reports = require("./DataBase/Models/reports");
 const Notification = require("./DataBase/Models/notifications");
 const { parse } = require("cookie");
 const followNotification = require("./DataBase/Models/followNotification");
+const likeNotification = require("./DataBase/Models/likeNotification");
 
 const wss = new WebSocketServer({ port: 5001 });
 const userConnections = new Map();
@@ -51,7 +52,6 @@ const commands = {
     }
   },
   makeReadFollow: async (followId) => {
-    console.log("Follow ID: \n", followId);
     try {
       await followNotification.findByIdAndUpdate(followId, {
         $set: { isRead: true },
@@ -65,6 +65,22 @@ const commands = {
       await followNotification.deleteOne({ _id: followId });
     } catch (e) {
       console.log("deleteFollow:\n", e);
+    }
+  },
+  makeReadLike: async (likeId) => {
+    try {
+      await likeNotification.findByIdAndUpdate(likeId, {
+        $set: { isRead: true },
+      });
+    } catch (e) {
+      console.log("likeNotification:\n", e);
+    }
+  },
+  deleteLike: async (likeId) => {
+    try {
+      await likeNotification.deleteOne({ _id: likeId });
+    } catch (e) {
+      console.log("deleteLike:\n", e);
     }
   },
 };
@@ -91,6 +107,7 @@ wss.on("connection", async (ws, req) => {
       if (command.includes("Report")) ws.send("Report");
       if (command.includes("Comment")) ws.send("Comment");
       if (command.includes("Follow")) ws.send("Follow");
+      if (command.includes("Like")) ws.send("Like");
     });
 
     ws.on("close", () => {
