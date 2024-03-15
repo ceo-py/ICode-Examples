@@ -180,6 +180,11 @@ type FollowNotification {
   status: Status!
 }
 
+type LikeNotification {
+  result: String
+  status: Status!
+}
+
 type Query {
   getUser: UserDetail
   getToken: AuthResult!
@@ -194,6 +199,7 @@ type Query {
   getReport: reportDetails!
   getCommentNotification: commentNotificationDetails!
   getFollowNotification: FollowNotification!
+  getLikeNotification: LikeNotification!
 }
 
 type Mutation {
