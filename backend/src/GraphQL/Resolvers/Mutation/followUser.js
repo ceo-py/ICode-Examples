@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Followers = require("../../../DataBase/Models/followers");
+const followNotification = require("../../../DataBase/Models/followNotification");
 const { userConnections } = require("../../../websocketServer");
 
 const followUserResolver = {
@@ -28,7 +29,14 @@ const followUserResolver = {
         await Followers.updateOne({ id: followId }, updateQuery);
 
         if (userIndex < 0) {
-          const followedUser = userConnections.get(input.id);
+
+            const notification = new followNotification({
+                targetUserId: followId,
+                usernameFollowing: decoded.username
+            })
+            await notification.save()
+
+          const followedUser = userConnections.get(followId);
           followedUser?.send(JSON.stringify("New Follower"));
         }
 
