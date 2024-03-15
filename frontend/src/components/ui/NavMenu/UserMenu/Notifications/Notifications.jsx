@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { REPORT_QUERY } from "../../../../../graphql/queries/getReportsQuery";
 import { ModalNotifications } from "./ModalNotifications/ModalNotifications";
 import { COMMENT_NOTIFICATION_QUERY } from "../../../../../graphql/queries/getCommentNotificationQuery";
+import { FOLLOW_NOTIFICATION_QUERY } from "../../../../../graphql/queries/getFollowNotification";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
@@ -20,12 +21,18 @@ let client;
 export function Notifications() {
   const { loading, data, refetch } = useQuery(REPORT_QUERY);
   const {
+    loading: loadingFollow,
+    data: dataFollow,
+    refetch: refetchFollow,
+  } = useQuery(FOLLOW_NOTIFICATION_QUERY);
+  const {
     loading: loadingComment,
     data: dataComment,
     refetch: refetchComment,
   } = useQuery(COMMENT_NOTIFICATION_QUERY);
   const [reports, setReports] = useState([]);
   const [comments, setComments] = useState([]);
+  const [followers, setFollowers] = useState([]);
   const [modal, setModal] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const navigate = useNavigate();
@@ -48,9 +55,10 @@ export function Notifications() {
 
     client.onmessage = (m) => {
       const message = m.data;
+      console.log(message);
       if (message.includes("Comment")) refetchComment();
       if (message.includes("Report")) refetch();
-      if (message.includes("Follower")) console.log("Follower");
+      if (message.includes("Follow")) refetchFollow();
     };
     return () => {
       client.close();
@@ -71,6 +79,11 @@ export function Notifications() {
     setComments(JSON.parse(dataComment?.getCommentNotification?.result));
   }, [dataComment]);
 
+  useEffect(() => {
+    if (loadingFollow) return;
+    setFollowers(JSON.parse(dataFollow?.getFollowNotification?.result));
+  }, [dataFollow]);
+
   const openModal = (report) => {
     const modalRespond = {
       content: report.content,
@@ -88,11 +101,18 @@ export function Notifications() {
       client.send(JSON.stringify(message));
     }
   };
-  const getNotReadNotification = (totalReports, totalComments) => {
+  const getNotReadNotification = (
+    totalReports,
+    totalComments,
+    totalFollowers
+  ) => {
     const reportsCounter = totalReports?.filter((r) => !r.isRead).length || 0;
     const commentsCounter = totalComments?.filter((r) => !r.isRead).length || 0;
-    return reportsCounter + commentsCounter;
+    const followersCounter =
+      totalFollowers?.filter((r) => !r.isRead).length || 0;
+    return reportsCounter + commentsCounter + followersCounter;
   };
+
   return (
     <>
       <Dropdown>
@@ -100,9 +120,11 @@ export function Notifications() {
           <div className="flex relative rounded-full justify-center items-center hover:bg-default/40">
             <Badge
               className={`${
-                getNotReadNotification(reports, comments) === 0 ? "hidden" : ""
+                getNotReadNotification(reports, comments, followers) === 0
+                  ? "hidden"
+                  : ""
               }`}
-              content={getNotReadNotification(reports, comments)}
+              content={getNotReadNotification(reports, comments, followers)}
               aria-label="Total Notifications"
               color="danger"
               shape="circle"
@@ -180,6 +202,40 @@ export function Notifications() {
                 {comment.content.length > 27
                   ? comment.content.slice(0, 24) + "..."
                   : comment.content}
+              </DropdownItem>
+            ))}
+          {followers &&
+            followers.map((follower) => (
+              <DropdownItem
+                key={crypto.randomUUID()}
+                shortcut={
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      sendMessage(`deleteFollow ${follower.followId}`);
+                    }}
+                  >
+                    <img
+                      className="max-h-5 max-w-5"
+                      src={linkIcons("delete")}
+                    ></img>
+                  </span>
+                }
+                startContent={
+                  !follower.isRead && (
+                    <img
+                      className="max-h-5 max-w-5"
+                      src={linkIcons("send")}
+                    ></img>
+                  )
+                }
+                description="New Follower:"
+                onClick={() => {
+                  sendMessage(`makeReadFollow ${follower.followId}`);
+                  navigate(`/user?name=${follower.follower}`);
+                }}
+              >
+                {follower.follower}
               </DropdownItem>
             ))}
         </DropdownMenu>

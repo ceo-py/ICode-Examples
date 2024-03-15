@@ -14,16 +14,14 @@ const getFollowNotificationResolver = {
             },
           };
         }
-        const { username: username } = jwt.verify(
-          cookieToken,
-          process.env.SECRET_KEY
-        );
+        const { userId } = jwt.verify(cookieToken, process.env.SECRET_KEY);
 
         const notifications = await followNotification
-          .find({ username })
+          .find({ targetUserId: userId })
           .sort({ _id: -1 });
 
         const results = notifications.map((n) => ({
+          followId: n._id,
           follower: n.usernameFollowing,
           isRead: n.isRead,
         }));

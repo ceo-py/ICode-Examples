@@ -37,7 +37,7 @@ const followUserResolver = {
             await notification.save()
 
           const followedUser = userConnections.get(followId);
-          followedUser?.send(JSON.stringify("New Follower"));
+          followedUser?.send(JSON.stringify("Follow"));
         }
 
         return {
