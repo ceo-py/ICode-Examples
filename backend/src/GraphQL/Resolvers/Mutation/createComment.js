@@ -46,7 +46,7 @@ const createCommentResolver = {
                     if (userIdNotification !== decoded.userId) {
                         createNotification(comment._id, userIdNotification)
                         const currentUser = userConnections.get(c.createdById.toString())
-                        currentUser?.send(JSON.stringify('Comment created'))
+                        currentUser?.send('Comment created')
                     };
                 })
 

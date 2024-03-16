@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import {
   connectWebSocket,
+  refetchHandler,
   client,
 } from "../../../../utils/webSocketClient/webSocketClient";
 
@@ -68,11 +69,11 @@ export function Notifications() {
   // };
 
   useEffect(() => {
-    connectWebSocket(refetchComment, refetch, refetchFollow);
+    connectWebSocket();
+    refetchHandler.Comment = refetchComment;
+    refetchHandler.Follow = refetchFollow;
+    refetchHandler.Report = refetch;
 
-    // return () => {
-    //   closeWebSocket();
-    // };
   }, []);
 
   useEffect(() => {

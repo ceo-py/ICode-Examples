@@ -1,8 +1,15 @@
 let client;
-const connectWebSocket = (refetchComment, refetch, refetchFollow) => {
+const refetchHandler = {};
+
+const validTypes = ["created", "deleted", "edited"];
+
+const isValidType = (type) => {
+  return validTypes.includes(type);
+};
+const connectWebSocket = () => {
   client = new WebSocket("ws://localhost:5001");
   if (!client) return;
-  console.log(refetch);
+
   // client.onopen = () => {
   //   console.log("WebSocket Client Connected");
   // };
@@ -17,11 +24,15 @@ const connectWebSocket = (refetchComment, refetch, refetchFollow) => {
   };
 
   client.onmessage = (m) => {
-    const message = m.data;
-    console.log(message);
-    if (message.includes("Comment")) refetchComment();
-    if (message.includes("Report")) refetch();
-    if (message.includes("Follow")) refetchFollow();
+    // const message = m.data;
+    const [command, type] = m.data.split(" ");
+    console.log(m.data);
+
+    if (!refetchHandler.hasOwnProperty(command)) return;
+    refetchHandler[command]();
+    if (isValidType(type)) {
+      refetchHandler.CommentList();
+    }
   };
 };
 const closeWebSocket = () => {
@@ -30,4 +41,4 @@ const closeWebSocket = () => {
     client = null;
   }
 };
-export { connectWebSocket, closeWebSocket, client };
+export { connectWebSocket, refetchHandler, client };

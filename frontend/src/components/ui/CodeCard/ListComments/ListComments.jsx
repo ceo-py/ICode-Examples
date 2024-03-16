@@ -21,6 +21,8 @@ import serverError from "../../../utils/serverError/serverError";
 import { zoomAndClick } from "../../../utils/css/zoomAndClick";
 import { useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { refetchHandler } from "../../../utils/webSocketClient/webSocketClient";
+import { useEffect } from "react";
 
 const dropDownBtnSettings = [
   {
@@ -92,6 +94,10 @@ export function ListComments({
       console.error("Comment Error:", error.message);
     }
   };
+
+  useEffect(() => {
+    refetchHandler.CommentList = refetch;
+  }, []);
 
   const navigateUser = (username) => {
     navigate(`/user?name=${username}`);
