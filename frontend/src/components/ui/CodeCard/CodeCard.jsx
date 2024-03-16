@@ -57,7 +57,7 @@ export function CodeCard() {
     if (!data?.getTaskSingleDetails?.comments) return;
     setCommentsList(JSON.parse(data?.getTaskSingleDetails?.comments));
   }, [data]);
-  
+
   return (
     <>
       {loading ? (
@@ -146,11 +146,12 @@ export function CodeCard() {
                       />
                     </Tooltip>
                   )}
-                  {searchParams.get("module") && (
-                    <h4 className="text-small tracking-tight text-default-400">{`${searchParams.get(
-                      "course"
-                    )} / ${searchParams.get("module")}`}</h4>
-                  )}
+                  {searchParams.get("module") &&
+                    searchParams.get("module") !== "others" && (
+                      <h4 className="text-small tracking-tight text-default-400">{`${searchParams.get(
+                        "course"
+                      )} / ${searchParams.get("module")}`}</h4>
+                    )}
                 </div>
               </div>
 

@@ -14,7 +14,6 @@ export default function DeleteTaskModal({ isOpen, onOpenChange }) {
   const [taskDelete] = useMutation(TASK_DELETE_MUTATION);
   const [searchParams] = useSearchParams();
 
-
   const handleDeleteTask = async () => {
     try {
       await taskDelete({
@@ -42,11 +41,18 @@ export default function DeleteTaskModal({ isOpen, onOpenChange }) {
               </p>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button
+                color="danger"
+                variant="light"
+                size="sm"
+                onPress={onClose}
+              >
                 Cancel
               </Button>
               <Button
                 color="primary"
+                variant="light"
+                size="sm"
                 onPress={() => {
                   onClose();
                   handleDeleteTask();

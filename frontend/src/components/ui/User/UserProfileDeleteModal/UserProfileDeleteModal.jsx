@@ -25,7 +25,7 @@ export default function UserProfileDeleteModal({ isOpen, onOpenChange }) {
         }
       })
       .catch((error) => {
-        serverError()
+        serverError();
       });
   };
 
@@ -34,7 +34,7 @@ export default function UserProfileDeleteModal({ isOpen, onOpenChange }) {
       await userDelete();
       handleLogout();
     } catch (error) {
-      serverError()
+      serverError();
     }
   };
 
@@ -56,11 +56,18 @@ export default function UserProfileDeleteModal({ isOpen, onOpenChange }) {
                 </p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  size="sm"
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
                 <Button
                   color="primary"
+                  variant="light"
+                  size="sm"
                   onPress={() => {
                     onClose();
                     handleUserDelete();
