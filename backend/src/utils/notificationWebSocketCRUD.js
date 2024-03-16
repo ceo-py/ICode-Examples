@@ -18,15 +18,19 @@ const sendMessageWSS = async ({
   message,
   notifyUser,
 }) => {
-  const uniqueComments = filterUnique(await Comments.find({ taskId }));
-  uniqueComments.forEach((c) => {
-    const userIdNotification = c.createdById.toString();
-    if (userIdNotification !== userId) {
-      if (notifyUser) createNotification(commentId, userIdNotification);
-      const currentUser = userConnections.get(c.createdById.toString());
-      currentUser?.send(message);
-    }
-  });
+  try {
+    const uniqueComments = filterUnique(await Comments.find({ taskId }));
+    uniqueComments.forEach((c) => {
+      const userIdNotification = c.createdById.toString();
+      if (userIdNotification !== userId) {
+        if (notifyUser) createNotification(commentId, userIdNotification);
+        const currentUser = userConnections.get(c.createdById.toString());
+        currentUser?.send(message);
+      }
+    });
+  } catch (e) {
+    console.log("sendMessageWSS: \n", e);
+  }
 };
 
 module.exports = sendMessageWSS;

@@ -1,9 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Comments = require("../../../DataBase/Models/comments");
 const UserDetail = require("../../../DataBase/Models/userDetails");
-const { userConnections } = require("../../../websocketServer");
-const filterUnique = require("../../../utils/filterUnique");
-const Notification = require("../../../DataBase/Models/notifications");
 const sendMessageWSS = require("../../../utils/notificationWebSocketCRUD");
 
 const createCommentResolver = {
@@ -36,25 +33,6 @@ const createCommentResolver = {
           message: "Comment created",
           notifyUser: true,
         });
-        // const createNotification = async (commentId, userId) => {
-        //     const notification = new Notification({
-        //         commentId,
-        //         userId
-        //     })
-        //     await notification.save()
-        // }
-
-        // const uniqueComments = filterUnique(await Comments.find({ taskId: input.id }))
-
-        // uniqueComments.forEach(c => {
-
-        //     const userIdNotification = c.createdById.toString()
-        //     if (userIdNotification !== decoded.userId) {
-        //         createNotification(comment._id, userIdNotification)
-        //         const currentUser = userConnections.get(c.createdById.toString())
-        //         currentUser?.send('Comment created')
-        //     };
-        // })
 
         return {
           status: {
