@@ -15,8 +15,10 @@ import { COMMENT_NOTIFICATION_QUERY } from "../../../../../graphql/queries/getCo
 import { FOLLOW_NOTIFICATION_QUERY } from "../../../../../graphql/queries/getFollowNotification";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-
-let client;
+import {
+  connectWebSocket,
+  client,
+} from "../../../../utils/webSocketClient/webSocketClient";
 
 export function Notifications() {
   const { loading, data, refetch } = useQuery(REPORT_QUERY);
@@ -37,36 +39,40 @@ export function Notifications() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const navigate = useNavigate();
 
-  const connectWebSocket = () => {
-    client = new WebSocket("ws://localhost:5001");
-    if (!client) return;
-    // client.onopen = () => {
-    //   console.log("WebSocket Client Connected");
-    // };
+  // const connectWebSocket = () => {
+  //   client = new WebSocket("ws://localhost:5001");
+  //   if (!client) return;
+  //   // client.onopen = () => {
+  //   //   console.log("WebSocket Client Connected");
+  //   // };
 
-    // client.onerror = (error) => {
-    //   console.error("WebSocket Error:", error);
-    // };
+  //   // client.onerror = (error) => {
+  //   //   console.error("WebSocket Error:", error);
+  //   // };
 
-    client.onclose = () => {
-      console.log("WebSocket connection closed. Attempting to reconnect...");
-      setTimeout(connectWebSocket, 5000);
-    };
+  //   client.onclose = () => {
+  //     console.log("WebSocket connection closed. Attempting to reconnect...");
+  //     setTimeout(connectWebSocket, 5000);
+  //   };
 
-    client.onmessage = (m) => {
-      const message = m.data;
-      console.log(message);
-      if (message.includes("Comment")) refetchComment();
-      if (message.includes("Report")) refetch();
-      if (message.includes("Follow")) refetchFollow();
-    };
-    return () => {
-      client.close();
-    };
-  };
+  //   client.onmessage = (m) => {
+  //     const message = m.data;
+  //     console.log(message);
+  //     if (message.includes("Comment")) refetchComment();
+  //     if (message.includes("Report")) refetch();
+  //     if (message.includes("Follow")) refetchFollow();
+  //   };
+  //   return () => {
+  //     client.close();
+  //   };
+  // };
 
   useEffect(() => {
-    connectWebSocket();
+    connectWebSocket(refetchComment, refetch, refetchFollow);
+
+    // return () => {
+    //   closeWebSocket();
+    // };
   }, []);
 
   useEffect(() => {
