@@ -22,14 +22,13 @@ import { zoomAndClick } from "../../../utils/css/zoomAndClick";
 import { useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { refetchHandler } from "../../../utils/webSocketClient/webSocketClient";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const dropDownBtnSettings = [
   {
     textValue: "Edit",
     onPress: (btn) => {
       btn.value = true;
-      console.log(`Edit Was clicked`);
     },
     iconSrc: "https://www.svgrepo.com/show/418007/edit-1.svg",
   },
@@ -42,7 +41,6 @@ const dropDownBtnSettings = [
     textValue: "Report",
     onPress: (btn) => {
       btn();
-      console.log(`Report Was clicked`);
     },
     iconSrc: "https://www.svgrepo.com/show/418024/report.svg",
   },
@@ -54,11 +52,8 @@ export function ListComments({
   setCommentsList,
   commentsList,
 }) {
-  const [focus, comment, hover] = [
-    useSignal(false),
-    useSignal(commentData.text),
-    useSignal(false),
-  ];
+  const [focus, hover] = [useSignal(false), useSignal(false)];
+  const [comment, setComment] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { state } = useAuth();
   const [commentEdit] = useMutation(EDIT_COMMENT_MUTATION);
@@ -70,7 +65,6 @@ export function ListComments({
       const { data } = await commentEdit({
         variables: { input: { id, text } },
       });
-      console.log(data);
       if (data?.editComment?.code === 200) {
         refetch();
       }
@@ -99,10 +93,13 @@ export function ListComments({
     refetchHandler.CommentList = refetch;
   }, []);
 
+  useEffect(() => {
+    setComment(commentData.text);
+  }, [commentData]);
+
   const navigateUser = (username) => {
     navigate(`/user?name=${username}`);
   };
-
   return (
     <Card
       className="max-w-full shadow-none"
@@ -143,8 +140,8 @@ export function ListComments({
             labelPlacement="outside"
             minRows="1"
             maxRows="4"
-            value={comment.value}
-            onValueChange={(v) => (comment.value = v)}
+            value={comment}
+            onValueChange={(v) => setComment(v)}
           />
           {hover.value && !focus.value ? (
             <Dropdown>
@@ -192,14 +189,14 @@ export function ListComments({
       {focus?.value && (
         <div className="flex flex-row-reverse gap-2 p-3">
           <Button
-            color={comment.value.trim() ? "primary" : "default"}
+            color={comment.trim() ? "primary" : "default"}
             radius="full"
             size="sm"
-            isDisabled={comment.value.trim() === commentData.text}
+            isDisabled={comment.trim() === commentData.text}
             onPress={() => {
               focus.value = !focus.value;
-              comment.value = comment.value.trim();
-              handleEditComment(commentData.commentId, comment.value);
+              setComment(commentData.text);
+              handleEditComment(commentData.commentId, comment);
             }}
           >
             Edit

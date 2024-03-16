@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Comments = require("../../../DataBase/Models/comments");
+const sendMessageWSS = require("../../../utils/notificationWebSocketCRUD");
 
 const editCommentResolver = {
   Mutation: {
@@ -12,12 +13,20 @@ const editCommentResolver = {
         };
       }
       try {
-        jwt.verify(cookieToken, process.env.SECRET_KEY);
+        const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
         const updatedUserDetail = await Comments.findOneAndUpdate(
           { _id: input.id },
           { $set: { text: input.text } },
           { new: true }
         );
+
+        await sendMessageWSS({
+          taskId: updatedUserDetail.taskId.toString(),
+          userId: decoded.userId,
+          commentId: updatedUserDetail._id,
+          message: "Comment edited",
+          notifyUser: false,
+        });
 
         if (!updatedUserDetail) {
           return {

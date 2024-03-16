@@ -24,7 +24,9 @@ const deleteCommentResolver = {
           message: "Comment deleted",
           notifyUser: false,
         });
+
         await Comments.deleteOne({ _id: comment._id });
+
         return {
           code: 200,
           message: "Delete comment successfully",

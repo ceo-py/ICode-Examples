@@ -29,15 +29,14 @@ const followUserResolver = {
         await Followers.updateOne({ id: followId }, updateQuery);
 
         if (userIndex < 0) {
-
-            const notification = new followNotification({
-                targetUserId: followId,
-                usernameFollowing: decoded.username
-            })
-            await notification.save()
+          const notification = new followNotification({
+            targetUserId: followId,
+            usernameFollowing: decoded.username,
+          });
+          await notification.save();
 
           const followedUser = userConnections.get(followId);
-          followedUser?.send(JSON.stringify("Follow"));
+          followedUser?.send("Follow");
         }
 
         return {

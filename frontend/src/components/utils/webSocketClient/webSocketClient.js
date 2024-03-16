@@ -24,15 +24,14 @@ const connectWebSocket = () => {
   };
 
   client.onmessage = (m) => {
-    // const message = m.data;
     const [command, type] = m.data.split(" ");
-    console.log(m.data);
+    console.log(command);
 
     if (!refetchHandler.hasOwnProperty(command)) return;
+
+    if (isValidType(type)) refetchHandler.CommentList();
+
     refetchHandler[command]();
-    if (isValidType(type)) {
-      refetchHandler.CommentList();
-    }
   };
 };
 const closeWebSocket = () => {
