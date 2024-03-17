@@ -22,6 +22,7 @@ const getLikeNotificationResolver = {
 
         const results = likes.map((l) => ({
           taskId: l.taskId,
+          taskName: l.taskName,
           likeId: l._id,
           liker: l.usernameLiking,
           isRead: l.isRead,

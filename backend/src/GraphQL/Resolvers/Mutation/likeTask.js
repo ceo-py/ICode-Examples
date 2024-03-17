@@ -28,13 +28,14 @@ const likeTaskResolver = {
           : (updateQuery.$pull = { likes: userId });
         await Likes.updateOne({ id: taskId }, updateQuery);
 
-        const { id: targetUserId } = await TaskSolution.findOne({
+        const { id: targetUserId, taskName } = await TaskSolution.findOne({
           _id: taskId,
         });
 
         if (userIndex < 0 && decoded.userId !== targetUserId.toString()) {
           const like = new likeNotification({
             targetUserId: targetUserId.toString(),
+            taskName,
             usernameLiking: decoded.username,
             taskId,
           });

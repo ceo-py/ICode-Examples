@@ -20,60 +20,43 @@ import {
   refetchHandler,
   client,
 } from "../../../../utils/webSocketClient/webSocketClient";
+import { LIKE_NOTIFICATION_QUERY } from "../../../../../graphql/queries/getLikeNotification";
 
 export function Notifications() {
   const { loading, data, refetch } = useQuery(REPORT_QUERY);
+
   const {
     loading: loadingFollow,
     data: dataFollow,
     refetch: refetchFollow,
   } = useQuery(FOLLOW_NOTIFICATION_QUERY);
+
   const {
     loading: loadingComment,
     data: dataComment,
     refetch: refetchComment,
   } = useQuery(COMMENT_NOTIFICATION_QUERY);
+
+  const {
+    loading: loadingLike,
+    data: dataLike,
+    refetch: refetchLike,
+  } = useQuery(LIKE_NOTIFICATION_QUERY);
+
   const [reports, setReports] = useState([]);
   const [comments, setComments] = useState([]);
   const [followers, setFollowers] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [modal, setModal] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const navigate = useNavigate();
-
-  // const connectWebSocket = () => {
-  //   client = new WebSocket("ws://localhost:5001");
-  //   if (!client) return;
-  //   // client.onopen = () => {
-  //   //   console.log("WebSocket Client Connected");
-  //   // };
-
-  //   // client.onerror = (error) => {
-  //   //   console.error("WebSocket Error:", error);
-  //   // };
-
-  //   client.onclose = () => {
-  //     console.log("WebSocket connection closed. Attempting to reconnect...");
-  //     setTimeout(connectWebSocket, 5000);
-  //   };
-
-  //   client.onmessage = (m) => {
-  //     const message = m.data;
-  //     console.log(message);
-  //     if (message.includes("Comment")) refetchComment();
-  //     if (message.includes("Report")) refetch();
-  //     if (message.includes("Follow")) refetchFollow();
-  //   };
-  //   return () => {
-  //     client.close();
-  //   };
-  // };
 
   useEffect(() => {
     connectWebSocket();
     refetchHandler.Comment = refetchComment;
     refetchHandler.Follow = refetchFollow;
     refetchHandler.Report = refetch;
-
+    refetchHandler.Like = refetchLike;
   }, []);
 
   useEffect(() => {
@@ -90,6 +73,11 @@ export function Notifications() {
     if (loadingFollow) return;
     setFollowers(JSON.parse(dataFollow?.getFollowNotification?.result));
   }, [dataFollow]);
+
+  useEffect(() => {
+    if (loadingLike) return;
+    setLikes(JSON.parse(dataLike?.getLikeNotification?.result));
+  }, [dataLike]);
 
   const openModal = (report) => {
     const modalRespond = {
@@ -111,13 +99,15 @@ export function Notifications() {
   const getNotReadNotification = (
     totalReports,
     totalComments,
-    totalFollowers
+    totalFollowers,
+    totalLikes
   ) => {
     const reportsCounter = totalReports?.filter((r) => !r.isRead).length || 0;
     const commentsCounter = totalComments?.filter((r) => !r.isRead).length || 0;
     const followersCounter =
       totalFollowers?.filter((r) => !r.isRead).length || 0;
-    return reportsCounter + commentsCounter + followersCounter;
+    const likesCounter = totalLikes?.filter((r) => !r.isRead).length || 0;
+    return reportsCounter + commentsCounter + followersCounter + likesCounter;
   };
 
   return (
@@ -127,11 +117,17 @@ export function Notifications() {
           <div className="flex relative rounded-full justify-center items-center hover:bg-default/40">
             <Badge
               className={`${
-                getNotReadNotification(reports, comments, followers) === 0
+                getNotReadNotification(reports, comments, followers, likes) ===
+                0
                   ? "hidden"
                   : ""
               }`}
-              content={getNotReadNotification(reports, comments, followers)}
+              content={getNotReadNotification(
+                reports,
+                comments,
+                followers,
+                likes
+              )}
               aria-label="Total Notifications"
               color="danger"
               shape="circle"
@@ -243,6 +239,40 @@ export function Notifications() {
                 }}
               >
                 {follower.follower}
+              </DropdownItem>
+            ))}
+          {likes &&
+            likes.map((like) => (
+              <DropdownItem
+                key={crypto.randomUUID()}
+                shortcut={
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      sendMessage(`deleteLike ${like.likeId}`);
+                    }}
+                  >
+                    <img
+                      className="max-h-5 max-w-5"
+                      src={linkIcons("delete")}
+                    ></img>
+                  </span>
+                }
+                startContent={
+                  !like.isRead && (
+                    <img
+                      className="max-h-5 max-w-5"
+                      src={linkIcons("send")}
+                    ></img>
+                  )
+                }
+                description={`Like from ${like.liker}`}
+                onClick={() => {
+                  sendMessage(`makeReadLike ${like.likeId}`);
+                  navigate(`/solution?id=${like.taskId}`);
+                }}
+              >
+                {like.taskName}
               </DropdownItem>
             ))}
         </DropdownMenu>
