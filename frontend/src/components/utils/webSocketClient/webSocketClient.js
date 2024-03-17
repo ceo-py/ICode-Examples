@@ -25,7 +25,7 @@ const connectWebSocket = () => {
 
   client.onmessage = (m) => {
     const [command, type] = m.data.split(" ");
-    console.log(command);
+    // console.log(command);
 
     if (!refetchHandler.hasOwnProperty(command)) return;
 

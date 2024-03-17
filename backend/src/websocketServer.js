@@ -9,80 +9,37 @@ const likeNotification = require("./DataBase/Models/likeNotification");
 const wss = new WebSocketServer({ port: 5001 });
 const userConnections = new Map();
 
-const getUserIdFromCookie = (rawCookie) => {
-  const regex = /token=(.*?);/g;
-  const matches = [];
-  let match;
-  while ((match = regex.exec(rawCookie)) !== null) {
-    matches.push(match[1]);
+const updateNotification = async (model, id, update) => {
+  try {
+    await model.findByIdAndUpdate(id, { $set: update });
+  } catch (error) {
+    console.log(`${model.modelName}:\n`, error);
   }
-  if (matches.length === 0) return;
-  return jwt.verify(matches[0], process.env.SECRET_KEY).userId;
+};
+
+const deleteNotification = async (model, id) => {
+  try {
+    await model.deleteOne({ _id: id });
+  } catch (error) {
+    console.log(`delete${model.modelName}:\n`, error);
+  }
 };
 
 const commands = {
-  deleteReport: async (reportId) => {
-    try {
-      await Reports.deleteOne({ _id: reportId });
-    } catch (e) {
-      console.log("deleteReport:\n", e);
-    }
-  },
-  makeReadReport: async (reportId) => {
-    try {
-      await Reports.findByIdAndUpdate(reportId, { $set: { isRead: true } });
-    } catch (e) {
-      console.log("makeReadReport:\n", e);
-    }
-  },
-  makeReadComment: async (commentId) => {
-    try {
-      await Notification.findByIdAndUpdate(commentId, {
-        $set: { isRead: true },
-      });
-    } catch (e) {
-      console.log("makeReadComment:\n", e);
-    }
-  },
-  deleteComment: async (commentId) => {
-    try {
-      await Notification.deleteOne({ _id: commentId });
-    } catch (e) {
-      console.log("deleteComment:\n", e);
-    }
-  },
-  makeReadFollow: async (followId) => {
-    try {
-      await followNotification.findByIdAndUpdate(followId, {
-        $set: { isRead: true },
-      });
-    } catch (e) {
-      console.log("followNotification:\n", e);
-    }
-  },
-  deleteFollow: async (followId) => {
-    try {
-      await followNotification.deleteOne({ _id: followId });
-    } catch (e) {
-      console.log("deleteFollow:\n", e);
-    }
-  },
-  makeReadLike: async (likeId) => {
-    try {
-      await likeNotification.findByIdAndUpdate(likeId, {
-        $set: { isRead: true },
-      });
-    } catch (e) {
-      console.log("likeNotification:\n", e);
-    }
-  },
-  deleteLike: async (likeId) => {
-    try {
-      await likeNotification.deleteOne({ _id: likeId });
-    } catch (e) {
-      console.log("deleteLike:\n", e);
-    }
-  },
+  deleteReport: async (reportId) => deleteNotification(Reports, reportId),
+  makeReadReport: async (reportId) =>
+    updateNotification(Reports, reportId, { isRead: true }),
+  makeReadComment: async (commentId) =>
+    updateNotification(Notification, commentId, { isRead: true }),
+  deleteComment: async (commentId) =>
+    deleteNotification(Notification, commentId),
+  makeReadFollow: async (followId) =>
+    updateNotification(followNotification, followId, { isRead: true }),
+  deleteFollow: async (followId) =>
+    deleteNotification(followNotification, followId),
+  makeReadLike: async (likeId) =>
+    updateNotification(likeNotification, likeId, { isRead: true }),
+  deleteLike: async (likeId) => deleteNotification(likeNotification, likeId),
 };
 
 wss.on("connection", async (ws, req) => {

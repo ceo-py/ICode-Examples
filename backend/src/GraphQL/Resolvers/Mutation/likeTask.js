@@ -41,7 +41,7 @@ const likeTaskResolver = {
           });
           await like.save();
 
-          const likedUser = userConnections.get(targetUserId);
+          const likedUser = userConnections.get(targetUserId.toString());
           likedUser?.send("Like");
         }
 
