@@ -38,6 +38,10 @@ Check out the live version of [iCode Example](https://icode-example.ceo-py.eu/).
 
 - Filter results by name, language, code and video, making it easy to find specific solutions.
 
+### 8. Real-time Notification System
+
+- Stay informed with real-time notifications for activities such as task reports, comments, and likes, enhancing collaboration and engagement on the platform. 
+
 # Technologies Used
 
 This project leverages a robust stack of technologies to deliver a seamless and performant user experience.
@@ -57,6 +61,7 @@ This project leverages a robust stack of technologies to deliver a seamless and 
 
 - **React:** A popular JavaScript library for building user interfaces with a declarative and component-based approach.
 - **Vite:** A rapid development environment (IDE) for React applications, enabling fast building and hot reloading.
+- **WebSocket Client:** A client-side library for establishing websocket connections and enabling real-time communication between the frontend and backend.
 - **Tailwind CSS:** A utility-first CSS framework for rapid styling and responsive design.
 - **Next UI:** A collection of pre-built React components for essential UI elements, reducing development time.
 - **DOMPurify:** A DOM-based content security policy (CSP) library for sanitizing and securing user-submitted HTML, MathML, and SVG content.
@@ -68,10 +73,12 @@ This project leverages a robust stack of technologies to deliver a seamless and 
 - **Express:** A popular Node.js framework for building web APIs and handling HTTP requests.
 - **Octokit:** A Node.js library for interacting with the GitHub API, enabling seamless integration with GitHub features.
 - **GraphQL:** A data query language and API development tool for fetching and managing data efficiently.
+- **WebSocket:** A JavaScript library for real-time web applications, facilitating bidirectional communication between clients and servers through websockets.
 - **MongoDB:** A NoSQL database for storing and retrieving dynamic data collections.
 - **Mongoose Cloud:** A cloud-based version of Mongoose, providing serverless database management.
 - **JSON Web Token (JWT):** A secure authentication method for verifying user identities and access permissions.
 - **bcrypt:** A password-hashing library for protecting user passwords against unauthorized access.
+- **highlight.js:** A syntax highlighter supporting 192 languages for Node.js and the web.
 
 
 
