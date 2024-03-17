@@ -19,7 +19,7 @@ const connectWebSocket = () => {
   // };
 
   client.onclose = () => {
-    console.log("WebSocket connection closed. Attempting to reconnect...");
+    // console.log("WebSocket connection closed. Attempting to reconnect...");
     setTimeout(connectWebSocket, 5000);
   };
 
@@ -29,7 +29,9 @@ const connectWebSocket = () => {
 
     if (!refetchHandler.hasOwnProperty(command)) return;
 
-    if (isValidType(type)) refetchHandler.CommentList();
+    if (command === "Comment" && isValidType(type)) {
+      refetchHandler.CommentList();
+    }
 
     refetchHandler[command]();
   };

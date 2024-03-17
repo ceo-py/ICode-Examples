@@ -1,44 +1,62 @@
-const jwt = require('jsonwebtoken');
-const Likes = require('../../../DataBase/Models/likes');
+const jwt = require("jsonwebtoken");
+const Likes = require("../../../DataBase/Models/likes");
+const likeNotification = require("../../../DataBase/Models/likeNotification");
+const { userConnections } = require("../../../websocketServer");
+const TaskSolution = require("../../../DataBase/Models/taskSolutions");
 
 const likeTaskResolver = {
-    Mutation: {
-        likeTask: async (_, { input }, { req, res }) => {
-            const cookieToken = req?.cookies?.token;
-            const taskId = input.id
+  Mutation: {
+    likeTask: async (_, { input }, { req, res }) => {
+      const cookieToken = req?.cookies?.token;
+      const taskId = input.id;
 
-            if (!taskId) {
-                return {
-                    code: 401,
-                    message: 'Missing like details'
-                }
-            }
-            try {
-                const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
-                const userId = decoded.userId
-                const taskLikes = await Likes.findOne({ id: taskId })
-                const updateQuery = { id: taskId };
-                const userIndex = taskLikes.likes.indexOf(userId);
+      if (!taskId) {
+        return {
+          code: 401,
+          message: "Missing Like details",
+        };
+      }
+      try {
+        const decoded = jwt.verify(cookieToken, process.env.SECRET_KEY);
+        const userId = decoded.userId;
+        const taskLikes = await Likes.findOne({ id: taskId });
+        const updateQuery = { id: taskId };
+        const userIndex = taskLikes.likes.indexOf(userId);
 
-                userIndex === -1 ? updateQuery.$addToSet = { likes: userId } : updateQuery.$pull = { likes: userId };
-                await Likes.updateOne({ id: taskId }, updateQuery);
+        userIndex === -1
+          ? (updateQuery.$addToSet = { likes: userId })
+          : (updateQuery.$pull = { likes: userId });
+        await Likes.updateOne({ id: taskId }, updateQuery);
 
-                return {
+        const { id: targetUserId } = await TaskSolution.findOne({
+          _id: taskId,
+        });
 
-                    code: 200,
-                    message: 'Like request successful'
+        if (userIndex < 0 && decoded.userId !== targetUserId.toString()) {
+          const like = new likeNotification({
+            targetUserId: targetUserId.toString(),
+            usernameLiking: decoded.username,
+            taskId,
+          });
+          await like.save();
 
-                };
-
-            } catch (e) {
-                console.error('Like tasks error:\n', e)
-                return {
-                    code: 500,
-                    message: 'Like request unsuccessful'
-                }
-            }
+          const likedUser = userConnections.get(targetUserId);
+          likedUser?.send("Like");
         }
-    }
+
+        return {
+          code: 200,
+          message: "Like request successful",
+        };
+      } catch (e) {
+        console.error("Like tasks error:\n", e);
+        return {
+          code: 500,
+          message: "Like request unsuccessful",
+        };
+      }
+    },
+  },
 };
 
 module.exports = likeTaskResolver;
