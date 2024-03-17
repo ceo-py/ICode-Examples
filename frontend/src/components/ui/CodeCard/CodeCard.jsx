@@ -48,6 +48,17 @@ export function CodeCard() {
     navigate(`/edit?&id=${data?.getTaskSingleDetails?.taskId}`);
   };
 
+  const metaTagTitleGenerator = () => {
+    let title = `${data.getTaskSingleDetails.taskName} `;
+    if (!searchParams.get("module")) return title;
+    title += `- ${data.getTaskSingleDetails.video ? "Video Solution " : ""}${
+      searchParams.get("language") === "C  "
+        ? "C++"
+        : searchParams.get("language")
+    } ${searchParams.get("course")} ${searchParams.get("module")}`;
+    return title;
+  };
+
   useEffect(() => {
     if (data?.getTaskSingleDetails?.project) {
       setProject(
@@ -65,13 +76,7 @@ export function CodeCard() {
       ) : data?.getTaskSingleDetails?.status?.code === 200 ? (
         <>
           <MetaTags
-            title={`${data.getTaskSingleDetails.taskName} - ${
-              data.getTaskSingleDetails.video ? "Video Solution " : ""
-            }${
-              searchParams.get("language") === "C  "
-                ? "C++"
-                : searchParams.get("language")
-            } ${searchParams.get("course")} ${searchParams.get("module")}`}
+            title={metaTagTitleGenerator()}
             description={`Explore solution for the ${
               searchParams.get("language") === "C  "
                 ? "C++"
