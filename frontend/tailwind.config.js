@@ -9,14 +9,13 @@ export default {
   theme: {
     extend: {},
     screens: {
-      'sm': '640px',      
-      'custom-sm': '400px', 
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',     
+      sm: "640px",
+      "custom-sm": "400px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
     },
   },
   darkMode: "class",
   plugins: [nextui()],
-}
-
+};
