@@ -6,8 +6,8 @@ export function DropDownMenuIcon({ alt, src }) {
     <Avatar
       alt={alt}
       className={`${
-        (alt === "code icon" ||
-        alt === "C++") && selectedThemeSignal.value === "dark"
+        (alt === "code icon" || alt === "C++" || alt === "cpp language icon") &&
+        selectedThemeSignal.value === "dark"
           ? "invert"
           : ""
       } w-4 h-4 bg- `}
