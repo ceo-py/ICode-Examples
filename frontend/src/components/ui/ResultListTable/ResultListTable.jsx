@@ -20,6 +20,7 @@ import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 import serverError from "../../utils/serverError/serverError";
 import DOMPurify from "dompurify";
 import { MetaTags } from "../MetaTags/MetaTags";
+import { selectedThemeSignal } from "../NavMenu/ThemeSwitch/ThemeSignal";
 
 export function ResultListTable({
   outsideData,
@@ -65,7 +66,10 @@ export function ResultListTable({
     if (column === "codeAndVIdeo") {
       return (
         <div className="flex gap-3">
-          <DropDownMenuIcon alt="code icon" src={linkIcons("code")} />
+          <DropDownMenuIcon
+            alt="code icon"
+            src={linkIcons("code")}
+          />
           {item.videoLink && (
             <DropDownMenuIcon alt="video icon" src={linkIcons("youTube")} />
           )}
