@@ -1,6 +1,7 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import { languages } from "./data";
 import DOMPurify from "dompurify";
+import { selectedThemeSignal } from "../../NavMenu/ThemeSwitch/ThemeSignal";
 
 export function SelectLanguage({ menu }) {
   return (
@@ -19,7 +20,12 @@ export function SelectLanguage({ menu }) {
         startContent={
           <Avatar
             alt=""
-            className="w-8 h-6"
+            className={`${
+              selectedThemeSignal.value === "dark" &&
+              menu?.value?.name?.language === "C++"
+                ? "invert"
+                : ""
+            } w-6 h-6`}
             src={
               menu?.value?.name?.url
                 ? menu.value.name.url
@@ -34,7 +40,12 @@ export function SelectLanguage({ menu }) {
             startContent={
               <Avatar
                 alt={x.name.language}
-                className="w-6 h-6"
+                className={`${
+                  selectedThemeSignal.value === "dark" &&
+                  x.name.language === "C++"
+                    ? "invert"
+                    : ""
+                } w-6 h-6`}
                 src={x.name.url}
               />
             }
