@@ -67,6 +67,7 @@ export const languages = {
                 'Regular Expressions - More Exercises': '',
             },
             'Fundamentals Exams': {
+                'Exam Preparation - 20 March 2024': '',
                 '01. Programming Fundamentals Mid Exam Retake': '',
                 '01. Programming Fundamentals Final Exam Retake': '',
                 '02. Programming Fundamentals Mid Exam': '',
@@ -261,6 +262,7 @@ export const languages = {
                 'Regular Expressions - More Exercise': '',
             },
             'Fundamentals Exams': {
+                'Exam Preparation - 20 March 2024': '',
                 '01. Programming Fundamentals Mid Exam Retake': '',
                 '01. Programming Fundamentals Final Exam Retake': '',
                 '02. Programming Fundamentals Mid Exam': '',
@@ -431,6 +433,7 @@ export const languages = {
                 'Regular Expressions - More Exercises': '',
             },
             'Fundamentals Exams': {
+                'Exam Preparation - 20 March 2024': '',
                 '01. Programming Fundamentals Mid Exam Retake': '',
                 '01. Programming Fundamentals Final Exam Retake': '',
                 '02. Programming Fundamentals Mid Exam': '',
@@ -629,6 +632,7 @@ export const languages = {
                 'Regular Expressions - More Exercises': '',
             },
             'Fundamentals Exams': {
+                'Exam Preparation - 20 March 2024': '',
                 '01. Programming Fundamentals Mid Exam Retake': '',
                 '01. Programming Fundamentals Final Exam Retake': '',
                 '02. Programming Fundamentals Mid Exam': '',
