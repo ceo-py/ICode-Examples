@@ -20,7 +20,6 @@ import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 import serverError from "../../utils/serverError/serverError";
 import DOMPurify from "dompurify";
 import { MetaTags } from "../MetaTags/MetaTags";
-import { selectedThemeSignal } from "../NavMenu/ThemeSwitch/ThemeSignal";
 
 export function ResultListTable({
   outsideData,
@@ -66,12 +65,16 @@ export function ResultListTable({
     if (column === "codeAndVIdeo") {
       return (
         <div className="flex gap-3">
-          <DropDownMenuIcon
-            alt="code icon"
-            src={linkIcons("code")}
-          />
+          <div className="cursor-pointer" onClick={() => taskDetails(item._id)}>
+            <DropDownMenuIcon alt="code icon" src={linkIcons("code")} />
+          </div>
           {item.videoLink && (
-            <DropDownMenuIcon alt="video icon" src={linkIcons("youTube")} />
+            <div
+              className="cursor-pointer"
+              onClick={() => window.open(item.videoLink, "_blank")}
+            >
+              <DropDownMenuIcon alt="video icon" src={linkIcons("youTube")} />
+            </div>
           )}
         </div>
       );
@@ -136,8 +139,7 @@ export function ResultListTable({
         <LoadingCircle />
       ) : (
         <Table
-          aria-label="table with client side pagination"
-          onRowAction={(e) => taskDetails(e)}
+          aria-label="table with task results"
           selectionMode="single"
           topContent={
             searchMenu ? null : (
@@ -191,7 +193,16 @@ export function ResultListTable({
             {(item) => (
               <TableRow key={item._id}>
                 {(columnKey) => (
-                  <TableCell className="cursor-pointer">
+                  <TableCell
+                    onClick={
+                      columnKey !== "codeAndVIdeo"
+                        ? () => taskDetails(item._id)
+                        : null
+                    }
+                    className={`${
+                      columnKey !== "codeAndVIdeo" ? "cursor-pointer" : ""
+                    }`}
+                  >
                     {columnKey === "taskName"
                       ? DOMPurify.sanitize(tableValues(columnKey, item))
                       : tableValues(columnKey, item)}
