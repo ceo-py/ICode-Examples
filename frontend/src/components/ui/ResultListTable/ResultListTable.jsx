@@ -20,6 +20,7 @@ import { TopContentInTable } from "./TopContentInTabel/TopContentInTabel";
 import serverError from "../../utils/serverError/serverError";
 import DOMPurify from "dompurify";
 import { MetaTags } from "../MetaTags/MetaTags";
+import { zoomAndClick } from "../../utils/css/zoomAndClick";
 
 export function ResultListTable({
   outsideData,
@@ -65,12 +66,12 @@ export function ResultListTable({
     if (column === "codeAndVIdeo") {
       return (
         <div className="flex gap-10">
-          <div className="cursor-pointer" onClick={() => taskDetails(item._id)}>
+          <div className={zoomAndClick()} onClick={() => taskDetails(item._id)}>
             <DropDownMenuIcon alt="code icon" src={linkIcons("code")} />
           </div>
           {item.videoLink && (
             <div
-              className="cursor-pointer"
+              className={zoomAndClick()}
               onClick={() => window.open(item.videoLink, "_blank")}
             >
               <DropDownMenuIcon alt="video icon" src={linkIcons("youTube")} />
