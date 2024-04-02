@@ -43,12 +43,9 @@ export default function TabLanguages({
 }) {
   return (
     <Tabs
-      classNames={
-        {
-          // tabList: "grid-flow-dense flex-col sm:flex-row",
-          // tabList: "grid-flow-dense flex-col sm:flex-row",
-        }
-      }
+      classNames={{
+        tabList: "gap-1 custom-sm:gap-2",
+      }}
       key="Options"
       size="lg"
       aria-label="Options"
@@ -62,11 +59,12 @@ export default function TabLanguages({
     >
       {tabs.map((tab) => (
         <Tab
+          className="px-0 py-0 custom-sm:px-2 py-2"
           key={tab.key}
           title={
             <div className="flex items-center space-x-2">
               <DropDownMenuIcon
-                alt={`${tab.text} language icon`}
+                alt={`${tab.key} language icon`}
                 src={languageIcons(tab.src)}
               />
               <span className="hidden sm:block">{tab.text}</span>
