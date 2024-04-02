@@ -64,7 +64,7 @@ export function ResultListTable({
     }
     if (column === "codeAndVIdeo") {
       return (
-        <div className="flex gap-3">
+        <div className="flex gap-10">
           <div className="cursor-pointer" onClick={() => taskDetails(item._id)}>
             <DropDownMenuIcon alt="code icon" src={linkIcons("code")} />
           </div>
