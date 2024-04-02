@@ -3,6 +3,38 @@ import { DropDownMenuIcon } from "../DropDownMenuIcon/DropDownMenuIcon";
 import { languageIcons } from "../../utils/languageIcons/languageIcons";
 import { selectedThemeSignal } from "../NavMenu/ThemeSwitch/ThemeSignal";
 
+const tabs = [
+  {
+    text: "Python",
+    key: "python",
+    src: "Python",
+    chip: "python",
+  },
+  {
+    text: "JavaScript",
+    key: "javascript",
+    src: "JavaScript",
+    chip: "javaScript",
+  },
+  {
+    text: "C#",
+    key: "csharp",
+    src: "C#",
+    chip: "cSharp",
+  },
+  {
+    text: "Java",
+    key: "java",
+    src: "Java",
+    chip: "java",
+  },
+  {
+    text: "C++",
+    key: "cpp",
+    src: "C++",
+    chip: "cpp",
+  },
+];
 export default function TabLanguages({
   language,
   setLanguage,
@@ -11,9 +43,12 @@ export default function TabLanguages({
 }) {
   return (
     <Tabs
-      classNames={{
-        tabList: "grid-flow-dense flex-col sm:flex-row",
-      }}
+      classNames={
+        {
+          // tabList: "grid-flow-dense flex-col sm:flex-row",
+          // tabList: "grid-flow-dense flex-col sm:flex-row",
+        }
+      }
       key="Options"
       size="lg"
       aria-label="Options"
@@ -25,91 +60,25 @@ export default function TabLanguages({
         setFilterValue ? setFilterValue("") : null;
       }}
     >
-      <Tab
-        key="python"
-        title={
-          <div className="flex items-center space-x-2">
-            <DropDownMenuIcon
-              alt="python language icon"
-              src={languageIcons("Python")}
-            />
-            <span>Python</span>
-            {languageCount && (
-              <Chip size="sm" variant="faded">
-                {languageCount.python}
-              </Chip>
-            )}
-          </div>
-        }
-      />
-      <Tab
-        key="javascript"
-        title={
-          <div className="flex items-center space-x-2">
-            <DropDownMenuIcon
-              alt="javascript language icon"
-              src={languageIcons("JavaScript")}
-            />
-            <span>JavaScript</span>
-            {languageCount && (
-              <Chip size="sm" variant="faded">
-                {languageCount.javaScript}
-              </Chip>
-            )}
-          </div>
-        }
-      />
-      <Tab
-        key="csharp"
-        title={
-          <div className="flex items-center space-x-2">
-            <DropDownMenuIcon
-              alt="csharp language icon"
-              src={languageIcons("C#")}
-            />
-            <span>C#</span>
-            {languageCount && (
-              <Chip size="sm" variant="faded">
-                {languageCount.cSharp}
-              </Chip>
-            )}
-          </div>
-        }
-      />
-      <Tab
-        key="java"
-        title={
-          <div className="flex items-center space-x-2">
-            <DropDownMenuIcon
-              alt="java language icon"
-              src={languageIcons("Java")}
-            />
-            <span>Java</span>
-            {languageCount && (
-              <Chip size="sm" variant="faded">
-                {languageCount.java}
-              </Chip>
-            )}
-          </div>
-        }
-      />
-      <Tab
-        key="cpp"
-        title={
-          <div className="flex items-center space-x-2">
-            <DropDownMenuIcon
-              alt="cpp language icon"
-              src={languageIcons("C++")}
-            />
-            <span>C++</span>
-            {languageCount && (
-              <Chip size="sm" variant="faded">
-                {languageCount.cpp}
-              </Chip>
-            )}
-          </div>
-        }
-      />
+      {tabs.map((tab) => (
+        <Tab
+          key={tab.key}
+          title={
+            <div className="flex items-center space-x-2">
+              <DropDownMenuIcon
+                alt={`${tab.text} language icon`}
+                src={languageIcons(tab.src)}
+              />
+              <span className="hidden sm:block">{tab.text}</span>
+              {languageCount && (
+                <Chip size="sm" variant="faded">
+                  {languageCount[tab.chip]}
+                </Chip>
+              )}
+            </div>
+          }
+        />
+      ))}
     </Tabs>
   );
 }
