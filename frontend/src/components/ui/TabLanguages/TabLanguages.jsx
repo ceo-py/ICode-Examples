@@ -67,11 +67,14 @@ export default function TabLanguages({
                 alt={`${tab.key} language icon`}
                 src={languageIcons(tab.src)}
               />
-              <span className="hidden sm:block">{tab.text}</span>
+              {!languageCount && <span>{tab.text}</span>}
               {languageCount && (
-                <Chip size="sm" variant="faded">
-                  {languageCount[tab.chip]}
-                </Chip>
+                <>
+                  <span className="hidden sm:block">{tab.text}</span>
+                  <Chip size="sm" variant="faded">
+                    {languageCount[tab.chip]}
+                  </Chip>
+                </>
               )}
             </div>
           }
