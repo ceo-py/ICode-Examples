@@ -658,6 +658,7 @@ export const languages = {
                 'Functions Advanced - Exercise': '',
             },
             'Advanced Exams': {
+                'Python Advanced Exam - 17 February 2024': '',
                 'Python Advanced Retake Exam - 13 December': '',
                 'Python Advanced Exam - 22 October 2023': '',
                 'Python Advanced Retake Exam - 09 August 2023': '',
