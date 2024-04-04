@@ -24,15 +24,21 @@ export function NavMenu() {
 
   return (
     <>
-      <Navbar isBordered maxWidth="2xl">
+      <Navbar
+        classNames={{
+          wrapper: "px-2 custom-sm:px-6 gap-2 custom-sm:gap-4",
+        }}
+        isBordered
+        maxWidth="2xl"
+      >
         <NavbarContent data-justify="between" className="gap- hidden sm:flex">
           <LogoText />
         </NavbarContent>
-        <NavbarContent>
+        <NavbarContent className="gap-2 custom-sm:gap-4">
           <SearchInput />
           <MenuSwitch selected={selected} setSelected={setSelected} />
         </NavbarContent>
-        <NavbarContent data-justify="between">
+        <NavbarContent className="gap-2 custom-sm:gap-4" data-justify="between">
           {!state.isAuthenticated ? (
             <>
               <LogIn />

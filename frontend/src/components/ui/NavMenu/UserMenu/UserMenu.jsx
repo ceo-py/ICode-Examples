@@ -40,7 +40,7 @@ export function UserMenu() {
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
           <Avatar
-            className="ring-default"
+            className="ring-default w-5 custom-sm:w-8 h-5 custom-sm:h-8"
             as="button"
             isBordered
             size="sm"

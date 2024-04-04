@@ -114,7 +114,7 @@ export function Notifications() {
     <>
       <Dropdown>
         <DropdownTrigger>
-          <div className="flex relative rounded-full justify-center items-center hover:bg-default/40">
+          <div className="flex relative rounded-full justify-center items-center hover:bg-default/40 ">
             <Badge
               className={`${
                 getNotReadNotification(reports, comments, followers, likes) ===
@@ -132,12 +132,12 @@ export function Notifications() {
               color="danger"
               shape="circle"
               placement="top-right"
-              size="md"
+              size="sm"
             >
               <Avatar
-                className="ring-default bg-"
+                className="ring-default bg- w-5 custom-sm:w-8 h-5 custom-sm:h-8"
                 as="button"
-                size="md"
+                size="sm"
                 showFallback
                 src={linkIcons("notification")}
               />
