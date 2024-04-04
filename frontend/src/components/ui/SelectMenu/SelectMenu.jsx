@@ -4,7 +4,7 @@ import { SelectModule } from "./SelectModule/SelectModule";
 
 export function SelectMenu({ menu }) {
   return (
-    <div className="flex flex-wrap w-full">
+    <div className="flex gap-1 flex-wrap w-full">
       <SelectLanguage menu={menu} />
       <SelectCourse menu={menu} />
       <SelectModule menu={menu} />
