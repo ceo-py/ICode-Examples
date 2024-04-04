@@ -14,15 +14,15 @@ const highLightSyntax = (theme) => {
 const siteTheme = document.documentElement;
 const highlightCode = document.querySelector("#highlight");
 
+export function changeThemeMode() {
+  const isDark = selectedThemeSignal.value === "dark";
+  siteTheme.setAttribute("class", isDark ? "light" : "dark");
+  const theme = isDark ? "light" : "dark";
+  selectedThemeSignal.value = theme;
+  highlightCode.href = highLightSyntax(theme);
+}
 export default function ThemeSwitch() {
   const isDark = selectedThemeSignal.value === "dark";
-
-  const changeThemeMode = () => {
-    siteTheme.setAttribute("class", isDark ? "light" : "dark");
-    const theme = isDark ? "light" : "dark";
-    selectedThemeSignal.value = theme;
-    highlightCode.href = highLightSyntax(theme);
-  };
 
   useEffect(() => {
     siteTheme.setAttribute("class", !isDark ? "light" : "dark");
@@ -37,7 +37,7 @@ export default function ThemeSwitch() {
         onPress={() => changeThemeMode(selectedThemeSignal.value)}
         className="bg-"
         isIconOnly
-        aria-label="Like"
+        aria-label="change theme dark or light"
       >
         {!isDark ? <MoonIcon /> : <SunIcon />}
       </Button>

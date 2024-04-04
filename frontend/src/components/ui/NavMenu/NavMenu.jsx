@@ -33,8 +33,14 @@ export function NavMenu() {
           <MenuSwitch selected={selected} setSelected={setSelected} />
         </NavbarContent>
         <NavbarContent data-justify="between">
-          {!state.isAuthenticated ? <LogIn /> : <UserMenu />}
-          <ThemeSwitch />
+          {!state.isAuthenticated ? (
+            <>
+              <LogIn />
+              <ThemeSwitch />
+            </>
+          ) : (
+            <UserMenu />
+          )}
         </NavbarContent>
       </Navbar>
       {selected && <MenuModule />}

@@ -13,6 +13,8 @@ export function linkIcons(name) {
     file: "https://www.svgrepo.com/show/418047/arrow-right-1.svg",
     send: "https://www.svgrepo.com/show/418110/send.svg",
     delete: "https://www.svgrepo.com/show/418071/note-delete.svg",
+    moon:"https://www.svgrepo.com/show/418108/moon.svg",
+    sun:"https://www.svgrepo.com/show/418035/sun.svg",
   };
   return linkIconsFull[name];
 }

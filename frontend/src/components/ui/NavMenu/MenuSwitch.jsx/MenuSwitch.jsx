@@ -11,7 +11,7 @@ export function MenuSwitch({ selected, setSelected }) {
         isSelected={selected}
         onChange={() => setSelected(!selected)}
       >
-        Smart Search Mode
+        <div className="hidden custom-sm:block">Smart Search Mode</div>
       </Switch>
     </div>
   );

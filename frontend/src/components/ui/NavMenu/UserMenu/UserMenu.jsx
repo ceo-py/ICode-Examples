@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { DropDownMenuIcon } from "../../DropDownMenuIcon/DropDownMenuIcon";
 import serverError from "../../../utils/serverError/serverError";
 import { Notifications } from "./Notifications/Notifications";
+import ThemeSwitch, { changeThemeMode } from "../ThemeSwitch/ThemeSwitch";
+import { selectedThemeSignal } from "../ThemeSwitch/ThemeSignal";
+import { linkIcons } from "../../../utils/Icons/linkIcons";
 
 export function UserMenu() {
   const { state, dispatch } = useAuth();
@@ -91,6 +94,26 @@ export function UserMenu() {
             }
           >
             Profile
+          </DropdownItem>
+          <DropdownItem
+            key="theme switch"
+            onPress={() => {
+              changeThemeMode();
+            }}
+            startContent={
+              <DropDownMenuIcon
+                alt={"profile"}
+                src={`${
+                  selectedThemeSignal.value === "dark"
+                    ? linkIcons("moon")
+                    : linkIcons("sun")
+                }`}
+              />
+            }
+          >
+            {`Appearance: ${
+              selectedThemeSignal.value === "dark" ? "Dark" : "Light"
+            }`}
           </DropdownItem>
           <DropdownItem
             key="logout"
