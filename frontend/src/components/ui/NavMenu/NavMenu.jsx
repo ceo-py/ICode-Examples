@@ -26,7 +26,7 @@ export function NavMenu() {
     <>
       <Navbar
         classNames={{
-          wrapper: "px-2 custom-sm:px-6 gap-2 custom-sm:gap-4",
+          wrapper: "px-2 custom-sm:px-6 gap-1 custom-sm:gap-4",
         }}
         isBordered
         maxWidth="2xl"
