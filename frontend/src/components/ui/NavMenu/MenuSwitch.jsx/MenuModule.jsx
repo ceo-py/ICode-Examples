@@ -33,7 +33,7 @@ export function MenuModule() {
 
   return (
     <div className="flex mt-6 flex-col w-full h-auto items-center justify-center">
-      <div className="flex mb-1 px-1 w-full flex-row flex-wrap items-center justify-between max-w-[1536px]">
+      <div className="flex mb-1 px-3 w-full flex-row flex-wrap items-center justify-between max-w-[1536px]">
         <SelectMenu menu={selectedCourseSignal} />
       </div>
     </div>
