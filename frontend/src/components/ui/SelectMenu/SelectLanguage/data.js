@@ -701,6 +701,7 @@ export const languages = {
                 'Testing - Exercise': '',
             },
             'OOP Exams': {
+                'Python OOP Regular Exam - 06 April 2024': '',
                 'Python OOP Retake Exam - 19 December 2023': '',
                 'Python OOP Regular Exam - 9 December': '',
                 'Python OOP Retake Exam - 15 August 2023': '',
