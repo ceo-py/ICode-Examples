@@ -531,6 +531,7 @@ export const languages = {
                 'HTTP and AJAX-Exercise': '',
             },
             'Front-End - Exams': {
+                'JS Front-End Regular Exam - 13 April 2024': '',
                 'JS Front-End Regular Exam - 16 Dec 2023': '',
                 'JS Front-End Retake Exam -22 December 2023': '',
                 'JS Front-End Retake Exam - 17 August 2023': '',
