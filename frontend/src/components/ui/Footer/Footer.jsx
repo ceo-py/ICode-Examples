@@ -23,12 +23,24 @@ export function Footer() {
               <LogoText size={"h-6"} hideDescription={true} />
             )}
             <div className="text-center">
-              &copy; {year.getFullYear()} Copyright iCode Example
+              &copy; {year.getFullYear()} iCode Example
             </div>
           </li>
           <li>
             <Link
               className="text-center"
+              alt="iCode Example YouTUbe Official channel"
+              isExternal
+              href="https://www.youtube.com/channel/UCAfxexPFdg85eVJe-I21ycw"
+              showAnchorIcon
+            >
+              YouTube
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-center"
+              alt="iCode Example Discord Official bot"
               isExternal
               href="https://www.ceo-py.eu/DiscordBot/"
               showAnchorIcon
