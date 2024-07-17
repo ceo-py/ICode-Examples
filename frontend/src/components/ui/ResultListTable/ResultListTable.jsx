@@ -41,10 +41,7 @@ export function ResultListTable({
   const genTaskDesc = (taskId) => {
     const taskDetail = searchResults.find((x) => x._id === taskId);
     return `${taskDetail.language}&course=${taskDetail.course}&module=${taskDetail.module}&problem=${taskDetail.taskName}`
-      .replace(/-./g, "")
-      .replace(/ /g, "-")
-      .replace(/#/g, "Sharp")
-      .replace(/'/g, "");
+    .replace(/#/g, "Sharp")
   };
 
   const taskDetails = (taskId) => {

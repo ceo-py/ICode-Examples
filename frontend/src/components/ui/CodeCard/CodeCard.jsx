@@ -44,6 +44,14 @@ export function CodeCard() {
     navigate(`/user?name=${username}`);
   };
 
+  const navigateModule = (language, course, module) => {
+    const updatedCode =
+      `/menu?language=${language}&course=${course}&module=${module}`
+        .replace(/Sharp/g, "%23")
+        .replace("C  ", "C%2B%2B");
+    navigate(updatedCode);
+  };
+
   const navigateEditTask = () => {
     navigate(`/edit?&id=${data?.getTaskSingleDetails?.taskId}`);
   };
@@ -153,10 +161,24 @@ export function CodeCard() {
                   )}
                   {searchParams.get("module") &&
                     searchParams.get("module") !== "others" && (
-                      <h4 className="text-small tracking-tight text-default-400">{`${searchParams.get(
-                        "course"
-                      )} / ${searchParams.get("module").replace(".", "")}`}</h4>
+                      <h4 className="text-small tracking-tight text-default-400">
+                        {`${searchParams.get("course")} / `}
+                        <a
+                          className="cursor-pointer hover:underline text-primary"
+                          onClick={() =>
+                            navigateModule(
+                              searchParams.get("language"),
+                              searchParams.get("course"),
+                              searchParams.get("module")
+                            )
+                          }
+                        >
+                          {searchParams.get("module").replace(/Sharp/g, "#")}
+                        </a>
+                      </h4>
                     )}
+                  {/* http://localhost:5173/menu?language=CSharp&course=Fundamentals%20Exams&module=01.%20Programming%20Fundamentals%20Mid%20Exam%20Retake# */}
+                  {/* http://localhost:5173/menu?language=C%23&course=Fundamentals%20Exams&module=01.%20Programming%20Fundamentals%20Mid%20Exam%20Retake */}
                 </div>
               </div>
 
