@@ -177,8 +177,6 @@ export function CodeCard() {
                         </a>
                       </h4>
                     )}
-                  {/* http://localhost:5173/menu?language=CSharp&course=Fundamentals%20Exams&module=01.%20Programming%20Fundamentals%20Mid%20Exam%20Retake# */}
-                  {/* http://localhost:5173/menu?language=C%23&course=Fundamentals%20Exams&module=01.%20Programming%20Fundamentals%20Mid%20Exam%20Retake */}
                 </div>
               </div>
 
