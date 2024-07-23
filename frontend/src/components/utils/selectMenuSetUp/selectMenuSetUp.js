@@ -5,8 +5,6 @@ export function menuSetUp(language, module, course) {
   const languageData = Object.values(languages).find(
     (y) => y?.name?.language === language
   );
-  console.log(languageData);
-  console.log(module);
   return {
     ...languageData,
     ...{ module: languageData.modules[course] },
