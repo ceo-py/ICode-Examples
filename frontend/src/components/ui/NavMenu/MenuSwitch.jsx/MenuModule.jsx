@@ -10,8 +10,6 @@ export function MenuModule() {
 
   const handleMenu = () => {
     if (share) return;
-    if (!selectedCourseSignal?.value?.name?.language)
-      navigate(`/menu?language=$null&course=null&module=null`);
 
     if (!selectedCourseSignal?.value?.selectedModule) return;
 

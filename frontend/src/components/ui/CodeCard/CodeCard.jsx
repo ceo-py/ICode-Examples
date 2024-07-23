@@ -23,6 +23,8 @@ import { MetaTags } from "../MetaTags/MetaTags";
 import { parseNestedObjects } from "../../utils/jsonParseProject/jsonParseProject";
 import { DividerDir } from "./FullProject/DividerDir/DividerDir";
 import { FullProject } from "./FullProject/FullProject";
+import { selectedCourseSignal } from "../SelectMenu/SelectLanguage/selectMenuSignal";
+import { menuSetUp } from "../../utils/selectMenuSetUp/selectMenuSetUp";
 
 export function CodeCard() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -45,6 +47,11 @@ export function CodeCard() {
   };
 
   const navigateModule = (language, course, module) => {
+    selectedCourseSignal.value = menuSetUp(
+      language.replace("C  ", "C++").replace("CSharp", "C#"),
+      module.trim().replace("CSharp", "C#"),
+      course.trim()
+    );
     const updatedCode =
       `/menu?language=${language}&course=${course}&module=${module}`
         .replace(/Sharp/g, "%23")
