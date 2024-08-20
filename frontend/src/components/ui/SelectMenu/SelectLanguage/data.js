@@ -467,6 +467,7 @@ export const languages = {
                 'RPrototypes and Inheritance - Exercise': '',
             },
             'JS Advanced - Exams': {
+                'JS Advanced Retake Exam - 12 August 2024': '',
                 'JS Advanced Regular Exam - 22 June 2024': '',
                 'JS Advanced Retake Exam - 3 April 2024': '',
                 'JS Advanced Regular Exam - 17 February 2024': '',
